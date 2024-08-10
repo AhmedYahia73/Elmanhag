@@ -25,8 +25,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
         Route::controller(CreateStudentController::class)->group(function () {
             Route::post('/add', 'store')->name('student.add');
-            Route::post('/update/{id}', 'modify')->name('student.modify');
-            Route::get('/delete/{id}', 'delete')->name('student.delete');
+            Route::put('/update/{id}', 'modify')->name('student.modify');
+            Route::delete('/delete/{id}', 'delete')->name('student.delete');
         });
     });
 
@@ -37,8 +37,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
         Route::controller(CreateCategoryController::class)->group(function(){
             Route::post('/add', 'create')->name('category.add');
-            Route::post('/update/{id}', 'modify')->name('category.update');
-            Route::get('/delete/{id}', 'delete')->name('category.delete');
+            Route::put('/update/{id}', 'modify')->name('category.update');
+            Route::delete('/delete/{id}', 'delete')->name('category.delete');
         });
     });
 
@@ -49,8 +49,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
         Route::controller(CreateSubjectController::class)->group(function(){
             Route::post('/add', 'create')->name('subject.add');
-            Route::post('/update/{id}', 'modify')->name('subject.update');
-            Route::get('/delete/{id}', 'delete')->name('subject.delete');
+            Route::put('/update/{id}', 'modify')->name('subject.update');
+            Route::delete('/delete/{id}', 'delete')->name('subject.delete');
         });
     });
 
@@ -61,8 +61,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
         Route::controller(CreateChapterController::class)->group(function(){
             Route::post('/add/{sub_id}', 'create')->name('subject.add');
-            Route::post('/update/{id}', 'modify')->name('subject.update');
-            Route::get('/delete/{id}', 'delete')->name('subject.delete');
+            Route::put('/update/{id}', 'modify')->name('subject.update');
+            Route::delete('/delete/{id}', 'delete')->name('subject.delete');
         });
     });
 });
