@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\country;
 use App\Models\city;
+use App\Models\ParentRelation;
 
 class StudentsDataController extends Controller
 {
@@ -28,6 +29,7 @@ class StudentsDataController extends Controller
         ->whereHas('subjects')
         ->count();
         $free_students = $total_students - $paid_students;
+        $relations = ParentRelation::get();
 
         return response()->json([
             'students' => $students,
@@ -37,6 +39,7 @@ class StudentsDataController extends Controller
             'free_students' => $free_students,
             'countries' => $countries,
             'cities' => $cities,
+            'relations' => $relations
         ]);
     }
 }
