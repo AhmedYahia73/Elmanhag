@@ -25,18 +25,18 @@ class StudentRequest extends FormRequest
     {
         return [
             // this request from admin for create new Student
-            'firstName'=>['required'],
-            'lastName'=>['required'],
+            'name'=>['required'], 
             'phone'=>['required','unique:users'],
             'email'=>['required','unique:users'],
-            'parent_name'=>['required'],
-            'parent_phone'=>['required'],
             'category_id'=>['required'],
             'language'=>['required'],
             'password'=>['required'],
-            'conf_password'=>['required', 'same:password'],
             'country_id'=>['required'],
             'city_id'=>['required'],
+            'parent_name'=>['required'],
+            'parent_email'=>['required'],
+            'parent_password'=>['required'],
+            'parent_phone'=>['required'],
         ];
     }
 
