@@ -34,10 +34,11 @@ class CreateLessonController extends Controller
         // Add Voice Source
         if ( isset($request->voice) && is_array($request->voice) ) {
             for ($i = 0, $end = count($request->voice); $i < $end; $i++) {
+                $voice = $this->upload($request);
                 LessonResource::create([
-                    'type' => '', 
-                    'source' => '', 
-                    'file' => '', 
+                    'type' => 'voice', 
+                    'source' => $request->source[$i], 
+                    'file' => $voice, 
                 ]);
             }
         }

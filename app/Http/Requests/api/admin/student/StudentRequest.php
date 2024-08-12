@@ -26,8 +26,8 @@ class StudentRequest extends FormRequest
         return [
             // this request from admin for create new Student
             'name'=>['required'], 
-            'phone'=>['required','unique:users', 'email'],
-            'email'=>['required','unique:users'],
+            'phone'=>['required','unique:users'],
+            'email'=>['required','unique:users', 'email'],
             'category_id'=>['required'],
             'language'=>['required'],
             'password'=>['required'],
