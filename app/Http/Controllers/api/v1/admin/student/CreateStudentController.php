@@ -17,13 +17,10 @@ class CreateStudentController extends Controller
 
     }
     protected $studentRequest = [
-        'firstName',
-        'lastName',
+        'name',
         'phone',
         'type',
         'email',
-        'parent_name',
-        'parent_phone',
         'category_id',
         'language',
         'password',
@@ -34,10 +31,16 @@ class CreateStudentController extends Controller
     use image;
     public function store(StudentRequest $request){
         $newStudent =  $request->only($this->studentRequest); // Take only Request From Protected studentRequest names 
-        $image =  $this->upload($request,'image','student/user'); // Start Upload Image
         $newStudent['type'] = 'student'; // Type Of User
-        $newStudent['image'] =$image; // Image Value From traid Image 
-       $user = $this->user->create($newStudent); // Start Create New Studetn
+        $user = $this->user->create($newStudent); // Start Create New Studetn
+        $parent = $this->user->create([
+            'name' => $request->parent_name,
+            'email' => $request->parent_email,
+            'password' => $request->parent_password,
+            'phone' => $request->parent_phone,
+            'type' => 'parent',
+            'student_id' => $user->id,
+        ]); // Start Create Parent
         return response()->json(['success'=>'Student Created Successfully'],200); 
     }
     
