@@ -36,7 +36,7 @@ class User extends Authenticatable
         'city_id',
         'student_id',
         'remember_token',
-        'parent_kinship',
+        'relation_id',
         'category_id',
         'language',
         'image',

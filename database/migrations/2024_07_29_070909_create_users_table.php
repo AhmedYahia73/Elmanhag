@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone');
-            $table->string('image')->nullable()->default('student/user/default');
+            $table->string('image')->nullable();
             $table->enum('type',['supAdmin','admin','teacher','parent','student']);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('parent_kinship')->nullable();
+            $table->foreignId('parent_relation_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('language')->nullable();
             $table->string('password');
             $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('cascade');

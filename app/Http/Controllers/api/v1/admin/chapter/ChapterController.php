@@ -12,6 +12,7 @@ class ChapterController extends Controller
     public function show(){
         $chapters = chapter::
         with('subject')
+        ->with('lessons')
         ->orderBy('subject_id')
         ->get();
 
