@@ -19,7 +19,7 @@ class CountryFactory extends Factory
         return [
             //  This Factory About Countries
                'name' => fake()->country(),
-               'status' =>$this->fake()->randomElement(['1','0']),
+               'status' =>fake()->randomElement(['1','0']),
         ];
     }
 }

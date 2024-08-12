@@ -28,18 +28,14 @@ class UserFactory extends Factory
     {
        
         return [
-            'firstName' => fake()->firstName(),
-            'lastName' => fake()->lastName(),
+            'name' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'type' => $this->faker->randomElement(['student','admin','parent','teacher','subAdmin']),
-        
+            'type' => $this->faker->randomElement(['student','admin']),
             'phone' => fake()->unique()->phoneNumber(),
-            'parent_phone' => fake()->unique()->phoneNumber(),
-            'parent_name' => fake()->name(),
             'image' => 'student/user/default.png',
             'status' => $this->faker->randomElement(['1','0']),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => '12345678',
             'remember_token' => Str::random(20),
         ];
     }

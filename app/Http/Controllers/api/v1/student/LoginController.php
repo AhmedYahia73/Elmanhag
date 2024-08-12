@@ -27,6 +27,7 @@ class LoginController extends Controller
                 if($user->type == 'student'){
                     return response()->json([
                     'success'=>'Welcome '.$login['email'],
+                    'user'=>$user,
                     'type'=>$user->type,
                     '_token'=>$token,
                     ]);

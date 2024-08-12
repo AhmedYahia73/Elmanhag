@@ -15,18 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        // User::factory(10)->create();
         // $this->call([
         //     User::class,
         // ]);
         country::factory()
-            ->count(5)
+            ->count(1)
             ->create();
         city::factory()
             ->count(20)
             ->create(
                 [
-                    'country_id'=>city::factory(),
+                    'country_id'=>country::factory(),
                 ]
             );
         User::factory()

@@ -12,8 +12,7 @@ class SignupController extends Controller
 {
         public function __construct(private User $user) {}
     protected $studentRequest = [
-        'firstName',
-        'lastName',
+        'name',
         'email',
         'password',
         'parent_name',
