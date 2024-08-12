@@ -35,7 +35,7 @@ class UserFactory extends Factory
             'phone' => fake()->unique()->phoneNumber(),
             'image' => 'student/user/default.png',
             'status' => $this->faker->randomElement(['1','0']),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => '12345678',
             'remember_token' => Str::random(20),
         ];
     }
