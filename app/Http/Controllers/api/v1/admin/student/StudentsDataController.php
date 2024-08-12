@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\country;
 use App\Models\city;
+use App\Models\category;
 use App\Models\ParentRelation;
 
 class StudentsDataController extends Controller
@@ -18,6 +19,8 @@ class StudentsDataController extends Controller
         ->with('category')
         ->with('country')
         ->with('city')
+        ->get();
+        $categories = category::where('category_id', '!=', null)
         ->get();
         $countries = country::get();
         $cities = city::get();
