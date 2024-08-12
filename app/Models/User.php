@@ -13,10 +13,11 @@ use App\Models\bundle;
 use App\Models\category;
 use App\Models\country;
 use App\Models\city;
+use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens,HasFactory, Notifiable;
+    use HasApiTokens,HasFactory, Notifiable,AuthAuthenticatable;
 
     /**
      * The attributes that are mass assignable.

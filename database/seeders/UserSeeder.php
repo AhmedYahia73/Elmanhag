@@ -15,8 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // This Seeder About Data Users Admin or Student
-
-        User::factory()
+            User::factory()
             ->count(20)
             ->create();
     }

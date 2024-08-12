@@ -17,9 +17,9 @@ class CountryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            //  This Factory About Countries
                'name' => fake()->country(),
-               'status' => '1',
+               'status' =>$this->fake()->randomElement(['1','0']),
         ];
     }
 }

@@ -17,10 +17,10 @@ class CityFactory extends Factory
     public function definition(): array
     {
         return [
-
+            // This Factory About Ciies
               'name' => fake()->name(),
-              'country_id' =>'1',
-              'status' => '1',
+              'country_id' =>'',
+              'status' => $this->fake()->randomElement(['1','0']),
         ];
     }
 }

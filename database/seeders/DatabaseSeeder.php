@@ -15,16 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        $this->call([
-            User::class,
-        ]);
+        User::factory(10)->create();
+        // $this->call([
+        //     User::class,
+        // ]);
         country::factory()
             ->count(5)
             ->create();
         city::factory()
-            ->count(5)
-            ->create();
+            ->count(20)
+            ->create(
+                [
+                    'country_id'=>city::factory(),
+                ]
+            );
         User::factory()
             ->count(20)
             ->create(
