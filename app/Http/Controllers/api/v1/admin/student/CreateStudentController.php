@@ -40,7 +40,7 @@ class CreateStudentController extends Controller
             'phone' => $request->parent_phone,
             'type' => 'parent',
             'student_id' => $user->id,
-            'relation_id' => $request->relation_id,
+            'parent_relation_id' => $request->relation_id,
         ]); // Start Create Parent
         return response()->json(['success'=>'Student Created Successfully'],200); 
     }
