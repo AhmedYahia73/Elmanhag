@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,15 +20,12 @@ class CategoryFactory extends Factory
         return [
             // This About All Category
 
-            $category = [
-                [
-                    'name',
-                    'thumbnail',
-                    'tags',
-                    'category_id',
-                    'status',
-                ]
-            ]
+             'name' => fake()->name(),
+             'thumbnail' => fake()->image(),
+             'tags' => fake()->name(),
+             'status' => $this->faker->randomElement(['1','0']),
         ];
+           
+            
     }
 }
