@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone');
-            $table->string('image')->nullable()->default('student/user/default');
+            $table->string('image')->nullable();
             $table->enum('type',['supAdmin','admin','teacher','parent','student']);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
