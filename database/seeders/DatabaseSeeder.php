@@ -6,6 +6,7 @@ use App\Models\category;
 use App\Models\city;
 use App\Models\country;
 use App\Models\User;
+use App\Models\subject;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -178,6 +179,11 @@ class DatabaseSeeder extends Seeder
                 ]
             );
 
+        subject::factory()
+        ->count(20)
+        ->create([
+            'category_id' => category::factory()
+        ]);
          
          
     }
