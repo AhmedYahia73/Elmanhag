@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('question');
             $table->string('image');
             $table->string('audio');
-            $table->enum('statues', ['0', '1']);
+            $table->boolean('status')->default(1);
             $table->foreignId('homework_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

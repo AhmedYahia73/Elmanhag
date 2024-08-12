@@ -13,10 +13,12 @@ class lesson extends Model
 
     protected $fillable = [
         'name' ,
+        'description' ,
+        'paid' ,
         'chapter_id' ,
         'status' ,
         'order' ,
-        'loged' ,
+        'drip_content' ,
     ];
 
     public function materials(){
