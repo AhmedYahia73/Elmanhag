@@ -42,7 +42,8 @@ class StudentsDataController extends Controller
             'free_students' => $free_students,
             'countries' => $countries,
             'cities' => $cities,
-            'relations' => $relations
+            'relations' => $relations,
+            'categories' => $categories,
         ]);
     }
 }
