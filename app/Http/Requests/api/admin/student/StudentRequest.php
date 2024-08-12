@@ -34,7 +34,7 @@ class StudentRequest extends FormRequest
             'country_id'=>['required'],
             'city_id'=>['required'],
             'parent_name'=>['required'],
-            'parent_email'=>['required', 'unique:users', 'email'],
+            'parent_email'=>['required', 'unique:users,email', 'email'],
             'parent_password'=>['required'],
             'parent_phone'=>['required'],
         ];
