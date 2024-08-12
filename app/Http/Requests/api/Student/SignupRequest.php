@@ -24,13 +24,10 @@ class SignupRequest extends FormRequest
     {
         return [
             // This About All Name Request and Validate Request 
-    'firstName' => [__('required')],
-    'lastName' => ['required'],
+    'name' => ['required'],
     'email' => ['email', 'unique:users', 'required'],
     'password' => ['required'],
     'conf_password' => ['required', 'same:password'],
-    'parent_name' => ['required'],
-    'parent_phone' => ['required'],
     'phone' => ['required', 'unique:users'],
     'city_id' => ['required','exists:cities,id'],
     'country_id' => ['required','exists:countries,id'],

@@ -19,8 +19,7 @@ class CityFactory extends Factory
         return [
             // This Factory About Ciies
               'name' => fake()->name(),
-              'country_id' =>'',
-              'status' => $this->fake()->randomElement(['1','0']),
+              'status' => fake()->randomElement(['1','0']),
         ];
     }
 }
