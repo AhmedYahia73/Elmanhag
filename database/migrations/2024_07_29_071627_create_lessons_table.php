@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description')->nullable();
+            $table->boolean('paid');
             $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->enum('status', ['1', '0']);
+            $table->boolean('status')->default(1);
             $table->integer('order');
-            $table->boolean('loged');
+            $table->boolean('drip_content');
             $table->timestamps();
         });
     }
