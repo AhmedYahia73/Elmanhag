@@ -15,7 +15,7 @@ Route::prefix('auth')->group(function () {
     });
     Route::controller(LoginController::class)->group(function () {
         Route::post('login','login')->name('login.index');
-        Route::post('logout','logout')->name('logout')->middleware(['auth.student']);
+        Route::post('logout','logout')->name('logout')->middleware(['auth:sanctum']);
     });
 });
 
