@@ -23,6 +23,7 @@ class CreateLessonController extends Controller
         'status',
         'order',
         'drip_content',
+        'chapter_id',
     ];
 
     public function create( LessonRequest $request, $ch_id ){
@@ -89,4 +90,24 @@ class CreateLessonController extends Controller
         ]);
     }
 
+    public function modify( LessonRequest $request, $id ){
+        //Keys 
+        // name, ar_name, description, paid, status, order, drip_content
+        // voice[], voice_source[]
+        // video_source[], video[]
+        // pdf_source[], pdf[]
+        $lesson_data = $request->only($this->lessonRequest); // Get data
+        $lesson = lesson::where('id', $id)
+        ->first();
+        $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
+        $lesson->update($lesson_data);
+        
+        // Update Source
+        //________________________________________
+
+        return response()->json([
+            'success' => 'You Update data success'
+        ]);
+    }
+    
 }
