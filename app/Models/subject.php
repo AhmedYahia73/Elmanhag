@@ -21,6 +21,7 @@ class subject extends Model
         'demo_video',
         'cover_photo',
         'thumbnail',
+        'education_id',
         'url',
         'description',
         'status',

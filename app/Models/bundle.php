@@ -17,6 +17,7 @@ class bundle extends Model
         'price'         ,
         'discount'      ,
         'category_id'   ,
+        'education_id'  ,
         'expired_date'  ,
         'discount_type' ,
     ];
