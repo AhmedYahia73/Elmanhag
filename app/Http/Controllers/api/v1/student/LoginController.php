@@ -24,7 +24,7 @@ class LoginController extends Controller
                 $user = $this->user->where('email',$login['email'])->first();
                 $token = $user->createToken('personal access token')->plainTextToken;
                 $user->token = $token;
-                if($user->type == 'student'){
+                if($user->role == 'student'){
                     return response()->json([
                     'success'=>'Welcome '.$login['email'],
                     'user'=>$user,
