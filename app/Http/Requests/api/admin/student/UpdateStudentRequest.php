@@ -23,18 +23,19 @@ class UpdateStudentRequest extends FormRequest
     {
         return [
             // this request from admin for Update Student
-            'firstName'=>['required'],
-            'lastName'=>['required'],
+            'name'=>['required'],
             'phone'=>['required'],
             'email'=>['required'],
             'parent_name'=>['required'],
             'parent_phone'=>['required'],
+            'parent_email'=>['required', 'unique:users,email', 'email'],
+            'parent_password'=>['required'],
             'category_id'=>['sometimes', 'required'],
             'language'=>['required'],
             'password'=>['required'],
-            'conf_password'=>['required', 'same:password'],
             'country_id'=>['sometimes', 'required'],
             'city_id'=>['sometimes', 'required'],
+            'status'=>['required'],
         ];
     }
 }
