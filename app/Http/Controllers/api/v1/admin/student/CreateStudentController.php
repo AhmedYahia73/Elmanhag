@@ -62,6 +62,7 @@ class CreateStudentController extends Controller
                 'phone' => $request->parent_phone,
                 'email' => $request->parent_email,
                 'password' => $request->parent_password,
+                'parent_relation_id' => $request->relation_id,
             ]);
             return response()->json(['success'=>'Student Updated Successfully'],200); 
         }
