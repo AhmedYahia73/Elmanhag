@@ -17,8 +17,14 @@ class StudentMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
-             
+        if(Auth::check()){
+                if(Auth::user()->role == 'student'){
+                    return $next($request);
+                }
+        }
+        return response()->json(
+            ['faield'=> 'This Is Not Student',]
+        ,403);
      
     }
 }

@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('admin')
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
-            Route::middleware('api')
+            Route::middleware('auth:sanctum')
                 ->prefix('student')
                 ->name('student.')
                 ->group(base_path('routes/student.php'));
@@ -29,8 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
 
         $middleware->alias([
-            'IsStudent' => $middleware->append(StudentMiddleware::class),
-             'IsAdmin'=>$middleware->append(AdminMiddleware::class)
+            'IsStudent' => StudentMiddleware::class,
+             'IsAdmin'=> AdminMiddleware::class
         ]);
        
     })

@@ -19,12 +19,12 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::prefix('profile')->middleware(['auth:sanctum'])->group(function () {
+Route::prefix('profile')->middleware(['auth:sanctum','IsStudent'])->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('view','profile')->name('profile.view');
     });
 });
-Route::prefix('setting')->middleware(['auth:sanctum'])->group(function () {
+Route::prefix('setting')->middleware(['auth:sanctum','IsStudent'])->group(function () {
     Route::controller(SettingController::class)->group(function () {
         Route::get('view','view')->name('setting.view');
     });
