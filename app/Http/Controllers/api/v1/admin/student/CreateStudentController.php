@@ -19,7 +19,7 @@ class CreateStudentController extends Controller
     protected $studentRequest = [
         'name',
         'phone',
-        'type',
+        'role',
         'email',
         'category_id',
         'language',
@@ -31,14 +31,14 @@ class CreateStudentController extends Controller
     use image;
     public function store(StudentRequest $request){
         $newStudent =  $request->only($this->studentRequest); // Take only Request From Protected studentRequest names 
-        $newStudent['type'] = 'student'; // Type Of User
+        $newStudent['role'] = 'student'; // Type Of User
         $user = $this->user->create($newStudent); // Start Create New Studetn
         $parent = $this->user->create([
             'name' => $request->parent_name,
             'email' => $request->parent_email,
             'password' => $request->parent_password,
             'phone' => $request->parent_phone,
-            'type' => 'parent',
+            'role' => 'parent',
             'student_id' => $user->id,
             'parent_relation_id' => $request->relation_id,
         ]); // Start Create Parent
@@ -50,7 +50,7 @@ class CreateStudentController extends Controller
         $student =  $request->only($this->studentRequest); 
         // Get User Data
         $user = User::where('id', $id)
-        ->where('type', 'student')
+        ->where('role', 'student')
         ->first();
         // Update Image
         if ( !empty($user) ) {
@@ -71,7 +71,7 @@ class CreateStudentController extends Controller
     public function delete( $id ){
         // Get User Data
         $user = User::where('id', $id)
-        ->where('type', 'student')
+        ->where('role', 'student')
         ->first();
 
         // Remove User
