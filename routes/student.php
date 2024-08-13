@@ -3,6 +3,7 @@ namespace Student;
 
 use App\Http\Controllers\api\v1\student\LoginController;
 use App\Http\Controllers\api\v1\student\profile\ProfileController;
+use App\Http\Controllers\api\v1\student\SettingController;
 use App\Http\Controllers\api\v1\student\SignupController;
 use App\Http\Middleware\StudentMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +22,10 @@ Route::prefix('auth')->group(function () {
 Route::prefix('profile')->middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('view','profile')->name('profile.view');
+    });
+});
+Route::prefix('setting')->middleware(['auth:sanctum'])->group(function () {
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('view','view')->name('setting.view');
     });
 });
