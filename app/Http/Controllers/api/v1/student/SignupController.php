@@ -22,6 +22,7 @@ class SignupController extends Controller
    'category_id',
    'role',
    'parent_relation_id',
+   'education_id',
    'language'
    ];
     protected $parentRequest = [
