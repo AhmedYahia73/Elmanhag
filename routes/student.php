@@ -24,8 +24,8 @@ Route::prefix('profile')->middleware(['auth:sanctum','IsStudent'])->group(functi
         Route::get('view','profile')->name('profile.view');
     });
 });
-Route::prefix('setting')->middleware(['auth:sanctum','IsStudent'])->group(function () {
+Route::prefix('setting')->group(function () {
     Route::controller(SettingController::class)->group(function () {
         Route::get('view','view')->name('setting.view');
     });
-})->middleware('IsStudent');
+});
