@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lesson_resources', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['voice', 'video', 'pdf']);
-            $table->enum('source', ['externel', 'internel', 'upload']);
+            $table->enum('source', ['externel', 'embeded', 'upload']);
             $table->string('file');
             $table->timestamps();
         });

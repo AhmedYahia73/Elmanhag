@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class SubjectsFactory extends Factory
+class subjectFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class SubjectsFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'price' => fake()->number(),
+            'price' => fake()->numberBetween(100, 10000),
             'demo_video' => fake()->image(),
             'cover_photo' => fake()->image(),
             'thumbnail' => fake()->image(),
