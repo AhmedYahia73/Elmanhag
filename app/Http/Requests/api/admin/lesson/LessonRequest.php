@@ -25,7 +25,6 @@ class LessonRequest extends FormRequest
             'name' => ['required'],
             'ar_name' => ['required'],
             'paid' => ['required'],
-            'chapter_id' => ['required', 'exists:chapters,id'],
             'status' => ['required'],
             'drip_content' => ['required']
         ];

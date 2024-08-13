@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'name' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'type' => $this->faker->randomElement(['student','admin']),
+            'role' => $this->faker->randomElement(['student','admin']),
             'phone' => fake()->unique()->phoneNumber(),
             'image' => 'student/user/default.png',
             'status' => $this->faker->randomElement(['1','0']),

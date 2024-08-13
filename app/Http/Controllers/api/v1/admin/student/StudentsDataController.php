@@ -13,7 +13,7 @@ use App\Models\ParentRelation;
 class StudentsDataController extends Controller
 {
     public function show(){
-        $students = User::where('type', 'student')
+        $students = User::where('role', 'student')
         ->with('subjects')
         ->with('bundles')
         ->with('category')
@@ -26,9 +26,9 @@ class StudentsDataController extends Controller
         $cities = city::get();
         $total_students = count($students);
         $banned_students = count($students->where('status', 0));
-        $paid_students = User::where('type', 'student')
+        $paid_students = User::where('role', 'student')
         ->whereHas('bundles')
-        ->orWhere('type', 'student')
+        ->orWhere('role', 'student')
         ->whereHas('subjects')
         ->count();
         $free_students = $total_students - $paid_students;

@@ -14,6 +14,8 @@ use App\Http\Controllers\api\v1\admin\Subject\CreateSubjectController;
 use App\Http\Controllers\api\v1\admin\chapter\ChapterController;
 use App\Http\Controllers\api\v1\admin\chapter\CreateChapterController;
 
+use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -63,6 +65,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('/add/{sub_id}', 'create')->name('subject.add');
             Route::put('/update/{id}', 'modify')->name('subject.update');
             Route::delete('/delete/{id}', 'delete')->name('subject.delete');
+        });
+    });
+
+    // Start Lesson Module
+    Route::prefix('lesson')->group(function () {
+        Route::controller(CreateLessonController::class)->group(function(){
+            Route::post('/add/{sub_id}', 'create')->name('lesson.add');
+            Route::put('/update/{id}', 'modify')->name('lesson.update');
+            Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
         });
     });
 });

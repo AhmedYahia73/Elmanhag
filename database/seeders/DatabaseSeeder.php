@@ -6,6 +6,7 @@ use App\Models\category;
 use App\Models\city;
 use App\Models\country;
 use App\Models\User;
+use App\Models\subject;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -47,7 +48,7 @@ class DatabaseSeeder extends Seeder
                  'name' => 'Elmanhag Admin',
                 'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
-                'type' => 'admin',
+                'role' => 'admin',
                 'phone' => fake()->unique()->phoneNumber(),
                 'image' => 'student/user/default.png',
                 'status' => '1',
@@ -62,7 +63,7 @@ class DatabaseSeeder extends Seeder
                  'name' => 'Elmanhag Student',
                 'email' => 'student@gmail.com',
                 'email_verified_at' => now(),
-                'type' => 'student',
+                'role' => 'student',
                 'phone' => fake()->unique()->phoneNumber(),
                 'image' => 'student/user/default.png',
                 'status' => '1',
@@ -178,6 +179,11 @@ class DatabaseSeeder extends Seeder
                 ]
             );
 
+        subject::factory()
+        ->count(20)
+        ->create([
+            'category_id' => category::factory()
+        ]);
          
          
     }
