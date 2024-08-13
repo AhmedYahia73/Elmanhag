@@ -22,7 +22,7 @@ class CreateStudentController extends Controller
         'role',
         'email',
         'category_id',
-        'language',
+        'education_id',
         'password',
         'country_id',
         'city_id',

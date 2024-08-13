@@ -29,7 +29,7 @@ class StudentRequest extends FormRequest
             'phone'=>['required','unique:users'],
             'email'=>['required','unique:users', 'email'],
             'category_id'=>['required'],
-            'language'=>['required'],
+            'education_id'=>['required'],
             'password'=>['required'],
             'country_id'=>['required'],
             'city_id'=>['required'],
