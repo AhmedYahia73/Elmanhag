@@ -32,6 +32,7 @@ class SignupRequest extends FormRequest
     'city_id' => ['required','exists:cities,id'],
     'country_id' => ['required','exists:countries,id'],
     'category_id' => ['required','exists:categories,id'],
+    'education_id' => ['required','exists:education,id'],
         ];
     }
     public function failedValidation(Validator $validator){

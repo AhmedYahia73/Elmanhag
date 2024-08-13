@@ -31,6 +31,13 @@ class LoginController extends Controller
                     'role'=>$user->role,
                     '_token'=>$token,
                     ]);
+                }elseif($user->role == 'parent'){
+                            return response()->json([
+                            'success'=>'Welcome '.$login['email'],
+                            'user'=>$user,
+                            'role'=>$user->role,
+                            '_token'=>$token,
+                            ]);
                 }
                  
             }else{
