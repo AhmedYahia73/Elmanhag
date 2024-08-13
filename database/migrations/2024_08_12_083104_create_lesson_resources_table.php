@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('lesson_resources', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['voice', 'video', 'pdf']);
-            $table->enum('source', ['externel', 'embeded', 'upload']);
-            $table->string('file');
+            $table->enum('source', ['external', 'embedded', 'upload']);
+            $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('file')->nullable();
+            $table->string('link')->nullable();
             $table->timestamps();
         });
     }

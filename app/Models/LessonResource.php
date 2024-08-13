@@ -13,5 +13,7 @@ class LessonResource extends Model
         'type',
         'source',
         'file',
+        'link',
+        'lesson_id',
     ];
 }
