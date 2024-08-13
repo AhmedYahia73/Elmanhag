@@ -21,6 +21,7 @@ class CreateSubjectController extends Controller
         'category_id',
         'url',
         'description',
+        'education_id',
         'status',
         'semester',
         'expired_date'
