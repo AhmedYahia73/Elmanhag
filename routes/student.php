@@ -28,4 +28,4 @@ Route::prefix('setting')->middleware(['auth:sanctum','IsStudent'])->group(functi
     Route::controller(SettingController::class)->group(function () {
         Route::get('view','view')->name('setting.view');
     });
-});
+})->middleware('IsStudent');
