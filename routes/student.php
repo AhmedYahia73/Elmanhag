@@ -15,7 +15,7 @@ Route::prefix('auth')->group(function () {
     });
     Route::controller(LoginController::class)->group(function () {
         Route::post('login','login')->name('login.index');
-        Route::post('logout','logout')->name('logout')->middleware(['auth.student']);
+        Route::post('logout','logout')->name('logout')->middleware(['auth:sanctum']);
     });
 });
 
@@ -24,7 +24,7 @@ Route::prefix('profile')->middleware(['auth:sanctum','IsStudent'])->group(functi
         Route::get('view','profile')->name('profile.view');
     });
 });
-Route::prefix('setting')->middleware(['auth:sanctum','IsStudent'])->group(function () {
+Route::prefix('setting')->group(function () {
     Route::controller(SettingController::class)->group(function () {
         Route::get('view','view')->name('setting.view');
     });
