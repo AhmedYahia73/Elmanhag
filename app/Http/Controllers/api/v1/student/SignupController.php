@@ -16,8 +16,6 @@ class SignupController extends Controller
    'name',
    'email',
    'password',
-   'parent_name',
-   'parent_phone',
    'phone',
    'city_id',
    'country_id',
