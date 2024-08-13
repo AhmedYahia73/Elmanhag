@@ -26,6 +26,7 @@ class CreateStudentController extends Controller
         'password',
         'country_id',
         'city_id',
+        'status',
     ];
     // This Controller About Student
     use image;
@@ -54,13 +55,14 @@ class CreateStudentController extends Controller
         ->first();
         // Update Image
         if ( !empty($user) ) {
-            $image =  $this->upload($request,'image','student/user'); // Start Upload Image
-            // If new image is found delete old image
-            if ( !empty($image) && $image != null ) {
-                $this->deleteImage($user->image);
-                $student['image'] =$image; // Image Value From traid Image 
-            }
             $user->update($student); // Start Create New Studetn
+            Uesr::where('student_id', $id)
+            ->update([
+                'name' => $request->parent_name,
+                'phone' => $request->parent_phone,
+                'email' => $request->parent_email,
+                'password' => $request->parent_password,
+            ]);
             return response()->json(['success'=>'Student Updated Successfully'],200); 
         }
         else{

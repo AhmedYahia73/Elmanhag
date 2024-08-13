@@ -26,7 +26,7 @@ class LoginController extends Controller
         $credentials= $request->only($this->requestLogin);
         $user_position = User::where('email', $request->email)
         ->first();
-        if ( !empty($user_position) && ($user_position->type == 'admin' || $user_position->type == 'supAdmin') ) {
+        if ( !empty($user_position) && ($user_position->role == 'admin' || $user_position->role == 'supAdmin') ) {
             
             $checkData = Auth::attempt($credentials);
             if(!$checkData){
