@@ -28,7 +28,7 @@ class SignupController extends Controller
     use image;
     public function store(SignupRequest $request){
         $newStudent = $request->only($this->studentRequest); // Get Requests
-        $image_path = $this->upload($request,'image', 'student'); // Upload New Image For Student
+        $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
         $newStudent['image'] = $image_path;
         $newStudent['type'] = 'student';
         $user = $this->user->create($newStudent); // Start Create New Student

@@ -29,14 +29,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
 
         $middleware->alias([
-            'auth.student' => $middleware->append(StudentMiddleware::class),
+            'IsStudent' => $middleware->append(StudentMiddleware::class),
+             'IsAdmin'=>$middleware->append(AdminMiddleware::class)
         ]);
-        [
-        
-        'admin' => [
-                    'student'=>$middleware->append(AdminMiddleware::class)
-                    ]
-        ];
+       
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
