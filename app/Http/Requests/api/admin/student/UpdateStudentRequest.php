@@ -31,7 +31,7 @@ class UpdateStudentRequest extends FormRequest
             'parent_email'=>['required', 'unique:users,email', 'email'],
             'parent_password'=>['required'],
             'category_id'=>['sometimes', 'required'],
-            'language'=>['required'],
+            'education_id'=>['required'],
             'password'=>['required'],
             'country_id'=>['sometimes', 'required'],
             'city_id'=>['sometimes', 'required'],

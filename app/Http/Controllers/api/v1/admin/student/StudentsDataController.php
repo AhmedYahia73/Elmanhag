@@ -9,6 +9,7 @@ use App\Models\country;
 use App\Models\city;
 use App\Models\category;
 use App\Models\ParentRelation;
+use App\Models\Education;
 
 class StudentsDataController extends Controller
 {
@@ -22,6 +23,7 @@ class StudentsDataController extends Controller
         ->get();
         $categories = category::where('category_id', '!=', null)
         ->get();
+        $education = Education::get();
         $countries = country::get();
         $cities = city::get();
         $total_students = count($students);
@@ -44,6 +46,7 @@ class StudentsDataController extends Controller
             'cities' => $cities,
             'relations' => $relations,
             'categories' => $categories,
+            'education' => $education,
         ]);
     }
 }
