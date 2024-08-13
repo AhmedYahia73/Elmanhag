@@ -7,6 +7,8 @@ use App\Models\city;
 use App\Models\country;
 use App\Models\User;
 use App\Models\subject;
+use App\Models\Education;
+use App\Models\chapter;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -158,9 +160,14 @@ class DatabaseSeeder extends Seeder
            category::factory()
            ->create($grade);
           }
+        
+        // Factory of Education
+        Education::factory()
+        ->count(20)
+        ->create();
             //  End Make Grade Category
       country::factory()
-            ->count(20)
+            ->count(30)
           ->create();
         city::factory()
             ->count(20)
@@ -176,6 +183,7 @@ class DatabaseSeeder extends Seeder
                     'country_id'=>country::factory(),
                     'category_id'=>category::factory(),
                     'city_id'=>city::factory(),
+                    'education_id' => Education::factory(),
                 ]
             );
 
@@ -183,6 +191,12 @@ class DatabaseSeeder extends Seeder
         ->count(20)
         ->create([
             'category_id' => category::factory()
+        ]);
+
+        chapter::factory()
+        ->count(20)
+        ->create([
+            'subject_id' => subject::factory()
         ]);
          
          

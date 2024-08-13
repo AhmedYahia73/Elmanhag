@@ -38,7 +38,7 @@ class User extends Authenticatable
         'remember_token',
         'parent_relation_id',
         'category_id',
-        'language',
+        'education_id',
         'image',
         'status',
     ];
