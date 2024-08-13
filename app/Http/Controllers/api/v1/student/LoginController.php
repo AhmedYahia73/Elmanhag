@@ -28,7 +28,7 @@ class LoginController extends Controller
                     return response()->json([
                     'success'=>'Welcome '.$login['email'],
                     'user'=>$user,
-                    'type'=>$user->type,
+                    'role'=>$user->role,
                     '_token'=>$token,
                     ]);
                 }
