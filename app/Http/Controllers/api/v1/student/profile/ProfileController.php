@@ -18,6 +18,7 @@ class ProfileController extends Controller
         ->with('country')
         ->with('city')
         ->with('parents')
+        ->with('category')
         ->where('id',$user_id )
         ->first();
         return response()->json([

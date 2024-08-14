@@ -82,7 +82,7 @@ class User extends Authenticatable
     }
 
     public function getimageAttribute($date){
-        return $this->image = url('storage/app/public/'.$date);
+        return $this->image = url('storage/'.$date);
     }
 
     public function subjects(){
