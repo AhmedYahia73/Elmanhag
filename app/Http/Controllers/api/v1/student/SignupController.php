@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\api\v1\student;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\api\student\SignupRequest;
 use App\Models\User;
 use App\trait\image;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\api\student\SignupRequest;
 
 class SignupController extends Controller
 {
