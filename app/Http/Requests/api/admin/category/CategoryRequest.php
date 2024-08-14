@@ -22,9 +22,10 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'ar_name' => 'required',
-            'status' => 'required'
+            'name' => ['required'],
+            'ar_name' => ['required'],
+            'status' => ['required'],
+            'order' => ['required'],
         ];
     }
 }

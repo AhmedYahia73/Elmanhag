@@ -14,6 +14,7 @@ class category extends Model
         'name' ,
         'thumbnail',
         'tags',
+        'order' ,
         'category_id' ,
         'status' ,
     ];

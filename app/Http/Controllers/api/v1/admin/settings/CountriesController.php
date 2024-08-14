@@ -19,6 +19,7 @@ class CountriesController extends Controller
     ];
 
     public function show(){
+        //https://bdev.elmanhag.shop/admin/Settings/countries
         $countries = country::get();
 
         return response()->json([
@@ -27,6 +28,7 @@ class CountriesController extends Controller
     }
 
     public function create( CountriesRequest $request ){
+        // https://bdev.elmanhag.shop/admin/Settings/countries/add?name=Egypt&ar_name=مصر&status=1
         $countries_data = $request->only($this->countriesRequest);
         $this->translate($countries_data['name'], $countries_data['ar_name']);
         country::create($countries_data);
@@ -37,6 +39,7 @@ class CountriesController extends Controller
     }
 
     public function modify( CountriesRequest $request, $id ){
+        // https://bdev.elmanhag.shop/admin/Settings/countries/update/73?name=Egypt&ar_name=مصر&status=1
         $countries_data = $request->only($this->countriesRequest);
         $this->translate($countries_data['name'], $countries_data['ar_name']);
         $country = country::where('id', $id)
@@ -49,6 +52,7 @@ class CountriesController extends Controller
     }
 
     public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/Settings/countries/delete/73
         $country = country::where('id', $id)
         ->delete();
 
