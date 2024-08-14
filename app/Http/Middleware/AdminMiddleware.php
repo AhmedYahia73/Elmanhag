@@ -19,10 +19,9 @@ class AdminMiddleware
           if(Auth::check()){
                 if(Auth::user()->role == 'admin' || Auth::user()->role == 'supAdmin'){
                     return $next($request);
-                }
-        }
-        return response()->json(
+                } else{abort(403);}
+        } return response()->json(
             ['faield'=> 'This Is Not Admin',]
-        ,403);
+        ,401);
     }
 }
