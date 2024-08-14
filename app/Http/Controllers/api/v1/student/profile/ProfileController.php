@@ -15,11 +15,12 @@ class ProfileController extends Controller
         // dd(Auth::user());
         $user_id = $request->user()->id;
         $user = $request->user()
-        ->with('country')
-        ->with('city')
         ->with('parents')
         ->where('id',$user_id )
         ->first();
+         $user->education = $user->category->name;
+         $user->country_name = $user->country->name;
+         $user->city_name = $user->city->name;
         return response()->json([
             'success'=>'Hello '.$request->user()->name,
             'user'=>$user,
