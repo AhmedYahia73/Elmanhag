@@ -12,7 +12,7 @@ class ProfileController extends Controller
     // This Controller About Profile Student
 
     public function profile(Request $request){
-         $user = $request->user()->with('country')->with('city')->first();
+         $user = $request->user()->with('country')->with('city')->with('parents')->first();
         return response()->json([
             'success'=>'Hello '.$request->user()->name,
             'user'=>$user,
