@@ -164,8 +164,7 @@ class CreateLessonController extends Controller
         foreach ($sources as $item) {
             $this->deleteImage($item->file);
         }
-
-        $sources->delete();
+        
         $lesson->delete();
 
         return response()->json([
