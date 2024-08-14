@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('thumbnail')->nullable();
             $table->string('tags')->nullable();
-            $table->integer('order');
+            $table->integer('order')->nullable();
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('status')->default(1);
             $table->timestamps();
