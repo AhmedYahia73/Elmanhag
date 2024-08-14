@@ -47,6 +47,7 @@ class CreateStudentController extends Controller
     }
     
     public function modify(UpdateStudentRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/student/update/22?name=Ahmed&phone=146345&email=ahmed@gmail.com&parent_name=Aziz&parent_phone=167556&parent_email=sdfsdggbh@gmail.com&parent_password=123&category_id=1&education_id=39&password=123&country_id=71&city_id=42&status=1
         // Take only Request From Protected studentRequest names 
         $student =  $request->only($this->studentRequest); 
         // Get User Data
