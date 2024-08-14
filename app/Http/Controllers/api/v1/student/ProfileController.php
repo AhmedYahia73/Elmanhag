@@ -19,10 +19,8 @@ class ProfileController extends Controller
 
     public function index( Request $request ){
 
-        $user_id = $request->user()->id;
         $user_data = $request->user()
-            ->with('city')->with('country')
-            ->where('id', $user_id)->first();
+            ->with('city')->with('country')->first();
             
         return response()->json([
             'user_data' => $user_data,
