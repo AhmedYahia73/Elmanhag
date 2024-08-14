@@ -56,7 +56,7 @@ class CreateStudentController extends Controller
         // Update Image
         if ( !empty($user) ) {
             $user->update($student); // Start Create New Studetn
-            Uesr::where('student_id', $id)
+            User::where('student_id', $id)
             ->update([
                 'name' => $request->parent_name,
                 'phone' => $request->parent_phone,
