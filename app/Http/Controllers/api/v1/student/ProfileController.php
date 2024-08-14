@@ -9,6 +9,7 @@ use App\Models\country;
 use App\Models\city;
 use App\Models\category;
 use App\Models\User;
+use Illuminate\Http\Facades\Auth;
 
 use App\Http\Requests\api\student\ProfileRequest;
 
@@ -19,7 +20,7 @@ class ProfileController extends Controller
 
     public function index( Request $request ){
 
-        $user_data = $request->user()
+        $user_data = Auth::user()
             ->with('city')->with('country')->first();
             
         return response()->json([
