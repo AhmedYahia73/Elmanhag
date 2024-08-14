@@ -16,6 +16,8 @@ use App\Http\Controllers\api\v1\admin\chapter\CreateChapterController;
 
 use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
 
+use App\Http\Controllers\api\v1\admin\settings\RelationController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -74,6 +76,19 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add/{sub_id}', 'create')->name('lesson.add');
             Route::put('/update/{id}', 'modify')->name('lesson.update');
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
+        });
+    });
+
+    // Start Settings Module
+    Route::prefix('Settings')->group(function () {
+        // Start Relations
+        Route::prefix('relation')->group(function () {
+            Route::controller(RelationController::class)->group(function(){
+                Route::get('/', 'show')->name('relation.show');
+                Route::post('/add', 'create')->name('relation.add');
+                Route::put('/update/{id}', 'modify')->name('relation.update');
+                Route::delete('/delete/{id}', 'delete')->name('relation.delete');
+            });
         });
     });
 });
