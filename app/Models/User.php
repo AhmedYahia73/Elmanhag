@@ -82,10 +82,10 @@ class User extends Authenticatable
     }
 
     public function getimageAttribute($date){
-        if($this->image)
+        if($date)
         return $this->image = url('storage/'.$date);
         else
-            $this->image = url('storage/' . 'default.png');
+            $this->image = url('storage/'.$date);
     }
 
     public function subjects(){
