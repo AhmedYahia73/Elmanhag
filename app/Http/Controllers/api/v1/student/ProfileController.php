@@ -10,7 +10,7 @@ use App\Models\city;
 use App\Models\category;
 use App\Models\User;
 
-use App\Http\Requests\api\Student\ProfileRequest;
+use App\Http\Requests\api\student\ProfileRequest;
 
 class ProfileController extends Controller
 {
