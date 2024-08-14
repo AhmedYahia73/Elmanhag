@@ -16,13 +16,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-          if(Auth::check()){
+        if(Auth::check()){
                 if(Auth::user()->role == 'admin'){
                     return $next($request);
-                }
-        }
-        return response()->json(
+                } else{abort(403);}
+        } return response()->json(
             ['faield'=> 'This Is Not Admin',]
-        ,403);
+        ,401);
     }
 }

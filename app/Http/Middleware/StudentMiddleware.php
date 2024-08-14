@@ -20,11 +20,10 @@ class StudentMiddleware
         if(Auth::check()){
                 if(Auth::user()->role == 'student'){
                     return $next($request);
-                }
-        }
-        return response()->json(
+            } else {abort(403);}
+        }return response()->json(
             ['faield'=> 'This Is Not Student',]
-        ,403);
+        ,401);
      
     }
 }
