@@ -19,7 +19,9 @@ class ProfileAdminController extends Controller
     public function view(Request  $request){
             
         if($request){
-             $user = $request->user()->with('country')->with('city')->first();
+            $user_id = $request->user()->id;
+             $user = $request->user()->with('country')->with('city')
+             ->where('id', $user_id)->first();
                 return response()->json([
                 'success'=>'Get User Profile Successfully',
                 'user'=>$user,
