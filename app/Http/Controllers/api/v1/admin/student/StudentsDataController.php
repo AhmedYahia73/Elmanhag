@@ -19,6 +19,7 @@ class StudentsDataController extends Controller
         ->with('bundles')
         ->with('category')
         ->with('country')
+        ->with('education')
         ->with('city')
         ->get();
         $categories = category::where('category_id', '!=', null)
