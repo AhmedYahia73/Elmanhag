@@ -13,6 +13,7 @@ class LessonMaterialController extends Controller
     use image;
 
     public function show( $lesson_id ){
+        // https://bdev.elmanhag.shop/admin/lessonMaterial/{$lesson_id}
         $materials = LessonResource::where('lesson_id', $lesson_id)
         ->get();
         foreach ($materials as $item) {
@@ -32,6 +33,7 @@ class LessonMaterialController extends Controller
         // video_source  لما يكون link فقط
         // pdf, pdf_link
         // pdf_source لما يكون link فقط
+        //https://bdev.elmanhag.shop/admin/lessonMaterial/add/{$lesson_id}
 
         // Add Voice Source
         if ( isset($request->voice) ) {
@@ -112,10 +114,14 @@ class LessonMaterialController extends Controller
     }
     
     public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/lessonMaterial/delete/1
+        // Get lesson material
         $material = LessonResource::
         where('id', $id)
         ->first();
+        // delete image of material
         $this->deleteImage($material->file);
+        // delete material
         $material->delete();
 
         return response()->json([
