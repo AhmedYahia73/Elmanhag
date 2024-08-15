@@ -20,6 +20,7 @@ class CitiesController extends Controller
     ];
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/Settings/cities
         // Get Data
         $cities = city::
         with('country')
@@ -31,6 +32,7 @@ class CitiesController extends Controller
     }
     
     public function create( CitiesRequest $request ){
+        // https://bdev.elmanhag.shop/admin/Settings/cities/add?name=Alexandria&ar_name=الاسكندرية&country_id=1&status=1
         // Get date at reqest
         $city_data = $request->only($this->citiesReqest);
         // Translate City at json file
@@ -44,6 +46,7 @@ class CitiesController extends Controller
     }
     
     public function modify( CitiesRequest $request, $id ){
+        // https://bdev.elmanhag.shop/admin/Settings/cities/update/1?name=Alexandria&ar_name=الاسكندرية&country_id=1&status=1
         // Get date at reqest
         $city_data = $request->only($this->citiesReqest);
         // Translate City at json file
@@ -60,6 +63,7 @@ class CitiesController extends Controller
     }
     
     public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/Settings/cities/delete/1
         // Delete City
         city::where('id', $id)
         ->delete();

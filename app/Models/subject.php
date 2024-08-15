@@ -32,11 +32,7 @@ class subject extends Model
     public function users(){
         return $this->belongsToMany(User::class, 'students_subjects');
     }
-public function getimageAttribute($date){
 
-return $this->image = url('storage/'.$date) ?? url('storage/'.'default.png');
-
-}
     public function category(){
         return $this->belongsTo(category::class);
     }

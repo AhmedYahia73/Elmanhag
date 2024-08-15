@@ -53,6 +53,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    protected $image_url;
 
     /**
      * Get the attributes that should be cast.
@@ -86,9 +87,12 @@ class User extends Authenticatable
         return $this->belongsTo(city::class);
     }
 
-    public function getimageAttribute($date){
+    public function getimageAttribute($data){
     
-        return $this->image = url('storage/'.$date) ?? url('storage/'.'default.png');
+        return $this->image = [
+            'path'=>$data,
+            'url'=> url('storage/'.$data) ?? url('storage/'.'default.png'),
+        ];
    
     }
 

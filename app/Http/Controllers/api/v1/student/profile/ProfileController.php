@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\api\student\profile\ProfileUpdateRequest;
 use App\Models\User;
 use App\trait\image;
+use DragonCode\Support\Facades\Filesystem\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -20,6 +22,7 @@ class ProfileController extends Controller
                'country_id',
                'category_id',
                'role',
+               'image',
                'parent_relation_id',
                'education_id',
                'language'
@@ -53,15 +56,23 @@ class ProfileController extends Controller
     }
     public function update(ProfileUpdateRequest $request,$user_id){
         // dd(Auth::user());
-      $user = $this->user::findOrFail($user_id);
+        $user = $this->user::findOrFail($user_id);
       $updateProfile = $request->only($this->requestProfile);
-            // $this->deleteImage($user->image);
-        $this->deleteImage( $user->image);
-        $this->upload($request, 'image', 'student/user');
-        $user->update($updateProfile);
-           return response()->json([
-           'success'=>'Data Updated Successfully',
-           ]);
-       
+      $this->deleteImage($user->image['path']);
+      $image_path = $this->upload($request, 'image', 'student/user');
+                $user->name = $updateProfile['name'] ?? $user->name;
+                $user->email = $updateProfile['email'] ?? $user->email ;
+                    if( $updateProfile['password']){
+                        $user->password = $updateProfile['password'] ;
+                    }
+                $user->phone = $updateProfile['phone'] ?? $user->phone ;
+                $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
+                $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
+                $user->image = $image_path ?? $user->image;
+                $user->role = 'student';
+                $user->save();   
+                        return response()->json([
+                            'success'=>'Data Updated Successfully',
+                            ]);
     }
 }

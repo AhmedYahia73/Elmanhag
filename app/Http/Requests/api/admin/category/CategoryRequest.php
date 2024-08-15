@@ -25,7 +25,6 @@ class CategoryRequest extends FormRequest
             'name' => ['required'],
             'ar_name' => ['required'],
             'status' => ['required'],
-            'order' => ['required'],
         ];
     }
 }
