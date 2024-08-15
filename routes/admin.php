@@ -85,7 +85,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     // Start Lesson Material Module
     Route::prefix('lessonMaterial')->group(function () {
         Route::controller(LessonMaterialController::class)->group(function(){
-            Route::get('/{id}', 'show')->name('lessonMaterial.show');
+            Route::get('/{lesson_id}', 'show')->name('lessonMaterial.show');
             Route::post('/add/{lesson_id}', 'create')->name('lessonMaterial.add');
             Route::delete('/delete/{id}', 'delete')->name('lessonMaterial.delete');
         });
