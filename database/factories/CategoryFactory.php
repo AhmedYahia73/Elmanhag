@@ -24,6 +24,7 @@ class CategoryFactory extends Factory
              'thumbnail' => fake()->image(),
              'tags' => fake()->name(),
              'status' => $this->faker->randomElement(['1','0']),
+             'order' => fake()->numberBetween(1, 15),
         ];
            
             

@@ -28,18 +28,21 @@ class DatabaseSeeder extends Seeder
                 'thumbnail' =>fake()->image(),
                 'tags' => fake()->name(),
                 'status'=>'1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'اعدادي',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'status'=>'1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'ثنوي',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'status'=>'1',
+                'order' => fake()->numberBetween(1, 15),
             ],
         ];
        
@@ -98,6 +101,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'1',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثاني الابتدائي',
@@ -105,6 +109,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'1',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثالث الابتدائي',
@@ -112,6 +117,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'1',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثالث الاعدادي',
@@ -119,6 +125,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'2',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثالث الاعدادي',
@@ -126,6 +133,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'2',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثالث الاعدادي',
@@ -133,6 +141,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'2',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثالث الثانوي',
@@ -140,6 +149,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'3',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثالث الثانوي',
@@ -147,6 +157,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'3',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
             [
                 'name' => 'الثالث الثانوي',
@@ -154,6 +165,7 @@ class DatabaseSeeder extends Seeder
                 'tags' => fake()->name(),
                 'category_id'=>'3',
                 'status' => '1',
+                'order' => fake()->numberBetween(1, 15),
             ],
         ];
           foreach ($grades as $grade) {

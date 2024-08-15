@@ -13,6 +13,7 @@ use App\Models\bundle;
 use App\Models\category;
 use App\Models\country;
 use App\Models\city;
+use App\Models\Education;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 
 class User extends Authenticatable
@@ -75,6 +76,10 @@ class User extends Authenticatable
 
     public function country(){
         return $this->belongsTo(country::class);
+    }
+
+    public function education(){
+        return $this->belongsTo(Education::class);
     }
 
     public function city(){

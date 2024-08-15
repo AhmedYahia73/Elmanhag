@@ -17,6 +17,8 @@ use App\Http\Controllers\api\v1\admin\chapter\CreateChapterController;
 use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
+use App\Http\Controllers\api\v1\admin\settings\CountriesController;
+use App\Http\Controllers\api\v1\admin\settings\CitiesController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -81,13 +83,31 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
     // Start Settings Module
     Route::prefix('Settings')->group(function () {
-        // Start Relations
+        // Start Parent Relations
         Route::prefix('relation')->group(function () {
             Route::controller(RelationController::class)->group(function(){
                 Route::get('/', 'show')->name('relation.show');
                 Route::post('/add', 'create')->name('relation.add');
                 Route::put('/update/{id}', 'modify')->name('relation.update');
                 Route::delete('/delete/{id}', 'delete')->name('relation.delete');
+            });
+        }); 
+        // Start Countries
+        Route::prefix('countries')->group(function () {
+            Route::controller(CountriesController::class)->group(function(){
+                Route::get('/', 'show')->name('countries.show');
+                Route::post('/add', 'create')->name('countries.add');
+                Route::put('/update/{id}', 'modify')->name('countries.update');
+                Route::delete('/delete/{id}', 'delete')->name('countries.delete');
+            });
+        });
+        // Start Cities
+        Route::prefix('cities')->group(function () {
+            Route::controller(CitiesController::class)->group(function(){
+                Route::get('/', 'show')->name('countries.show');
+                Route::post('/add', 'create')->name('countries.add');
+                Route::put('/update/{id}', 'modify')->name('countries.update');
+                Route::delete('/delete/{id}', 'delete')->name('countries.delete');
             });
         });
     });

@@ -22,6 +22,7 @@ class CreateCategoryController extends Controller
         'tags',
         'category_id',
         'status',
+        'order',
     ];
 
     public function create( CategoryRequest $request ){

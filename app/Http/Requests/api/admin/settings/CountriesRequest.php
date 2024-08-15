@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\api\admin\category;
+namespace App\Http\Requests\api\admin\settings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class CountriesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,9 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'ar_name' => ['required'],
-            'status' => ['required'],
-            'order' => ['required'],
+            'name',
+            'ar_name',
+            'status',
         ];
     }
 }
