@@ -17,107 +17,132 @@ class categorySeeder extends Seeder
      */
     public function run(): void
     {
-        // This About All Category 
-
-          // Category
-        $categories =
-         [
-            [
-                'name' => 'ابتدائي',
-                'thumbnail' =>fake()->image(),
-                'tags' => fake()->name(),
-                'status'=>'1',
-            ],
-            [
-                'name' => 'اعدادي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'status'=>'1',
-            ],
-            [
-                'name' => 'ثنوي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'status'=>'1',
-            ],
-        ];
-       
         // Category
-      
+       $categories =
+        [
+           [
+               'name' => 'Primary',
+               'thumbnail' =>fake()->image(),
+               'tags' => fake()->name(),
+               'status'=>'1',
+           ],
+           [
+               'name' => 'Middle',
+               'thumbnail' =>fake()->image(),
+               'tags' => fake()->name(),
+               'status'=>'1',
+           ],
+           [
+               'name' => 'Senior',
+               'thumbnail' =>fake()->image(),
+               'tags' => fake()->name(),
+               'status'=>'1',
+           ],
+       ];
        foreach ($categories as $category) {
-       category::factory()
-       ->create($category);
+       category::create($category);
        }
           //  Start Make Grade Category
                $grades = [
             [
-                'name' => 'الاول الابتدائي',
+                'name' => 'Primary One',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'1',
                 'status' => '1',
+                'order' => 1,
             ],
             [
-                'name' => 'الثاني الابتدائي',
+                'name' => 'Primary Two',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'1',
                 'status' => '1',
+                'order' => 2,
             ],
             [
-                'name' => 'الثالث الابتدائي',
+                'name' => 'Primary Three',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'1',
                 'status' => '1',
+                'order' => 3,
             ],
             [
-                'name' => 'الثالث الاعدادي',
+                'name' => 'Primary Four',
+                'thumbnail' => fake()->image(),
+                'tags' => fake()->name(),
+                'category_id'=>'1',
+                'status' => '1',
+                'order' => 4,
+            ],
+            [
+                'name' => 'Primary Five',
+                'thumbnail' => fake()->image(),
+                'tags' => fake()->name(),
+                'category_id'=>'1',
+                'status' => '1',
+                'order' => 5,
+            ],
+            [
+                'name' => 'Primary Six',
+                'thumbnail' => fake()->image(),
+                'tags' => fake()->name(),
+                'category_id'=>'1',
+                'status' => '1',
+                'order' => 6,
+            ],
+            [
+                'name' => 'Middle One',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'2',
                 'status' => '1',
+                'order' => 7,
             ],
             [
-                'name' => 'الثالث الاعدادي',
+                'name' => 'Middle Two',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'2',
                 'status' => '1',
+                'order' => 8,
             ],
             [
-                'name' => 'الثالث الاعدادي',
+                'name' => 'Middle Three',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'2',
                 'status' => '1',
+                'order' => 9,
             ],
             [
-                'name' => 'الثالث الثانوي',
+                'name' => 'Senior One',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'3',
                 'status' => '1',
+                'order' => 10,
             ],
             [
-                'name' => 'الثالث الثانوي',
+                'name' => 'Senior Two',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'3',
                 'status' => '1',
+                'order' => 11,
             ],
             [
-                'name' => 'الثالث الثانوي',
+                'name' => 'Senior Three',
                 'thumbnail' => fake()->image(),
                 'tags' => fake()->name(),
                 'category_id'=>'3',
                 'status' => '1',
+                'order' => 12,
             ],
         ];
           foreach ($grades as $grade) {
-           category::factory()
-           ->create($grade);
+           category::create($grade);
           }
-            //  End Make Grade Category
     }
 }
