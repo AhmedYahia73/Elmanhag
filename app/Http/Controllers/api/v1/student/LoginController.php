@@ -38,12 +38,14 @@ class LoginController extends Controller
                             'role'=>$user->role,
                             '_token'=>$token,
                             ]);
+                }else{
+                return response()->json(['faield' => 'This user does not have the ability to login'],403);
                 }
-                 
             }else{
                 return response()->json([
                 'faield'=>'creational not Valid',
                 ]);
+                
         }
     }
 

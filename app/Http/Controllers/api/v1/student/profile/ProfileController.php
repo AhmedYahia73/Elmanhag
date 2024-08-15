@@ -3,14 +3,39 @@
 namespace App\Http\Controllers\api\v1\student\profile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\student\profile\ProfileUpdateRequest;
 use App\Models\User;
+use App\trait\image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+     protected $requestProfile = [
+               'name',
+               'email',
+               'password',
+               'phone',
+               'city_id',
+               'country_id',
+               'category_id',
+               'role',
+               'parent_relation_id',
+               'education_id',
+               'language'
+     ];
+         protected $parentRequest = [
+         'parent_name' ,
+         'parent_email' ,
+         'parent_password',
+         'parent_phone' ,
+         'parent_role' ,
+         'student_id' ,
+         'parent_relation_id',
+         ];
+    public function __construct(private User $user){}
     // This Controller About Profile Student
-
+    use image;
     public function profile(Request $request){
         // dd(Auth::user());
         $user_id = $request->user()->id;
@@ -25,5 +50,18 @@ class ProfileController extends Controller
             'success'=>'Hello '.$request->user()->name,
             'user'=>$user,
         ]);
+    }
+    public function update(ProfileUpdateRequest $request,$user_id){
+        // dd(Auth::user());
+      $user = $this->user::findOrFail($user_id);
+      $updateProfile = $request->only($this->requestProfile);
+            // $this->deleteImage($user->image);
+        $this->deleteImage( $user->image);
+        $this->upload($request, 'image', 'student/user');
+        $user->update($updateProfile);
+           return response()->json([
+           'success'=>'Data Updated Successfully',
+           ]);
+       
     }
 }
