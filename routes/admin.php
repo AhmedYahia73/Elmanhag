@@ -15,6 +15,7 @@ use App\Http\Controllers\api\v1\admin\chapter\ChapterController;
 use App\Http\Controllers\api\v1\admin\chapter\CreateChapterController;
 
 use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
+use App\Http\Controllers\api\v1\admin\lesson\LessonMaterialController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -78,6 +79,15 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add/{sub_id}', 'create')->name('lesson.add');
             Route::put('/update/{id}', 'modify')->name('lesson.update');
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
+        });
+    });
+
+    // Start Lesson Material Module
+    Route::prefix('lessonMaterial')->group(function () {
+        Route::controller(LessonMaterialController::class)->group(function(){
+            Route::get('/{id}', 'show')->name('lessonMaterial.show');
+            Route::post('/add/{lesson_id}', 'create')->name('lessonMaterial.add');
+            Route::delete('/delete/{id}', 'delete')->name('lessonMaterial.delete');
         });
     });
 
