@@ -19,33 +19,8 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-         // Category
-        $categories =
-         [
-            [
-                'name' => 'ابتدائي',
-                'thumbnail' =>fake()->image(),
-                'tags' => fake()->name(),
-                'status'=>'1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'اعدادي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'status'=>'1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'ثنوي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'status'=>'1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-        ];
-       
+    { 
+        $this->call(categorySeeder::class);
         // Category
         $staticUser =
             [
@@ -85,93 +60,10 @@ class DatabaseSeeder extends Seeder
         // $this->call([
         //     User::class,
         // ]);
-      foreach ($staticUser as $user) {
-                  User::factory()
-                  ->create($user);
-    }
-       foreach ($categories as $category) {
-       category::factory()
-       ->create($category);
-       }
-          //  Start Make Grade Category
-               $grades = [
-            [
-                'name' => 'الاول الابتدائي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'1',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثاني الابتدائي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'1',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثالث الابتدائي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'1',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثالث الاعدادي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'2',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثالث الاعدادي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'2',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثالث الاعدادي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'2',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثالث الثانوي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'3',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثالث الثانوي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'3',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-            [
-                'name' => 'الثالث الثانوي',
-                'thumbnail' => fake()->image(),
-                'tags' => fake()->name(),
-                'category_id'=>'3',
-                'status' => '1',
-                'order' => fake()->numberBetween(1, 15),
-            ],
-        ];
-          foreach ($grades as $grade) {
-           category::factory()
-           ->create($grade);
-          }
+        foreach ($staticUser as $user) {
+            User::factory()
+            ->create($user);
+        }
         
         // Factory of Education
         Education::factory()
