@@ -54,12 +54,11 @@ class ProfileController extends Controller
             'user'=>$user,
         ]);
     }
-    public function update(ProfileUpdateRequest $request,$user_id){
-        // dd(Auth::user());
+    public function update(ProfileUpdateRequest $request){
+        $user_id = $request->user()->id;
         $user = $this->user::findOrFail($user_id);
       $updateProfile = $request->only($this->requestProfile);
      
-      $image_path = $this->upload($request, 'image', 'student/user');
                 $user->name = $updateProfile['name'] ?? $user->name;
                 $user->email = $updateProfile['email'] ?? $user->email ;
                     if( isset($updateProfile['password'])){
@@ -69,10 +68,13 @@ class ProfileController extends Controller
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
                 $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
-                $user->image = $image_path ?? $user->image['path'];
                 $user->role = 'student';
-                $user->save();   
+                $image_path = $this->upload($request, 'image', 'student/user');
+                $user->image = $image_path ?? $user->image['path'];
+                $user->save();
+                if($image_path){
                 $this->deleteImage($user->image['path']);
+                }
 
                         return response()->json([
                             'success'=>'Data Updated Successfully',

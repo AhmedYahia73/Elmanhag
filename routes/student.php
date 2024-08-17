@@ -22,7 +22,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('profile')->middleware(['auth:sanctum','IsStudent'])->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('view','profile')->name('profile.view');
-        Route::post('modify/{id}','update')->name('profile.view');
+        Route::post('modify','update')->name('profile.view');
     });
 });
 Route::middleware('auth:sanctum')->prefix('setting')->group(function () {
