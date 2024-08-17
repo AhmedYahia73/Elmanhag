@@ -58,19 +58,22 @@ class ProfileController extends Controller
         // dd(Auth::user());
         $user = $this->user::findOrFail($user_id);
       $updateProfile = $request->only($this->requestProfile);
-      $this->deleteImage($user->image['path']);
+     
       $image_path = $this->upload($request, 'image', 'student/user');
                 $user->name = $updateProfile['name'] ?? $user->name;
                 $user->email = $updateProfile['email'] ?? $user->email ;
                     if( isset($updateProfile['password'])){
                         $user->password = $updateProfile['password'] ;
                     }
+                    
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
                 $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
-                $user->image = $image_path ?? $user->image;
+                $user->image = $image_path ?? $user->image['path'];
                 $user->role = 'student';
                 $user->save();   
+                $this->deleteImage($user->image['path']);
+
                         return response()->json([
                             'success'=>'Data Updated Successfully',
                             ]);
