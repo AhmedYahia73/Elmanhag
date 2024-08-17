@@ -22,11 +22,20 @@ class SubjectController extends Controller
         ])
         ->get();
 
-        // Manually add the count of lessons to each chapter
         foreach ($subjects as $subject) {
             $lessons = 0;
+            // Manually add the count of lessons to each chapter
             foreach ($subject->chapters as $chapter) {
                 $lessons += $chapter->lessons()->count();
+            }
+            // Manually add price after discount
+            foreach ($subject->discount as $discount) {
+                if ( $discount->type == 'precentage' ) {
+                    $subject->price_discount = $subject->price - ($subject->price * $discount->amount / 100);
+                } else {
+                    $subject->price_discount = $subject->price - $discount->amount;
+                }
+                break;
             }
             $subject->lesson_count = $lessons;
         }
