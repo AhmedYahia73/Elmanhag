@@ -49,4 +49,8 @@ class question extends Model
         return $this->image = url('storage/' . $image);
     }
 
+    public function getaudioAttribute($audio){
+        return $this->audio = url('storage/' . $audio);
+    }
+
 }
