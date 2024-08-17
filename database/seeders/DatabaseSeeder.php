@@ -53,7 +53,22 @@ class DatabaseSeeder extends Seeder
                 'category_id'=>category::factory(),
                 'city_id' => city::factory(),
                 
-                ]
+               ],
+               [
+                 'name' => 'Moaz',
+                'email' => 'Moaz@gmail.com',
+                'email_verified_at' => now(),
+                'role' => 'student',
+                'phone' => fake()->unique()->phoneNumber(),
+                'image' => 'student/user/default.png',
+                'status' => '1',
+                'password' => '123',
+                'remember_token' => str::random(20),
+                'country_id' => country::factory(),
+                'category_id'=>category::factory(),
+                'city_id' => city::factory(),
+                
+               ],
             ];
 
         // User::factory(10)->create();
