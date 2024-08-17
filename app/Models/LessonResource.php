@@ -16,4 +16,8 @@ class LessonResource extends Model
         'link',
         'lesson_id',
     ];
+
+    public function getfileAttribute($file){
+        return $this->file = url('storage/' . $file);
+    }
 }

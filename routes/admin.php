@@ -14,8 +14,11 @@ use App\Http\Controllers\api\v1\admin\Subject\CreateSubjectController;
 use App\Http\Controllers\api\v1\admin\chapter\ChapterController;
 use App\Http\Controllers\api\v1\admin\chapter\CreateChapterController;
 
-use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
 use App\Http\Controllers\api\v1\admin\lesson\LessonMaterialController;
+use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
+
+use App\Http\Controllers\api\v1\admin\bundle\BundleController;
+use App\Http\Controllers\api\v1\admin\bundle\CreateBundleController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -88,6 +91,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/{lesson_id}', 'show')->name('lessonMaterial.show');
             Route::post('/add/{lesson_id}', 'create')->name('lessonMaterial.add');
             Route::delete('/delete/{id}', 'delete')->name('lessonMaterial.delete');
+        });
+    });
+
+    // Start Bundle Module
+    Route::prefix('bundle')->group(function () {
+        Route::controller(BundleController::class)->group(function(){
+            Route::get('/', 'show')->name('bundle.show');
+        });
+        Route::controller(CreateBundleController::class)->group(function(){
+            Route::post('/add', 'create')->name('bundle.add');
+            Route::put('/update/{id}', 'modify')->name('bundle.update');
+            Route::delete('/delete/{id}', 'delete')->name('bundle.delete');
         });
     });
 
