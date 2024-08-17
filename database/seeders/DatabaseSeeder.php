@@ -102,7 +102,8 @@ class DatabaseSeeder extends Seeder
         ->create([
             'subject_id' => subject::factory()
         ]);
-        $this->call(BundleFactory::class);
+        $this->call(BundleSeeder::class);
+        $this->call(QuestionSeeder::class);
          
          
     }

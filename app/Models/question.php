@@ -17,6 +17,7 @@ class question extends Model
         'category_id' ,
         'subject_id' ,
         'lesson_id' ,
+        'chapter_id' ,
         'semester' ,
         'answer_type' ,
         'difficulty' ,
