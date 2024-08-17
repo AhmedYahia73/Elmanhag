@@ -5,11 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\bundle;
-use App\Models\category;
-use App\Models\Education;
-
-class BundleFactory extends Seeder
+class BundleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
