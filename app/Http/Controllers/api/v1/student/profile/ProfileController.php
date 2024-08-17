@@ -62,7 +62,7 @@ class ProfileController extends Controller
       $image_path = $this->upload($request, 'image', 'student/user');
                 $user->name = $updateProfile['name'] ?? $user->name;
                 $user->email = $updateProfile['email'] ?? $user->email ;
-                    if( $updateProfile['password']){
+                    if( isset($updateProfile['password'])){
                         $user->password = $updateProfile['password'] ;
                     }
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
