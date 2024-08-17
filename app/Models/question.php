@@ -14,6 +14,13 @@ class question extends Model
         'image' ,
         'audio' ,
         'statues' ,
-        'homework_id' ,
+        'category_id' ,
+        'subject_id' ,
+        'lesson_id' ,
+        'chapter_id' ,
+        'semester' ,
+        'answer_type' ,
+        'difficulty' ,
+        'question_type' ,
     ];
 }

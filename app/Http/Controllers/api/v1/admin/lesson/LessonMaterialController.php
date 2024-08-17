@@ -15,10 +15,7 @@ class LessonMaterialController extends Controller
     public function show( $lesson_id ){
         // https://bdev.elmanhag.shop/admin/lessonMaterial/{$lesson_id}
         $materials = LessonResource::where('lesson_id', $lesson_id)
-        ->get();
-        foreach ($materials as $item) {
-            $item->file = url('storage/app/public/' . $item->file);
-        }
+        ->get(); 
 
         return response()->json([
             'materials' => $materials

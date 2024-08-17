@@ -3,6 +3,8 @@
 namespace App\Http\Requests\api\admin\settings;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RelationRequest extends FormRequest
 {
@@ -26,4 +28,11 @@ class RelationRequest extends FormRequest
             'ar_name'
         ];
     }
+
+    public function failedValidation(Validator $validator){
+       throw new HttpResponseException(response()->json([
+               'message'=>'validation error',
+               'errors'=>$validator->errors(),
+       ],400));
+   }
 }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\User;
 use App\Models\subject;
+use App\Models\category;
+use App\Models\Discount;
 
 class bundle extends Model
 {
@@ -15,18 +17,29 @@ class bundle extends Model
     protected $fillable = [
         'name'          ,
         'price'         ,
-        'discount'      ,
         'category_id'   ,
         'education_id'  ,
         'expired_date'  ,
-        'discount_type' ,
+        'semester'      ,
     ];
 
     public function users(){
-        return belongsToMany(User::class, 'students_bundles');
+        return $this->belongsToMany(User::class, 'students_bundles');
     }
 
     public function subjects(){
-        return belongsToMany(subject::class, 'bundles_subjects');
+        return $this->belongsToMany(subject::class, 'bundles_subjects');
+    }
+
+    public function category(){
+        return $this->belongsTo(category::class);
+    }
+
+    public function discount(){
+        return $this->hasMany(Discount::class)
+        ->where('start_date', '<=', now())
+        ->where('end_date', '>=', now())
+        ->where('statue', 1)
+        ->orderByDesc('id');
     }
 }

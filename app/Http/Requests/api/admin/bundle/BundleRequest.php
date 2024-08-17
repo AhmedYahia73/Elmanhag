@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\api\admin\lesson;
+namespace App\Http\Requests\api\admin\bundle;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Foundation\Http\FormRequest;
 
-class LessonRequest extends FormRequest
+class BundleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,11 @@ class LessonRequest extends FormRequest
         return [
             'name' => ['required'],
             'ar_name' => ['required'],
-            'paid' => ['required'],
-            'status' => ['required'],
-            'drip_content' => ['required']
+            'price' => ['required', 'numeric'],
+            'semester' => ['required', 'in:first,second'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'education_id' => ['required', 'exists:education,id'],
+            'expired_date' => ['required', 'date']
         ];
     }
 
