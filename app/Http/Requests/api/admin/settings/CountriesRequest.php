@@ -3,6 +3,8 @@
 namespace App\Http\Requests\api\admin\settings;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CountriesRequest extends FormRequest
 {
@@ -27,4 +29,11 @@ class CountriesRequest extends FormRequest
             'status',
         ];
     }
+
+    public function failedValidation(Validator $validator){
+       throw new HttpResponseException(response()->json([
+               'message'=>'validation error',
+               'errors'=>$validator->errors(),
+       ],400));
+   }
 }

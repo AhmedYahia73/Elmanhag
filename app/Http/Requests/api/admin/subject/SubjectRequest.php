@@ -3,6 +3,8 @@
 namespace App\Http\Requests\api\admin\subject;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SubjectRequest extends FormRequest
 {
@@ -32,4 +34,11 @@ class SubjectRequest extends FormRequest
             'semester' => ['in:first,second']
         ];
     }
+
+    public function failedValidation(Validator $validator){
+       throw new HttpResponseException(response()->json([
+               'message'=>'validation error',
+               'errors'=>$validator->errors(),
+       ],400));
+   }
 }

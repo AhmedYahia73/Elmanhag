@@ -3,6 +3,8 @@
 namespace App\Http\Requests\api\admin\student;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateStudentRequest extends FormRequest
 {
@@ -38,4 +40,11 @@ class UpdateStudentRequest extends FormRequest
             'status'=>['required'],
         ];
     }
+
+    public function failedValidation(Validator $validator){
+       throw new HttpResponseException(response()->json([
+               'message'=>'validation error',
+               'errors'=>$validator->errors(),
+       ],400));
+   }
 }
