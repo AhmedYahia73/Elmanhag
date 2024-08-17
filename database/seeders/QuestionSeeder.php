@@ -21,10 +21,10 @@ class QuestionSeeder extends Seeder
         question::factory()
         ->count(20)
         ->create([
-            'subject_id'=>country::factory(),
+            'subject_id'=>subject::factory(),
             'category_id'=>category::factory(),
-            'chapter_id' => Education::factory(),
-            'lesson_id'=>city::factory(),
+            'chapter_id' => chapter::factory(),
+            'lesson_id'=>lesson::factory(),
         ]);
     }
 }

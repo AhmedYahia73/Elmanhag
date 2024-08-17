@@ -20,7 +20,7 @@ class QuestionFactory extends Factory
             'question' => fake()->name(),
             'image' => fake()->image(),
             'audio' => fake()->image(),
-            'statues' => fake()->randomElement([1, 0]),
+            'status' => fake()->randomElement([1, 0]),
             'semester' => fake()->randomElement(['first', 'second']) ,
             'answer_type' => fake()->randomElement(['Mcq', 'T/F', 'Join', 'Essay']) ,
             'question_type' => fake()->randomElement(['text', 'image', 'audio']) ,

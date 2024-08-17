@@ -103,6 +103,7 @@ class DatabaseSeeder extends Seeder
             'subject_id' => subject::factory()
         ]);
         $this->call(BundleSeeder::class);
+        $this->call(LessonSeeder::class);
         $this->call(QuestionSeeder::class);
          
          

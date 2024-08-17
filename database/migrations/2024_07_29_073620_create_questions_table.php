@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->string('image');
-            $table->string('audio');
+            $table->string('question')->nullable();
+            $table->string('image')->nullable();
+            $table->string('audio')->nullable();
             $table->boolean('status')->default(1);
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');

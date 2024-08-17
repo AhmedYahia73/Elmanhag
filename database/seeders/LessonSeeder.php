@@ -5,22 +5,20 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\bundle;
-use App\Models\category;
-use App\Models\Education;
+use App\Models\lesson;
+use App\Models\chapter;
 
-class BundleSeeder extends Seeder
+class LessonSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        bundle::factory()
+        lesson::factory()
         ->count(20)
         ->create([
-            'category_id' => category::factory(),
-            'education_id' => Education::factory(),
+            'chapter_id' => chapter::factory(),
         ]);
     }
 }
