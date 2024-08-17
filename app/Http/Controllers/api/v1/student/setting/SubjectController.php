@@ -28,12 +28,14 @@ class SubjectController extends Controller
        $subject = $this->subject;
         try {
             if ( $category_id && $education_id) {
-                
                  $subject->orderBy('name')
                         ->where('category_id', $category_id)
                         ->where('education_id', $education_id)->get();
             } elseif($category_id) {
                         $subject->where('category_id', $category_id)
+                        ->orderBy('name');
+            } elseif($education_id) {
+                        $subject->where('education_id', $education_id)
                         ->orderBy('name');
             }
             $subject->get();
