@@ -24,15 +24,15 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             // Update Student Profile
-             'name' => ['required'],
-             'email' => ['email', 'unique:users', 'required'],
-             'password' => ['required'],
-             'conf_password' => ['required', 'same:password'],
-             'phone' => ['required', 'unique:users'],
-             'city_id' => ['required','exists:cities,id'],
-             'country_id' => ['required','exists:countries,id'],
-             'category_id' => ['required','exists:categories,id'],
-             'education_id' => ['required','exists:education,id'],
+            //  'name' => ['required'],
+            //  'email' => ['email', 'required'],
+            //  'password' => ['required'],
+            //  'conf_password' => ['required', 'same:password'],
+            //  'phone' => ['required'],
+            //  'city_id' => ['required','exists:cities,id'],
+            //  'country_id' => ['required','exists:countries,id'],
+            //  'category_id' => ['required','exists:categories,id'],
+            //  'education_id' => ['required','exists:education,id'],
         ];
     }
 
