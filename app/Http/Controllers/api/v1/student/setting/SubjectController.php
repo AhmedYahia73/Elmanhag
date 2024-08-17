@@ -17,31 +17,24 @@ class SubjectController extends Controller
 
     public function show(Request $request)
     {
-        $user_id = $request->user()->id;
-        $user =  $request
-            ->user()
-            ->where('id', $user_id)
-            ->with('category')->first();
-        $category = $user->category;
-        $category_id = $user->category->id;
+        $category_id = $request->category_id;
        $education_id = $request->education_id;
        $subject = $this->subject;
         try {
             if ( $category_id && $education_id) {
-                 $subject->orderBy('name')
-                        ->where('category_id', $category_id)
-                        ->where('education_id', $education_id)->get();
+             $subject =  $subject->orderBy('name')
+                    ->where('category_id', $category_id)
+                    ->where('education_id', $education_id);
             } elseif($category_id) {
-                        $subject->where('category_id', $category_id)
-                        ->orderBy('name');
+                    $subject = $subject->orderBy('name')
+                        ->where('category_id', $category_id);
             } elseif($education_id) {
-                        $subject->where('education_id', $education_id)
+                    $subject = $subject->where('education_id', $education_id)
                         ->orderBy('name');
             }
-            $subject->get();
+          $subject = $subject->get();
             return response()->json([
                 'success' => 'Data Returned Successfully',
-                'category' => $category ,
                 'subject' => $subject ,
             ]);
         } catch (QueryException $e) {
