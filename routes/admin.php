@@ -20,6 +20,9 @@ use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
 use App\Http\Controllers\api\v1\admin\bundle\BundleController;
 use App\Http\Controllers\api\v1\admin\bundle\CreateBundleController;
 
+use App\Http\Controllers\api\v1\admin\question\QuestionController;
+use App\Http\Controllers\api\v1\admin\question\CreateQuestionController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
@@ -103,6 +106,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'create')->name('bundle.add');
             Route::put('/update/{id}', 'modify')->name('bundle.update');
             Route::delete('/delete/{id}', 'delete')->name('bundle.delete');
+        });
+    });
+
+    // Start Question Module
+    Route::prefix('question')->group(function () {
+        Route::controller(QuestionController::class)->group(function(){
+            Route::get('/', 'show')->name('question.show');
+        });
+        Route::controller(CreateQuestionController::class)->group(function(){
+            Route::post('/add', 'create')->name('question.add');
+            Route::put('/update/{id}', 'modify')->name('question.update');
+            Route::delete('/delete/{id}', 'delete')->name('question.delete');
         });
     });
 

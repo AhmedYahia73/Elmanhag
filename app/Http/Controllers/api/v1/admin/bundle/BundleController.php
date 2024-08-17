@@ -10,6 +10,7 @@ use App\Models\bundle;
 class BundleController extends Controller
 {
     public function show(){
+        // https://bdev.elmanhag.shop/admin/bundle
         $bundles = bundle::
         with('category')
         ->with('discount')
