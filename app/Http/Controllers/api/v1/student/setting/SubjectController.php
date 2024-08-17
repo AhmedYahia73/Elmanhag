@@ -25,18 +25,18 @@ class SubjectController extends Controller
         $category = $user->category;
         $category_id = $user->category->id;
        $education_id = $request->education_id;
+       $subject = $this->subject;
         try {
-            if ($education_id) {
-                $subject = $this->subject
-                ->orderBy('name')
-                ->where('category_id', $category_id)
-                ->where('education_id', $education_id)->get();
-            } else {
-                $subject = $this->subject
-                ->where('category_id', $category_id)
-                ->orderBy('name')
-                ->get();
+            if ( $category_id && $education_id) {
+                
+                 $subject->orderBy('name')
+                        ->where('category_id', $category_id)
+                        ->where('education_id', $education_id)->get();
+            } elseif($category_id) {
+                        $subject->where('category_id', $category_id)
+                        ->orderBy('name');
             }
+            $subject->get();
             return response()->json([
                 'success' => 'Data Returned Successfully',
                 'category' => $category ,
