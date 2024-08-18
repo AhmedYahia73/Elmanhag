@@ -18,7 +18,13 @@ class chapter extends Model
         'cover_photo' ,
         'thumbnail' ,
     ];
-
+        protected $appends = ['cover_photo','thumbnail'];
+        public function getCoverPhotoAttribute(){
+           return url('storage/' . $this->attributes['cover_photo']) ;
+        }
+        public function getThumbnailAttribute(){
+           return url('storage/' . $this->attributes['thumbnail']) ;
+        }
     public function subject(){
         return $this->belongsTo(subject::class);
     }
