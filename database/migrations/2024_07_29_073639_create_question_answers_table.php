@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('answer');
             $table->string('true_answer');
-            $table->foreignId('question_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('question_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('price');
-            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('demo_video')->nullable();
             $table->string('cover_photo')->nullable();
             $table->string('thumbnail')->nullable();

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('type', ['voice', 'video', 'pdf']);
             $table->enum('source', ['external', 'embedded', 'upload']);
-            $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('file')->nullable();
             $table->string('link')->nullable();
             $table->timestamps();
