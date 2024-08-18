@@ -10,6 +10,7 @@ use App\Models\question;
 class QuestionController extends Controller
 {
     public function show(){
+        // https://bdev.elmanhag.shop/admin/question
         $questions = question::
         with('category')
         ->with('subject')
