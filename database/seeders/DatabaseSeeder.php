@@ -120,6 +120,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BundleSeeder::class);
         $this->call(LessonSeeder::class);
         $this->call(QuestionSeeder::class);
+        $this->call(HomeworkSeeder::class);
          
          
     }
