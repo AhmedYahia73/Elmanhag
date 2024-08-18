@@ -31,5 +31,6 @@ Route::middleware('auth:sanctum')->prefix('setting')->group(function () {
     }); // Guest Data
     Route::controller(SubjectController::class)->group(function () {
         Route::post('subject/view','show')->name('setting.view');
+        Route::post('subject/student','student_subject')->name('setting.view');
     });
 });

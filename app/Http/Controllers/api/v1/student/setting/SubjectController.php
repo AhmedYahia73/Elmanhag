@@ -44,4 +44,21 @@ class SubjectController extends Controller
             ]);
         }
     }
+
+
+        public function student_subject(Request $request){
+        $user = $request->user();
+        $category_id = $user->category_id;
+        $education_id = $user->education_id;
+        $user_id = $user->id;
+        $subject = $user->subjects
+       ->where('category_id',$category_id)
+       ->where('education_id',$education_id);
+        return response()->json([
+            'success'=>'data return Successfully',
+            'subject'=>$subject,
+        ]);
+
+
+        }
 }
