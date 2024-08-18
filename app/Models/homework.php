@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\subject;
+use App\Models\category;
+use App\Models\chapter;
+use App\Models\lesson;
+
 class homework extends Model
 {
     use HasFactory;
@@ -21,4 +26,21 @@ class homework extends Model
         'pass' ,
         'status' ,
     ];
+
+
+    public function subject(){
+        return $this->belongsTo(subject::class);
+    }
+
+    public function chapter(){
+        return $this->belongsTo(chapter::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(category::class);
+    }
+
+    public function lesson(){
+        return $this->belongsTo(lesson::class);
+    }
 }

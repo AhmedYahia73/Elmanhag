@@ -23,6 +23,9 @@ use App\Http\Controllers\api\v1\admin\bundle\CreateBundleController;
 use App\Http\Controllers\api\v1\admin\question\QuestionController;
 use App\Http\Controllers\api\v1\admin\question\CreateQuestionController;
 
+use App\Http\Controllers\api\v1\admin\homework\HomeworkController;
+use App\Http\Controllers\api\v1\admin\homework\CreateHomeworkController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
@@ -118,6 +121,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'create')->name('question.add');
             Route::put('/update/{id}', 'modify')->name('question.update');
             Route::delete('/delete/{id}', 'delete')->name('question.delete');
+        });
+    });
+
+    // Start H.W Module
+    Route::prefix('homework')->group(function () {
+        Route::controller(HomeworkController::class)->group(function(){
+            Route::get('/', 'show')->name('homework.show');
+        });
+        Route::controller(CreateHomeworkController::class)->group(function(){
+            Route::post('/add', 'create')->name('homework.add');
+            Route::put('/update/{id}', 'modify')->name('homework.update');
+            Route::delete('/delete/{id}', 'delete')->name('homework.delete');
         });
     });
 
