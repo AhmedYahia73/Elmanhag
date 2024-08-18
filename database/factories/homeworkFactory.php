@@ -17,7 +17,7 @@ class homeworkFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->name(),
+            'title' => fake()->randomElement(['H.W1', 'H.W2', 'H.W3']),
             'semester' => fake()->randomElement(['first', 'second']),
             'difficulty' => fake()->randomElement(['A', 'B', 'C']) ,
             'mark' => fake()->randomElement([100, 150, 200]),

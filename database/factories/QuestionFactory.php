@@ -24,7 +24,7 @@ class questionFactory extends Factory
             'semester' => fake()->randomElement(['first', 'second']) ,
             'answer_type' => fake()->randomElement(['Mcq', 'T/F', 'Join', 'Essay']) ,
             'question_type' => fake()->randomElement(['text', 'image', 'audio']) ,
-            'difficulty' => fake()->randomElement(['A', 'B', 'C', 'D']) ,
+            'difficulty' => fake()->randomElement(['A', 'B', 'C']) ,
         ];
     }
 }
