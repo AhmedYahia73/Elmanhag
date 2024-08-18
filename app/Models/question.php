@@ -28,6 +28,7 @@ class question extends Model
         'difficulty' ,
         'question_type' ,
     ];
+    protected $appends = ['image_link', 'audio_link'];
 
     public function category(){
         return $this->belongsTo(category::class);
@@ -45,12 +46,12 @@ class question extends Model
         return $this->belongsTo(chapter::class);
     }
 
-    public function getimageAttribute($image){
-        return $this->image = url('storage/' . $image);
+    public function getImageLinkAttribute(){
+        return url('storage/' . $this->attributes['image']);
     }
 
-    public function getaudioAttribute($audio){
-        return $this->audio = url('storage/' . $audio);
+    public function getAudioLinkAttribute(){
+        return url('storage/' . $this->attributes['audio']);
     }
 
 }

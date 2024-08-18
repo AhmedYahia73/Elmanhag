@@ -25,24 +25,60 @@ class CreateQuestionController extends Controller
         'question_type',
     ];
     public function create(QuestionRequest $request){
-        $question_data = $request->only($this->questionRequest);
-        if ( $question_data['question_type'] == 'image' ) {
-            $image_path = $this->upload($request, 'image', 'admin/questions/image');
+        // https://bdev.elmanhag.shop/admin/question/add 
+        // keys => question, image, audio, status, category_id, subject_id, chapter_id, lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
+        $question_data = $request->only($this->questionRequest); // Get request
+        if ( $question_data['question_type'] == 'image' ) { // if request send image
+            $image_path = $this->upload($request, 'image', 'admin/questions/image'); // Upload image
             $question_data['image'] = $image_path;
         }
-        elseif ( $question_data['question_type'] == 'audio' ) {
-            $audio_path = $this->upload($request, 'audio', 'admin/questions/audio');
+        elseif ( $question_data['question_type'] == 'audio' ) { // if request send audio
+            $audio_path = $this->upload($request, 'audio', 'admin/questions/audio'); // Upload audio
             $question_data['audio'] = $audio_path;
         }
-        question::create($question_data);
+        question::create($question_data); // Create Question
 
         return response()->json([
             'success' => 'You add data success'
         ]);
     }
     
-    public function modify(){
+    public function modify(QuestionRequest $request, $id){
+        // 
+        // keys => question, image, audio, status, category_id, subject_id, chapter_id, lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
+        $question_data = $request->only($this->questionRequest); // Get request
+        $question = question::where('id', $id)
+        ->first(); //Get Question
+        if ( $question_data['question_type'] == 'image' ) { // if request send image
+            $image_path = $this->upload($request, 'image', 'admin/questions/image'); // Upload image
+            if ( !empty($image_path) && $image_path != null ) { // if he upload new image
+                $question_data['image'] = $image_path;
+                $question_data['audio'] = null;
+                $this->deleteImage($question->image); // Delete old image
+                $this->deleteImage($question->audio); // Delete old audio
+            }
+        }
+        elseif ( $question_data['question_type'] == 'audio' ) { // if request send audio
+            $audio_path = $this->upload($request, 'audio', 'admin/questions/audio'); // Upload audio
+            if ( !empty($audio_path) && $audio_path != null ) { // if he upload new audio
+                $question_data['audio'] = $audio_path;
+                $question_data['image'] = null;
+                $this->deleteImage($question->image);
+                $this->deleteImage($question->audio);
+            }
+        }
+        elseif ( $question_data['question_type'] == 'text' ) {
+            $question_data['audio'] = null;
+            $question_data['image'] = null;
+            $this->deleteImage($question->image);
+            $this->deleteImage($question->audio);
+        }
         
+        $question->update($question_data);
+
+        return response()->json([
+            'success' => 'You update data success'
+        ]);
     }
     
     public function delete( $id ){
