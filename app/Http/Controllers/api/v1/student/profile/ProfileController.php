@@ -58,13 +58,11 @@ class ProfileController extends Controller
         $user_id = $request->user()->id;
         $user = $this->user::findOrFail($user_id);
       $updateProfile = $request->only($this->requestProfile);
-     
                 $user->name = $updateProfile['name'] ?? $user->name;
                 $user->email = $updateProfile['email'] ?? $user->email ;
                     if( isset($updateProfile['password'])){
                         $user->password = $updateProfile['password'] ;
                     }
-                    
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
                 $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
@@ -75,7 +73,6 @@ class ProfileController extends Controller
                 if($image_path){
                 $this->deleteImage($user->image['path']);
                 }
-
                         return response()->json([
                             'success'=>'Data Updated Successfully',
                             ]);
