@@ -51,9 +51,17 @@ class SubjectController extends Controller
         $category_id = $user->category_id;
         $education_id = $user->education_id;
         $user_id = $user->id;
-        $subject = $user->subjects
-       ->where('category_id',$category_id)
-       ->where('education_id',$education_id);
+                try {
+                      $subject = $user->subjects
+                      ->where('category_id',$category_id)
+                      ->where('education_id',$education_id);
+                } catch (QueryException $queryException) {
+                        return response()->json([
+                            'faield'=>'Not Found Subject',
+                            'error'=> $queryException,
+                        ]);
+                }
+       
         return response()->json([
             'success'=>'data return Successfully',
             'subject'=>$subject,
