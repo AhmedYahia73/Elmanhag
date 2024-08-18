@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->enum('semester', ['first', 'second']);
-            $table->char('difficulty', 1)->nullable();
+            $table->enum('difficulty', ['A', 'B', 'C']);
             $table->enum('answer_type', ['Mcq', 'T/F', 'Join', 'Essay']);
             $table->enum('question_type', ['text', 'image', 'audio']);
             $table->timestamps();

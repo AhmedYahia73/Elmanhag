@@ -32,6 +32,7 @@ class QuestionRequest extends FormRequest
             'semester' => ['required', 'in:first,second'],
             'answer_type' => ['required', 'in:Mcq,T/F,Join,Essay'],
             'question_type' => ['required', 'in:text,image,audio'],
+            'difficulty' => ['required', 'in:A,B,C'],
         ];
     }
 
