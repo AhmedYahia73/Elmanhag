@@ -10,8 +10,15 @@ class homework extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name' ,
-        'order' ,
+        'title' ,
+        'semester' ,
+        'category_id' ,
+        'subject_id' ,
+        'chapter_id' ,
         'lesson_id' ,
+        'difficulty' ,
+        'mark' ,
+        'pass' ,
+        'status' ,
     ];
 }
