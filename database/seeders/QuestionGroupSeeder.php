@@ -21,9 +21,5 @@ class QuestionGroupSeeder extends Seeder
         ->create([
             'homework_id' => homework::factory(),
         ]);
-
-        foreach ($groups as $group) {
-            $group->roles()->attach(question::factory);
-        }
     }
 }
