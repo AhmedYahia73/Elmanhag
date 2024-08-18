@@ -16,10 +16,10 @@ class HomeworkController extends Controller
     private lesson $lessons, private subject $subjects, private homework $homeworks ){}
 
     public function show(){
-        $chapters = $chapters->get();
-        $lessons = $lessons->get();
-        $subjects = $subjects->get();
-        $homeworks = $homeworks
+        $chapters = $this->chapters->get();
+        $lessons = $this->lessons->get();
+        $subjects = $this->subjects->get();
+        $homeworks = $this->homeworks
         ->with('subject')
         ->with('chapter')
         ->with('category')
