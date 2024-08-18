@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('question_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('homework_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('homework_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

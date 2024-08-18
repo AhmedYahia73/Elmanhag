@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->enum('title', ['H.W1', 'H.W2', 'H.W3']);
             $table->enum('semester', ['first', 'second']);
-            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->enum('difficulty', ['A', 'B', 'C']);
             $table->float('mark');
             $table->float('pass');

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('video_rates', function (Blueprint $table) {
             $table->id();
             $table->integer('rate');
-            $table->foreignId('video_lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('video_lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
