@@ -44,7 +44,7 @@ class CreateQuestionController extends Controller
     }
     
     public function modify(QuestionRequest $request, $id){
-        // 
+        // https://bdev.elmanhag.shop/admin/question/update/{id}
         // keys => question, image, audio, status, category_id, subject_id, chapter_id, lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
         $question_data = $request->only($this->questionRequest); // Get request
         $question = question::where('id', $id)
