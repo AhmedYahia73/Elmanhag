@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->float('price');
             $table->enum('semester', ['first', 'second']);
-            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->date('expired_date');
             $table->timestamps();
         });

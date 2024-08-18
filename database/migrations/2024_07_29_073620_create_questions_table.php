@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('audio')->nullable();
             $table->boolean('status')->default(1);
-            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->enum('semester', ['first', 'second']);
-            $table->char('difficulty', 1)->nullable();
+            $table->enum('difficulty', ['A', 'B', 'C']);
             $table->enum('answer_type', ['Mcq', 'T/F', 'Join', 'Essay']);
             $table->enum('question_type', ['text', 'image', 'audio']);
             $table->timestamps();

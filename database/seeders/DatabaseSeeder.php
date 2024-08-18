@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    { 
+    {
         $this->call(categorySeeder::class);
         // Category
         $staticUser =
@@ -120,6 +120,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BundleSeeder::class);
         $this->call(LessonSeeder::class);
         $this->call(QuestionSeeder::class);
+        $this->call(HomeworkSeeder::class);
+        $this->call(QuestionGroupSeeder::class);
          
          
     }

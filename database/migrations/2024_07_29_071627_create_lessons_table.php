@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('paid');
-            $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->boolean('status')->default(1);
             $table->integer('order');
             $table->boolean('drip_content');
