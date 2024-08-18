@@ -30,7 +30,7 @@ use App\Http\Controllers\api\v1\admin\settings\CitiesController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     // Start Module Student Sign UP
     Route::prefix('student')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
