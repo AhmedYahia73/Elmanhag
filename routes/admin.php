@@ -29,6 +29,7 @@ use App\Http\Controllers\api\v1\admin\homework\CreateHomeworkController;
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
+use App\Http\Controllers\api\v1\admin\settings\JobsController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -163,6 +164,15 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
                 Route::post('/add', 'create')->name('countries.add');
                 Route::put('/update/{id}', 'modify')->name('countries.update');
                 Route::delete('/delete/{id}', 'delete')->name('countries.delete');
+            });
+            // Start Jobs
+            Route::prefix('jobs')->group(function () {
+                Route::controller(JobsController::class)->group(function(){
+                    Route::get('/', 'show')->name('jobs.show');
+                    Route::post('/add', 'create')->name('jobs.add');
+                    Route::put('/update/{id}', 'modify')->name('jobs.update');
+                    Route::delete('/delete/{id}', 'delete')->name('jobs.delete');
+                });
             });
         });
     });
