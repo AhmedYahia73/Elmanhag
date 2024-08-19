@@ -16,6 +16,7 @@ class HomeworkController extends Controller
     private lesson $lessons, private subject $subjects, private homework $homeworks ){}
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/homework
         $chapters = $this->chapters->get();
         $lessons = $this->lessons->get();
         $subjects = $this->subjects->get();

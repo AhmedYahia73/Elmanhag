@@ -26,6 +26,7 @@ class CreateHomeworkController extends Controller
     ];
 
     public function create(HomeworkRequest $request){
+        // https://bdev.elmanhag.shop/admin/homework/add
         // Keys 
         // title, semester, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
         // groups[$iteration]
@@ -49,6 +50,7 @@ class CreateHomeworkController extends Controller
     }
     
     public function modify(HomeworkRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/homework/update/{id}
         // Keys 
         // title, semester, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
         // groups[$iteration]
@@ -76,6 +78,7 @@ class CreateHomeworkController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/homework/delete/{id}
         $this->homeworks->where('id', $id)
         ->delete();
 
