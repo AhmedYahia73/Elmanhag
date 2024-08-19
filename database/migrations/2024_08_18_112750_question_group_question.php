@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('question_group_question', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('question_group_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('question_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
