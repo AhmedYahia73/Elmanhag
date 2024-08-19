@@ -12,6 +12,7 @@ class JobsController extends Controller
 {
     public function __construct(private StudentJob $jobs){}
     public function show(){
+        // https://bdev.elmanhag.shop/admin/Settings/jobs
         $jobs = $this->jobs->get();
 
         return response()->json([
@@ -28,6 +29,7 @@ class JobsController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/Settings/jobs/delete/{id}
         $this->jobs->where('id', $id)
         ->first()->delete();
 
