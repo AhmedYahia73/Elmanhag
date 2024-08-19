@@ -165,15 +165,16 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
                 Route::put('/update/{id}', 'modify')->name('countries.update');
                 Route::delete('/delete/{id}', 'delete')->name('countries.delete');
             });
-            // Start Jobs
-            Route::prefix('jobs')->group(function () {
-                Route::controller(JobsController::class)->group(function(){
-                    Route::get('/', 'show')->name('jobs.show');
-                    Route::post('/add', 'create')->name('jobs.add');
-                    Route::put('/update/{id}', 'modify')->name('jobs.update');
-                    Route::delete('/delete/{id}', 'delete')->name('jobs.delete');
-                });
+        });
+        // Start Jobs
+        Route::prefix('jobs')->group(function () {
+            Route::controller(JobsController::class)->group(function(){
+                Route::get('/', 'show')->name('jobs.show');
+                Route::post('/add', 'create')->name('jobs.add');
+                Route::put('/update/{id}', 'modify')->name('jobs.update');
+                Route::delete('/delete/{id}', 'delete')->name('jobs.delete');
             });
         });
+
     });
 });
