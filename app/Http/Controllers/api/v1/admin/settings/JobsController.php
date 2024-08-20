@@ -31,6 +31,9 @@ class JobsController extends Controller
     }
 
     public function create(JobRequest $request){
+        // https://bdev.elmanhag.shop/admin/Settings/jobs/add
+        // key
+        // job, title_male, title_female, ar_job, ar_title_male, ar_title_female
         $job_data = $request->only($this->jodRequest);
         $this->translate($job_data['job'], $job_data['ar_job']);
         $this->translate($job_data['title_male'], $job_data['ar_title_male']);
@@ -43,6 +46,9 @@ class JobsController extends Controller
     }
 
     public function modify(JobRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/Settings/jobs/update/{id}
+        // key
+        // job, title_male, title_female, ar_job, ar_title_male, ar_title_female
         $job_data = $request->only($this->jodRequest);
         $this->translate($job_data['job'], $job_data['ar_job']);
         $this->translate($job_data['title_male'], $job_data['ar_title_male']);
