@@ -20,6 +20,7 @@ class PromoCode extends Model
         'usage_type' ,
         'usage' ,
         'number_users' ,
+        'status',
     ];
 
     public function subjects(){
