@@ -22,7 +22,6 @@ class ChapterController extends Controller
                         $validator = Validator::make($request->all(), [
                         'subject_id' => 'required|exists:chapters',
                         ]);
-                        
                         if ($validator->fails()) { // if Validate Make Error Return Message Error
                                 return response()->json([
                                         'error' => $validator->errors(),
@@ -51,6 +50,36 @@ class ChapterController extends Controller
                                 'success'=>'data Returned Successfully',
                                 'chapter'=>$chapter,
                         ],200);
+        }
+
+
+        public function chapters(Request $request){
+                $subject_id = $request->subject_id;
+                $chapter = $this->chapter;
+                   $validator = Validator::make($request->all(), [
+                        'subject_id' => 'required|exists:chapters',
+                        ]);
+                        if ($validator->fails()) { // if Validate Make Error Return Message Error
+                                return response()->json([
+                                        'error' => $validator->errors(),
+                                ],400);
+                        }
+                        try {
+                             $subject_id = $request->subject_id;
+                             $chapter = $this->chapter
+                             ->where('subject_id',$subject_id)
+                             ->with('lessons')
+                             ->get();
+                        } catch (QueryException $th) {
+                                       return response()->json([
+                                       'error' => $th,
+                                       ],400);
+                        }
+                return response()->json([
+                        'success'=>'data return successfully',
+                        'chapter'=>$chapter ,
+                ]);
+
         }
 
         
