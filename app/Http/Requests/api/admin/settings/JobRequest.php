@@ -11,7 +11,7 @@ class JobRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class JobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'job' => ['required'],
+            'title_male' => ['required'],
+            'title_female' => ['required'],
+            'ar_job' => ['required'],
+            'ar_title_male' => ['required'],
+            'ar_title_female' => ['required'],
         ];
     }
 }
