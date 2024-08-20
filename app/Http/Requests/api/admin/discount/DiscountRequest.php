@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\api\admin\settings;
+namespace App\Http\Requests\api\admin\discount;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class JobRequest extends FormRequest
+class DiscountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,15 @@ class JobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'job' => ['required'],
-            'title_male' => ['required'],
-            'title_female' => ['required'],
-            'ar_job' => ['required'],
-            'ar_title_male' => ['required'],
-            'ar_title_female' => ['required'],
+            'category_id' => ['exists:categories,id'],
+            'subject_id' => ['exists:subjects,id'],
+            'bundle_id' => ['exists:bundles,id'],
+            'amount' => ['required', 'numeric'],
+            'type' => ['required', 'in:precentage,value'],
+            'description' => ['required'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
+            'statue' => ['required', 'boolean']
         ];
     }
 

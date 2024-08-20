@@ -26,6 +26,9 @@ use App\Http\Controllers\api\v1\admin\question\CreateQuestionController;
 use App\Http\Controllers\api\v1\admin\homework\HomeworkController;
 use App\Http\Controllers\api\v1\admin\homework\CreateHomeworkController;
 
+use App\Http\Controllers\api\v1\admin\homework\DiscountController;
+use App\Http\Controllers\api\v1\admin\homework\CreateDiscountController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
@@ -134,6 +137,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'create')->name('homework.add');
             Route::put('/update/{id}', 'modify')->name('homework.update');
             Route::delete('/delete/{id}', 'delete')->name('homework.delete');
+        });
+    });
+
+    // Start Discount Module
+    Route::prefix('discount')->group(function () {
+        Route::controller(DiscountController::class)->group(function(){
+            Route::get('/', 'show')->name('discount.show');
+        });
+        Route::controller(CreateDiscountController::class)->group(function(){
+            Route::post('/add', 'create')->name('discount.add');
+            Route::put('/update/{id}', 'modify')->name('discount.update');
+            Route::delete('/delete/{id}', 'delete')->name('discount.delete');
         });
     });
 
