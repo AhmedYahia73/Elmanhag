@@ -23,6 +23,10 @@ class CreateDiscountController extends Controller
         'statue',
     ];
     public function create(DiscountRequest $request){
+        // https://bdev.elmanhag.shop/admin/discount/add
+        // keys 
+        // subject_id, category_id, bundle_id, amount, type => [precentage, value], description
+        // start_date, end_date, statue
         $dicount_data = $request->only($this->discountRequest);
         $this->discount->create($dicount_data);
 
@@ -32,6 +36,10 @@ class CreateDiscountController extends Controller
     }
 
     public function modify(DiscountRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/discount/update/{id}
+        // keys 
+        // subject_id, category_id, bundle_id, amount, type => [precentage, value], description
+        // start_date, end_date, statue
         $dicount_data = $request->only($this->discountRequest);
         $this->discount->where('id', $id)
         ->update($dicount_data);
@@ -42,6 +50,7 @@ class CreateDiscountController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/discount/delete/{id}
         $this->discount->where('id', $id)
         ->delete();
 
