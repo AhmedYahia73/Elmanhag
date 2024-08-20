@@ -123,6 +123,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HomeworkSeeder::class);
         $this->call(QuestionGroupSeeder::class);
         $this->call(DiscountSeeder::class);
+        $this->call(PromoCodeSeeder::class);
          
          
     }
