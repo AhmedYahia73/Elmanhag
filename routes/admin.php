@@ -23,9 +23,19 @@ use App\Http\Controllers\api\v1\admin\bundle\CreateBundleController;
 use App\Http\Controllers\api\v1\admin\question\QuestionController;
 use App\Http\Controllers\api\v1\admin\question\CreateQuestionController;
 
+use App\Http\Controllers\api\v1\admin\homework\HomeworkController;
+use App\Http\Controllers\api\v1\admin\homework\CreateHomeworkController;
+
+use App\Http\Controllers\api\v1\admin\discount\DiscountController;
+use App\Http\Controllers\api\v1\admin\discount\CreateDiscountController;
+
+use App\Http\Controllers\api\v1\admin\promocode\PromocodeController;
+use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
+use App\Http\Controllers\api\v1\admin\settings\JobsController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -121,6 +131,42 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
     });
 
+    // Start H.W Module
+    Route::prefix('homework')->group(function () {
+        Route::controller(HomeworkController::class)->group(function(){
+            Route::get('/', 'show')->name('homework.show');
+        });
+        Route::controller(CreateHomeworkController::class)->group(function(){
+            Route::post('/add', 'create')->name('homework.add');
+            Route::put('/update/{id}', 'modify')->name('homework.update');
+            Route::delete('/delete/{id}', 'delete')->name('homework.delete');
+        });
+    });
+
+    // Start Discount Module
+    Route::prefix('discount')->group(function () {
+        Route::controller(DiscountController::class)->group(function(){
+            Route::get('/', 'show')->name('discount.show');
+        });
+        Route::controller(CreateDiscountController::class)->group(function(){
+            Route::post('/add', 'create')->name('discount.add');
+            Route::put('/update/{id}', 'modify')->name('discount.update');
+            Route::delete('/delete/{id}', 'delete')->name('discount.delete');
+        });
+    });
+
+    // Start Promo Code Module
+    Route::prefix('promoCode')->group(function () {
+        Route::controller(PromocodeController::class)->group(function(){
+            Route::get('/', 'show')->name('promoCode.show');
+        });
+        Route::controller(CreatePromocodeController::class)->group(function(){
+            Route::post('/add', 'create')->name('promoCode.add');
+            Route::put('/update/{id}', 'modify')->name('promoCode.update');
+            Route::delete('/delete/{id}', 'delete')->name('promoCode.delete');
+        });
+    });
+
     // Start Settings Module
     Route::prefix('Settings')->group(function () {
         // Start Parent Relations
@@ -150,5 +196,15 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
                 Route::delete('/delete/{id}', 'delete')->name('countries.delete');
             });
         });
+        // Start Jobs
+        Route::prefix('jobs')->group(function () {
+            Route::controller(JobsController::class)->group(function(){
+                Route::get('/', 'show')->name('jobs.show');
+                Route::post('/add', 'create')->name('jobs.add');
+                Route::put('/update/{id}', 'modify')->name('jobs.update');
+                Route::delete('/delete/{id}', 'delete')->name('jobs.delete');
+            });
+        });
+
     });
 });
