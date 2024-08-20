@@ -29,6 +29,9 @@ use App\Http\Controllers\api\v1\admin\homework\CreateHomeworkController;
 use App\Http\Controllers\api\v1\admin\discount\DiscountController;
 use App\Http\Controllers\api\v1\admin\discount\CreateDiscountController;
 
+use App\Http\Controllers\api\v1\admin\promocode\PromocodeController;
+use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
@@ -149,6 +152,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'create')->name('discount.add');
             Route::put('/update/{id}', 'modify')->name('discount.update');
             Route::delete('/delete/{id}', 'delete')->name('discount.delete');
+        });
+    });
+
+    // Start Promo Code Module
+    Route::prefix('promoCode')->group(function () {
+        Route::controller(PromocodeController::class)->group(function(){
+            Route::get('/', 'show')->name('promoCode.show');
+        });
+        Route::controller(CreatePromocodeController::class)->group(function(){
+            Route::post('/add', 'create')->name('promoCode.add');
+            Route::put('/update/{id}', 'modify')->name('promoCode.update');
+            Route::delete('/delete/{id}', 'delete')->name('promoCode.delete');
         });
     });
 
