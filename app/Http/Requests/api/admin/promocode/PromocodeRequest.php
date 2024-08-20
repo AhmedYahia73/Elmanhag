@@ -3,6 +3,8 @@
 namespace App\Http\Requests\api\admin\promocode;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PromocodeRequest extends FormRequest
 {
@@ -29,6 +31,14 @@ class PromocodeRequest extends FormRequest
             'usage_type' => ['required', 'in:fixed,unlimited'],
             'usage' => ['numeric'],
             'number_users' => ['numeric'],
+            'status' => ['required'],
         ];
     }
+
+    public function failedValidation(Validator $validator){
+       throw new HttpResponseException(response()->json([
+               'message'=>'validation error',
+               'errors'=>$validator->errors(),
+       ],400));
+   }
 }
