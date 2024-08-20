@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('usage_type', ['fixed', 'unlimited']);
             $table->integer('usage')->nullable();
             $table->integer('number_users')->default(0);
+            $table->boolean('status');
             $table->timestamps();
         });
     }
