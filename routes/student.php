@@ -8,7 +8,7 @@ use App\Http\Middleware\StudentMiddleware;
 use App\Http\Controllers\api\v1\student\LoginController;
 use App\Http\Controllers\api\v1\student\SignupController;
 use App\Http\Controllers\api\v1\student\profile\ProfileController;
-use App\Http\Controllers\api\v1\student\setting\SubjectController;
+use App\Http\Controllers\api\v1\student\subject\SubjectController ;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -36,10 +36,12 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                 Route::get('subject/student','student_subject')->name('setting.view');
             });
         });
-        Route::prefix('mySubject')->group(function () { // This All Chapters For Student
-            Route::controller(ChapterController::class)->group(function () {
-                Route::post('chapter/view', 'show')->name('chapter_view');
-            });
+        Route::controller(ChapterController::class)->group(function () { // This All Chapters For Student
+                Route::prefix('mySubject')->group(function () {
+                    Route::post('chapter/view', 'show')->name('student_chapter_view');
+                });
+                  Route::prefix('subject')->group(function () {
+                  Route::post('chapter/view', 'show_chapter')->name('chapter_view');
+                  });
         });
-
 });
