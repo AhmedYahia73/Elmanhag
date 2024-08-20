@@ -11,6 +11,7 @@ class DiscountController extends Controller
 {
     public function __construct(private Discount $discount){}
     public function show(){
+        // https://bdev.elmanhag.shop/admin/discount
         $discounts = $this->discount
         ->with(['category', 'subject', 'bundle'])
         ->get();
