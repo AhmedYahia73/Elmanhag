@@ -26,8 +26,8 @@ use App\Http\Controllers\api\v1\admin\question\CreateQuestionController;
 use App\Http\Controllers\api\v1\admin\homework\HomeworkController;
 use App\Http\Controllers\api\v1\admin\homework\CreateHomeworkController;
 
-use App\Http\Controllers\api\v1\admin\homework\DiscountController;
-use App\Http\Controllers\api\v1\admin\homework\CreateDiscountController;
+use App\Http\Controllers\api\v1\admin\discount\DiscountController;
+use App\Http\Controllers\api\v1\admin\discount\CreateDiscountController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
