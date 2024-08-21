@@ -20,6 +20,7 @@ class PaymentMethodsController extends Controller
     public function __construct(private PaymentMethod $payment_methods){}
  
     public function show(){
+        // https://bdev.elmanhag.shop/admin/Settings/paymentMethods
         $payment_methods = $this->payment_methods
         ->get();
 
@@ -29,6 +30,7 @@ class PaymentMethodsController extends Controller
     }
 
     public function create(PaymentMethodRequest $request){
+        // https://bdev.elmanhag.shop/admin/Settings/paymentMethods/add
         // Keys
         // title, description, thumbnail, status
         $payment_method_data = $request->only($this->paymentMethodRequest);
@@ -42,6 +44,7 @@ class PaymentMethodsController extends Controller
     }
 
     public function modify(PaymentMethodRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/Settings/paymentMethods/update/{id}
         // Keys
         // title, description, thumbnail, status
         $payment_method_data = $request->only($this->paymentMethodRequest);
@@ -61,6 +64,7 @@ class PaymentMethodsController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/Settings/paymentMethods/delete/{id}
         $payment_methods = $this->payment_methods
         ->where('id', $id)
         ->delete();
