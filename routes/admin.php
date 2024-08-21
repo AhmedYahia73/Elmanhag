@@ -208,7 +208,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         // Start Payment Methods
         Route::prefix('paymentMethods')->group(function () {
-            Route::controller(JobsController::class)->group(function(){
+            Route::controller(PaymentMethodsController::class)->group(function(){
                 Route::get('/', 'show')->name('payment_methods.show');
                 Route::post('/add', 'create')->name('payment_methods.add');
                 Route::put('/update/{id}', 'modify')->name('payment_methods.update');
