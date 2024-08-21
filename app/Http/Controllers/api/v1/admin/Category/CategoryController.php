@@ -16,6 +16,9 @@ class CategoryController extends Controller
         with('parent_category')
         ->orderBy('category_id')
         ->get();
+        $parent_categories = category::
+        where('category_id', null)
+        ->get();
 
         return response()->json([
             'categories' => $categories
