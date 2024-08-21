@@ -12,6 +12,7 @@ class PaymentMethod extends Model
     protected $fillable = [
         'title',
         'thumbnail',
+        'description',
         'status',
     ];
 }
