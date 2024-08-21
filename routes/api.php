@@ -19,10 +19,6 @@ Route::get('/user', function (Request $request) {
 
 
 Route::middleware('auth:sanctum')->prefix('Student')->group(function () {
-    Route::controller(SubjectsController::class)->prefix('Subjects')->group(function () {
-        Route::get('/','subjects')->name('stu_subjects');
-    });
-    
     Route::controller(ProfileStudentController::class)->prefix('Profile')->group(function () {
         Route::get('/','index')->name('stu_profile');
         Route::post('/Update','update_profile')->name('stu_update_profile');
