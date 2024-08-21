@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
                 'password' => '123',
                 'remember_token' => str::random(20),
                 'country_id' => country::factory(),
-                'category_id'=>category::factory(),
+                'category_id'=>17,
                 'city_id' => city::factory(),
                 
                ],
@@ -106,17 +106,8 @@ class DatabaseSeeder extends Seeder
                 ]
             );
 
-        subject::factory()
-        ->count(20)
-        ->create([
-            'category_id' => category::factory()
-        ]);
-
-        chapter::factory()
-        ->count(20)
-        ->create([
-            'subject_id' => subject::factory()
-        ]);
+        $this->call(SubjectSeeder::class);
+        $this->call(ChapterSeeder::class);
         $this->call(BundleSeeder::class);
         $this->call(LessonSeeder::class);
         $this->call(QuestionSeeder::class);
