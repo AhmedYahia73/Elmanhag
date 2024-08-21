@@ -26,6 +26,9 @@ class CreateCategoryController extends Controller
     ];
 
     public function create( CategoryRequest $request ){
+        return response()->json([
+            'image' => $request->thumbnail
+        ]);
         $data = $request->only($this->categoryRequest); // Get Request
         $image =  $this->upload($request,'thumbnail','admin/categories/thumbnail'); // Upload Thumbnail
         $data['thumbnail'] = $image;
