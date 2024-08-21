@@ -21,7 +21,8 @@ class CategoryController extends Controller
         ->get();
 
         return response()->json([
-            'categories' => $categories
+            'categories' => $categories,
+            'parent_categories' => $parent_categories
         ]);
     }
 
