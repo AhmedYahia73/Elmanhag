@@ -49,19 +49,17 @@ class SubjectController extends Controller
 
     public function student_subject(Request $request)
     {
-        $user = $request->user();
-        $user_id = $user->id;
+        $user_id = $request->user()->id;
+        $user = $request->user()->where('id',$user_id)
+        ->get();
         try {
-            $subject = $user->where('id',$user_id)
-            ->with('subjects')
-            ->get();
+            $subject = $user[0]->subjects;
         } catch (QueryException $queryException) {
             return response()->json([
                 'faield' => 'Not Found Subject',
                 'error' => $queryException,
             ]);
         }
-
         return response()->json([
             'success' => 'data return Successfully',
             'subject' => $subject,
