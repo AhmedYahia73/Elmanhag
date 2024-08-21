@@ -52,7 +52,7 @@ class SubjectController extends Controller
         $user = $request->user();
         $user_id = $user->id;
         try {
-           return $subject = $user->where('id',$user_id)
+            $subject = $user->where('id',$user_id)
             ->with('subjects')
             ->get();
         } catch (QueryException $queryException) {
