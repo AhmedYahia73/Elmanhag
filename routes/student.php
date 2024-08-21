@@ -2,6 +2,7 @@
 namespace Student;
 
 use App\Http\Controllers\api\v1\student\chapter\ChapterController;
+use App\Http\Controllers\api\v1\student\lesson\LessonController;
 use App\Http\Controllers\api\v1\student\setting\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\StudentMiddleware;
@@ -43,6 +44,11 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                   Route::prefix('subject')->group(function () {
                   Route::post('chapter/view', 'chapters')->name('chapters');
                   });
+        });
+        Route::controller(LessonController::class)->group(function () { // This All Chapters For Student
+                Route::prefix('chapter')->group(function () {
+                    Route::post('lesson/view', 'show_lesson')->name('student_chapter_view');
+                });
         });
 
         
