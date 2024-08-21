@@ -23,6 +23,7 @@ class CreatePromocodeController extends Controller
     ];
 
     public function create(PromocodeRequest $request){
+        // https://bdev.elmanhag.shop/admin/promoCode/add
         // Keys
         // title, code, status, value, precentage, usage_type, usage, number_users
         // subjects[], bundles[]
@@ -43,6 +44,7 @@ class CreatePromocodeController extends Controller
     }
     
     public function modify(PromocodeRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/promoCode/update/{id}
         // Keys
         // title, code, status, value, precentage, usage_type, usage, number_users
         // subjects[], bundles[]
@@ -60,6 +62,7 @@ class CreatePromocodeController extends Controller
     }
     
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/promoCode/delete/{id}
         $this->promo_code
         ->where('id', $id)
         ->delete();
