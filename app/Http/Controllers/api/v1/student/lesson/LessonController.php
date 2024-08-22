@@ -37,7 +37,17 @@ class LessonController extends Controller
              $chapter_id = $lesson->chapter_id; // Start Get The chapter about Lesson
              $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
             // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
-            try {
+         
+        } catch (ErrorException $e) {
+
+            return response()->json([
+                'faield' => 'Not Found Lesson',
+                'data' => $e->getMessage(),
+            ]);
+        }
+
+    if ($purchaseStatus == true) {
+   try {
                 $user_bundle =$user->bundles->where('category_id',$category_id)->where('education_id',$education_id);
                      foreach ($user_bundle as $student_bundle) {
                     $dataNew = $student_bundle; // Get Bundle For Student
@@ -55,34 +65,18 @@ class LessonController extends Controller
                 'lesson'=>$lessons,
                 ]);
                 }
-           
             } catch (QueryException $qe) {
                 return response()->json([
                     'faield'=>'Some Error when Get Data',
                     'error'=>$qe->getMessage(),
                 ]);
             }
-             
-           
-        } catch (ErrorException $e) {
-
-            return response()->json([
-                'faield' => 'Not Found Lesson',
-                'data' => $e->getMessage(),
-            ]);
-        }
-
-    if ($purchaseStatus == true) {
-            $status = 'This Student Don\'t Buy This Lesson';
-            
-         
         } else {
-            $status = 'This Student Has This Lesson';
-
-            return response()->json([
-                'success' => 'data return successfully',
-                'data' => $lesson,
-            ]);
+               return response()->json([
+                'data'=>'Lesson Return Successfully',
+                'lesson'=>$lesson,
+                ]);
+          
         }
     }
 }
