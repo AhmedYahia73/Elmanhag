@@ -174,6 +174,10 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('payment')->group(function() {
         Route::controller(PaymentController::class)->group(function(){
             Route::get('/pendding', 'pendding_payment')->name('payment.pendding');
+            Route::post('/pendding/rejected/{id}', 'rejected_payment')->name('payment.rejected');
+            Route::get('/pendding/approve/{id}', 'approve_payment')->name('payment.approve');
+
+            Route::get('/', 'payments')->name('payment.payments');
         });
     });
 

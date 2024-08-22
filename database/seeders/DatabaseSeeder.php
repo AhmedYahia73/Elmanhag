@@ -116,6 +116,7 @@ class DatabaseSeeder extends Seeder
         $this->call(QuestionGroupSeeder::class);
         $this->call(DiscountSeeder::class);
         $this->call(PromoCodeSeeder::class);
+        $this->call(PaymentSeeder::class);
          
          
     }
