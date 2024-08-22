@@ -50,7 +50,10 @@ class SubjectController extends Controller
     public function student_subject(Request $request)
     {
         $user_id = $request->user()->id;
-        $user = $request->user()->where('id',$user_id)
+        $user = $request->user()->where('id', $user_id)
+            ->with('subjects', function ($query) {
+                $query->with('chapters');
+        })
         ->get();
         try {
             $subject = $user[0]->subjects;
