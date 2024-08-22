@@ -35,8 +35,8 @@ class LessonController extends Controller
         try {
               $lesson = $this->lesson->where('id', $lesson_id)
               ->with('materials')
-              ->with('materials')
-              ->with('materials')
+              ->with('resources')
+              ->with('homework')
               ->first(); // Start Get Leeon
              $chapter_id = $lesson->chapter_id; // Start Get The chapter about Lesson
              $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
