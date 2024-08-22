@@ -28,7 +28,7 @@ class lesson extends Model
         return $this->hasMany(LessonResource::class);
     }
     public function homework(){
-        return $this->hasMany(LessonResource::class);
+        return $this->hasMany(homework::class);
     }
 
 }
