@@ -24,5 +24,11 @@ class lesson extends Model
     public function materials(){
         return $this->hasMany(MaterialLesson::class);
     }
+    public function resources(){
+        return $this->hasMany(LessonResource::class);
+    }
+    public function homework(){
+        return $this->hasMany(LessonResource::class);
+    }
 
 }

@@ -33,7 +33,11 @@ class LessonController extends Controller
         $subject_id = $request->subject_id;
         $data_now = Carbon::now();
         try {
-              $lesson = $this->lesson->where('id', $lesson_id)->first(); // Start Get Leeon
+              $lesson = $this->lesson->where('id', $lesson_id)
+              ->with('materials')
+              ->with('materials')
+              ->with('materials')
+              ->first(); // Start Get Leeon
              $chapter_id = $lesson->chapter_id; // Start Get The chapter about Lesson
              $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
             // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
@@ -48,24 +52,26 @@ class LessonController extends Controller
 
     if ($purchaseStatus == true) {
    try {
-                $user_bundle =$user->bundles->where('category_id',$category_id)->where('education_id',$education_id);
+                 $user_bundle =$user->bundles->where('category_id',$category_id)->where('education_id',$education_id);
                      foreach ($user_bundle as $student_bundle) {
                     $dataNew = $student_bundle; // Get Bundle For Student
                     $subjects = $student_bundle->subjects // Get Subject
                     ->where('id', $subject_id)
                     ->where('expired_date', '>=', $data_now)->first(); // Get Subject
-                    $chapter = $subjects->chapters; 
+                    $chapter = $subjects->chapters;
                     $student_chapter = $chapter->where('id',$chapter_id)->first();// Get Chapter
-                     $lessons = $student_chapter->lessons
+                    $lessons = $student_chapter->lessons
                      ->where('id',$lesson_id)
                     ->first(); // Finaly Get Lesson for Studnet
-                      $lessons->materials ; // With Materials
-                      return response()->json([
-                'data'=>'Lesson Return Successfully',
-                'lesson'=>$lessons,
-                ]);
+                        $lessons->materials ; // With Materials
+                      $lessons->resources ; // With Resource
+                      $lessons->homework ; // With Homework
                 }
-            } catch (QueryException $qe) {
+                      return response()->json([
+                      'data'=>'Lesson Return Successfully',
+                      'lesson'=>$lessons,
+                      ]);
+            } catch (ErrorException $qe) {
                 return response()->json([
                     'faield'=>'Some Error when Get Data',
                     'error'=>$qe->getMessage(),
