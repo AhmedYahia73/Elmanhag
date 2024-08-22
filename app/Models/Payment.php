@@ -24,7 +24,11 @@ class Payment extends Model
         'rejected_reason',
         'status',
     ];
+    protected $appends = ['receipt_link'];
 
+    public function getReceiptLinkAttribute(){
+        return url('storage/' . $this->attributes['receipt']);
+    }
     public function student(){
         return $this->belongsTo(User::class, 'student_id');
     }
@@ -34,10 +38,10 @@ class Payment extends Model
     }
 
     public function bundle(){
-        return $this->belongsTo(bundle::class, 'service_payment');
+        return $this->belongsToMany(bundle::class, 'service_payment');
     }
 
     public function subject(){
-        return $this->belongsTo(subject::class, 'service_payment');
+        return $this->belongsToMany(subject::class, 'service_payment');
     }
 }
