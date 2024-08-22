@@ -17,8 +17,9 @@ return new class extends Migration
             $table->enum('service', ['Live session', 'Bundle', 'Subject', 'Live Package', 'Revision']);
             $table->foreignId('student_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('payment_method_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->date('purchase_date');
+            $table->string('receipt')->nullable();
             $table->string('rejected_reason')->nullable();
+            $table->date('purchase_date');
             $table->boolean('status')->nullable();
             $table->timestamps();
         });
