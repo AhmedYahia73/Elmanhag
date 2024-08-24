@@ -34,6 +34,8 @@ use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
 
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
+use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
@@ -178,6 +180,14 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/pendding/approve/{id}', 'approve_payment')->name('payment.approve');
 
             Route::get('/', 'payments')->name('payment.payments');
+        });
+    });
+
+    // Start Teacher Module
+    Route::prefix('teacher')->group(function() {
+        Route::controller(TeacherController::class)->group(function(){
+            Route::get('/', 'teachers_list')->name('teachers.list');
+            Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
         });
     });
 
