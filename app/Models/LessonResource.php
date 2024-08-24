@@ -16,11 +16,9 @@ class LessonResource extends Model
         'link',
         'lesson_id',
     ];
-    protected $appends = ['link'];
+    protected $appends = ['file_link'];
 
-    public function getLinkAttribute($file){
-        if($this->type == 'upload'){
-            return url('storage/' . $this->attributes['link']);
-        }
+    public function getFileLinkAttribute($file){
+        return url('storage/' . $this->attributes['file']);
     }
 }
