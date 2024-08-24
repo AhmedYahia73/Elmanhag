@@ -47,8 +47,7 @@ class LessonController extends Controller
 
             return response()->json([
                 'faield' => 'Not Found Lesson',
-                'data' => $e->getMessage(),
-            ]);
+            ],404);
         }
 
     if ($purchaseStatus == true) {
@@ -59,6 +58,7 @@ class LessonController extends Controller
                     $subjects = $student_bundle->subjects // Get Subject
                     ->where('id', $subject_id)
                     ->where('expired_date', '>=', $data_now)->first(); // Get Subject
+
                     $chapter = $subjects->chapters;
                     $student_chapter = $chapter->where('id',$chapter_id)->first();// Get Chapter
                     $lessons = $student_chapter->lessons
@@ -74,15 +74,14 @@ class LessonController extends Controller
                       ]);
             } catch (ErrorException $qe) {
                 return response()->json([
-                    'faield'=>'Some Error when Get Data',
-                    'error'=>$qe->getMessage(),
-                ]);
+                    'faield'=>'This Lesson Is Un paid',
+                ],404);
             }
         } else {
                return response()->json([
                 'data'=>'Lesson Return Successfully',
                 'lesson'=>$lesson,
-                ]);
+                ],200);
           
         }
     }
