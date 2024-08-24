@@ -107,8 +107,13 @@ class User extends Authenticatable
     public function category(){
         return $this->belongsTo(category::class, 'category_id');
     }
+
     public function parents(){
         return $this->hasMany(User::class,'student_id');
+    }
+
+    public function teacher_subjects(){
+        return $this->belongsToMany(subject::class, 'teacher_subject');
     }
 
 }
