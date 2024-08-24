@@ -42,12 +42,7 @@ class LessonController extends Controller
             // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
             $drip_content = $lesson->drip_content;
             $lesson_order = $lesson->order;
-                if($drip_content == true){
-                return $checkLesson = $this->lesson->where('order','<', $lesson_order)
-                    ->with('homework', function ($query) {
-                        $query->latest()->first();
-                          })->first(); // Start Get Leeon
-                }
+            
         } catch (ErrorException $e) {
 
             return response()->json([
