@@ -62,7 +62,7 @@ class LessonController extends Controller
                     $lessons = $student_chapter->lessons
                      ->where('id',$lesson_id)
                     ->first(); // Finaly Get Lesson for Studnet
-                        $lessons->materials ; // With Materials
+                        // $lessons->materials ; // With Materials
                       $lessons->resources ; // With Resource
                       $lessons->homework ; // With Homework
                 }
