@@ -21,6 +21,9 @@ class LessonResource extends Model
     public function getFileLinkAttribute($file){
             if($this->source == 'upload'){
                         return url('storage/' . $this->attributes['file']);
+            }else{
+            return $this->attributes['file'];
             }
+
     }
 }

@@ -34,7 +34,6 @@ class LessonController extends Controller
         $data_now = Carbon::now();
         try {
               $lesson = $this->lesson->where('id', $lesson_id)
-              ->with('materials')
               ->with('resources')
               ->with('homework')
               ->first(); // Start Get Leeon
