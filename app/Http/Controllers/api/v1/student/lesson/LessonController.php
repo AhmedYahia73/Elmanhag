@@ -40,7 +40,14 @@ class LessonController extends Controller
              $chapter_id = $lesson->chapter_id; // Start Get The chapter about Lesson
              $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
             // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
-         
+            $drip_content = $lesson->drip_content;
+            $lesson_order = $lesson->order;
+                if($drip_content == true){
+                return $checkLesson = $this->lesson->where('order','<', $lesson_order)
+                    ->with('homework', function ($query) {
+                        $query->latest()->first();
+                          })->first(); // Start Get Leeon
+                }
         } catch (ErrorException $e) {
 
             return response()->json([
