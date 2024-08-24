@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\subject;
+use App\Models\category;
 
 class SubjectController extends Controller
 {
@@ -20,6 +21,11 @@ class SubjectController extends Controller
             'users as students',
             'chapters'
         ])
+        ->get();
+        // Category
+        $categories = category::
+        where('category_id', '!=', null)
+        ->orderBy('category_id')
         ->get();
 
         foreach ($subjects as $subject) {
@@ -41,7 +47,8 @@ class SubjectController extends Controller
         }
 
         return response()->json([
-            'subjects' => $subjects
+            'subjects' => $subjects,
+            'categories' => $categories,
         ]);
 
     }
