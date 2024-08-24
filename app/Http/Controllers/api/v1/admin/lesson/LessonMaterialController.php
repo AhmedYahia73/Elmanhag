@@ -51,7 +51,7 @@ class LessonMaterialController extends Controller
             LessonResource::create([
                 'type' => 'voice', 
                 'source' => $request->voice_source, 
-                'link' => $request->voice_link, 
+                'file' => $request->voice_link, 
                 'lesson_id' => $lesson_id,
             ]);
         }
@@ -75,7 +75,7 @@ class LessonMaterialController extends Controller
             LessonResource::create([
                 'type' => 'video', 
                 'source' => $request->video_source, 
-                'link' => $request->video_link, 
+                'file' => $request->video_link, 
                 'lesson_id' => $lesson_id,
             ]);
         }
@@ -99,7 +99,7 @@ class LessonMaterialController extends Controller
             LessonResource::create([
                 'type' => 'pdf', 
                 'source' => $request->pdf_source, 
-                'link' => $request->pdf_link, 
+                'file' => $request->pdf_link, 
                 'lesson_id' => $lesson_id,
             ]);
         }
