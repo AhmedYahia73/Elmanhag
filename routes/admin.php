@@ -188,6 +188,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::controller(TeacherController::class)->group(function(){
             Route::get('/', 'teachers_list')->name('teachers.list');
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
+            Route::post('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
         });
     });
 
