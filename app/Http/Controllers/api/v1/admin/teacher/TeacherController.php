@@ -55,7 +55,7 @@ class TeacherController extends Controller
 
     public function teacher_profile_update(TeacherRequest $request, $id){ 
         // Get User Data
-        $user = User::where('id', $id)
+        $user = $this->users->where('id', $id)
         ->where('role', 'teacher')
         ->first();
         // Update Image
@@ -89,30 +89,17 @@ class TeacherController extends Controller
     protected $teacherRequest = [
         'name',
         'phone',
-        'name',
-        'name',
+        'status',
+        'email',
+        'password',
     ];
-    public function add_teacher(AddTeacherRequest $request){ 
-        // Update Image
-        if ( !empty($user) ) {
-            $image =  $this->upload($request,'image','teacher/user'); // Upload teacher image
-             
-            // $user-> = $request->name;
-            // $user-> = $request->phone;
-            // $user->status = $request->status;
-            // $user->email = $request->email;
-            // $user->role = 'teacher';
-            if ($request->filled('password')) {
-                $user->password = $request->password;
-            }
-
-            $user->save(); // Start Update Teacher Data
-
-            $user->teacher_subjects()->sync($request->subject);
-            return response()->json(['success'=>'Teacher Updated Successfully'],200); 
-        }
-        else{
-            return response()->json(['faild'=>'Teacher Is not Found'],400); 
-        }
+    public function add_teacher(AddTeacherRequest $request){
+        $teacherData = $request->only($this->teacherRequest); // Get data
+        $image =  $this->upload($request,'image','teacher/user'); // Upload teacher image
+        $teacherData['role'] = 'teacher'; // Determine role of user
+        $user = $this->users
+        ->create($teacherData); // Create teacher
+        $user->teacher_subjects()->sync($request->subject);
+        return response()->json(['success'=>'Teacher Updated Successfully'],200); 
     }
 }

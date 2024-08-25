@@ -98,7 +98,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('lesson')->group(function () {
         Route::controller(CreateLessonController::class)->group(function(){
             Route::post('/add/{sub_id}', 'create')->name('lesson.add');
-            Route::post('/update/{id}', 'modify')->name('lesson.update');
+            Route::put('/update/{id}', 'modify')->name('lesson.update');
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
         });
     });
@@ -188,7 +188,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::controller(TeacherController::class)->group(function(){
             Route::get('/', 'teachers_list')->name('teachers.list');
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
-            Route::post('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
+            Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
+            Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
         });
     });
 
