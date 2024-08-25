@@ -56,6 +56,14 @@ class CreateStudentController extends Controller
         ->first();
         // Update Image
         if ( !empty($user) ) {
+            $image =  $this->upload($request,'image','student/user'); // Upload teacher image
+          
+            // If new image is found delete old image
+            if ( !empty($image) && $image != null ) { 
+                $this->deleteImage($user->image['path']); // Delete old teacher image
+                $data['image'] = $image;
+            }
+
             $user->update($student); // Start Create New Studetn
             User::where('student_id', $id)
             ->update([
@@ -80,7 +88,7 @@ class CreateStudentController extends Controller
 
         // Remove User
         if ( !empty($user) ) {
-            $this->deleteImage($user->image);
+            $this->deleteImage($user->image['path']);
             $user->delete();
             return response()->json(['success'=>'Student Deleted Successfully'],200); 
         }

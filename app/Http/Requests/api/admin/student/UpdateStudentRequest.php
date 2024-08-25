@@ -26,8 +26,8 @@ class UpdateStudentRequest extends FormRequest
         return [
             // this request from admin for Update Student
             'name'=>['required'],
-            'phone'=>['required'],
-            'email'=>['required'],
+            'phone'=>['required', 'unique:users,phone'],
+            'email'=>['required', 'unique:users,email', 'email'],
             'parent_name'=>['required'],
             'parent_phone'=>['required'],
             'parent_email'=>['required', 'unique:users,email', 'email'],
