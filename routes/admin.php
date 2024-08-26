@@ -1,6 +1,8 @@
 <?php
 namespace Admin;
 
+use App\Http\Controllers\api\v1\lang\LangController;
+
 use App\Http\Controllers\api\v1\admin\student\CreateStudent;
 use App\Http\Controllers\api\v1\admin\student\CreateStudentController;
 use App\Http\Controllers\api\v1\admin\student\StudentsDataController;
@@ -34,6 +36,8 @@ use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
 
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
+use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
@@ -44,6 +48,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
+    // Start Module Translation
+    Route::prefix('translation')->group(function () {
+        Route::controller(LangController::class)->group(function () {
+            Route::get('/', 'languages_api')->name('translation.link');
+        });
+    });
+
     // Start Module Student Sign UP
     Route::prefix('student')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
@@ -178,6 +189,16 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/pendding/approve/{id}', 'approve_payment')->name('payment.approve');
 
             Route::get('/', 'payments')->name('payment.payments');
+        });
+    });
+
+    // Start Teacher Module
+    Route::prefix('teacher')->group(function() {
+        Route::controller(TeacherController::class)->group(function(){
+            Route::get('/', 'teachers_list')->name('teachers.list');
+            Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
+            Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
+            Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
         });
     });
 

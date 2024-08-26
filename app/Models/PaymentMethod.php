@@ -15,4 +15,9 @@ class PaymentMethod extends Model
         'description',
         'status',
     ];
+    protected $appends = ['thumbnail_link'];
+
+    public function getThumbnailLinkAttribute(){
+        return url('storage/' . $this->attributes['thumbnail']);
+    }
 }

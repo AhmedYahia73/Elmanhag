@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\subject;
 
 class category extends Model
 {
@@ -18,8 +19,17 @@ class category extends Model
         'category_id' ,
         'status' ,
     ];
+    protected $appends = ['thumbnail_link'];
 
     public function parent_category(){
         return $this->belongsTo(category::class, 'category_id');
+    }
+
+    public function subjects(){
+        return $this->hasMany(subject::class, 'category_id');
+    }
+
+    public function getThumbnailLinkAttribute(){
+        return url('storage/' . $this->attributes['thumbnail']);
     }
 }
