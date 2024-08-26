@@ -79,7 +79,7 @@ class LessonController extends Controller
                             ->orderBy('order','DESC')
                             ->with('user_homework')
                             ->where('chapter_id',$chapter_id)
-                            ->where('order','>',$lesson_order)
+                            ->where('order','<',$lesson_order)
                             ->firstOrFail();
                          $user_homework = $beforLesson->user_homework;
                            if(count($user_homework) === 0) {
@@ -99,9 +99,10 @@ class LessonController extends Controller
                       'data'=>'Lesson Return Successfully',
                       'lesson'=>$lessons,
                       ]);
-            } catch (ErrorException $qe) {
+            } catch (ErrorException $e) {
                 return response()->json([
                     'faield'=>'This Lesson Is UnAvilable',
+                    'error'=>$e->getMessage(),
                 ],404);
             }
         } else {

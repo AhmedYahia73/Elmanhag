@@ -45,6 +45,9 @@ class question extends Model
     public function chapter(){
         return $this->belongsTo(chapter::class);
     }
+    public function answers(){
+        return $this->hasMany(question_answer::class);
+    }
 
     public function getImageLinkAttribute(){
         return url('storage/' . $this->attributes['image']);

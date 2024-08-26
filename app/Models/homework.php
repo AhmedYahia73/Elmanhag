@@ -39,6 +39,9 @@ class homework extends Model
     public function category(){
         return $this->belongsTo(category::class);
     }
+    public function question_groups(){
+    return $this->hasMany(QuestionGroup::class);
+    }
 
     public function lesson(){
         return $this->belongsTo(lesson::class);
