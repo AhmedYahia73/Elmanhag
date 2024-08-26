@@ -1,6 +1,8 @@
 <?php
 namespace Admin;
 
+use App\Http\Controllers\api\v1\lang\LangController;
+
 use App\Http\Controllers\api\v1\admin\student\CreateStudent;
 use App\Http\Controllers\api\v1\admin\student\CreateStudentController;
 use App\Http\Controllers\api\v1\admin\student\StudentsDataController;
@@ -46,6 +48,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
+    // Start Module Translation
+    Route::prefix('translation')->group(function () {
+        Route::controller(StudentsDataController::class)->group(function () {
+            Route::get('/', 'languages_api')->name('translation.link');
+        });
+        Route::controller(CreateStudentController::class)->group(function () {
+            Route::post('/add', 'store')->name('student.add');
+            Route::put('/update/{id}', 'modify')->name('student.modify');
+            Route::delete('/delete/{id}', 'delete')->name('student.delete');
+        });
+    });
+
     // Start Module Student Sign UP
     Route::prefix('student')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
