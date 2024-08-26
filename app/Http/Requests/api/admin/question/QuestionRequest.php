@@ -30,7 +30,7 @@ class QuestionRequest extends FormRequest
             'chapter_id' => ['required', 'exists:chapters,id'],
             'lesson_id' => ['required', 'exists:lessons,id'],
             'semester' => ['required', 'in:first,second'],
-            'answer_type' => ['required', 'in:Mcq,T/F,Join,Essay'],
+            'answer_type' => ['required', 'in:Mcq,T/F,Join,Essay,complete'],
             'question_type' => ['required', 'in:text,image,audio'],
             'difficulty' => ['required', 'in:A,B,C'],
         ];

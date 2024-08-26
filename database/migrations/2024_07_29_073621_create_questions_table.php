@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->enum('semester', ['first', 'second']);
             $table->enum('difficulty', ['A', 'B', 'C']);
-            $table->enum('answer_type', ['Mcq', 'T/F', 'Join', 'Essay']);
+            $table->enum('answer_type', ['Mcq', 'T/F', 'Join', 'Essay', 'complete']);
             $table->enum('question_type', ['text', 'image', 'audio']);
             $table->timestamps();
         });
