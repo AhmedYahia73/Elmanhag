@@ -103,6 +103,7 @@ class User extends Authenticatable
     public function bundles(){
         return $this->belongsToMany(bundle::class, 'students_bundles');
     }
+   
 
     public function category(){
         return $this->belongsTo(category::class, 'category_id');

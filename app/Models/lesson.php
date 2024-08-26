@@ -30,5 +30,8 @@ class lesson extends Model
     public function homework(){
         return $this->hasMany(homework::class);
     }
+    public function user_homework(){
+        return $this->belongsToMany(homework::class,'users_homework');
+    }
 
 }

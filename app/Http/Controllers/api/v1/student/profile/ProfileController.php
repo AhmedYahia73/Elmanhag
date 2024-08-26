@@ -7,6 +7,7 @@ use App\Http\Requests\api\student\profile\ProfileUpdateRequest;
 use App\Models\User;
 use App\trait\image;
 use DragonCode\Support\Facades\Filesystem\File;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -46,9 +47,15 @@ class ProfileController extends Controller
         ->with('parents')
         ->where('id',$user_id )
         ->first();
-         $user->education = $user->category->name;
-         $user->country_name = $user->country->name;
-         $user->city_name = $user->city->name;
+            try {
+                       $user->education = $user->category->name;
+                       $user->country_name = $user->country->name;
+                       $user->city_name = $user->city->name;
+            } catch (QueryException $th) {
+            return response()->json([
+                'faield'=>'This user Don\'t have City  ',
+            ]);
+            }
         return response()->json([
             'success'=>'Hello '.$request->user()->name,
             'user'=>$user,

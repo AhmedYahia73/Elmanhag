@@ -8,6 +8,7 @@ use App\Models\chapter;
 use App\Models\lesson;
 use App\Models\subject;
 use ErrorException;
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -37,11 +38,15 @@ class LessonController extends Controller
               ->with('resources')
               ->with('homework')
               ->first(); // Start Get Leeon
+
+              
              $chapter_id = $lesson->chapter_id; // Start Get The chapter about Lesson
              $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
             // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
             $drip_content = $lesson->drip_content;
             $lesson_order = $lesson->order;
+
+              
             
         } catch (ErrorException $e) {
 
@@ -52,6 +57,7 @@ class LessonController extends Controller
 
     if ($purchaseStatus == true) {
    try {
+                //  $user_subject =$user->subjects->where('category_id',$category_id)->where('education_id',$education_id);
                  $user_bundle =$user->bundles->where('category_id',$category_id)->where('education_id',$education_id);
                      foreach ($user_bundle as $student_bundle) {
                     $dataNew = $student_bundle; // Get Bundle For Student
@@ -67,6 +73,27 @@ class LessonController extends Controller
                         // $lessons->materials ; // With Materials
                       $lessons->resources ; // With Resource
                       $lessons->homework ; // With Homework
+                        if($drip_content == true){
+                                try {
+                             $beforLesson = $lessons
+                            ->orderBy('order','DESC')
+                            ->with('user_homework')
+                            ->where('chapter_id',$chapter_id)
+                            ->where('order','>',$lesson_order)
+                            ->firstOrFail();
+                         $user_homework = $beforLesson->user_homework;
+                           if(count($user_homework) === 0) {
+                                return response()->json([
+                                    'faield'=>'The previous lesson was not solved.',
+                                ]);
+                           }
+                                } catch (QueryException $th) {
+                            return response()->json([
+                                'faield'=>'You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson ', 
+                            ]);
+                                }
+                 
+                }
                 }
                       return response()->json([
                       'data'=>'Lesson Return Successfully',
@@ -74,7 +101,7 @@ class LessonController extends Controller
                       ]);
             } catch (ErrorException $qe) {
                 return response()->json([
-                    'faield'=>'This Lesson Is Un paid',
+                    'faield'=>'This Lesson Is UnAvilable',
                 ],404);
             }
         } else {
