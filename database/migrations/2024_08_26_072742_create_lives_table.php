@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lives', function (Blueprint $table) {
             $table->id();
-            $table->name('name');
+            $table->string('name');
             $table->time('from');
             $table->time('to');
             $table->date('date');

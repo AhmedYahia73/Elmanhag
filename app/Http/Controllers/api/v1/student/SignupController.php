@@ -21,6 +21,8 @@ class SignupController extends Controller
    'country_id',
    'category_id',
    'role',
+   'gender',
+   'future_career',
    'parent_relation_id',
    'education_id',
    'language'

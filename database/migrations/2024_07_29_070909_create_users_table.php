@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('phone');
             $table->string('image')->nullable()->default('default.png');
             $table->enum('role',['supAdmin','admin','teacher','parent','student']);
+            $table->enum('gender',['mail','femail']);
+            $table->string('future_career');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('parent_relation_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
