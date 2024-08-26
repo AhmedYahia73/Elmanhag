@@ -30,7 +30,8 @@ class BundleRequest extends FormRequest
             'semester' => ['required', 'in:first,second'],
             'category_id' => ['required', 'exists:categories,id'],
             'education_id' => ['required', 'exists:education,id'],
-            'expired_date' => ['required', 'date']
+            'expired_date' => ['required', 'date'],
+            'status' => ['required']
         ];
     }
 
