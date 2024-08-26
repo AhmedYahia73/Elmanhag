@@ -21,6 +21,7 @@ class bundle extends Model
         'education_id'  ,
         'expired_date'  ,
         'semester'      ,
+        'status'        ,
     ];
 
     public function users(){

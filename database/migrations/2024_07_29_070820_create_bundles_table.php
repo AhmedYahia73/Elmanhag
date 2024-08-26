@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->date('expired_date');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
