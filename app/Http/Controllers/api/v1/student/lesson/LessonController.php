@@ -99,9 +99,10 @@ class LessonController extends Controller
                       'data'=>'Lesson Return Successfully',
                       'lesson'=>$lessons,
                       ]);
-            } catch (ErrorException $qe) {
+            } catch (ErrorException $e) {
                 return response()->json([
                     'faield'=>'This Lesson Is UnAvilable',
+                    'error'=>$e,
                 ],404);
             }
         } else {
