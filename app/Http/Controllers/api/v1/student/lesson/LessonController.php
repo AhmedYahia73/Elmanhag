@@ -102,7 +102,7 @@ class LessonController extends Controller
             } catch (ErrorException $e) {
                 return response()->json([
                     'faield'=>'This Lesson Is UnAvilable',
-                    'error'=>$e,
+                    'error'=>$e->getMessage(),
                 ],404);
             }
         } else {
