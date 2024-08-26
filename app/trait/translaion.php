@@ -6,8 +6,8 @@ trait translaion
 {
     public function translate( $en_name, $ar_name ){
         // Add to file translation
-        $filePath = url("lang\\ar.json"); // Get Path
-        $filePathEn = url("lang\\en.json"); // Get Path
+        $filePath = resource_path("lang\\ar.json"); // Get Path
+        $filePathEn = resource_path("lang\\en.json"); // Get Path
         if (file_exists($filePath)) {
             $lang = json_decode(file_get_contents($filePath), true);  // Get old data
             $lang[$en_name] = $ar_name; // New data
