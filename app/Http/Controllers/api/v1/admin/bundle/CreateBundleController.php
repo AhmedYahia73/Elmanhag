@@ -20,11 +20,12 @@ class CreateBundleController extends Controller
         'semester',
         'category_id',
         'education_id',
-        'expired_date'
+        'expired_date',
+        'status',
     ];
 
     public function create(BundleRequest $request){
-        // https://bdev.elmanhag.shop/admin/bundle/add?name=Bundle 1&ar_name=مجموعة 1&price=222&semester=first&category_id=5&education_id=1&expired_date=2024-10-11
+        // https://bdev.elmanhag.shop/admin/bundle/add?name=Bundle 1&ar_name=مجموعة 1&price=222&semester=first&category_id=5&education_id=1&expired_date=2024-10-11&status=1
         $bundle_data = $request->only($this->bundleRequest);
         $this->translate($bundle_data['name'], $bundle_data['ar_name']);
         bundle::create($bundle_data);
@@ -35,7 +36,7 @@ class CreateBundleController extends Controller
     }
 
     public function modify(BundleRequest $request, $id){
-        // https://bdev.elmanhag.shop/admin/bundle/update/1?name=Bundle 1&ar_name=مجموعة 1&price=222&semester=first&category_id=5&education_id=1&expired_date=2024-10-11
+        // https://bdev.elmanhag.shop/admin/bundle/update/1?name=Bundle 1&ar_name=مجموعة 1&price=222&semester=first&category_id=5&education_id=1&expired_date=2024-10-11&status=1
         $bundle_data = $request->only($this->bundleRequest);
         $this->translate($bundle_data['name'], $bundle_data['ar_name']);
         $bundle = bundle::where('id', $id)

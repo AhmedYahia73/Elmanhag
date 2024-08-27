@@ -245,7 +245,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::controller(PaymentMethodsController::class)->group(function(){
                 Route::get('/', 'show')->name('payment_methods.show');
                 Route::post('/add', 'create')->name('payment_methods.add');
-                Route::put('/update/{id}', 'modify')->name('payment_methods.update');
+                Route::post('/update/{id}', 'modify')->name('payment_methods.update');
                 Route::delete('/delete/{id}', 'delete')->name('payment_methods.delete');
             });
         });
