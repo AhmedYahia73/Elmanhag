@@ -19,6 +19,7 @@ class QuestionGroup extends Model
     public function questions(){
         return $this->belongsToMany(question::class, 'question_group_question');
     }
+  
 
     
 }
