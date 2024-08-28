@@ -34,6 +34,9 @@ use App\Http\Controllers\api\v1\admin\discount\CreateDiscountController;
 use App\Http\Controllers\api\v1\admin\promocode\PromocodeController;
 use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
 
+use App\Http\Controllers\api\v1\admin\promocode\LiveController;
+use App\Http\Controllers\api\v1\admin\promocode\CreateLiveController;
+
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
@@ -199,6 +202,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
             Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
+        });
+    });
+
+    // Start Live Module
+    Route::prefix('live')->group(function() {
+        Route::controller(LiveController::class)->group(function(){
+            Route::get('/', 'show')->name('live.show');
+        });
+        Route::controller(CreateLiveController::class)->group(function(){
+            Route::post('/add', 'create')->name('live.add');
+            Route::put('/update/{id}', 'modify')->name('live.update');
+            Route::delete('/delete/{id}', 'delete')->name('live.delete');
         });
     });
 

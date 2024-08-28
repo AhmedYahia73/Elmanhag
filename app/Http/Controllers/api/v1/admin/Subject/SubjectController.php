@@ -15,7 +15,8 @@ class SubjectController extends Controller
         $subjects = Subject::with([
             'discount',
             'category',
-            'chapters.lessons.materials'
+            'chapters.lessons.materials',
+            'users',
         ])
         ->withCount([
             'users as students',

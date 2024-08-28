@@ -28,6 +28,9 @@ class CreateSubjectController extends Controller
     ];
 
     public function create( SubjectRequest $request ){
+        // Keys
+        // name, ar_name, price, category_id, url, description, education_id
+        // status, semester, expired_date, demo_video, cover_photo, thumbnail
         $data = $request->only($this->subjectRequest); // Get Data
         $demo_video = $this->upload($request,'demo_video','admin/subjects/demo_video'); // Upload Demo Video
         $cover_photo = $this->upload($request,'cover_photo','admin/subjects/cover_photo'); // Upload Cover Photo
