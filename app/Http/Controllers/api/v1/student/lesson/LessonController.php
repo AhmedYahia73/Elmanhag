@@ -50,8 +50,8 @@ class LessonController extends Controller
                         ->with('user_homework', function ($query) {
                             $query->firstOrFail();
                         })->where('chapter_id', $chapter_id)
-                        ->where('order', '<', $lesson_order,'=','1')
-                     
+                        ->where('order', '<', $lesson_order)
+                        ->orwhere('order', '=', '1')
                         ->first();
                         if(empty($beforLesson)){
                                 return response()->json([
