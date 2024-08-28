@@ -20,6 +20,8 @@ class ProfileController extends Controller
                'password',
                'phone',
                'city_id',
+               'sudent_jobs_id',
+               'gender',
                'country_id',
                'category_id',
                'role',
@@ -76,6 +78,8 @@ class ProfileController extends Controller
                 $user->role = 'student';
                 $image_path = $this->upload($request, 'image', 'student/user');
                 $user->image = $image_path ?? $user->image['path'];
+                $user->country_id = $updateProfile['country_id']?? $user->country_id;
+                $user->category_id = $updateProfile['category_id']?? $user->category_id;
                 $user->save();
                 if($image_path){
                 $this->deleteImage($user->image['path']);
