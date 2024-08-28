@@ -11,7 +11,9 @@ class LiveController extends Controller
 {
     public function __construct(private Live $live){}
     public function show(){
-        $live = $this->live->get();
+        $live = $this->live
+        ->with(['subject', 'teacher'])
+        ->get();
 
         return response()->json([
             'live' => $live
