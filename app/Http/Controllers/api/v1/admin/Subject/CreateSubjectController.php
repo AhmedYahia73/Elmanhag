@@ -24,7 +24,8 @@ class CreateSubjectController extends Controller
         'education_id',
         'status',
         'semester',
-        'expired_date'
+        'expired_date',
+        'tags'
     ];
 
     public function create( SubjectRequest $request ){

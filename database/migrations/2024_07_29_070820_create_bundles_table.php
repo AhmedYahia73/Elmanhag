@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('price');
+            $table->string('tags')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('cover_photo')->nullable();
+            $table->string('demo_video')->nullable();
+            $table->string('url')->nullable();
+            $table->text('description')->nullable();
             $table->enum('semester', ['first', 'second']);
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
