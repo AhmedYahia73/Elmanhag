@@ -61,7 +61,7 @@ class LessonController extends Controller
                     if (count($user_homework) === 0) {
                         return response()->json([
                             'lesson_not_solved' => 'The previous lesson was not solved.',
-                        ], 400);
+                        ], 500);
                     }
                 } catch (QueryException $th) {
                     return response()->json([
@@ -84,9 +84,9 @@ class LessonController extends Controller
                 if( empty($user_subject) ){
                         return response()->json([
                         'faield'=>'This Lesson Unpaid',
-                        ]);
+                        ],400);
                 }
-                $chapter =   $user_subject->chapters->where('id', $chapter_id);
+                $chapter =   $user_subject->chapters->where('id', $chapter_id)->first();
                 $lessons = $chapter->lessons->where('id', $lesson_id)->first();
                 $lessons->resources; // With Resource
                 $lessons->homework; // With Homework
@@ -102,7 +102,7 @@ class LessonController extends Controller
                             return response()->json([
                                 'not_found'=>'This Bundle Don\'t Have Subject',
                                 'error'=>$queryException->getMessage(),
-                            ]);
+                            ],400);
                         }
                     $student_chapter = $chapter->where('id', $chapter_id)->first(); // Get Chapter
                     $lessons = $student_chapter->lessons
