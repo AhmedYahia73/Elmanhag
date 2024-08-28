@@ -12,6 +12,7 @@ use App\Models\bundle;
 
 class CreateBundleController extends Controller
 {
+    use image;
     use translaion;
     protected $bundleRequest = [
         'name',
