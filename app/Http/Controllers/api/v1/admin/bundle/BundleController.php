@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\bundle;
 use App\Models\Education;
+use App\Models\subject;
 
 class BundleController extends Controller
 {
@@ -31,10 +32,13 @@ class BundleController extends Controller
                 break;
             }
         }
+        $subjects = subject::get();
+
 
         return response()->json([
             'bundles' => $bundles,
-            'education' => $education
+            'education' => $education,
+            'subjects' => $subjects
         ]);
     }
 }
