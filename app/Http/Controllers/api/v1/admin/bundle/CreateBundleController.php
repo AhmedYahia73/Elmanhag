@@ -40,9 +40,9 @@ class CreateBundleController extends Controller
         $cover_photo = $this->upload($request,'cover_photo','admin/bundles/cover_photo'); // Upload Cover Photo
         $thumbnail = $this->upload($request,'thumbnail','admin/bundles/thumbnail'); // Upload thumbnail
         $this->translate($bundle_data['name'], $bundle_data['ar_name']);
-        $data['demo_video'] = $demo_video;
-        $data['cover_photo'] = $cover_photo;
-        $data['thumbnail'] = $thumbnail;
+        $bundle_data['demo_video'] = $demo_video;
+        $bundle_data['cover_photo'] = $cover_photo;
+        $bundle_data['thumbnail'] = $thumbnail;
         $bundle = $this->bundle->create($bundle_data);
         $bundle->subjects()->sync($request->subjects);
 
@@ -68,17 +68,17 @@ class CreateBundleController extends Controller
         // If new Video is found delete old image
         if ( !empty($demo_video) && $demo_video != null ) {
             $this->deleteImage($bundle->demo_video);
-            $data['demo_video'] =$demo_video; // Image Value From traid Image 
+            $bundle_data['demo_video'] =$demo_video; // Image Value From traid Image 
         }
         // If new image is found delete old image
         if ( !empty($cover_photo) && $cover_photo != null ) {
             $this->deleteImage($bundle->cover_photo);
-            $data['cover_photo'] =$cover_photo; // Image Value From traid Image 
+            $bundle_data['cover_photo'] =$cover_photo; // Image Value From traid Image 
         }
         // If new image is found delete old image
         if ( !empty($thumbnail) && $thumbnail != null ) {
             $this->deleteImage($bundle->thumbnail);
-            $data['thumbnail'] =$thumbnail; // Image Value From traid Image 
+            $bundle_data['thumbnail'] =$thumbnail; // Image Value From traid Image 
         }
         $bundle->update($bundle_data);
 
