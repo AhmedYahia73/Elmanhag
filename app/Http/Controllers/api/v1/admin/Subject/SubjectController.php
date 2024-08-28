@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\subject;
 use App\Models\category;
+use App\Models\Education;
 
 class SubjectController extends Controller
 {
@@ -23,6 +24,8 @@ class SubjectController extends Controller
             'chapters'
         ])
         ->get();
+        // Education
+        $education = Education::get();
         // Category
         $categories = category::
         where('category_id', '!=', null)
@@ -50,6 +53,7 @@ class SubjectController extends Controller
         return response()->json([
             'subjects' => $subjects,
             'categories' => $categories,
+            'education' => $education,
         ]);
 
     }

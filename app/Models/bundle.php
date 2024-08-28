@@ -17,6 +17,12 @@ class bundle extends Model
     protected $fillable = [
         'name'          ,
         'price'         ,
+        'tags'          ,
+        'thumbnail'     ,
+        'cover_photo'   ,
+        'demo_video'    ,
+        'url'           ,
+        'description'   ,
         'category_id'   ,
         'education_id'  ,
         'expired_date'  ,
