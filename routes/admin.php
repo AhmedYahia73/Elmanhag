@@ -131,7 +131,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         Route::controller(CreateBundleController::class)->group(function(){
             Route::post('/add', 'create')->name('bundle.add');
-            Route::post('/update/{id}', 'modify')->name('bundle.update');
+            Route::put('/update/{id}', 'modify')->name('bundle.update');
             Route::delete('/delete/{id}', 'delete')->name('bundle.delete');
         });
     });
