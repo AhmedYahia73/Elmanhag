@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\bundle;
+use App\Models\Education;
 
 class BundleController extends Controller
 {
@@ -17,6 +18,8 @@ class BundleController extends Controller
         ->withCount('users')
         ->withCount('subjects')
         ->get();
+        // Education
+        $education = Education::get();
         foreach ($bundles as $bundle) {
             // Manually add price after discount
             foreach ($bundle->discount as $discount) {
@@ -30,7 +33,8 @@ class BundleController extends Controller
         }
 
         return response()->json([
-            'bundles' => $bundles
+            'bundles' => $bundles,
+            'education' => $education
         ]);
     }
 }
