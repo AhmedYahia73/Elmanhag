@@ -51,7 +51,6 @@ class LessonController extends Controller
                             $query->firstOrFail();
                         })->where('chapter_id', $chapter_id)
                         ->where('order', '<', $lesson_order)
-                        ->orwhere('order', '=', '1')
                         ->first();
                         if(empty($beforLesson)){
                                 return response()->json([
