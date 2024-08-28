@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
-class userFactory extends Factory
+class UserFactory extends Factory
 {
     /**
      * The current password being used by the factory.
@@ -33,6 +33,8 @@ class userFactory extends Factory
             'email_verified_at' => now(),
             'role' => $this->faker->randomElement(['student','admin']),
             'phone' => fake()->unique()->phoneNumber(),
+            'gender' => $this->faker->randomElement(['mail','femail']),
+            'future_career'=>'Flutter Developer',
             'image' => 'student/user/default.png',
             'status' => $this->faker->randomElement(['1','0']),
             'password' => '12345678',
