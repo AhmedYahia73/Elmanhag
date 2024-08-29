@@ -34,8 +34,8 @@ use App\Http\Controllers\api\v1\admin\discount\CreateDiscountController;
 use App\Http\Controllers\api\v1\admin\promocode\PromocodeController;
 use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
 
-use App\Http\Controllers\api\v1\admin\promocode\LiveController;
-use App\Http\Controllers\api\v1\admin\promocode\CreateLiveController;
+use App\Http\Controllers\api\v1\admin\live\LiveController;
+use App\Http\Controllers\api\v1\admin\live\CreateLiveController;
 
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 

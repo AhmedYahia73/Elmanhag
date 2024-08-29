@@ -8,9 +8,12 @@ use App\trait\image;
 use App\Http\Requests\api\admin\question\QuestionRequest;
 
 use App\Models\question;
+use App\Models\question_answer;
 
 class CreateQuestionController extends Controller
 {
+    public function __construct(private question $question, 
+    private question_answer $question_answer){}
     use image;
     protected $questionRequest = [
         'question',
@@ -24,6 +27,7 @@ class CreateQuestionController extends Controller
         'answer_type',
         'question_type',
     ];
+
     public function create(QuestionRequest $request){
         // https://bdev.elmanhag.shop/admin/question/add 
         // keys => question, image, audio, status, category_id, subject_id, chapter_id, lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
@@ -36,7 +40,7 @@ class CreateQuestionController extends Controller
             $audio_path = $this->upload($request, 'audio', 'admin/questions/audio'); // Upload audio
             $question_data['audio'] = $audio_path;
         }
-        question::create($question_data); // Create Question
+        $this->question->create($question_data); // Create Question
 
         return response()->json([
             'success' => 'You add data success'
@@ -47,7 +51,7 @@ class CreateQuestionController extends Controller
         // https://bdev.elmanhag.shop/admin/question/update/{id}
         // keys => question, image, audio, status, category_id, subject_id, chapter_id, lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
         $question_data = $request->only($this->questionRequest); // Get request
-        $question = question::where('id', $id)
+        $question = $this->question->where('id', $id)
         ->first(); //Get Question
         if ( $question_data['question_type'] == 'image' ) { // if request send image
             $image_path = $this->upload($request, 'image', 'admin/questions/image'); // Upload image
