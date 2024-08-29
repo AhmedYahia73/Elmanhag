@@ -15,6 +15,7 @@ class LiveController extends Controller
     private User $users, private subject $subject){}
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/live
         $live = $this->live
         ->with(['subject', 'teacher'])
         ->get();
