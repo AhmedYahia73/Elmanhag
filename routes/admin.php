@@ -89,7 +89,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         Route::controller(CreateSubjectController::class)->group(function(){
             Route::post('/add', 'create')->name('subject.add');
-            Route::put('/update/{id}', 'modify')->name('subject.update');
+            Route::post('/update/{id}', 'modify')->name('subject.update');
             Route::delete('/delete/{id}', 'delete')->name('subject.delete');
         });
     });
