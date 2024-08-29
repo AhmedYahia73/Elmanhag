@@ -11,24 +11,38 @@ use App\Models\Education;
 
 class SubjectController extends Controller
 {
+    public function __construct(private subject $subject, 
+    private category $category, private Education $education ){}
+
     public function show(){
         // Get data
-        $subjects = Subject::with([
+        $subjects = $this->subject
+        ->with([
             'discount',
             'category',
             'chapters.lessons.materials',
             'users',
+            'bundles.users',
         ])
         ->withCount([
-            'users as students',
             'chapters'
         ])
         ->get();
+
+        // Add students from bundels and subjects at users
+        foreach ($subjects as $item) {
+            $arr = $item->users;
+            foreach ($item->bundles as $element) {
+                $arr = $arr->merge($element->users);
+            }
+            $item->students = $arr;
+            $item->students_count = count($arr);
+        }
         // Education
-        $education = Education::get();
+        $education = $this->education->get();
         // Category
-        $categories = category::
-        where('category_id', '!=', null)
+        $categories = $this->category
+        ->where('category_id', '!=', null)
         ->orderBy('category_id')
         ->get();
 
@@ -55,6 +69,10 @@ class SubjectController extends Controller
             'categories' => $categories,
             'education' => $education,
         ]);
+
+    }
+
+    public function subject_progress(){
 
     }
 }

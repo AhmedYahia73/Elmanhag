@@ -47,6 +47,8 @@ class User extends Authenticatable
         'status',
     ];
 
+    protected $appends = ['image_link'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -90,13 +92,8 @@ class User extends Authenticatable
         return $this->belongsTo(city::class);
     }
 
-    public function getimageAttribute($data){
-    
-        return $this->image = [
-            'path'=>$data,
-            'url'=> url('storage/'.$data) ?? url('storage/'.'default.png'),
-        ];
-   
+    public function getImageLinkAttribute(){
+        return url('storage/' . $this->attributes['image']);
     }
 
     public function subjects(){

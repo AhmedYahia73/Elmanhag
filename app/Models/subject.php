@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Discount;
 use App\Models\category;
 use App\Models\chapter;
+use App\Models\bundle;
 
 class subject extends Model
 {
@@ -30,9 +31,14 @@ class subject extends Model
     ];
     protected $appends = ['demo_video_url','cover_photo_url','thumbnail_url'];
 
+    public function bundles(){
+        return $this->belongsToMany(bundle::class, 'bundles_subjects');
+    }
+    
     public function users(){
         return $this->belongsToMany(User::class, 'students_subjects');
     }
+    
        
          public function getDemoVideoUrlAttribute(){
         return url('storage/' . $this->attributes['demo_video']) ?? url('storage/' . 'default.png');
