@@ -34,7 +34,6 @@ class UserFactory extends Factory
             'role' => $this->faker->randomElement(['student','admin']),
             'phone' => fake()->unique()->phoneNumber(),
             'gender' => $this->faker->randomElement(['mail','femail']),
-            'future_career'=>'Flutter Developer',
             'image' => 'student/user/default.png',
             'status' => $this->faker->randomElement(['1','0']),
             'password' => '12345678',

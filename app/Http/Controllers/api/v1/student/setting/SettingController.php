@@ -9,6 +9,7 @@ use App\Models\Education;
 use Illuminate\Http\Request;
 use App\Models\ParentRelation;
 use App\Http\Controllers\Controller;
+use App\Models\StudentJob;
 
 class SettingController extends Controller
 {
@@ -21,6 +22,7 @@ class SettingController extends Controller
         private category $category,
         private Education $education,
         private ParentRelation $parentRelation,
+        private StudentJob $studentJobs,
     ){}
 
     public function show(){
@@ -29,6 +31,7 @@ class SettingController extends Controller
         $category = $this->category::orderBy('name')->get();
         $education = $this->education::orderBy('name')->get();
         $parentRelation = $this->parentRelation::orderBy('name')->get();
+        $studentJobs = $this->studentJobs::get();
         
 
         return response()->json(
@@ -39,7 +42,7 @@ class SettingController extends Controller
             'category'=>$category,
             'education'=>$education,
             'parentRelation'=>$parentRelation,
-        ]
-        );
+            'studentJobs'=>$studentJobs,
+        ],200);
     }
 }

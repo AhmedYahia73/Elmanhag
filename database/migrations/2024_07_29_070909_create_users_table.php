@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('image')->nullable()->default('default.png');
             $table->enum('role',['supAdmin','admin','teacher','parent','student']);
             $table->enum('gender',['mail','femail']);
-            $table->foreignId('sudent_jobs_id')->nullable()->constrained()->nullOnDelete();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('parent_relation_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
@@ -28,6 +27,7 @@ return new class extends Migration
             $table->foreignId('city_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('student_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('sudent_job_id')->constrained('student_jobs');
             $table->boolean('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
