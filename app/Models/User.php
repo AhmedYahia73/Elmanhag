@@ -13,6 +13,7 @@ use App\Models\bundle;
 use App\Models\category;
 use App\Models\country;
 use App\Models\city;
+use App\Models\homework;
 use App\Models\Education;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 
@@ -118,6 +119,10 @@ class User extends Authenticatable
     }
     public function studentJobs(){
         return $this->belongsToMany(StudentJob::class,'student_jobs');
+    }
+    public function user_homework(){
+        return $this->belongsToMany(homework::class,'users_homework')
+        ->withPivot(['score', 'lesson_id']);
     }
 
 }
