@@ -86,6 +86,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('subject')->group(function () {
         Route::controller(SubjectController::class)->group(function(){
             Route::get('/', 'show')->name('subject.show');
+            Route::get('/progress/{id}', 'subject_progress')->name('subject.progress');
         });
         Route::controller(CreateSubjectController::class)->group(function(){
             Route::post('/add', 'create')->name('subject.add');
