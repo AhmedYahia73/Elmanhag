@@ -41,9 +41,10 @@ class LessonController extends Controller
             $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
             // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
             $drip_content = $lesson->drip_content;
+            $order = $lesson->order;
             $lesson_order = $lesson->order;
             //  Geck Previos 
-            if ($drip_content == true) {
+            if ($drip_content == true && $order   > 1) {
                 try {
                     $beforLesson = $lesson
                         ->orderBy('order', 'DESC')

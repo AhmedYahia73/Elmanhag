@@ -46,6 +46,7 @@ class ProfileController extends Controller
         $user_id = $request->user()->id;
         $user = $request->user()
         ->with('parents')
+        ->with('studentJobs')
         ->where('id',$user_id )
         ->first();
             try {
