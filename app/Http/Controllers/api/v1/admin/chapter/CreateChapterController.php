@@ -21,6 +21,8 @@ class CreateChapterController extends Controller
     
     public function create(ChapterRequest $request, $sub_id){
         // https://bdev.elmanhag.shop/admin/chapter/add/{$sub_id}
+        // Keys
+        // name, ar_name, cover_photo, thumbnail
         $chapter = $request->only($this->chapterRequest); // Get Date
         $cover_photo = $this->upload($request, 'cover_photo', 'admin/chapters/cover_photo'); // Upload cover photo
         $thumbnail = $this->upload($request, 'thumbnail', 'admin/chapters/thumbnail'); // Upload thumbnail
@@ -37,6 +39,8 @@ class CreateChapterController extends Controller
 
     public function modify(ChapterRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/chapter/update/{$id}
+        // Keys
+        // name, ar_name, cover_photo, thumbnail
         $chapterData = $request->only($this->chapterRequest); // Get Date
         $chapter = chapter::where('id', $id)
         ->first();
