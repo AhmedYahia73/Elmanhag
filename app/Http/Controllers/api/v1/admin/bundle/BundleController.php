@@ -15,6 +15,7 @@ class BundleController extends Controller
         // https://bdev.elmanhag.shop/admin/bundle
         $bundles = bundle::
         with('category')
+        ->with('subjects')
         ->with('discount')
         ->withCount('users')
         ->withCount('subjects')
