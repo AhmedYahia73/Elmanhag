@@ -33,16 +33,16 @@ class CreateStudentController extends Controller
     public function store(StudentRequest $request){
         $newStudent =  $request->only($this->studentRequest); // Take only Request From Protected studentRequest names 
         $newStudent['role'] = 'student'; // Type Of User
-        $user = $this->user->create($newStudent); // Start Create New Studetn
         $parent = $this->user->create([
             'name' => $request->parent_name,
             'email' => $request->parent_email,
             'password' => $request->parent_password,
             'phone' => $request->parent_phone,
             'role' => 'parent',
-            'student_id' => $user->id,
             'parent_relation_id' => $request->relation_id,
         ]); // Start Create Parent
+        $newStudent['parent_id'] = $parent->id;
+        $user = $this->user->create($newStudent); // Start Create New Studetn
         return response()->json(['success'=>'Student Created Successfully'],200); 
     }
     
@@ -65,7 +65,7 @@ class CreateStudentController extends Controller
             }
 
             $user->update($student); // Start Create New Studetn
-            User::where('student_id', $id)
+            User::where('parent_id', $id)
             ->update([
                 'name' => $request->parent_name,
                 'phone' => $request->parent_phone,
