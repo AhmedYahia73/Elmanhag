@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\payment\PaymentController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,10 @@ Route::controller(SignupController::class)->prefix('admin')->group(function () {
 });
 Route::controller(ProfileAdminController::class)->prefix('admin')->group(function () {
     Route::get('profile/view','view')->name('profile.admin')->middleware('auth:sanctum');
+});
+
+Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+    Route::post('fawry','payment')->name('payment.fawry');
 });
 
 
