@@ -15,6 +15,7 @@ class SubjectController extends Controller
     private category $category, private Education $education ){}
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/subject
         // Get data
         $subjects = $this->subject
         ->with([
