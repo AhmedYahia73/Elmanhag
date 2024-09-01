@@ -20,6 +20,7 @@ class CreateChapterController extends Controller
     use translaion;
     
     public function create(ChapterRequest $request, $sub_id){
+        // https://bdev.elmanhag.shop/admin/chapter/add/{$sub_id}
         $chapter = $request->only($this->chapterRequest); // Get Date
         $cover_photo = $this->upload($request, 'cover_photo', 'admin/chapters/cover_photo'); // Upload cover photo
         $thumbnail = $this->upload($request, 'thumbnail', 'admin/chapters/thumbnail'); // Upload thumbnail
@@ -35,6 +36,7 @@ class CreateChapterController extends Controller
     }
 
     public function modify(ChapterRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/chapter/update/{$id}
         $chapterData = $request->only($this->chapterRequest); // Get Date
         $chapter = chapter::where('id', $id)
         ->first();
@@ -61,6 +63,7 @@ class CreateChapterController extends Controller
     }
     
     public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/chapter/delete/{$id}
         $chapter = chapter::where('id', $id)
         ->first();
         $this->deleteImage($chapter->cover_photo);

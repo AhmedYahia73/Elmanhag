@@ -98,7 +98,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     // Start Chapter Module
     Route::prefix('chapter')->group(function () {
         Route::controller(ChapterController::class)->group(function(){
-            Route::get('/', 'show')->name('subject.show');
+            Route::get('/{subject_id}', 'show')->name('subject.show');
         });
         Route::controller(CreateChapterController::class)->group(function(){
             Route::post('/add/{sub_id}', 'create')->name('subject.add');
