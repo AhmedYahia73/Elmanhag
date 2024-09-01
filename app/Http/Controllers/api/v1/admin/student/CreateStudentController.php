@@ -66,7 +66,7 @@ class CreateStudentController extends Controller
             }
 
             $user->update($student); // Start Create New Studetn
-            User::where('parent_id', $id)
+            User::where('id', $user->parent_id)
             ->update([
                 'name' => $request->parent_name,
                 'phone' => $request->parent_phone,
