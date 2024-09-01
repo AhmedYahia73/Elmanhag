@@ -77,12 +77,13 @@ class ProfileController extends Controller
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
                 $user->role = 'student';
                 $image_path = $this->upload($request, 'image', 'student/user');
-                $user->image = $image_path ?? $user->image['path'];
+                $user->image = $image_path ?? $user->image;
+                $user->city_id = $updateProfile['city_id']?? $user->city_id;
                 $user->country_id = $updateProfile['country_id']?? $user->country_id;
                 $user->category_id = $updateProfile['category_id']?? $user->category_id;
                 $user->save();
                 if($image_path){
-                $this->deleteImage($user->image['path']);
+                $this->deleteImage($user->image);
                 }
                         return response()->json([
                             'success'=>'Data Updated Successfully',
