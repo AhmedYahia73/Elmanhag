@@ -29,6 +29,7 @@ class CreateSubjectController extends Controller
     ];
 
     public function create( SubjectRequest $request ){
+        // https://bdev.elmanhag.shop/admin/subject/add
         // Keys
         // name, ar_name, price, category_id, url, description, education_id
         // status, semester, expired_date, demo_video, cover_photo, thumbnail
@@ -48,6 +49,10 @@ class CreateSubjectController extends Controller
     }
     
     public function modify( SubjectRequest $request, $id ){
+        // https://bdev.elmanhag.shop/admin/subject/update/{id}
+        // Keys
+        // name, ar_name, price, category_id, url, description, education_id
+        // status, semester, expired_date, demo_video, cover_photo, thumbnail
         $data = $request->only($this->subjectRequest); // Get Data
         $subject = subject::where('id', $id)
         ->first();
@@ -78,6 +83,7 @@ class CreateSubjectController extends Controller
     }
     
     public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/subject/delete/{id}
         $subject = subject::where('id', $id)
         ->first();    
         $this->deleteImage($subject->demo_video);
