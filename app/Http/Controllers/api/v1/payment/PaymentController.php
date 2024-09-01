@@ -39,7 +39,7 @@ class PaymentController extends Controller
 //    $items  = $requestPayment['chargeItems'];
 
       response()->json($requestPayment);
- $response = Http::dd()->post('https://www.atfawry.com/ECommerceWeb/Fawry/payments/charge', $requestPayment);
+ $response = Http::post('https://www.atfawry.com/ECommerceWeb/Fawry/payments/charge', $requestPayment);
         return $response->body();
 
        
