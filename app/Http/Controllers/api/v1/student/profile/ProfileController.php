@@ -43,7 +43,6 @@ class ProfileController extends Controller
     // This Controller About Profile Student
     use image;
     public function profile(Request $request){
-        // dd(Auth::user());
         $user_id = $request->user()->id;
         $user = $request->user()
         ->with('parents')
