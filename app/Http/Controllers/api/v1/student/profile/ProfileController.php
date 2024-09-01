@@ -36,7 +36,7 @@ class ProfileController extends Controller
          'parent_password',
          'parent_phone' ,
          'parent_role' ,
-         'student_id' ,
+         'parent_id' ,
          'parent_relation_id',
          ];
     public function __construct(private User $user){}

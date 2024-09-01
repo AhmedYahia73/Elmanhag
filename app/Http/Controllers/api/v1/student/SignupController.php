@@ -33,7 +33,7 @@ class SignupController extends Controller
     'parent_password',
     'parent_phone'  ,
     'parent_role' ,
-    'student_id' ,
+    'parent_id' ,
     'parent_relation_id',
     ];
     // This Controller About Create New Student
@@ -46,7 +46,7 @@ class SignupController extends Controller
         $user = $this->user->create($newStudent); // Start Create New Student
         if($this->parentRequest){
             $newParent = $request->only($this->parentRequest);
-              $newParent['student_id'] = $user->id;
+              $newParent['parent_id'] = $user->id;
               $newParent['role'] = 'parent';
               $parent = $this->user->create([
               'name' => $newParent['parent_name'],
@@ -54,7 +54,7 @@ class SignupController extends Controller
               'password' => $newParent['parent_password'],
               'phone' => $newParent['parent_phone'],
               'role' => 'parent',
-              'student_id' => $newParent['student_id'],
+              'parent_id' => $newParent['parent_id'],
               'parent_relation_id' => $newParent['parent_relation_id'],
               ]); // Start Create Parent
         }

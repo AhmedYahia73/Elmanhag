@@ -8,4 +8,5 @@ abstract class Controller
 {
     //
      use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+     
 }
