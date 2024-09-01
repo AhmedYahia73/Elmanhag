@@ -33,15 +33,28 @@ class CreateStudentController extends Controller
     public function store(StudentRequest $request){
         // https://bdev.elmanhag.shop/admin/student/add?name=Ahmed&phone=146345&email=ahmed@gmail.com&parent_name=Aziz&parent_phone=167556&parent_email=sdfsdggbh@gmail.com&parent_password=123&category_id=1&education_id=39&password=123&country_id=71&city_id=42&status=1&relation_id=1
         $newStudent =  $request->only($this->studentRequest); // Take only Request From Protected studentRequest names 
-        $parent = $this->user->create([
-            'name' => $request->parent_name,
-            'email' => $request->parent_email,
-            'password' => $request->parent_password,
-            'phone' => $request->parent_phone,
-            'role' => 'parent',
-            'parent_relation_id' => $request->relation_id,
-        ]); // Start Create Parent
-        $newStudent['parent_id'] = $parent->id;
+        $parent =  $this->user->where('email', $request->parent_email)
+        ->first();
+        if (!empty($parent) && $parent->role == 'parent') {
+            $newStudent['parent_id'] = $parent->id;
+        } 
+        elseif (!empty($parent)) {
+            return response()->json([
+                'faild' => 'Parent Email exists his role not as parent'
+            ]);
+        }
+        else {
+            $parent = $this->user->create([
+                'name' => $request->parent_name,
+                'email' => $request->parent_email,
+                'password' => $request->parent_password,
+                'phone' => $request->parent_phone,
+                'role' => 'parent',
+                'parent_relation_id' => $request->relation_id,
+            ]); // Start Create Parent
+            $newStudent['parent_id'] = $parent->id;
+        }
+        
         $newStudent['role'] = 'student'; // Type Of User
         $user = $this->user->create($newStudent); // Start Create New Studetn
         return response()->json(['success'=>'Student Created Successfully'],200); 
