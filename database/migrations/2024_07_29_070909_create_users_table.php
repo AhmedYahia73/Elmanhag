@@ -22,11 +22,13 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('parent_relation_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('password');
+            $table->string('affilate_code')->nullable();
             $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('country_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('city_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('parent_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('affilate_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('sudent_job_id')->nullable()->constrained('student_jobs');
             $table->boolean('status')->default(1);
             $table->rememberToken();
