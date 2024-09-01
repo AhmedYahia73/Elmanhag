@@ -40,11 +40,13 @@ class User extends Authenticatable
         'country_id',
         'city_id',
         'parent_id',
+        'affilate_id',
         'remember_token',
         'parent_relation_id',
         'category_id',
         'education_id',
         'image',
+        'affilate_code',
         'status',
     ];
 

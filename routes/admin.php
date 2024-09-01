@@ -41,6 +41,8 @@ use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 
+use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
+
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
@@ -215,6 +217,13 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'create')->name('live.add');
             Route::put('/update/{id}', 'modify')->name('live.update');
             Route::delete('/delete/{id}', 'delete')->name('live.delete');
+        });
+    });
+
+    // Start Affilate Module
+    Route::prefix('affilate')->group(function() {
+        Route::controller(AffilateController::class)->group(function(){
+            Route::get('/', 'affilate')->name('affilate.affilate');
         });
     });
 

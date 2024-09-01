@@ -27,7 +27,8 @@ class CreateLessonController extends Controller
     ];
 
     public function create( LessonRequest $request, $ch_id ){
-        //Keys 
+        // https://bdev.elmanhag.shop/admin/lesson/add/{chapter_id}  
+        // Keys 
         // name, ar_name, description, paid, status, order, drip_content
         // voice[], voice_link[]
         // voice_source[] لما يكون link فقط

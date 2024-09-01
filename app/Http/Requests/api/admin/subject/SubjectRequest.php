@@ -30,7 +30,7 @@ class SubjectRequest extends FormRequest
             'expired_date' => ['required'],
             'semester' => ['required'],
             'status' => ['required'],
-            'expired_date' => ['date'],
+            'expired_date' => ['date', 'required'],
             'semester' => ['in:first,second']
         ];
     }
