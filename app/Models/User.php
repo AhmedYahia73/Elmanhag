@@ -111,7 +111,7 @@ class User extends Authenticatable
     }
 
     public function parents(){
-        return $this->belongsTo(User::class,'parent_relation_id');
+        return $this->belongsTo(ParentRelation::class,'parent_relation_id');
     }
 
     public function teacher_subjects(){
