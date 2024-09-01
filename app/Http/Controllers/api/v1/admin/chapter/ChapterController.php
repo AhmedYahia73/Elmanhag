@@ -9,11 +9,12 @@ use App\Models\chapter;
 
 class ChapterController extends Controller
 {
-    public function show(){
-        $chapters = chapter::
-        with('subject')
+    public function __construct(private chapter $chapter){}
+    public function show($subject_id){
+        $chapters = $this->chapter
+        ->with('subject')
         ->with('lessons')
-        ->orderBy('subject_id')
+        ->where('subject_id', $subject_id)
         ->get();
 
         return response()->json([
