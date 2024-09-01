@@ -39,7 +39,7 @@ class User extends Authenticatable
         'password',
         'country_id',
         'city_id',
-        'student_id',
+        'parent_id',
         'remember_token',
         'parent_relation_id',
         'category_id',
