@@ -52,9 +52,28 @@ class CreateStudentController extends Controller
         // Take only Request From Protected studentRequest names 
         $student =  $request->only($this->studentRequest); 
         // Get User Data
-        $user = User::where('id', $id)
+        $user = $this->user->where('id', $id)
         ->where('role', 'student')
         ->first();
+        $student_email = $this->user->where('id', '!=', $id)
+        ->where('email', $request->email)
+        ->first();
+        $parent_email = $this->user->where('id', '!=', $user->parent_id)
+        ->where('email', $request->parent_email)
+        ->first();
+        // Check if student email is exist
+        if (!empty($student_email)) {
+            return response()->json([
+                'faild' => 'Student email is exist'
+            ]);
+        }
+        // Check if parent email is exist
+        if (!empty($parent_email)) {
+            return response()->json([
+                'faild' => 'Parent email is exist'
+            ]);
+        }
+
         // Update Image
         if ( !empty($user) ) {
             $image =  $this->upload($request,'image','student/user'); // Upload teacher image
