@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use App\Http\Middleware\StudentMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Auth\AuthenticationException;
 
 return Application::configure(basePath: dirname(__DIR__))
 
@@ -30,11 +32,21 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'IsStudent' => StudentMiddleware::class,
-             'IsAdmin'=> AdminMiddleware::class
+            'IsAdmin' => AdminMiddleware::class
         ]);
-       
+         $middleware->redirectGuestsTo(function (Request $request) {
+            if (!$request->is('api/*')) {
+                return route('unauthorized');
+            } 
+        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-        
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], 401);
+            }
+        });
     })->create();

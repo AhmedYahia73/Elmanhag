@@ -12,6 +12,8 @@ use App\Http\Controllers\api\v1\student\SignupController;
 use App\Http\Controllers\api\v1\student\profile\ProfileController;
 use App\Http\Controllers\api\v1\student\subject\SubjectController ;
 
+
+
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
         Route::post('signup/create','store')->name('student.signup');

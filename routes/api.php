@@ -18,12 +18,12 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::middleware('auth:sanctum')->prefix('Student')->group(function () {
-    Route::controller(ProfileStudentController::class)->prefix('Profile')->group(function () {
-        Route::get('/','index')->name('stu_profile');
-        Route::post('/Update','update_profile')->name('stu_update_profile');
-    });
-});
+// Route::middleware('auth:sanctum')->prefix('Student')->group(function () {
+//     Route::controller(ProfileStudentController::class)->prefix('Profile')->group(function () {
+//         Route::get('/','index')->name('stu_profile');
+//         Route::post('/Update','update_profile')->name('stu_update_profile');
+//     });
+// });
 
 Route::controller(LoginController::class)->prefix('admin')->group(function () {
     Route::post('auth/login','login')->name('login'); 
@@ -41,3 +41,8 @@ Route::controller(SignupController::class)->prefix('admin')->group(function () {
 Route::controller(ProfileAdminController::class)->prefix('admin')->group(function () {
     Route::get('profile/view','view')->name('profile.admin')->middleware('auth:sanctum');
 });
+
+
+Route::get('/unauthorized', function () {
+return response()->json(['error'=>'Unauthorized'],401);
+})->name('unauthorized');

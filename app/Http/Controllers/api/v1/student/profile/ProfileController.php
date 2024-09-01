@@ -36,7 +36,7 @@ class ProfileController extends Controller
          'parent_password',
          'parent_phone' ,
          'parent_role' ,
-         'student_id' ,
+         'parent_id' ,
          'parent_relation_id',
          ];
     public function __construct(private User $user){}
@@ -72,6 +72,7 @@ class ProfileController extends Controller
                     if( isset($updateProfile['password'])){
                         $user->password = $updateProfile['password'] ;
                     }
+                     $this->deleteImage($user->image);
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
                 $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
@@ -82,9 +83,7 @@ class ProfileController extends Controller
                 $user->country_id = $updateProfile['country_id']?? $user->country_id;
                 $user->category_id = $updateProfile['category_id']?? $user->category_id;
                 $user->save();
-                if($image_path){
-                $this->deleteImage($user->image);
-                }
+               
                         return response()->json([
                             'success'=>'Data Updated Successfully',
                             ]);
