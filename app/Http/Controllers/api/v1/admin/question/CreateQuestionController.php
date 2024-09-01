@@ -16,7 +16,6 @@ class CreateQuestionController extends Controller
     private question_answer $question_answer){}
     use image;
     protected $questionRequest = [
-        'question',
         'status',
         'category_id',
         'subject_id',
@@ -30,7 +29,10 @@ class CreateQuestionController extends Controller
 
     public function create(QuestionRequest $request){
         // https://bdev.elmanhag.shop/admin/question/add 
-        // keys => question, image, audio, status, category_id, subject_id, chapter_id, lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
+        // keys => question, image, audio, status, category_id, subject_id, 
+        // chapter_id, lesson_id, semester['first', 'second'], difficulty,
+        // answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
+        // answer, true_answer
         $question_data = $request->only($this->questionRequest); // Get request
         if ( $question_data['question_type'] == 'image' ) { // if request send image
             $image_path = $this->upload($request, 'image', 'admin/questions/image'); // Upload image
@@ -40,7 +42,25 @@ class CreateQuestionController extends Controller
             $audio_path = $this->upload($request, 'audio', 'admin/questions/audio'); // Upload audio
             $question_data['audio'] = $audio_path;
         }
-        $this->question->create($question_data); // Create Question
+
+        if ($question_data['answer_type'] != 'Essay') {
+            $question_data['question'] = $request->question;
+            $question = $this->question->create($question_data); // Create Question
+            $this->question_answer->create([
+                'answer' => json_encode($request->answer),
+                'true_answer' => $request->true_answer,
+                'question_id' => $question->id
+            ]); // Create Answer
+        }
+        else {
+            $question_data['question'] = json_encode($request->question);
+            $question = $this->question->create($question_data); // Create Question
+            $this->question_answer->create([
+                'answer' => json_encode($request->answer),
+                'true_answer' => json_encode($request->answer),
+                'question_id' => $question->id
+            ]); // Create Answer
+        }
 
         return response()->json([
             'success' => 'You add data success'
@@ -49,7 +69,10 @@ class CreateQuestionController extends Controller
     
     public function modify(QuestionRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/question/update/{id}
-        // keys => question, image, audio, status, category_id, subject_id, chapter_id, lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], question_type ['text', 'image', 'audio']
+        // keys => question, image, audio, status, category_id, subject_id, chapter_id, 
+        // lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Essay'], 
+        // question_type ['text', 'image', 'audio']
+        // answer, true_answer
         $question_data = $request->only($this->questionRequest); // Get request
         $question = $this->question->where('id', $id)
         ->first(); //Get Question
@@ -78,7 +101,26 @@ class CreateQuestionController extends Controller
             $this->deleteImage($question->audio);
         }
         
-        $question->update($question_data);
+        $this->question_answer
+        ->where('question_id', $id)->delete();
+        if ($question_data['answer_type'] != 'Essay') {
+            $question_data['question'] = $request->question;
+            $question->update($question_data);
+            $this->question_answer->create([
+                'answer' => json_encode($request->answer),
+                'true_answer' => $request->true_answer,
+                'question_id' => $id
+            ]); // Create Answer
+        }
+        else {
+            $question_data['question'] = json_encode($request->question);
+            $question->update($question_data);
+            $this->question_answer->create([
+                'answer' => json_encode($request->answer),
+                'true_answer' => json_encode($request->answer),
+                'question_id' => $id
+            ]); // Create Answer
+        }
 
         return response()->json([
             'success' => 'You update data success'

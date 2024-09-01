@@ -13,6 +13,7 @@ use App\Models\bundle;
 use App\Models\category;
 use App\Models\country;
 use App\Models\city;
+use App\Models\homework;
 use App\Models\Education;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 
@@ -46,6 +47,8 @@ class User extends Authenticatable
         'image',
         'status',
     ];
+
+    protected $appends = ['image_link'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -90,13 +93,8 @@ class User extends Authenticatable
         return $this->belongsTo(city::class);
     }
 
-    public function getimageAttribute($data){
-    
-        return $this->image = [
-            'path'=>$data,
-            'url'=> url('storage/'.$data) ?? url('storage/'.'default.png'),
-        ];
-   
+    public function getImageLinkAttribute(){
+        return url('storage/' . $this->attributes['image']);
     }
 
     public function subjects(){
@@ -121,6 +119,10 @@ class User extends Authenticatable
     }
     public function studentJobs(){
         return $this->belongsToMany(StudentJob::class,'student_jobs');
+    }
+    public function user_homework(){
+        return $this->belongsToMany(homework::class,'users_homework')
+        ->withPivot(['score', 'lesson_id']);
     }
 
 }
