@@ -4,6 +4,9 @@ namespace App\Http\Controllers\api\v1\admin\affilate;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\api\admin\affilate\AffilateRequest;
+use App\Http\Requests\api\admin\affilate\UpdateAffilateRequest;
+use App\trait\image;
 
 use App\Models\User;
 use App\Models\AffilateAccount;
@@ -14,6 +17,16 @@ class AffilateController extends Controller
 {
     public function __construct(private User $user, private AffilateAccount $affilate_account,
     private country $country, private city $city){}
+    use image;
+    protected $affilateRequest = [
+        'name',
+        'phone',
+        'email',
+        'country_id',
+        'city_id',
+        'password',
+        'status',
+    ];
 
     public function affilate(){
         $affilates = $this->user
@@ -48,7 +61,36 @@ class AffilateController extends Controller
         ]);
     }
 
-    public function create(){
-        
+    public function create(AffilateRequest $request){
+        // Keys
+        // name, phone, email, country_id, city_id, password, status
+        $affilate_data = $request->only($this->affilateRequest);
+        $affilate_data['role'] = 'affilate';
+        $affilate = $this->user->create($affilate_data);
+        $this->affilate_account->create([
+            'affilate_id' => $affilate->id
+        ]);
+
+        return response()->json([
+            'success' => 'You add affilate success'
+        ]);
+    }
+
+    public function modify(UpdateAffilateRequest $request, $id){
+        // Keys
+        // name, phone, email, country_id, city_id, password, status, image
+        $affilate = $this->user->where('id', $id)
+        ->where('role', 'affilate')
+        ->first();
+        $affilate_data = $request->only($this->affilateRequest);
+        $image_path = $this->upload($request, 'image', 'affilate/users');
+        if (!empty($image_path) && $image_path != null) {
+            $affilate_data['image'] = $image_path;
+        }
+        $affilate->update($affilate_data);
+
+        return response()->json([
+            'success' => 'You update affilate success'
+        ]);
     }
 }
