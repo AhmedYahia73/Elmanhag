@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
           if(Auth::check()){
-                if(Auth::user()->role == 'admin' || Auth::user()->role == 'supAdmin'){
+                if((Auth::user()->role == 'admin' || Auth::user()->role == 'supAdmin') && Auth::user()->status == 1){
                     return $next($request);
                 } else{abort(403);}
         } return response()->json(

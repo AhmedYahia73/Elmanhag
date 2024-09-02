@@ -93,4 +93,35 @@ class AffilateController extends Controller
             'success' => 'You update affilate success'
         ]);
     }
+
+    // public function delete($id){
+    //     $affilate = $this->user->where('id', $id)
+    //     ->first();
+    //     $this->deleteImage($affilate->image);
+    //     $affilate->delete();
+
+    //     return response()->json([
+    //         'success' => 'You delete affilate success'
+    //     ]);
+    // }
+    
+    public function banned($id){
+        $affilate = $this->user->where('id', $id)
+        ->where('role', 'affilate')
+        ->update(['status' => 0]);
+
+        return response()->json([
+            'success' => 'You block affilate success'
+        ]);
+    }
+
+    public function unblock($id){
+        $affilate = $this->user->where('id', $id)
+        ->where('role', 'affilate')
+        ->update(['status' => 1]);
+
+        return response()->json([
+            'success' => 'You unblock affilate success'
+        ]);
+    }
 }
