@@ -126,18 +126,13 @@ class AffilateController extends Controller
     }
 
     public function signups($affilate_id){
-        $affilate = $this->user
-        ->where('role', 'affilate')
-        ->where('id', $affilate_id)
-        ->with([
-            'signups' => function ($query) {
-                $query->with(['category', 'parents']);
-            },
-        ])
-        ->first();
+        $signups = $this->user
+        ->where('affilate_id', $affilate_id)
+        ->with(['category', 'parents'])
+        ->get();
 
         return response()->json([
-            'signups' => $affilate->signups
+            'signups' => $signups
         ]);
     }
 }
