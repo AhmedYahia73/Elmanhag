@@ -28,7 +28,4 @@ class AffiliateController extends Controller
 
 
 
-    public function modify(AffilateRequest $request){
-        return $user_id = $request->user()->id;
-    }
 }
