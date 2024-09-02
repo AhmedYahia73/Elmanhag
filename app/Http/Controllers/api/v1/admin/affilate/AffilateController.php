@@ -16,7 +16,8 @@ use App\Models\city;
 class AffilateController extends Controller
 {
     public function __construct(private User $user, private AffilateAccount $affilate_account,
-    private country $country, private city $city){}
+    private country $country, private city $city, private AffilateHistory $affilate_histories
+    , private category $category){}
     use image;
     protected $affilateRequest = [
         'name',
@@ -134,5 +135,12 @@ class AffilateController extends Controller
         return response()->json([
             'signups' => $signups
         ]);
+    }
+
+    public function revenue($affilate_id){
+        $categories = $this->category->get();
+        $affilate_histories = $this->affilate_histories
+        ->where('affilate_id', $affilate_id)
+        ->get();
     }
 }
