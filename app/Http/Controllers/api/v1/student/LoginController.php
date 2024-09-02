@@ -24,22 +24,15 @@ class LoginController extends Controller
                 $user = $this->user->where('email',$login['email'])->first();
                 $token = $user->createToken('personal access token')->plainTextToken;
                 $user->token = $token;
-                if($user->role == 'student'){
-                    return response()->json([
-                    'success'=>'Welcome '.$login['email'],
-                    'user'=>$user,
-                    'role'=>$user->role,
-                    '_token'=>$token,
-                    ]);
-                }elseif($user->role == 'parent'){
-                            return response()->json([
-                            'success'=>'Welcome '.$login['email'],
-                            'user'=>$user,
-                            'role'=>$user->role,
-                            '_token'=>$token,
-                            ]);
+                if(!empty($user->role)){
+                   return response()->json([
+                   'success'=>'Welcome '.$login['email'],
+                   'user'=>$user,
+                   'role'=>$user->role,
+                   '_token'=>$token,
+                   ]);
                 }else{
-                return response()->json(['faield' => 'This user does not have the ability to login'],403);
+                    return response()->json(['faield' => 'This user does not have the ability to login'],403);
                 }
             }else{
                 return response()->json([

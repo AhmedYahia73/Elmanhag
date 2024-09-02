@@ -15,6 +15,7 @@ use App\Models\country;
 use App\Models\city;
 use App\Models\homework;
 use App\Models\Education;
+use App\Models\Payout;
 use App\Models\AffilateAccount;
 use App\Models\PersonalAccessToken;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
@@ -141,5 +142,9 @@ class User extends Authenticatable
         return $this->belongsToMany(homework::class,'users_homework')
         ->withPivot(['score', 'lesson_id']);
     }
+
+     public function payout_history(){
+        return $this->hasMany(Payout::class,'affilate_id');
+     }
 
 }

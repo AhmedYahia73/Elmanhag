@@ -20,6 +20,7 @@ class bundleFactory extends Factory
             'name' => fake()->name() ,
             'price' => fake()->numberBetween(100, 1000) ,
             'expired_date' => fake()->date() ,
+            'status' => $this->faker()->randomElement(['1','0']) ,
             'semester' => fake()->randomElement(['first', 'second']) ,
         ];
     }

@@ -16,4 +16,8 @@ class Payout extends Model
         'status',
         'affilate_id',
     ];
+
+
+
+   
 }
