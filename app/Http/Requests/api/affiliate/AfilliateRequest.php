@@ -26,6 +26,7 @@ class AfilliateRequest extends FormRequest
         return [
             // This Request About All Affilates
         'name'=>['required'],
+        'email'=>['required','unique:users'],
         'phone'=>['required'],
         'country'=>['required'],
         'city'=>['required'],
