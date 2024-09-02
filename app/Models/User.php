@@ -15,7 +15,6 @@ use App\Models\country;
 use App\Models\city;
 use App\Models\homework;
 use App\Models\Education;
-use App\Models\User;
 use App\Models\AffilateAccount;
 use App\Models\PersonalAccessToken;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
