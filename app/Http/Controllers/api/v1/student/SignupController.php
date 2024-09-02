@@ -29,12 +29,12 @@ class SignupController extends Controller
    'language'
    ];
     protected $parentRequest = [
-    'parent_name'  ,
-    'parent_email'  ,
+    'parent_name',
+    'parent_email',
     'parent_password',
-    'parent_phone'  ,
-    'parent_role' ,
-    'parent_id' ,
+    'parent_phone',
+    'parent_role',
+    'parent_id',
     'parent_relation_id',
     ];
     // This Controller About Create New Student

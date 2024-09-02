@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\AffilateMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\StudentMiddleware;
@@ -25,6 +26,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('student')
                 ->name('student.')
                 ->group(base_path('routes/student.php'));
+            Route::middleware('api')
+                ->prefix('affilate')
+                ->name('affilate.')
+                ->group(base_path('routes/affilate.php'));
         },
     )
 
@@ -32,7 +37,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'IsStudent' => StudentMiddleware::class,
-            'IsAdmin' => AdminMiddleware::class
+            'IsAdmin' => AdminMiddleware::class,
+            'IsAffilate' => AffilateMiddleware::class,
         ]);
          $middleware->redirectGuestsTo(function (Request $request) {
             if (!$request->is('api/*')) {
