@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->float('amount');
             $table->string('rejected_reason')->nullable();
-            $table->boolean('status');
+            $table->boolean('status')->nullable();
             $table->foreignId('affilate_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
