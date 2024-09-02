@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\PaymentMethodAffilate;
+
 class Payout extends Model
 {
     use HasFactory;
@@ -17,4 +19,8 @@ class Payout extends Model
         'affilate_id',
         'payment_method_affilate_id',
     ];
+
+    public function method(){
+        return $this->belongsTo(PaymentMethodAffilate::class, 'payment_method_affilate_id');
+    }
 }

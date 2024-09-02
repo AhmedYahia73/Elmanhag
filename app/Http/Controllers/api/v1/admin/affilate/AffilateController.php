@@ -153,10 +153,28 @@ class AffilateController extends Controller
         ]);
     }
 
-    public function payout(){
+    public function payout($affilate_id){
         $payouts = $this->payout
         ->where('status', null)
+        ->where('affilate_id', $affilate_id)
+        ->with('method')
         ->get();
+
+        return response()->json([
+            'payouts' => $payouts,
+        ]);
+    }
+
+    public function payout_history($affilate_id){
+        $payouts = $this->payout
+        ->where('status', '!=', null)
+        ->where('affilate_id', $affilate_id)
+        ->with('method')
+        ->get();
+
+        return response()->json([
+            'payouts' => $payouts,
+        ]);
     }
     
 }
