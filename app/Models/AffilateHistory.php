@@ -17,5 +17,6 @@ class AffilateHistory extends Model
         'price',
         'payment_method_id',
         'commission',
+        'affilate_id',
     ];
 }
