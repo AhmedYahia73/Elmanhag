@@ -15,5 +15,6 @@ class Payout extends Model
         'rejected_reason',
         'status',
         'affilate_id',
+        'payment_method_affilate_id',
     ];
 }

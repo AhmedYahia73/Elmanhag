@@ -13,13 +13,14 @@ use App\Models\AffilateAccount;
 use App\Models\country;
 use App\Models\city;
 use App\Models\AffilateHistory;
+use App\Models\Payout;
 use App\Models\category;
 
 class AffilateController extends Controller
 {
     public function __construct(private User $user, private AffilateAccount $affilate_account,
     private country $country, private city $city, private AffilateHistory $affilate_histories
-    , private category $category){}
+    , private category $category, private Payout $payout){}
     use image;
     protected $affilateRequest = [
         'name',
@@ -151,4 +152,11 @@ class AffilateController extends Controller
             'affilate_histories' => $affilate_histories,
         ]);
     }
+
+    public function payout(){
+        $payouts = $this->payout
+        ->where('status', null)
+        ->get();
+    }
+    
 }

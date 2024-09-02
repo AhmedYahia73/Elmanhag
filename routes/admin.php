@@ -230,6 +230,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/unblock/{id}', 'unblock')->name('affilate.unblock');
             Route::get('/signups/{affilate_id}', 'signups')->name('affilate.signups');
             Route::get('/revenue/{affilate_id}', 'revenue')->name('affilate.revenue');
+            Route::get('/payout/{affilate_id}', 'payout')->name('affilate.payout');
         });
     });
 
