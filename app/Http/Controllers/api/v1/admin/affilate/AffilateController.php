@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\AffilateAccount;
 use App\Models\country;
 use App\Models\city;
+use App\Models\AffilateHistory;
+use App\Models\category;
 
 class AffilateController extends Controller
 {
@@ -141,6 +143,12 @@ class AffilateController extends Controller
         $categories = $this->category->get();
         $affilate_histories = $this->affilate_histories
         ->where('affilate_id', $affilate_id)
+        ->with(['student', 'category', 'method'])
         ->get();
+
+        return response()->json([
+            'categories' => $categories,
+            'affilate_histories' => $affilate_histories,
+        ]);
     }
 }
