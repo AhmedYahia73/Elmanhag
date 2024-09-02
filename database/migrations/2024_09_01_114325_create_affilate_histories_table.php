@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('student_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('payment_method_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('affilate_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

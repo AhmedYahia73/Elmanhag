@@ -225,7 +225,12 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::controller(AffilateController::class)->group(function(){
             Route::get('/', 'affilate')->name('affilate.affilate');
             Route::post('/add', 'create')->name('affilate.add');
-            Route::post('/update/{id}', 'modify')->name('affilate.update');
+            Route::put('/update/{id}', 'modify')->name('affilate.update');
+            Route::put('/banned/{id}', 'banned')->name('affilate.banned');
+            Route::put('/unblock/{id}', 'unblock')->name('affilate.unblock');
+            Route::get('/signups/{affilate_id}', 'signups')->name('affilate.signups');
+            Route::get('/revenue/{affilate_id}', 'revenue')->name('affilate.revenue');
+            Route::get('/payout/{affilate_id}', 'payout')->name('affilate.payout');
         });
     });
 

@@ -12,11 +12,15 @@ use App\Models\User;
 use App\Models\AffilateAccount;
 use App\Models\country;
 use App\Models\city;
+use App\Models\AffilateHistory;
+use App\Models\Payout;
+use App\Models\category;
 
 class AffilateController extends Controller
 {
     public function __construct(private User $user, private AffilateAccount $affilate_account,
-    private country $country, private city $city){}
+    private country $country, private city $city, private AffilateHistory $affilate_histories
+    , private category $category, private Payout $payout){}
     use image;
     protected $affilateRequest = [
         'name',
@@ -93,4 +97,66 @@ class AffilateController extends Controller
             'success' => 'You update affilate success'
         ]);
     }
+
+    // public function delete($id){
+    //     $affilate = $this->user->where('id', $id)
+    //     ->first();
+    //     $this->deleteImage($affilate->image);
+    //     $affilate->delete();
+
+    //     return response()->json([
+    //         'success' => 'You delete affilate success'
+    //     ]);
+    // }
+    
+    public function banned($id){
+        $affilate = $this->user->where('id', $id)
+        ->where('role', 'affilate')
+        ->update(['status' => 0]);
+
+        return response()->json([
+            'success' => 'You block affilate success'
+        ]);
+    }
+
+    public function unblock($id){
+        $affilate = $this->user->where('id', $id)
+        ->where('role', 'affilate')
+        ->update(['status' => 1]);
+
+        return response()->json([
+            'success' => 'You unblock affilate success'
+        ]);
+    }
+
+    public function signups($affilate_id){
+        $signups = $this->user
+        ->where('affilate_id', $affilate_id)
+        ->with(['category', 'parents'])
+        ->get();
+
+        return response()->json([
+            'signups' => $signups
+        ]);
+    }
+
+    public function revenue($affilate_id){
+        $categories = $this->category->get();
+        $affilate_histories = $this->affilate_histories
+        ->where('affilate_id', $affilate_id)
+        ->with(['student', 'category', 'method'])
+        ->get();
+
+        return response()->json([
+            'categories' => $categories,
+            'affilate_histories' => $affilate_histories,
+        ]);
+    }
+
+    public function payout(){
+        $payouts = $this->payout
+        ->where('status', null)
+        ->get();
+    }
+    
 }
