@@ -224,6 +224,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('affilate')->group(function() {
         Route::controller(AffilateController::class)->group(function(){
             Route::get('/', 'affilate')->name('affilate.affilate');
+            Route::post('/add', 'create')->name('affilate.add');
         });
     });
 
