@@ -15,6 +15,9 @@ use App\Models\country;
 use App\Models\city;
 use App\Models\homework;
 use App\Models\Education;
+use App\Models\User;
+use App\Models\AffilateAccount;
+use App\Models\PersonalAccessToken;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 
 class User extends Authenticatable
@@ -81,6 +84,19 @@ class User extends Authenticatable
             return $this->image = url('storage/app/public/'.$this->image);
         }
         return 'C:\xampp\tmp'.$this->name;
+    }
+
+    public function signups(){
+        return $this->hasMany(User::class, 'affilate_id');
+    }
+
+    public function income(){
+        return $this->hasMany(AffilateAccount::class, 'affilate_id');
+    }
+
+    public function logins(){
+        return $this->hasMany(PersonalAccessToken::class, 'tokenable_id')
+        ->orderByDesc('id');
     }
 
     public function country(){

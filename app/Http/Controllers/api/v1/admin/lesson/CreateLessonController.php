@@ -157,6 +157,7 @@ class CreateLessonController extends Controller
     }
 
     public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/lesson/delete/{lesson_id}
         $lesson = lesson::where('id', $id)
         ->first();
         $sources = LessonResource::where('lesson_id', $id)
