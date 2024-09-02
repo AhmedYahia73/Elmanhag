@@ -25,6 +25,7 @@ class SignupController extends Controller
    'sudent_jobs_id',
    'parent_relation_id',
    'education_id',
+   'affilate_id',
    'language'
    ];
     protected $parentRequest = [
