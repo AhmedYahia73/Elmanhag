@@ -124,4 +124,20 @@ class AffilateController extends Controller
             'success' => 'You unblock affilate success'
         ]);
     }
+
+    public function signups($affilate_id){
+        $affilate = $this->user
+        ->where('role', 'affilate')
+        ->where('id', $affilate_id)
+        ->with([
+            'signups' => function ($query) {
+                $query->with(['category', 'parents']);
+            },
+        ])
+        ->first();
+
+        return response()->json([
+            'signups' => $affilate->signups
+        ]);
+    }
 }
