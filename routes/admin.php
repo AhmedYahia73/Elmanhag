@@ -251,6 +251,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
         Route::controller(Aff_PaymentMethodController::class)->group(function(){
             Route::get('/affilateMethod', 'affilate_method')->name('affilate.affilate_method');
+            Route::post('/affilateMethodAdd', 'affilate_method_add')->name('affilate.affilate_method_add');
+            Route::put('/affilateMethodUpdate/{id}', 'affilate_method_update')->name('affilate.affilate_method_update');
         });
     });
 
