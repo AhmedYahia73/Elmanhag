@@ -14,6 +14,7 @@ class Aff_CommessionController extends Controller
     public function __construct(private AffilateCommession $commession){}
 
     public function commession(){
+        // https://bdev.elmanhag.shop/admin/affilate/commession
         $commession = $this->commession->first();
 
         return response()->json([
@@ -22,7 +23,9 @@ class Aff_CommessionController extends Controller
     }
 
     public function add_commession(Request $request){
-        
+        //https://bdev.elmanhag.shop/admin/affilate/addCommession
+        // Keys
+        // type[fixed, percentage], amount
         $validator = Validator::make($request->all(), [
             'type' => 'required|in:fixed,percentage',
             'amount' => 'required|numeric'

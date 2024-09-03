@@ -18,6 +18,7 @@ class Aff_PaymentMethodController extends Controller
     ];
 
     public function affilate_method(){
+        // https://bdev.elmanhag.shop/admin/affilate/affilateMethod
         $payment_methods = $this->payment_method
         ->get();
 
@@ -27,6 +28,9 @@ class Aff_PaymentMethodController extends Controller
     }
 
     public function add(Request $request){
+        // https://bdev.elmanhag.shop/admin/affilate/affilateMethodAdd
+        // Keys
+        // method, min_payout
         $validator = Validator::make($request->all(), [
             'method' => 'required',
             'min_payout' => 'required|numeric'
@@ -46,6 +50,9 @@ class Aff_PaymentMethodController extends Controller
     }
 
     public function update(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/affilate/affilateMethodUpdate/{id}
+        // Keys
+        // method, min_payout
         $validator = Validator::make($request->all(), [
             'method' => 'required',
             'min_payout' => 'required|numeric'
@@ -66,6 +73,7 @@ class Aff_PaymentMethodController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/affilate/affilateMethodDelete/{id}
         $this->payment_method
         ->where('id', $id)
         ->delete();
