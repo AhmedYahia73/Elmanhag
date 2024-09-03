@@ -144,7 +144,7 @@ class User extends Authenticatable
     }
 
      public function payout_history(){
-        return $this->hasMany(Payout::class,'affilate_id')->where('status','!=',Null);
+        return $this->hasMany(Payout::class,'affilate_id')->where('status','!=',Null)->with('method');
      }
 
 }
