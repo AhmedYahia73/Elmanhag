@@ -165,6 +165,46 @@ class AffilateController extends Controller
         ]);
     }
 
+    public function approve_payout($payout_id){
+        $payout = $this->payout
+        ->where('id', $payout_id)
+        ->first();
+        $affilate_account = $this->affilate_account
+        ->where('affilate_id', $payout->affilate_id)
+        ->first();
+
+        if ($payout->amount > $affilate_account->wallet) {
+            return response()->json([
+                'faild' => 'You are asking for more than what is available'
+            ]);
+        }
+        $affilate_account->update([
+            'wallet' => $affilate_account->wallet - $payout->amount,
+        ]);
+        $payout->update([
+            'status' => 1
+        ]);
+
+        return response()->json([
+            'success' => 'You Approve Payout Success'
+        ]);
+    }
+
+    public function rejected_payout(Request $request, $payout_id){
+        $payout = $this->payout
+        ->where('id', $payout_id)
+        ->first(); 
+  
+        $payout->update([
+            'status' => 0,
+            'rejected_reason' => $request->rejected_reason,
+        ]);
+
+        return response()->json([
+            'success' => 'You Rejected Payout Success'
+        ]);
+    }
+
     public function payout_history($affilate_id){
         $payouts = $this->payout
         ->where('status', '!=', null)

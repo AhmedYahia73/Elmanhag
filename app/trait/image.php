@@ -17,6 +17,16 @@ trait image
         }
         return Null;
     }
+
+    // This to upload file
+    public function uploadFile($file, $directory) {
+        if ($file) {
+            $filePath = $file->store($directory, 'public');
+            return $filePath;
+        }
+        return null;
+    }
+
     // This Trait Aboute file
 
     public function upload_array_of_file(Request $request,$fileName = 'image',$directory){

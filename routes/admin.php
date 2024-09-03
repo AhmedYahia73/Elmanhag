@@ -42,6 +42,9 @@ use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
+use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
+use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
+use App\Http\Controllers\api\v1\admin\affilate\Aff_PaymentMethodController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -231,7 +234,23 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/signups/{affilate_id}', 'signups')->name('affilate.signups');
             Route::get('/revenue/{affilate_id}', 'revenue')->name('affilate.revenue');
             Route::get('/payout/{affilate_id}', 'payout')->name('affilate.payout');
+            Route::post('/payout/approve/{payout_id}', 'approve_payout')->name('affilate.approve_payout');
+            Route::post('/payout/rejected/{payout_id}', 'rejected_reason')->name('affilate.rejected_reason');
             Route::get('/payout_history/{affilate_id}', 'payout_history')->name('affilate.payout_history');
+        });
+
+        Route::controller(Aff_CommessionController::class)->group(function(){
+            Route::get('/commession', 'commession')->name('affilate.commession');
+            Route::post('/addCommession', 'add_commession')->name('affilate.addCommession');
+        });
+
+        Route::controller(Aff_PayoutController::class)->group(function(){
+            Route::get('/payouts', 'payouts')->name('affilate.payouts');
+            Route::get('/payoutsHistory', 'payouts_history')->name('affilate.payouts_history');
+        });
+
+        Route::controller(Aff_PaymentMethodController::class)->group(function(){
+            Route::get('/affilateMethod', 'affilate_method')->name('affilate.affilate_method');
         });
     });
 

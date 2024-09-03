@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\api\v1\payment\PaymentController;
+// use App\Http\Controllers\api\v1\payment\PaymentController;
+use App\Http\Controllers\Api\PaymentController;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +29,7 @@ Route::get('/user', function (Request $request) {
 // });
 
 Route::controller(LoginController::class)->prefix('admin')->group(function () {
-    Route::post('auth/login','login')->name('login'); 
+    Route::post('auth/login','login')->name('login');
     Route::post('auth/logout','logout')->name('user.logout')->middleware('auth:sanctum');
 });
 
@@ -35,19 +37,20 @@ Route::controller(LoginController::class)->prefix('user')->group(function () {
     Route::post('auth/login','user_login')->name('user_login');
 });
 
-Route::controller(SignupController::class)->prefix('admin')->group(function () { 
+Route::controller(SignupController::class)->prefix('admin')->group(function () {
     Route::get('auth/signup','signup')->name('signup');
-    Route::post('auth/signup_proccess','signup_proccess')->name('signup_proccess'); 
+    Route::post('auth/signup_proccess','signup_proccess')->name('signup_proccess');
 });
 Route::controller(ProfileAdminController::class)->prefix('admin')->group(function () {
     Route::get('profile/view','view')->name('profile.admin')->middleware('auth:sanctum');
 });
 
-Route::controller(PaymentController::class)->prefix('payment')->group(function () {
-    Route::post('fawry','payment')->name('payment.fawry');
-});
+Route::post('payment/charge', [PaymentController::class, 'charge']);
+Route::post('payment/respose_payment', [PaymentController::class, 'respose_payment']);
 
 
 Route::get('/unauthorized', function () {
 return response()->json(['error'=>'Unauthorized'],401);
 })->name('unauthorized');
+
+
