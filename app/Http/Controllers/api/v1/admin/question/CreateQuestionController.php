@@ -53,7 +53,7 @@ class CreateQuestionController extends Controller
             ]); // Create Answer
         }
         else {
-            $question_data['question'] = json_encode($request->question);
+            $question_data['question'] = $request->question;
             $question = $this->question->create($question_data); // Create Question
             $this->question_answer->create([
                 'answer' => json_encode($request->answer),
@@ -113,7 +113,7 @@ class CreateQuestionController extends Controller
             ]); // Create Answer
         }
         else {
-            $question_data['question'] = json_encode($request->question);
+            $question_data['question'] = $request->question;
             $question->update($question_data);
             $this->question_answer->create([
                 'answer' => json_encode($request->answer),
