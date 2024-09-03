@@ -46,20 +46,20 @@ class CreateLessonController extends Controller
 
         foreach ($request->materials as $item) {
             // if source file
-            if ($item->source == 'upload') {
-                $file_paths = $this->uploadFile($item['material'], 'admin/lessons/' . $item->type);
+            if ($item['source'] == 'upload') {
+                $file_paths = $this->uploadFile($item['material'], 'admin/lessons/' . $item['type']);
                 LessonResource::create([
-                    'type' => $item->type, 
-                    'source' => $item->source, 
+                    'type' => $item['type'], 
+                    'source' => $item['source'], 
                     'file' => $file_paths, 
                     'lesson_id' => $lesson->id,
                 ]);
             }
             else{
                 LessonResource::create([
-                    'type' => $item->type, 
-                    'source' => $item->source, 
-                    'file' => $item->material, 
+                    'type' => $item['type'], 
+                    'source' => $item['source'], 
+                    'file' => $item['material'], 
                     'lesson_id' => $lesson->id,
                 ]);
             }
