@@ -11,6 +11,7 @@ class Aff_PayoutController extends Controller
 {
     public function __construct(private Payout $payouts){}
     public function payouts(){
+        // https://bdev.elmanhag.shop/admin/affilate/payouts
         $payouts = $this->payouts->where('status', null)
         ->orderBy('affilate_id')
         ->get();
@@ -21,6 +22,7 @@ class Aff_PayoutController extends Controller
     }
 
     public function payouts_history(){
+        // https://bdev.elmanhag.shop/admin/affilate/payoutsHistory
         $payouts = $this->payouts->where('status', '!=', null)
         ->orderBy('affilate_id')
         ->get();

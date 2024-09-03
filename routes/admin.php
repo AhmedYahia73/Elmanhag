@@ -235,7 +235,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/revenue/{affilate_id}', 'revenue')->name('affilate.revenue');
             Route::get('/payout/{affilate_id}', 'payout')->name('affilate.payout');
             Route::post('/payout/approve/{payout_id}', 'approve_payout')->name('affilate.approve_payout');
-            Route::post('/payout/rejected/{payout_id}', 'rejected_reason')->name('affilate.rejected_reason');
+            Route::post('/payout/rejected/{payout_id}', 'rejected_payout')->name('affilate.rejected_payout');
             Route::get('/payout_history/{affilate_id}', 'payout_history')->name('affilate.payout_history');
         });
 
@@ -251,6 +251,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
         Route::controller(Aff_PaymentMethodController::class)->group(function(){
             Route::get('/affilateMethod', 'affilate_method')->name('affilate.affilate_method');
+            Route::post('/affilateMethodAdd', 'add')->name('affilate.affilate_method_add');
+            Route::put('/affilateMethodUpdate/{id}', 'update')->name('affilate.affilate_method_update');
+            Route::delete('/affilateMethodDelete/{id}', 'delete')->name('affilate.affilate_method_delete');
         });
     });
 
