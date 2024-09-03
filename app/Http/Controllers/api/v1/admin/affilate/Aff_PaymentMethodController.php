@@ -26,7 +26,7 @@ class Aff_PaymentMethodController extends Controller
         ]);
     }
 
-    public function affilate_method_add(Request $request){
+    public function add(Request $request){
         $validator = Validator::make($request->all(), [
             'method' => 'required',
             'min_payout' => 'required|numeric'
@@ -45,7 +45,7 @@ class Aff_PaymentMethodController extends Controller
         ]);
     }
 
-    public function affilate_method_update(Request $request, $id){
+    public function update(Request $request, $id){
         $validator = Validator::make($request->all(), [
             'method' => 'required',
             'min_payout' => 'required|numeric'
@@ -62,6 +62,16 @@ class Aff_PaymentMethodController extends Controller
 
         return response()->json([
             'success' => 'You update data success'
+        ]);
+    }
+
+    public function delete($id){
+        $this->payment_method
+        ->where('id', $id)
+        ->delete();
+
+        return response()->json([
+            'success' => 'You delete data success'
         ]);
     }
 }
