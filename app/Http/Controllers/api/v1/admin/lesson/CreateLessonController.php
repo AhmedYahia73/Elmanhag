@@ -47,6 +47,9 @@ class CreateLessonController extends Controller
         foreach ($request->materials as $item) {
             // if source file
             if ($item['source'] == 'upload') {
+                return response()->json([
+                    'material' => $item['material']
+                ]);
                 $file_paths = $this->uploadFile($item['material'], 'admin/lessons/' . $item['type']);
                 LessonResource::create([
                     'type' => $item['type'], 
