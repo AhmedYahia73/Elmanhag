@@ -19,10 +19,12 @@ class AffiliateController extends Controller
         $newAffilate['role'] ='affilate';
         $user = $this->user ;
         $user = $user->create($newAffilate);
-         $affiliate =['affilate_id'=> $user->id];
+        $newAffilate['image'] = 'default.png';
+        $affiliate =['affilate_id'=> $user->id];
         $user->income()->create($affiliate);
-         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
-         $user->token = $token; // Start User Take This Token ;
+        $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
+        $user->token = $token; // Start User Take This Token ;
+        $user->image = 'default.png'; // Start User Take This Token ;
         return response()->json([
             'success'=>'affilate Add Successfully',
             '_tokent'=>$token,

@@ -28,8 +28,8 @@ class AfilliateRequest extends FormRequest
         'name'=>['required'],
         'email'=>['required','unique:users'],
         'phone'=>['required'],
-       'country_id' => ['required', 'exists:countries,id'],
-       'city_id' => ['required', 'exists:cities,id'],
+        'country_id' => ['required', 'exists:countries,id'],
+        'city_id' => ['required', 'exists:cities,id'],
         'password' => ['required'],
         'conf_password' => ['required', 'same:password'],
         ];
