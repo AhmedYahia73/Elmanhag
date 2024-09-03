@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\bundle;
 use App\Models\Education;
 use App\Models\subject;
+use App\Models\category;
 
 class BundleController extends Controller
 {
+    public function __construct(private category $categories){}
     public function show(){
         // https://bdev.elmanhag.shop/admin/bundle
         $bundles = bundle::
@@ -19,6 +21,9 @@ class BundleController extends Controller
         ->with('discount')
         ->withCount('users')
         ->withCount('subjects')
+        ->get();
+        // Categories
+        $categories = $this->categories->where('category_id', '!=', null)
         ->get();
         // Education
         $education = Education::get();
@@ -39,7 +44,8 @@ class BundleController extends Controller
         return response()->json([
             'bundles' => $bundles,
             'education' => $education,
-            'subjects' => $subjects
+            'subjects' => $subjects,
+            'categories' => $categories
         ]);
     }
 }
