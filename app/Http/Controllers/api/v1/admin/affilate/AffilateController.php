@@ -190,6 +190,21 @@ class AffilateController extends Controller
         ]);
     }
 
+    public function rejected_payout(Request $request, $payout_id){
+        $payout = $this->payout
+        ->where('id', $payout_id)
+        ->first(); 
+  
+        $payout->update([
+            'status' => 0,
+            'rejected_reason' => $request->rejected_reason,
+        ]);
+
+        return response()->json([
+            'success' => 'You Rejected Payout Success'
+        ]);
+    }
+
     public function payout_history($affilate_id){
         $payouts = $this->payout
         ->where('status', '!=', null)
