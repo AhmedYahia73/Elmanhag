@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AffiliateController extends Controller
 {
     // This Controller About Affiliate
-    protected $requestAffiliate = ['name','email','phone','role','country','city','password'];
+    protected $requestAffiliate = ['name','email','phone','role','country_id','city_id','password'];
         public function __construct(private User $user){}
     protected $requestAccountAfilliate = ['affilate_id'];
     public function store(AfilliateRequest $request){
