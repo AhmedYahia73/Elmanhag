@@ -43,6 +43,7 @@ use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
+use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -240,6 +241,11 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::controller(Aff_CommessionController::class)->group(function(){
             Route::get('/commession', 'commession')->name('affilate.commession');
             Route::post('/addCommession', 'add_commession')->name('affilate.addCommession');
+        });
+
+        Route::controller(Aff_PayoutController::class)->group(function(){
+            Route::get('/payouts', 'payouts')->name('affilate.payouts');
+            Route::get('/payoutsHistory', 'payouts_history')->name('affilate.payouts_history');
         });
     });
 
