@@ -23,7 +23,10 @@ class AffiliateController extends Controller
         $user->income()->create($affiliate);
          $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
          $user->token = $token; // Start User Take This Token ;
-        return response()->json(['success'=>'affilate Add Successfully','_tokent'=>$token],200);
+        return response()->json([
+            'success'=>'affilate Add Successfully',
+            '_tokent'=>$token,
+            'user' => $user],200);
     }
 
 
