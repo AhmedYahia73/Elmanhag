@@ -10,11 +10,13 @@ use App\Models\chapter;
 use App\Models\subject;
 use App\Models\homework;
 use App\Models\category;
+use App\Models\question;
 
 class HomeworkController extends Controller
 {
     public function __construct(private chapter $chapters, private category $category,
-    private lesson $lessons, private subject $subjects, private homework $homeworks ){}
+    private lesson $lessons, private subject $subjects, private homework $homeworks,
+    private question $question ){}
 
     public function show(){
         // https://bdev.elmanhag.shop/admin/homework
@@ -22,6 +24,7 @@ class HomeworkController extends Controller
         $lessons = $this->lessons->get();
         $subjects = $this->subjects->get();
         $categories = $this->category->get();
+        $questions = $this->question->get();
         $homeworks = $this->homeworks
         ->with('subject')
         ->with('chapter')
@@ -35,6 +38,7 @@ class HomeworkController extends Controller
             'subjects' => $subjects,
             'homeworks' => $homeworks,
             'categories' => $categories,
+            'questions' => $questions
         ]);
     }
 }

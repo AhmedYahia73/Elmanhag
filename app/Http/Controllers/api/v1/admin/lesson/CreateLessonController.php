@@ -40,7 +40,20 @@ class CreateLessonController extends Controller
         $lesson_data['chapter_id'] = $ch_id;
         $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
         $lesson = lesson::create($lesson_data); // Create lesson record
-        
+
+        // foreach ($request->materials as $item) {
+        //     // if source file
+        //     if ($item->source == 'upload') {
+        //         $voice_paths = $this->upload_array_of_file($request, 'voice', 'admin/lessons/' . $item->type);
+        //         LessonResource::create([
+        //             'type' => $item->type, 
+        //             'source' => $item->source, 
+        //             'file' => $voice_paths[$i], 
+        //             'lesson_id' => $lesson->id,
+        //         ]);
+        //     }
+        // } 
+
         // Add Voice Source
         if ( isset($request->voice) && is_array($request->voice) ) {
             // Upload voice
