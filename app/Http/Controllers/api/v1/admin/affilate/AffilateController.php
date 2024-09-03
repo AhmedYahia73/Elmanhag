@@ -33,6 +33,7 @@ class AffilateController extends Controller
     ];
 
     public function affilate(){
+        // https://bdev.elmanhag.shop/admin/affilate
         $affilates = $this->user
         ->where('role', 'affilate')
         ->with(['income', 'logins'])
@@ -66,6 +67,7 @@ class AffilateController extends Controller
     }
 
     public function create(AffilateRequest $request){
+        // https://bdev.elmanhag.shop/admin/affilate/add
         // Keys
         // name, phone, email, country_id, city_id, password, status
         $affilate_data = $request->only($this->affilateRequest);
@@ -81,6 +83,7 @@ class AffilateController extends Controller
     }
 
     public function modify(UpdateAffilateRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/affilate/update/{id}
         // Keys
         // name, phone, email, country_id, city_id, password, status, image
         $affilate = $this->user->where('id', $id)
@@ -110,6 +113,7 @@ class AffilateController extends Controller
     // }
     
     public function banned($id){
+        // https://bdev.elmanhag.shop/admin/affilate/banned/{id}
         $affilate = $this->user->where('id', $id)
         ->where('role', 'affilate')
         ->update(['status' => 0]);
@@ -120,6 +124,7 @@ class AffilateController extends Controller
     }
 
     public function unblock($id){
+        // https://bdev.elmanhag.shop/admin/affilate/unblock/{id}
         $affilate = $this->user->where('id', $id)
         ->where('role', 'affilate')
         ->update(['status' => 1]);
@@ -130,6 +135,7 @@ class AffilateController extends Controller
     }
 
     public function signups($affilate_id){
+        // https://bdev.elmanhag.shop/admin/affilate/signups/{affilate_id}
         $signups = $this->user
         ->where('affilate_id', $affilate_id)
         ->with(['category', 'parents'])
@@ -141,6 +147,7 @@ class AffilateController extends Controller
     }
 
     public function revenue($affilate_id){
+        // https://bdev.elmanhag.shop/admin/affilate/revenue/{affilate_id}
         $categories = $this->category->get();
         $affilate_histories = $this->affilate_histories
         ->where('affilate_id', $affilate_id)
@@ -154,6 +161,7 @@ class AffilateController extends Controller
     }
 
     public function payout($affilate_id){
+        // https://bdev.elmanhag.shop/admin/affilate/payout/{affilate_id}
         $payouts = $this->payout
         ->where('status', null)
         ->where('affilate_id', $affilate_id)
@@ -166,6 +174,7 @@ class AffilateController extends Controller
     }
 
     public function approve_payout($payout_id){
+        // https://bdev.elmanhag.shop/admin/affilate/payout/approve/{payout_id}
         $payout = $this->payout
         ->where('id', $payout_id)
         ->first();
@@ -191,6 +200,7 @@ class AffilateController extends Controller
     }
 
     public function rejected_payout(Request $request, $payout_id){
+        // https://bdev.elmanhag.shop/admin/affilate/payout/rejected/{payout_id}
         $payout = $this->payout
         ->where('id', $payout_id)
         ->first(); 
@@ -206,6 +216,7 @@ class AffilateController extends Controller
     }
 
     public function payout_history($affilate_id){
+        // https://bdev.elmanhag.shop/admin/affilate/payout_history/{id}
         $payouts = $this->payout
         ->where('status', '!=', null)
         ->where('affilate_id', $affilate_id)
