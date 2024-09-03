@@ -80,7 +80,7 @@ class User extends Authenticatable
     }
 
     public function getImageUrl (){
-        if($this->image){
+        if(isset($this->image)){
             return $this->image = url('storage/app/public/'.$this->image);
         }
         return 'C:\xampp\tmp'.$this->name;
