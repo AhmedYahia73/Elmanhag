@@ -29,6 +29,7 @@ Route::prefix('profile')->middleware(['auth:sanctum','IsStudent'])->group(functi
     Route::controller(ProfileController::class)->group(function () {
         Route::get('view','profile')->name('profile.view');
         Route::post('modify','update')->name('profile.view');
+        Route::post('delete','delete_account')->name('profile.delete');
     });
 });
 Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
