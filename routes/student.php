@@ -10,7 +10,8 @@ use App\Http\Middleware\StudentMiddleware;
 use App\Http\Controllers\api\v1\student\LoginController;
 use App\Http\Controllers\api\v1\student\SignupController;
 use App\Http\Controllers\api\v1\student\profile\ProfileController;
-use App\Http\Controllers\api\v1\student\subject\SubjectController ;
+use App\Http\Controllers\api\v1\student\subject\SubjectController;
+use App\Http\Controllers\api\v1\student\bundles\BundlesController;
 
 
 
@@ -58,7 +59,11 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                     Route::post('lesson/MyHmework', 'show')->name('student_homework_view');
                 });
         });
-
+        Route::controller(BundlesController::class)->group(function () { // This All Chapters For Student
+                Route::prefix('bundles')->group(function () {
+                    Route::get('/', 'show')->name('student_bundels_view');
+                });
+        });
         
 
         
