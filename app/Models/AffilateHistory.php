@@ -22,6 +22,7 @@ class AffilateHistory extends Model
         'payment_method_id',
         'commission',
         'affilate_id',
+        'service_type',
     ];
 
     public function student(){

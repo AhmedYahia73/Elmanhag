@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('date')->nullable();
             $table->string('service');
+            $table->enum('service_type', ['bundle', 'subject', 'revision', 'live_session', 'live_bundle']);
             $table->float('price');
             $table->float('commission');
             $table->foreignId('student_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
