@@ -88,4 +88,14 @@ class ProfileController extends Controller
                             'success'=>'Data Updated Successfully',
                             ]);
     }
+
+
+    public function delete_account(Request $request){
+        $user = $request->user();
+        if($user->delete()){
+            return response()->json([
+                'success'=>'Account Deleted Successfully',
+            ]);
+        }            
+    }
 }
