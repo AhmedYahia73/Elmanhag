@@ -45,6 +45,7 @@ use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PaymentMethodController;
+use App\Http\Controllers\api\v1\admin\affilate\Aff_BonusController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -254,6 +255,13 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/affilateMethodAdd', 'add')->name('affilate.affilate_method_add');
             Route::put('/affilateMethodUpdate/{id}', 'update')->name('affilate.affilate_method_update');
             Route::delete('/affilateMethodDelete/{id}', 'delete')->name('affilate.affilate_method_delete');
+        });
+
+        Route::controller(Aff_BonusController::class)->group(function(){
+            Route::get('/bonus', 'show')->name('affilate.bonus');
+            Route::post('/bonus/add', 'add')->name('affilate.add_bonus');
+            Route::put('/bonus/update/{id}', 'update')->name('affilate.update_bonus');
+            Route::delete('/bonus/delete/{id}', 'delete')->name('affilate.delete_bonus');
         });
     });
 
