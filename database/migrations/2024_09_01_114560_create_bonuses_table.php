@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->integer('target')->default(0);
             $table->string('bonus');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
