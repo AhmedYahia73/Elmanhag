@@ -5,19 +5,22 @@ namespace App\Http\Controllers\api\v1\admin\affilate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\api\admin\affilate\BonusRequest;
+use App\trait\image;
 
 use App\Models\Bonus;
 
 class Aff_BonusController extends Controller
 {
+    use image;
     public function __construct(private Bonus $bonus){}
     protected $bonusRequest = [
         'title',
         'target',
-        'bonus'
+        'bonus',
     ];
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/affilate/bonus
         $bonus = $this->bonus->get();
 
         return response()->json([
@@ -26,7 +29,14 @@ class Aff_BonusController extends Controller
     }
 
     public function add(BonusRequest $request){
+        // https://bdev.elmanhag.shop/admin/affilate/bonus/add
+        // Keys
+        // title, target, bonus, image
         $bonus_data = $request->only($this->bonusRequest);
+        if (isset($request->image) && !empty($request->image)) {
+            $image = $this->upload($request,'image','admin/affilate/bonus'); // Upload Image
+            $bonus_data['image'] = $image;
+        }
         $this->bonus
         ->create($bonus_data);
 
@@ -36,10 +46,22 @@ class Aff_BonusController extends Controller
     }
 
     public function update(BonusRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/affilate/bonus/update/{id}
+        // Keys
+        // title, target, bonus, image
         $bonus_data = $request->only($this->bonusRequest);
-        $this->bonus
+        $bonus = $this->bonus
         ->where('id', $id)
-        ->update($bonus_data);
+        ->first();
+        if (isset($request->image) && !empty($request->image)) {
+            $image = $this->upload($request,'image','admin/affilate/bonus'); // Upload Image
+            // If new image is found delete old image
+            if ( !empty($image) && $image != null ) {
+                $this->deleteImage($bonus->image);
+                $bonus_data['image'] = $image; // Image Value From traid Image 
+            }
+        }
+        $bonus->update($bonus_data);
 
         return response()->json([
             'success' => 'You update data success'
@@ -47,9 +69,12 @@ class Aff_BonusController extends Controller
     }
 
     public function delete($id){
-        $this->bonus
+        // https://bdev.elmanhag.shop/admin/affilate/bonus/delete/{id}
+        $bonus = $this->bonus
         ->where('id', $id)
-        ->delete();
+        ->first();
+        $this->deleteImage($bonus->image);
+        $bonus->delete();
 
         return response()->json([
             'success' => 'You delete data success'

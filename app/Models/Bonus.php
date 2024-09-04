@@ -13,5 +13,6 @@ class Bonus extends Model
         'title',
         'target',
         'bonus',
+        'image',
     ];
 }
