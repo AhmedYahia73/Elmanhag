@@ -25,6 +25,7 @@ class PaymentController extends Controller
     }
 
     public function rejected_payment( Request $request, $id ){
+        // https://bdev.elmanhag.shop/admin/payment/pendding/rejected/{id}
         // key
         // rejected_reason
         $this->payments
@@ -40,6 +41,7 @@ class PaymentController extends Controller
     }
 
     public function approve_payment($id){
+        // https://bdev.elmanhag.shop/admin/payment/pendding/approve/1
         $payment = $this->payments
         ->where('id', $id)
         ->with(['bundle', 'subject'])
@@ -77,6 +79,7 @@ class PaymentController extends Controller
 
     // function that return approve payment
     public function payments(){
+        // https://bdev.elmanhag.shop/admin/payment
         $payments = $this->payments
         ->where('status', 1)
         ->with(['student', 'payment_method', 'bundle', 'subject'])

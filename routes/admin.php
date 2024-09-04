@@ -41,6 +41,10 @@ use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 
+use App\Http\Controllers\api\v1\admin\admin\AdminController;
+
+use App\Http\Controllers\api\v1\admin\role\RoleController;
+
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
@@ -74,6 +78,13 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/update/{id}', 'modify')->name('student.modify');
             Route::delete('/delete/{id}', 'delete')->name('student.delete');
         });
+    });
+
+    // Start Category Module
+    Route::prefix('adminRole')->group(function () {
+        Route::controller(RoleController::class)->group(function(){
+            Route::get('/', 'show')->name('role.show');
+        }); 
     });
 
     // Start Category Module
