@@ -13,6 +13,7 @@ class PaymentController extends Controller
     public function __construct(private Payment $payments, private User $user){}
     
     public function pendding_payment(){
+        // https://bdev.elmanhag.shop/admin/payment/pendding
         $payments = $this->payments
         ->where('status', null)
         ->with(['student', 'payment_method', 'bundle', 'subject'])
