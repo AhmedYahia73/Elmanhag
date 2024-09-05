@@ -47,4 +47,39 @@ class RoleController extends Controller
             'success' => 'You add data success'
         ]);
     }
+
+    public function modify(RoleRequest $request, $id){
+        // Keys
+        // name
+        // roles[]
+        $admin_position = $this->admin_position
+        ->where('id', $id)
+        ->update(['name' => $request->name]);
+        
+        $this->admin_role
+        ->where('admin_position_id', $id)
+        ->delete();
+
+        foreach ($request->roles as $item) {
+            $this->admin_role
+            ->create([
+                'role' => $item,
+                'admin_position_id' => $id
+            ]);
+        }
+
+        return response()->json([
+            'success' => 'You update data success'
+        ]);
+    }
+
+    public function delete($id){
+        $admin_position = $this->admin_position
+        ->where('id', $id)
+        ->delete(); 
+
+        return response()->json([
+            'success' => 'You delete data success'
+        ]);
+    }
 }
