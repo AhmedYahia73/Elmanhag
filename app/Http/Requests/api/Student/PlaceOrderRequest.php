@@ -13,7 +13,7 @@ class PlaceOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,9 +27,9 @@ class PlaceOrderRequest extends FormRequest
             //This Request About Any request to place order 
             'amount'=>['required'],
             'service'=>['required'],
-            'payment_method_id'=>['required','exists:payment_methods'],
+            'payment_method_id'=>['required','exists:payment_methods,id'],
             'receipt'=>['required'],
-            'bundle_id'=>['required','exists:bundles'],
+            'bundle_id'=>['required','exists:bundles,id'],
         ];
     }
 
