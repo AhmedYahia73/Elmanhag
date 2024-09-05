@@ -14,7 +14,7 @@ class AdminController extends Controller
     public function show(){
         $admins = $this->users
         ->where('role', 'admin')
-        ->with('admin_role')
+        ->with('admin_position')
         ->get();
 
         return response()->json([

@@ -11,6 +11,7 @@ use App\Models\subject;
 use App\Models\homework;
 use App\Models\category;
 use App\Models\question;
+use App\Models\QuestionGroup;
 
 class HomeworkController extends Controller
 {
@@ -30,6 +31,7 @@ class HomeworkController extends Controller
         ->with('chapter')
         ->with('category')
         ->with('lesson')
+        ->with('question_groups.questions')
         ->get();
 
         return response()->json([

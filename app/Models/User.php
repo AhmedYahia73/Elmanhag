@@ -18,6 +18,7 @@ use App\Models\Education;
 use App\Models\Payout;
 use App\Models\AffilateAccount;
 use App\Models\Bonus;
+use App\Models\AdminPosition;
 use App\Models\PersonalAccessToken;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 
@@ -51,6 +52,7 @@ class User extends Authenticatable
         'education_id',
         'image',
         'affilate_code',
+        'admin_position_id',
         'status',
     ];
 
@@ -85,6 +87,10 @@ class User extends Authenticatable
             return $this->image = url('storage/app/public/'.$this->image);
         }
         return 'C:\xampp\tmp'.$this->name;
+    }
+
+    public function admin_position(){
+        return $this->belongsTo(AdminPosition::class, 'admin_position_id');
     }
 
     public function signups(){
