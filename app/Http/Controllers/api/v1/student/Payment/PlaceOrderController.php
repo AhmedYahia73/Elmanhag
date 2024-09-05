@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api\v1\student\Payment;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\api\student\PlaceOrderRequest;
+use App\Http\Requests\api\Student\PlaceOrderRequest;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\User;
