@@ -50,8 +50,18 @@ class PaymentController extends Controller
         // https://bdev.elmanhag.shop/admin/payment/pendding/approve/1
         $payment = $this->payments
         ->where('id', $id)
+        ->where('status', null) 
+        ->orWhere('id', $id)
+        ->where('status', 0) 
         ->with(['bundle', 'subject'])
         ->first(); // Get payment with its service [bundles, subjects]
+        
+        if (empty($payment)) {
+            
+            return response()->json([
+                'faild' => 'You approve this payment at last or this payment does not found'
+            ]);
+        }
         $user = $this->user
         ->where('id', $payment->student_id)
         ->first(); // Get User To Add Service to him
@@ -96,14 +106,50 @@ class PaymentController extends Controller
                 $affilate_account->update([
                     'income' => $affilate_account->income + $affilate_commession,
                     'wallet' => $affilate_account->wallet + $affilate_commession,
-                ]);
+                ]); // Add commession to income and wallet
            }
            else{
                 $affilate_account->create([
                     'income' => $affilate_account->income + $affilate_commession,
                     'wallet' => $affilate_account->wallet + $affilate_commession,
                     'affilate_id' => $user->affilate_id,
-                ]);
+                ]); // create affilate account if not found
+           }
+           $affilate_history = $this->affilate_history
+           ->create([
+            'date' => $payment->created_at,
+            'service' => $service_type,
+            'service_type' => $service_type,
+            'price' => $payment->amount,
+            'commission' => $affilate_commession,
+            'student_id' => $payment->student_id,
+            'category_id' => $user->category_id,
+            'payment_method_id' => $payment->payment_method_id ,
+            'affilate_id' => $user->affilate_id,
+           ]); // Make affilate history
+
+           // if service bundle it check target of bonus
+           if ($service_type == 'bundle') {
+                $affilate_history = $this->affilate_history
+                ->where('service_type', 'bundle')
+                ->where('affilate_id', $user->affilate_id)
+                ->count();
+                $bonus = $this->bonus
+                ->where('target', $affilate_history)
+                ->first(); // Give bones When achive target
+                if (!empty($bonus)) { // if bonus does not empty
+                    if (intval($bonus->bonus)) {
+                        $affilate_account = $this->affilate_account
+                        ->where('affilate_id', $user->affilate_id)
+                        ->first();
+                        $affilate_account->update([
+                            'income' => $affilate_account->income + $bonus->bonus,
+                            'wallet' => $affilate_account->wallet + $bonus->bonus,
+                        ]); // Add bonus to income and wallet
+                    }
+
+                    $bonus->affilate()->sync([$user->affilate_id]);
+                }
            }
        }
 
