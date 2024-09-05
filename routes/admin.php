@@ -84,6 +84,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('adminRole')->group(function () {
         Route::controller(RoleController::class)->group(function(){
             Route::get('/', 'show')->name('role.show');
+            Route::post('/add', 'add')->name('role.add');
         }); 
     });
 
