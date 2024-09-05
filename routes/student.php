@@ -65,6 +65,12 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                     Route::get('/', 'show')->name('student_bundels_view');
                 });
         });
+        Route::controller(HomeWorkController::class)->group(function () { // This All Chapters For Student
+                Route::prefix('order')->group(function () {
+                    Route::post('/place', 'show')->name('order.place');
+                });
+        });
+
         
 
         

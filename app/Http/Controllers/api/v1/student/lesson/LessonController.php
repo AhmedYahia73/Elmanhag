@@ -43,6 +43,12 @@ class LessonController extends Controller
             $drip_content = $lesson->drip_content;
             $order = $lesson->order;
             $lesson_order = $lesson->order;
+            $lesson_status = $lesson->status;
+            if($lesson_status == false){
+                return response()->json([
+                    'faield'=>'This Lesson Is Closed',
+                ],204);
+            }
             //  Geck Previos 
             if ($drip_content == true && $order   > 1) {
                 try {
