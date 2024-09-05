@@ -17,6 +17,7 @@ use App\Models\homework;
 use App\Models\Education;
 use App\Models\Payout;
 use App\Models\AffilateAccount;
+use App\Models\Bonus;
 use App\Models\PersonalAccessToken;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 
@@ -97,6 +98,10 @@ class User extends Authenticatable
     public function logins(){
         return $this->hasMany(PersonalAccessToken::class, 'tokenable_id')
         ->orderByDesc('id');
+    }
+
+    public function bonuses(){
+        return $this->belongsToMany(Bonus::class, 'affilate_bonuses', 'affilate_id', 'bonus_id');
     }
 
     public function country(){

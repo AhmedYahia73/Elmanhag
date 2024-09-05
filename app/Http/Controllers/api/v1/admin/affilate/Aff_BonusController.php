@@ -8,16 +8,28 @@ use App\Http\Requests\api\admin\affilate\BonusRequest;
 use App\trait\image;
 
 use App\Models\Bonus;
+use App\Models\User;
 
 class Aff_BonusController extends Controller
 {
     use image;
-    public function __construct(private Bonus $bonus){}
+    public function __construct(private Bonus $bonus, private User $users){}
     protected $bonusRequest = [
         'title',
         'target',
         'bonus',
     ];
+
+    public function affilates(){
+        $affilates = $this->users
+        ->where('role', 'affilate')
+        ->with('bonuses')
+        ->get();
+
+        return response()->json([
+            'affilates' => $affilates
+        ]);
+    }
 
     public function show(){
         // https://bdev.elmanhag.shop/admin/affilate/bonus

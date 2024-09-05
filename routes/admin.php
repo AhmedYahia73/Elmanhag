@@ -41,6 +41,10 @@ use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 
+use App\Http\Controllers\api\v1\admin\admin\AdminController;
+
+use App\Http\Controllers\api\v1\admin\role\RoleController;
+
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
@@ -74,6 +78,13 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/update/{id}', 'modify')->name('student.modify');
             Route::delete('/delete/{id}', 'delete')->name('student.delete');
         });
+    });
+
+    // Start Category Module
+    Route::prefix('adminRole')->group(function () {
+        Route::controller(RoleController::class)->group(function(){
+            Route::get('/', 'show')->name('role.show');
+        }); 
     });
 
     // Start Category Module
@@ -195,8 +206,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('payment')->group(function() {
         Route::controller(PaymentController::class)->group(function(){
             Route::get('/pendding', 'pendding_payment')->name('payment.pendding');
-            Route::post('/pendding/rejected/{id}', 'rejected_payment')->name('payment.rejected');
-            Route::get('/pendding/approve/{id}', 'approve_payment')->name('payment.approve');
+            Route::put('/pendding/rejected/{id}', 'rejected_payment')->name('payment.rejected');
+            Route::put('/pendding/approve/{id}', 'approve_payment')->name('payment.approve');
 
             Route::get('/', 'payments')->name('payment.payments');
         });
@@ -256,9 +267,10 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/affilateMethodUpdate/{id}', 'update')->name('affilate.affilate_method_update');
             Route::delete('/affilateMethodDelete/{id}', 'delete')->name('affilate.affilate_method_delete');
         });
-
+        
         Route::controller(Aff_BonusController::class)->group(function(){
             Route::get('/bonus', 'show')->name('affilate.bonus');
+            Route::get('/bonus/affilates', 'affilates')->name('affilate.bonus_affilates');
             Route::post('/bonus/add', 'add')->name('affilate.add_bonus');
             Route::put('/bonus/update/{id}', 'update')->name('affilate.update_bonus');
             Route::delete('/bonus/delete/{id}', 'delete')->name('affilate.delete_bonus');

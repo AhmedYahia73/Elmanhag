@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('parent_relation_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('password');
             $table->string('affilate_code')->nullable();
+            $table->foreignId('admin_position_id')->nullable()->constrained('admin_positions')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('country_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('city_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');

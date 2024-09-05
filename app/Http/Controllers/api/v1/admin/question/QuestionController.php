@@ -17,9 +17,11 @@ class QuestionController extends Controller
         ->with('lesson')
         ->with('chapter')
         ->get();
+        $question_types = ['text', 'image', 'audio'];
 
         return response()->json([
             'questions' => $questions,
+            'question_types' => $question_types,
         ]);
     }
 }
