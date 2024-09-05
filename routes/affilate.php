@@ -18,5 +18,5 @@ Route::middleware(['auth:sanctum', 'IsAffilate'])->group(function () {
     });
     Route::controller(PayoutController::class)->prefix('account')->group(function () {
         Route::get('withdraw','payout')->name('affilate.payout');
-    });
+    });//Test
 });
