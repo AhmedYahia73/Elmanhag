@@ -48,7 +48,6 @@ class PlaceOrderController extends Controller
             if($payment_title == 'fawry'){
                         return response ()->json(['This Method UnAvailable Now']);
             }
-
         $payment = $this->payment;
         $payment->create($newOrder);
 
