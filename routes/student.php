@@ -12,8 +12,7 @@ use App\Http\Controllers\api\v1\student\SignupController;
 use App\Http\Controllers\api\v1\student\profile\ProfileController;
 use App\Http\Controllers\api\v1\student\subject\SubjectController;
 use App\Http\Controllers\api\v1\student\bundles\BundlesController;
-
-
+use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -65,9 +64,9 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                     Route::get('/', 'show')->name('student_bundels_view');
                 });
         });
-        Route::controller(HomeWorkController::class)->group(function () { // This All Chapters For Student
+        Route::controller(PlaceOrderController::class)->group(function () { // This All Chapters For Student
                 Route::prefix('order')->group(function () {
-                    Route::post('/place', 'show')->name('order.place');
+                    Route::post('/place', 'place_order')->name('order.place');
                 });
         });
 
