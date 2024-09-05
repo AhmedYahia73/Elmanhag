@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('paid');
             $table->float('price');
+            $table->boolean('inculded');
             $table->timestamps();
         });
     }

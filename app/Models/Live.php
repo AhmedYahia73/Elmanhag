@@ -22,6 +22,7 @@ class Live extends Model
         'subject_id',
         'paid',
         'price',
+        'inculded',
     ];
 
     public function subject(){
