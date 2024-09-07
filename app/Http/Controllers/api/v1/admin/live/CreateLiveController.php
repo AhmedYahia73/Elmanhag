@@ -21,12 +21,13 @@ class CreateLiveController extends Controller
         'subject_id',
         'paid',
         'price',
+        'inculded',
     ];
 
     public function create(LiveRequest $request){
         // https://bdev.elmanhag.shop/admin/live/add
         // Keys
-        // name, from, to, date, day, teacher_id, subject_id, paid, price
+        // name, from, to, date, day, teacher_id, subject_id, paid, price, inculded
         $liveData = $request->only($this->liveRequest);
         $this->live->create($liveData);
 
@@ -38,7 +39,7 @@ class CreateLiveController extends Controller
     public function modify(LiveRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/live/update/{$id}
         // Keys
-        // name, from, to, date, day, teacher_id, subject_id, paid, price
+        // name, from, to, date, day, teacher_id, subject_id, paid, price, inculded
         $liveData = $request->only($this->liveRequest);
         $live = $this->live->where('id', $id)
         ->first();

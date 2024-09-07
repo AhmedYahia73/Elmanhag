@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\api\admin\live;
+namespace App\Http\Requests\api\admin\admins;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class LiveRequest extends FormRequest
+class UpdateAdminRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +24,15 @@ class LiveRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('id');
         return [
-            'name' => ['required'],
-            'from' => ['required', 'date_format:H:i:s'],
-            'to' => ['required', 'date_format:H:i:s'],
-            'date' => ['required', 'date'],
-            'teacher_id' => ['required', 'exists:users,id'],
-            'subject_id' => ['required', 'exists:subjects,id'],
-            'paid' => ['required', 'boolean'],
-            'inculded' => ['required', 'boolean']
+            // this request from admin for add new Admin
+            'name'=>['required'],
+            'phone'=>['required', Rule::unique('users')->ignore($userId)],
+            'email'=>['required', Rule::unique('users')->ignore($userId), 'email'],
+            'status'=>['required', 'boolean'],
+            'password'=>['required'],
+            'admin_position_id'=>['required', 'exists:admin_positions,id'],
         ];
     }
 
