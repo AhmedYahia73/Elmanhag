@@ -158,4 +158,8 @@ class User extends Authenticatable
         return $this->hasMany(Payout::class,'affilate_id')->where('status','!=',Null)->with('method');
      }
 
+     public function affiliate_history(){
+        return $this->hasMany(AffilateHistory::class,'affilate_id')->with('student');
+     }
+
 }
