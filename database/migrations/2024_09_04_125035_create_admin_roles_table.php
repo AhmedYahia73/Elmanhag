@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->enum('role', ['students', 'teachers', 'admins', 'categories',
             'subjects', 'bundles', 'questions', 'hw', 'revisions', 'exams', 'live',
-            'discounts', 'promocode', 'pop up', 'reviews', 'pendding payments', 'payments',
-            'affilate', 'support', 'reports', 'settings', 'notice board']);
+            'discounts', 'promocode', 'pop up', 'reviews', 'payments', 'affilate', 
+            'support', 'reports', 'settings', 'notice board',
+            'chapters', 'lessons', 'admin_roles']);
             $table->foreignId('admin_position_id')->nullable()->constrained('admin_positions')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

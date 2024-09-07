@@ -20,8 +20,9 @@ class RoleController extends Controller
         ->get();
         $roles = ['students', 'teachers', 'admins', 'categories',
         'subjects', 'bundles', 'questions', 'hw', 'revisions', 'exams', 'live',
-        'discounts', 'promocode', 'pop up', 'reviews', 'pendding payments', 'payments',
-        'affilate', 'support', 'reports', 'settings', 'notice board'];
+        'discounts', 'promocode', 'pop up', 'reviews', 'payments',
+        'affilate', 'support', 'reports', 'settings', 'notice board', 'chapters'
+        , 'lessons',  'admin_roles'];
 
         return response()->json([
             'admin_position' => $admin_position,
