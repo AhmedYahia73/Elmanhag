@@ -80,7 +80,17 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
     });
 
-    // Start Category Module
+    // Start Admin Module
+    Route::prefix('admins')->group(function () {
+        Route::controller(AdminController::class)->group(function(){
+            Route::get('/', 'show')->name('admins.show');
+            Route::post('/add', 'add')->name('admins.add');
+            Route::put('/update/{id}', 'modify')->name('admins.update');
+            Route::delete('/delete/{id}', 'delete')->name('admins.delete');
+        }); 
+    });
+
+    // Start Admin Role Module
     Route::prefix('adminRole')->group(function () {
         Route::controller(RoleController::class)->group(function(){
             Route::get('/', 'show')->name('role.show');
