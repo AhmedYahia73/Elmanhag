@@ -23,6 +23,7 @@ class AdminController extends Controller
     ];
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/admins
         $admins = $this->users
         ->where('role', 'admin')
         ->with('admin_position')
@@ -37,6 +38,7 @@ class AdminController extends Controller
     }
 
     public function add(AdminRequest $request){
+        // https://bdev.elmanhag.shop/admin/admins/add
         // Keys
         // name, phone, email, status, password, admin_position_id
         $admin_data = $request->only($this->adminRequest);
@@ -50,6 +52,7 @@ class AdminController extends Controller
     }
 
     public function modify(UpdateAdminRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/admins/update/{id}
         // Keys
         // name, phone, email, status, password, admin_position_id
         $admin_data = $request->only($this->adminRequest);
@@ -64,6 +67,7 @@ class AdminController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/admins/delete/{id}
         $this->users
         ->where('id', $id)
         ->where('role', 'admin')
