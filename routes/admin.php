@@ -69,7 +69,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Module Student Sign UP
-    Route::prefix('student')->group(function () {
+    Route::prefix('student')->middleware('can:isStudent')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
             Route::get('/', 'show')->name('student.show');
         });
@@ -81,7 +81,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Admin Module
-    Route::prefix('admins')->group(function () {
+    Route::prefix('admins')->middleware('can:isAdmins')->group(function () {
         Route::controller(AdminController::class)->group(function(){
             Route::get('/', 'show')->name('admins.show');
             Route::post('/add', 'add')->name('admins.add');
@@ -89,9 +89,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('admins.delete');
         }); 
     });
-
+    
     // Start Admin Role Module
-    Route::prefix('adminRole')->group(function () {
+    Route::prefix('adminRole')->middleware('can:isAdminRoles')->group(function () {
         Route::controller(RoleController::class)->group(function(){
             Route::get('/', 'show')->name('role.show');
             Route::post('/add', 'add')->name('role.add');
@@ -101,7 +101,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Category Module
-    Route::prefix('category')->group(function () {
+    Route::prefix('category')->middleware('can:isCategories')->group(function () {
         Route::controller(CategoryController::class)->group(function(){
             Route::get('/', 'show')->name('category.show');
         });
@@ -113,7 +113,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Subject Module
-    Route::prefix('subject')->group(function () {
+    Route::prefix('subject')->middleware('can:isSubjects')->group(function () {
         Route::controller(SubjectController::class)->group(function(){
             Route::get('/', 'show')->name('subject.show');
             Route::get('/progress/{id}', 'subject_progress')->name('subject.progress');
@@ -124,9 +124,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('subject.delete');
         });
     });
-
+    
     // Start Chapter Module
-    Route::prefix('chapter')->group(function () {
+    Route::prefix('chapter')->middleware('can:isChapters')->group(function () {
         Route::controller(ChapterController::class)->group(function(){
             Route::get('/{subject_id}', 'show')->name('subject.show');
         });
@@ -136,9 +136,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('subject.delete');
         });
     });
-
+    
     // Start Lesson Module
-    Route::prefix('lesson')->group(function () {
+    Route::prefix('lesson')->middleware('can:isLessons')->group(function () {
         Route::controller(CreateLessonController::class)->group(function(){
             Route::post('/add/{sub_id}', 'create')->name('lesson.add');
             Route::put('/update/{id}', 'modify')->name('lesson.update');
@@ -147,7 +147,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Lesson Material Module
-    Route::prefix('lessonMaterial')->group(function () {
+    Route::prefix('lessonMaterial')->middleware('can:isLessons')->group(function () {
         Route::controller(LessonMaterialController::class)->group(function(){
             Route::get('/{lesson_id}', 'show')->name('lessonMaterial.show');
             Route::post('/add/{lesson_id}', 'create')->name('lessonMaterial.add');
@@ -156,7 +156,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Bundle Module
-    Route::prefix('bundle')->group(function () {
+    Route::prefix('bundle')->middleware('can:isBundles')->group(function () {
         Route::controller(BundleController::class)->group(function(){
             Route::get('/', 'show')->name('bundle.show');
         });
@@ -168,7 +168,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Question Module
-    Route::prefix('question')->group(function () {
+    Route::prefix('question')->middleware('can:isQuestions')->group(function () {
         Route::controller(QuestionController::class)->group(function(){
             Route::get('/', 'show')->name('question.show');
         });
@@ -180,7 +180,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start H.W Module
-    Route::prefix('homework')->group(function () {
+    Route::prefix('homework')->middleware('can:isHw')->group(function () {
         Route::controller(HomeworkController::class)->group(function(){
             Route::get('/', 'show')->name('homework.show');
         });
@@ -190,9 +190,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('homework.delete');
         });
     });
-
+    
     // Start Discount Module
-    Route::prefix('discount')->group(function () {
+    Route::prefix('discount')->middleware('can:isDiscounts')->group(function () {
         Route::controller(DiscountController::class)->group(function(){
             Route::get('/', 'show')->name('discount.show');
         });
@@ -202,9 +202,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('discount.delete');
         });
     });
-
+    
     // Start Promo Code Module
-    Route::prefix('promoCode')->group(function () {
+    Route::prefix('promoCode')->middleware('can:isPromocode')->group(function () {
         Route::controller(PromocodeController::class)->group(function(){
             Route::get('/', 'show')->name('promoCode.show');
         });
@@ -214,9 +214,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('promoCode.delete');
         });
     });
-
+    
     // Start Payment Module
-    Route::prefix('payment')->group(function() {
+    Route::prefix('payment')->middleware('can:isPayments')->group(function() {
         Route::controller(PaymentController::class)->group(function(){
             Route::get('/pendding', 'pendding_payment')->name('payment.pendding');
             Route::put('/pendding/rejected/{id}', 'rejected_payment')->name('payment.rejected');
@@ -227,7 +227,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Teacher Module
-    Route::prefix('teacher')->group(function() {
+    Route::prefix('teacher')->middleware('can:isTeachers')->group(function() {
         Route::controller(TeacherController::class)->group(function(){
             Route::get('/', 'teachers_list')->name('teachers.list');
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
@@ -235,9 +235,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
         });
     });
-
+    
     // Start Live Module
-    Route::prefix('live')->group(function() {
+    Route::prefix('live')->middleware('can:isLive')->group(function() {
         Route::controller(LiveController::class)->group(function(){
             Route::get('/', 'show')->name('live.show');
         });
@@ -247,9 +247,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('live.delete');
         });
     });
-
+    
     // Start Affilate Module
-    Route::prefix('affilate')->group(function() {
+    Route::prefix('affilate')->middleware('can:isAffilate')->group(function() {
         Route::controller(AffilateController::class)->group(function(){
             Route::get('/', 'affilate')->name('affilate.affilate');
             Route::post('/add', 'create')->name('affilate.add');
@@ -291,7 +291,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     });
 
     // Start Settings Module
-    Route::prefix('Settings')->group(function () {
+    Route::prefix('Settings')->middleware('can:isSettings')->group(function () {
         // Start Parent Relations
         Route::prefix('relation')->group(function () {
             Route::controller(RelationController::class)->group(function(){
