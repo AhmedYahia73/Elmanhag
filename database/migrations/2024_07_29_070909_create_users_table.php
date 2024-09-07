@@ -31,7 +31,7 @@ return new class extends Migration
             $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('affilate_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('sudent_job_id')->nullable()->constrained('student_jobs');
-            $table->boolean('status')->default(1);
+            $table->boolean('status')->default(1)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
