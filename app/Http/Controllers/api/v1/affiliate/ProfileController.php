@@ -24,6 +24,7 @@ class ProfileController extends Controller
                          $user = $request->user();
                          $income = $user->income;
                          $payout = $user->payout_history;
+                         $affiliate_history = $user->affiliate_history;
                          $total_payout = $user->payout_history->where('status','1')->sum('amount');
                 } catch (QueryException $th) {
             return response()->json([
