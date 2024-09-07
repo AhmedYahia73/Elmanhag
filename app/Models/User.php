@@ -161,5 +161,8 @@ class User extends Authenticatable
      public function affiliate_history(){
         return $this->hasMany(AffilateHistory::class,'affilate_id')->with('student');
      }
+     
+
+
 
 }
