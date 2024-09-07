@@ -24,6 +24,7 @@ class ProfileController extends Controller
                          $user = $request->user();
                          $income = $user->income;
                          $payout = $user->payout_history;
+                         $total_payout = $user->payout_history->where('status','1')->sum('amount');
                 } catch (QueryException $th) {
             return response()->json([
                 'message'=>'Something Wrong',
@@ -34,6 +35,7 @@ class ProfileController extends Controller
         return response()->json([
             'success'=>'data Returned Successfully',
             'user'=>$user,
+            'total_payout'=>$total_payout,
         ]);
     }
 
