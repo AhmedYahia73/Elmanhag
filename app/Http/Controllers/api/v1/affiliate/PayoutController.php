@@ -9,7 +9,8 @@ class PayoutController extends Controller
 {
     // This Finction About All Payout For Affiliate Account
 
-    public function payout(){
+    public function payout(Request $request){
+        
         
     }
 }

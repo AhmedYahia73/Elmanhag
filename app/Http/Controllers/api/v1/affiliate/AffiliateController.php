@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AffiliateController extends Controller
 {
     // This Controller About Affiliate
-    protected $requestAffiliate = ['name','email','phone','role','country_id','city_id','password'];
+    protected $requestAffiliate = ['name','email','phone','status','role','country_id','city_id','password'];
         public function __construct(private User $user){}
     protected $requestAccountAfilliate = ['affilate_id'];
     public function store(AfilliateRequest $request){
@@ -20,6 +20,7 @@ class AffiliateController extends Controller
         $user = $this->user ;
         $user = $user->create($newAffilate);
         $newAffilate['image'] = 'default.png';
+        $newAffilate['status'] = Null;
         $affiliate =['affilate_id'=> $user->id];
         $user->income()->create($affiliate);
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
