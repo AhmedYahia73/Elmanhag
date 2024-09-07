@@ -29,7 +29,7 @@ class PlaceOrderRequest extends FormRequest
             'service'=>['required'],
             'payment_method_id'=>['required','exists:payment_methods,id'],
             'receipt'=>['required'],
-            'bundle_id'=>['required','exists:bundles,id'],
+            'bundle_id'=>['exists:bundles,id'],
         ];
     }
 
