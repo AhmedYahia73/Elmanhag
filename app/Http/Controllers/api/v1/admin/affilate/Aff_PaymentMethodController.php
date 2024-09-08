@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\admin\affilate;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\trait\image;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +16,9 @@ class Aff_PaymentMethodController extends Controller
     protected $paymentMethodRequest = [
         'method',
         'min_payout',
+        'status'
     ];
+    use image;
 
     public function affilate_method(){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethod
@@ -30,10 +33,11 @@ class Aff_PaymentMethodController extends Controller
     public function add(Request $request){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodAdd
         // Keys
-        // method, min_payout
+        // method, min_payout, status, thumbnail
         $validator = Validator::make($request->all(), [
             'method' => 'required',
-            'min_payout' => 'required|numeric'
+            'min_payout' => 'required|numeric',
+            'status' => 'required|boolean',
         ]);
         if ($validator->fails()) { // if Validate Make Error Return Message Error
             return response()->json([
@@ -41,6 +45,10 @@ class Aff_PaymentMethodController extends Controller
             ],400);
         }
         $data = $request->only($this->paymentMethodRequest);
+        $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
+        if (!empty($thumbnail) && $thumbnail != null) {
+            $data['thumbnail'] = $thumbnail; // add to data image if is found
+        }
         $payment_methods = $this->payment_method
         ->create($data);
 
@@ -55,7 +63,8 @@ class Aff_PaymentMethodController extends Controller
         // method, min_payout
         $validator = Validator::make($request->all(), [
             'method' => 'required',
-            'min_payout' => 'required|numeric'
+            'min_payout' => 'required|numeric',
+            'status' => 'required|boolean',
         ]);
         if ($validator->fails()) { // if Validate Make Error Return Message Error
             return response()->json([
