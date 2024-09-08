@@ -39,14 +39,10 @@ class PayoutController extends Controller
             return response()->json([
                 'faield' => 'Your Amount Less Than Your Wallet',
             ]);
-        } else {
-            $walletNow = $affiliateWallet - $amountRequest;
-            $updateWallet = ['wallet'=>$walletNow];
-           $accountUpdate = $user->income()->update($updateWallet);
-            $newPayout = $user->payout_history()->create($payout);
-            return response()->json([
-                'success' => 'Payout Successfully',
-            ]);
-        }
+        } 
+        $newPayout = $user->payout_history()->create($payout);
+        return response()->json([
+        'success' => 'Payout Successfully',
+        ]);
     }
 }
