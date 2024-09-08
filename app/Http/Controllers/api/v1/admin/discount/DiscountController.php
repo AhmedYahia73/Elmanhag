@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Discount;
-use App\Models\Discount;
+use App\Models\category;
 
 class DiscountController extends Controller
 {
