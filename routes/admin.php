@@ -56,6 +56,8 @@ use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
 use App\Http\Controllers\api\v1\admin\settings\JobsController;
 use App\Http\Controllers\api\v1\admin\settings\PaymentMethodsController;
+use App\Http\Controllers\api\v1\admin\settings\QuestionIssuesController;
+use App\Http\Controllers\api\v1\admin\settings\VideoIssuesController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -248,6 +250,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
     });
     
+    
     // Start Affilate Module
     Route::prefix('affilate')->middleware('can:isAffilate')->group(function() {
         Route::controller(AffilateController::class)->group(function(){
@@ -335,6 +338,15 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
                 Route::post('/add', 'create')->name('payment_methods.add');
                 Route::post('/update/{id}', 'modify')->name('payment_methods.update');
                 Route::delete('/delete/{id}', 'delete')->name('payment_methods.delete');
+            });
+        });
+        // Start Question Issues
+        Route::prefix('questionIssues')->group(function() {
+            Route::controller(QuestionIssuesController::class)->group(function(){
+                Route::get('/', 'show')->name('question_issues.show');
+                Route::post('/add', 'add')->name('question_issues.add');
+                Route::put('/update/{id}', 'modify')->name('question_issues.update');
+                Route::delete('/delete/{id}', 'delete')->name('question_issues.delete');
             });
         });
 
