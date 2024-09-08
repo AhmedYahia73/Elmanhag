@@ -60,7 +60,7 @@ class Aff_PaymentMethodController extends Controller
     public function update(Request $request, $id){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodUpdate/{id}
         // Keys
-        // method, min_payout
+        // method, min_payout, status, thumbnail
         $validator = Validator::make($request->all(), [
             'method' => 'required',
             'min_payout' => 'required|numeric',
@@ -74,7 +74,13 @@ class Aff_PaymentMethodController extends Controller
         $data = $request->only($this->paymentMethodRequest);
         $payment_methods = $this->payment_method
         ->where('id', $id)
-        ->update($data);
+        ->first();
+        $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
+        if (!empty($thumbnail) && $thumbnail != null) {
+            $data['thumbnail'] = $thumbnail; // add to data image if is found
+            $this->deleteImage($payment_methods->thumbnail); // delete old image
+        }
+        $payment_methods->update($data);
 
         return response()->json([
             'success' => 'You update data success'
@@ -83,9 +89,11 @@ class Aff_PaymentMethodController extends Controller
 
     public function delete($id){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodDelete/{id}
-        $this->payment_method
+        $payment_methods = $this->payment_method
         ->where('id', $id)
-        ->delete();
+        ->first();
+        $this->deleteImage($payment_methods->thumbnail); // delete old image
+        $payment_methods->delete();
 
         return response()->json([
             'success' => 'You delete data success'
