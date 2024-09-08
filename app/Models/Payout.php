@@ -18,6 +18,7 @@ class Payout extends Model
         'status',
         'affilate_id',
         'payment_method_affilate_id',
+        'description'
     ];
 
     public function method(){
