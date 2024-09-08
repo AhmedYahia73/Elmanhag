@@ -126,6 +126,10 @@ class User extends Authenticatable
         return url('storage/' . $this->attributes['image']);
     }
 
+    public function getcreatedAtAttribute($datetime){
+        return date('d-m-Y', strtotime($datetime));
+    }
+
     public function subjects(){
         return $this->belongsToMany(subject::class, 'students_subjects');
     }
