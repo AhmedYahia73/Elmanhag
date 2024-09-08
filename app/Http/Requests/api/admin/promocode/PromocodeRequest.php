@@ -31,7 +31,7 @@ class PromocodeRequest extends FormRequest
             'usage_type' => ['required', 'in:fixed,unlimited'],
             'usage' => ['numeric'],
             'number_users' => ['numeric'],
-            'status' => ['required'],
+            'status' => ['required', 'boolean'],
         ];
     }
 

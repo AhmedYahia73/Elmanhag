@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('discount_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('bundle_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->boolean('status');
             $table->timestamps();
         });
     }
