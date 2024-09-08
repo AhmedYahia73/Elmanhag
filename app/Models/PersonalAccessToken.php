@@ -22,4 +22,8 @@ class PersonalAccessToken extends Model
     public function getcreatedAtAttribute($datetime){
         return date('d-m-Y', strtotime($datetime));
     }
+
+    public function getupdatedAtAttribute($datetime){
+        return date('d-m-Y', strtotime($datetime));
+    }
 }
