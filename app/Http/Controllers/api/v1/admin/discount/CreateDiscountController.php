@@ -40,11 +40,14 @@ class CreateDiscountController extends Controller
     public function modify(DiscountRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/discount/update/{id}
         // keys 
-        // subject_id, category_id, bundle_id, amount, type => [precentage, value], description
+        // subject_id[], category_id, bundle_id[], amount, type => [precentage, value], description
         // start_date, end_date, statue
         $dicount_data = $request->only($this->discountRequest);
-        $this->discount->where('id', $id)
-        ->update($dicount_data);
+        $discount = $this->discount->where('id', $id)
+        ->first();
+        $discount->update($dicount_data);
+        $discount->subject()->sync($request->subject_id); // Add subjects to pivot table
+        $discount->bundle()->sync($request->bundle_id); // Add bundle to pivot table
 
         return response()->json([
             'success' => 'You update data success'
