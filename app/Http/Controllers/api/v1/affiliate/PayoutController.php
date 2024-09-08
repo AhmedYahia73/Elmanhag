@@ -12,6 +12,7 @@ class PayoutController extends Controller
     protected $payoutRequest = [
         'payment_method_affilate_id',
         'amount',
+        'description',
         'date',
     ];
     public function __construct(private PaymentMethodAffilate $paymentMethodAffilate) {}
