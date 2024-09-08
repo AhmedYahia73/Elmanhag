@@ -15,8 +15,6 @@ class Discount extends Model
 
     protected $fillable = [
         'category_id',
-        'subject_id',
-        'bundle_id',
         'amount',
         'type',
         'description',
@@ -30,10 +28,10 @@ class Discount extends Model
     }
 
     public function subject(){
-        return $this->belongsTo(subject::class);
+        return $this->belongsToMany(subject::class, 'discount_services');
     }
 
     public function bundle(){
-        return $this->belongsTo(bundle::class);
+        return $this->belongsToMany(bundle::class, 'discount_services');
     }
 }

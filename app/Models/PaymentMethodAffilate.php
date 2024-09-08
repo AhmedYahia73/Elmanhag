@@ -12,5 +12,7 @@ class PaymentMethodAffilate extends Model
     protected $fillable = [
         'method',
         'min_payout',
+        'thumbnail',
+        'status',
     ];
 }
