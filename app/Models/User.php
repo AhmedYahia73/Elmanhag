@@ -98,7 +98,7 @@ class User extends Authenticatable
     }
 
     public function income(){
-        return $this->hasMany(AffilateAccount::class, 'affilate_id');
+        return $this->hasOne(AffilateAccount::class, 'affilate_id');
     }
 
     public function logins(){
