@@ -102,7 +102,7 @@ class User extends Authenticatable
     }
 
     public function logins(){
-        return $this->hasMany(PersonalAccessToken::class, 'tokenable_id')
+        return $this->hasOne(PersonalAccessToken::class, 'tokenable_id')
         ->orderByDesc('id');
     }
 
