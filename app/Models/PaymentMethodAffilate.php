@@ -15,4 +15,8 @@ class PaymentMethodAffilate extends Model
         'thumbnail',
         'status',
     ];
+
+    public function getthumbnailAttribute ($thumbnail){
+        return url('storage/'.$thumbnail);
+    }
 }
