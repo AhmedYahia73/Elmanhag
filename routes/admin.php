@@ -349,6 +349,15 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
                 Route::delete('/delete/{id}', 'delete')->name('question_issues.delete');
             });
         });
+        // Start Video Issues
+        Route::prefix('videoIssues')->group(function() {
+            Route::controller(VideoIssuesController::class)->group(function(){
+                Route::get('/', 'show')->name('video_issues.show');
+                Route::post('/add', 'add')->name('video_issues.add');
+                Route::put('/update/{id}', 'modify')->name('video_issues.update');
+                Route::delete('/delete/{id}', 'delete')->name('video_issues.delete');
+            });
+        });
 
     });
 });

@@ -28,7 +28,7 @@ class QuestionIssuesController extends Controller
         ]);
     }
 
-    public function add(Request $request){ 
+    public function add(Request $request){
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'status' => 'required|boolean',
