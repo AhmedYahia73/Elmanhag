@@ -85,9 +85,11 @@ class QuestionIssuesController extends Controller
 
     public function delete($id){
         // https://bdev.elmanhag.shop/admin/Settings/questionIssues/delete/{id}
-        $this->question_issues
+        $question_issue = $this->question_issues
         ->where('id', $id)
-        ->delete();
+        ->first();
+        $this->deleteImage($question_issue->thumbnail);
+        $question_issue->delete();
 
         return response()->json([
             'success' => 'You delete data success'

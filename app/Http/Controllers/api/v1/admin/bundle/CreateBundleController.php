@@ -89,8 +89,17 @@ class CreateBundleController extends Controller
 
     public function delete( $id ){
         // https://bdev.elmanhag.shop/admin/bundle/delete/1
-        $this->bundle->where('id', $id)
-        ->delete();
+        $bundle = $this->bundle->where('id', $id)
+        ->first();
+        if (empty($bundle)) { 
+            return response()->json([
+                'faild' => 'bundle is not found'
+            ]);
+        }
+        $this->deleteImage($bundle->demo_video); // delete demo video
+        $this->deleteImage($bundle->cover_photo); // delete cover photo
+        $this->deleteImage($bundle->thumbnail); // delete thumbnail
+        $bundle->delete();
 
         return response()->json([
             'success' => 'You delete data success'
