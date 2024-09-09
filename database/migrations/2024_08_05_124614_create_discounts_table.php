@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null'); 
             $table->float('amount');
-            $table->enum('type', ['precentage', 'value']);
+            $table->enum('type', ['percentage', 'value']);
             $table->string('description');
             $table->date('start_date');
             $table->date('end_date');

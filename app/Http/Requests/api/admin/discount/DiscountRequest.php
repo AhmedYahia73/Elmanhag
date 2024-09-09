@@ -28,7 +28,7 @@ class DiscountRequest extends FormRequest
             'subject_id' => ['exists:subjects,id'],
             'bundle_id' => ['exists:bundles,id'],
             'amount' => ['required', 'numeric'],
-            'type' => ['required', 'in:precentage,value'],
+            'type' => ['required', 'in:percentage,value'],
             'description' => ['required'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
