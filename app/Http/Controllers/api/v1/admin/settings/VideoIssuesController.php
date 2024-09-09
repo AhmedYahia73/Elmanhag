@@ -21,6 +21,7 @@ class VideoIssuesController extends Controller
     ];
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/Settings/videoIssues
         $video_issues = $this->video_issues->get();
 
         return response()->json([
@@ -29,6 +30,9 @@ class VideoIssuesController extends Controller
     }
 
     public function add(Request $request){
+        // https://bdev.elmanhag.shop/admin/Settings/videoIssues/add
+        // Keys
+        // title, description, status, thumbnail
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'status' => 'required|boolean',
@@ -50,7 +54,10 @@ class VideoIssuesController extends Controller
         ]);
     }
 
-    public function modify(Request $request, $id){ 
+    public function modify(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/Settings/videoIssues/update/{id}
+        // Keys
+        // title, description, status, thumbnail
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'status' => 'required|boolean',
@@ -77,10 +84,13 @@ class VideoIssuesController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/Settings/videoIssues/delete/{id}
         $video_issues = $this->video_issues
         ->where('id', $id)
         ->first();
-        $this->deleteImage($video_issues->thumbnail);
+        if (isset($video_issues->thumbnail)) {
+            $this->deleteImage($video_issues->thumbnail);
+        }
         $video_issues->delete();
 
         return response()->json([
