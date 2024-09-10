@@ -1,6 +1,8 @@
 <?php
 namespace Admin;
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\api\v1\lang\LangController;
 
 use App\Http\Controllers\api\v1\admin\student\CreateStudent;
@@ -58,8 +60,6 @@ use App\Http\Controllers\api\v1\admin\settings\JobsController;
 use App\Http\Controllers\api\v1\admin\settings\PaymentMethodsController;
 use App\Http\Controllers\api\v1\admin\settings\QuestionIssuesController;
 use App\Http\Controllers\api\v1\admin\settings\VideoIssuesController;
-
-use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
