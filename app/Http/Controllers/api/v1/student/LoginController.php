@@ -20,8 +20,16 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request){
         $login = $request->only($this->loginRequest);
-           if( Auth::attempt($login)){
-                $user = $this->user->where('email',$login['email'])->first();
+        // is_numeric($login['email']) ? $name ='phone':$name ='email'; Old Selution
+         $user = $this->user
+         ->where('email',$login['email'])
+         ->orwhere('phone',$login['email'])->first();
+            if(!$user)
+            {
+                  return response()->json([
+                  'faield'=>'creational not Valid',
+                  ]);
+            }
                 $token = $user->createToken('personal access token')->plainTextToken;
                 $user->token = $token;
                 if(!empty($user->role)){
@@ -34,12 +42,7 @@ class LoginController extends Controller
                 }else{
                     return response()->json(['faield' => 'This user does not have the ability to login'],403);
                 }
-            }else{
-                return response()->json([
-                'faield'=>'creational not Valid',
-                ]);
-                
-        }
+       
     }
 
     public function logout(Request $request){
