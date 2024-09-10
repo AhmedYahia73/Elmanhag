@@ -22,7 +22,7 @@ class questionFactory extends Factory
             'audio' => fake()->image(),
             'status' => fake()->randomElement([1, 0]),
             'semester' => fake()->randomElement(['first', 'second']) ,
-            'answer_type' => fake()->randomElement(['Mcq', 'T/F', 'Join', 'Essay']) ,
+            'answer_type' => fake()->randomElement(['Mcq', 'T/F', 'Join', 'Complete', 'Reorder']) ,
             'question_type' => fake()->randomElement(['text', 'image', 'audio']) ,
             'difficulty' => fake()->randomElement(['A', 'B', 'C']) ,
         ];
