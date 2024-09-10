@@ -147,6 +147,10 @@ class User extends Authenticatable
         return $this->belongsTo(User::class,'parent_id');
     }
 
+    public function childreen(){
+        return $this->hasMany(User::class,'parent_id');
+    }
+
     public function teacher_subjects(){
         return $this->belongsToMany(subject::class, 'teacher_subject');
     }
