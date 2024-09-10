@@ -30,6 +30,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('affilate')
                 ->name('affilate.')
                 ->group(base_path('routes/affilate.php'));
+            Route::middleware('api')
+                ->prefix('parent')
+                ->name('parent.')
+                ->group(base_path('routes/parent.php'));
         },
     )
 

@@ -73,12 +73,16 @@ class PaymentController extends Controller
         // Determine Service That User Pay it
         if ( $payment->service == 'Subject' ) {
             $subjects = $payment->subject->pluck('id')->toArray(); // Get subjects as array
-            $user->subjects()->sync($subjects); // Add subjects to student
+            if (count($subjects) > 0) {
+                $user->subjects()->sync($subjects); // Add subjects to student
+            }
             $service_type = 'subject';
         }
         elseif ( $payment->service == 'Bundle' ) {
             $bundles = $payment->bundle->pluck('id')->toArray(); // Get bundles as array
-            $user->bundles()->sync($bundles); // Add bundles to student
+            if (count($bundles) > 0) {
+                $user->bundles()->sync($bundles); // Add bundles to student
+            }
             $service_type = 'bundle';
         }
         elseif ( $payment->service == 'Live session' ) {
