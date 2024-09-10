@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     {
         return [
             // This Request About Request login 
-            'email'=>['required','email'],
+            'email'=>['required'],
             'password'=>['required'],
         ];
     }
