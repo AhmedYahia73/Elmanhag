@@ -12,6 +12,7 @@ class ChildreenController extends Controller
     public function __construct(private User $users){}
 
     public function show(){
+        // https://bdev.elmanhag.shop/parent/childreen
         $childreen = auth()->user();
         $childreen = $childreen->childreen;
 

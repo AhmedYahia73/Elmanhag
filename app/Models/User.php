@@ -148,7 +148,8 @@ class User extends Authenticatable
     }
 
     public function childreen(){
-        return $this->hasMany(User::class,'parent_id');
+        return $this->hasMany(User::class,'parent_id')
+        ->with('category');
     }
 
     public function teacher_subjects(){
