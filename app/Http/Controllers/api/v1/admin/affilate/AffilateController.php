@@ -72,6 +72,15 @@ class AffilateController extends Controller
         // name, phone, email, country_id, city_id, password, status
         $affilate_data = $request->only($this->affilateRequest);
         $affilate_data['role'] = 'affilate';
+        $affilate_code = rand(1000000, 9999999);
+        $db_affilate_code = $this->user->where('affilate_code', $affilate_code)
+        ->first(); // get affilate that have the same code to check if code frequent
+        while (!empty($db_affilate_code)) { // if code is exist it will changed
+            $affilate_code = rand(100000, 999999);
+            $db_affilate_code = $this->user->where('affilate_code', $affilate_code)
+            ->first(); // get affilate that have the same code to check if code frequent
+        }
+        $affilate_data['affilate_code'] = $affilate_code;
         $affilate = $this->user->create($affilate_data);
         $this->affilate_account->create([
             'affilate_id' => $affilate->id
