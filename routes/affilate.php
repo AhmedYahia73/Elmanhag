@@ -2,6 +2,7 @@
 namespace affilate;
 
 use App\Http\Controllers\api\v1\affiliate\AffiliateController;
+use App\Http\Controllers\api\v1\affiliate\BonusController;
 use App\Http\Controllers\api\v1\affiliate\PayoutController;
 use App\Http\Controllers\api\v1\affiliate\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,5 +19,8 @@ Route::middleware(['auth:sanctum', 'IsAffilate'])->group(function () {
     });
     Route::controller(PayoutController::class)->prefix('account')->group(function () {
         Route::post('withdraw','payout')->name('affilate.payout');
+    });
+    Route::controller(BonusController::class)->prefix('bonus')->group(function () {
+        Route::get('/view','get_bonus')->name('affilate.bonus');
     });
 });
