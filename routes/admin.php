@@ -269,7 +269,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
         Route::controller(Aff_CommessionController::class)->group(function(){
             Route::get('/commession', 'commession')->name('affilate.commession');
-            Route::post('/addCommession', 'add_commession')->name('affilate.addCommession');
+            Route::put('/addCommession', 'add_commession')->name('affilate.addCommession');
         });
 
         Route::controller(Aff_PayoutController::class)->group(function(){

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bundles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->float('price');
+            $table->integer('price');
             $table->string('tags')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('cover_photo')->nullable();
