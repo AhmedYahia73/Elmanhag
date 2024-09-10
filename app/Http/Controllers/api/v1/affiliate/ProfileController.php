@@ -22,10 +22,14 @@ class ProfileController extends Controller
     public function show(Request $request){
                 try {
                          $user = $request->user();
+                         $affilate_code = $user->affilate_code;
                          $income = $user->income;
                          $payout = $user->payout_history;
                          $affiliate_history = $user->affiliate_history;
                          $total_payout = $user->payout_history->where('status','1')->sum('amount');
+                         $user->student_signups = $user->signups
+                        ->where('role','student')
+                        ->count();
                 } catch (QueryException $th) {
             return response()->json([
                 'message'=>'Something Wrong',

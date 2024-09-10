@@ -34,7 +34,7 @@ class SignupRequest extends FormRequest
     'category_id' => ['required','exists:categories,id'],
     'education_id' => ['required','exists:education,id'],
     'gender' => ['required'],
-    'future_career' => ['required'],
+    'sudent_job_id' => ['required'],
         ];
     }
     public function failedValidation(Validator $validator){

@@ -25,6 +25,7 @@ class SignupController extends Controller
    'sudent_jobs_id',
    'parent_relation_id',
    'education_id',
+   'affilate_code',
    'affilate_id',
    'language'
    ];
@@ -44,7 +45,12 @@ class SignupController extends Controller
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
         $newStudent['image'] = $image_path;
         $newStudent['role'] = 'student';
+         if(isset($newStudent['affilate_code'])){ // If Student Append Affiliate Code
+            $affiliate = $this->user->where('affilate_code', $newStudent['affilate_code'])->first();
+            $newStudent['affilate_id'] = $affiliate->id;
+         }
         $user = $this->user->create($newStudent); // Start Create New Student
+           
         if($this->parentRequest){
             $newParent = $request->only($this->parentRequest);
               $newParent['parent_id'] = $user->id;
