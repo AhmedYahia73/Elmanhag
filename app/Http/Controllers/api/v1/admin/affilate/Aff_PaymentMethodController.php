@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\admin\affilate;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\trait\image;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +16,9 @@ class Aff_PaymentMethodController extends Controller
     protected $paymentMethodRequest = [
         'method',
         'min_payout',
+        'status'
     ];
+    use image;
 
     public function affilate_method(){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethod
@@ -30,10 +33,11 @@ class Aff_PaymentMethodController extends Controller
     public function add(Request $request){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodAdd
         // Keys
-        // method, min_payout
+        // method, min_payout, status, thumbnail
         $validator = Validator::make($request->all(), [
             'method' => 'required',
-            'min_payout' => 'required|numeric'
+            'min_payout' => 'required|numeric',
+            'status' => 'required|boolean',
         ]);
         if ($validator->fails()) { // if Validate Make Error Return Message Error
             return response()->json([
@@ -41,6 +45,10 @@ class Aff_PaymentMethodController extends Controller
             ],400);
         }
         $data = $request->only($this->paymentMethodRequest);
+        $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
+        if (!empty($thumbnail) && $thumbnail != null) {
+            $data['thumbnail'] = $thumbnail; // add to data image if is found
+        }
         $payment_methods = $this->payment_method
         ->create($data);
 
@@ -52,10 +60,11 @@ class Aff_PaymentMethodController extends Controller
     public function update(Request $request, $id){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodUpdate/{id}
         // Keys
-        // method, min_payout
+        // method, min_payout, status, thumbnail
         $validator = Validator::make($request->all(), [
             'method' => 'required',
-            'min_payout' => 'required|numeric'
+            'min_payout' => 'required|numeric',
+            'status' => 'required|boolean',
         ]);
         if ($validator->fails()) { // if Validate Make Error Return Message Error
             return response()->json([
@@ -65,7 +74,13 @@ class Aff_PaymentMethodController extends Controller
         $data = $request->only($this->paymentMethodRequest);
         $payment_methods = $this->payment_method
         ->where('id', $id)
-        ->update($data);
+        ->first();
+        $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
+        if (!empty($thumbnail) && $thumbnail != null) {
+            $data['thumbnail'] = $thumbnail; // add to data image if is found
+            $this->deleteImage($payment_methods->thumbnail); // delete old image
+        }
+        $payment_methods->update($data);
 
         return response()->json([
             'success' => 'You update data success'
@@ -74,9 +89,11 @@ class Aff_PaymentMethodController extends Controller
 
     public function delete($id){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodDelete/{id}
-        $this->payment_method
+        $payment_methods = $this->payment_method
         ->where('id', $id)
-        ->delete();
+        ->first();
+        $this->deleteImage($payment_methods->thumbnail); // delete old image
+        $payment_methods->delete();
 
         return response()->json([
             'success' => 'You delete data success'

@@ -21,6 +21,7 @@ class QuestionIssuesController extends Controller
     use image;
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/Settings/questionIssues
         $question_issues = $this->question_issues->get();
 
         return response()->json([
@@ -28,7 +29,10 @@ class QuestionIssuesController extends Controller
         ]);
     }
 
-    public function add(Request $request){ 
+    public function add(Request $request){
+        // https://bdev.elmanhag.shop/admin/Settings/questionIssues/add
+        // Keys
+        // title, description, status, thumbnail
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'status' => 'required|boolean',
@@ -51,6 +55,9 @@ class QuestionIssuesController extends Controller
     }
 
     public function modify(Request $request, $id){ 
+        // https://bdev.elmanhag.shop/admin/Settings/questionIssues/update/{id}
+        // Keys
+        // title, description, status, thumbnail
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'status' => 'required|boolean',
@@ -77,9 +84,12 @@ class QuestionIssuesController extends Controller
     }
 
     public function delete($id){
-        $this->question_issues
+        // https://bdev.elmanhag.shop/admin/Settings/questionIssues/delete/{id}
+        $question_issue = $this->question_issues
         ->where('id', $id)
-        ->delete();
+        ->first();
+        $this->deleteImage($question_issue->thumbnail);
+        $question_issue->delete();
 
         return response()->json([
             'success' => 'You delete data success'

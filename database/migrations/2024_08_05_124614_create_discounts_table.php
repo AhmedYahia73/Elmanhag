@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('bundle_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null'); 
             $table->float('amount');
-            $table->enum('type', ['precentage', 'value']);
+            $table->enum('type', ['percentage', 'value']);
             $table->string('description');
             $table->date('start_date');
             $table->date('end_date');

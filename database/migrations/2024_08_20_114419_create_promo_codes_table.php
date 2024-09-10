@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('precentage')->nullable();
             $table->enum('usage_type', ['fixed', 'unlimited']);
             $table->integer('usage')->nullable();
-            $table->integer('number_users')->default(0);
+            $table->integer('number_users')->nullable();
             $table->boolean('status');
             $table->timestamps();
         });

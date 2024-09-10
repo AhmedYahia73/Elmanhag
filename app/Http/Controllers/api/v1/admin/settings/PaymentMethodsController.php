@@ -65,9 +65,11 @@ class PaymentMethodsController extends Controller
 
     public function delete($id){
         // https://bdev.elmanhag.shop/admin/Settings/paymentMethods/delete/{id}
-        $payment_methods = $this->payment_methods
+        $payment_method = $this->payment_methods
         ->where('id', $id)
-        ->delete();
+        ->first();
+        $this->deleteImage($payment_method->thumbnail); // Delete old Thumbnail
+        $payment_method->delete();
 
         return response()->json([
             'success' => 'You delete data success'

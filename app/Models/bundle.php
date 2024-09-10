@@ -43,7 +43,7 @@ class bundle extends Model
     }
 
     public function discount(){
-        return $this->hasMany(Discount::class)
+        return $this->belongsToMany(Discount::class, 'discount_services')
         ->where('start_date', '<=', now())
         ->where('end_date', '>=', now())
         ->where('statue', 1)

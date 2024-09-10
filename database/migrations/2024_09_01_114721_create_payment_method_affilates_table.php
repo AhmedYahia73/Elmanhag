@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('method');
             $table->float('min_payout');
+            $table->string('thumbnail')->nullable();
+            $table->boolean('status');
             $table->timestamps();
         });
     }
