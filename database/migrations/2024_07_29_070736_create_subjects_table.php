@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->float('price');
+            $table->integer('price');
             $table->string('tags')->nullable();
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
