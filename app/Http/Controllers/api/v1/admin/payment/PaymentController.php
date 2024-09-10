@@ -73,9 +73,6 @@ class PaymentController extends Controller
         // Determine Service That User Pay it
         if ( $payment->service == 'Subject' ) {
             $subjects = $payment->subject->pluck('id')->toArray(); // Get subjects as array
-            return response()->json([
-                'subjects' => $subjects
-            ]);
             if (count($subjects) > 0) {
                 $user->subjects()->sync($subjects); // Add subjects to student
             }
