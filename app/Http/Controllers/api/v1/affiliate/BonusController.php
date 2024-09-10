@@ -20,16 +20,13 @@ class BonusController extends Controller
             $query->orderByDesc('id');
          })->first();
         $bonus = $user->bonuses->unique()->first();
-        $target = $bonus->target;
-        $bundle_history = $user->affiliate_history->where('service_type','bundle')->count();
-        $total_bonus = $this->bound->get();
+       $bonus->bundle_paid = $user->affiliate_history->where('service_type','bundle')->count();
+        $bonus->total_bonus = $this->bound->get();
         // $targetBonus = $user->targetBonus->first();
 
         return response()->json([
             'success'=>'Bonus Returned Successfully',
             'affiliate_bonus'=>$bonus,
-            'affiliate_history'=>$bundle_history,
-            'bonus'=>$total_bonus ,
         ]);
     }
 }
