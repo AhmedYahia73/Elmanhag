@@ -10,6 +10,7 @@ Route::middleware(['auth:sanctum', 'IsParent'])->group(function(){
     Route::prefix('childreen')->group(function() {
         Route::controller(ChildreenController::class)->group(function(){
             Route::get('/', 'show')->name('childreen.show');
+            Route::post('/profile/{id}', 'child_profile')->name('childreen.child_profile');
         });
     });
 });
