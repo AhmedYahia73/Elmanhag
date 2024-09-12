@@ -13,7 +13,12 @@ class ChildreenController extends Controller
 
     public function show(){
         // https://bdev.elmanhag.shop/parent/childreen
-        $childreen = auth()->user();
+        $childreen = $this->users
+        ->where('id', auth()->user()->id)
+        ->with('childreen', function($query){
+            $query->with(['category', 'education', 'country', 'city']);
+        })
+        ->first();
         $childreen = $childreen->childreen;
 
         return response()->json([
