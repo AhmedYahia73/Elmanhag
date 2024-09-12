@@ -17,11 +17,28 @@ class BundlesController extends Controller
         $bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
         ->with('discount')
-        ->whereDoesntHave('users')
+        ->whereDoesntHave('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
         ->get(); // Get bundles that havs the same category of student and student does not buy it
+        $student_bundles = $this->bundles
+        ->where('category_id', auth()->user()->category_id)
+        ->with('subjects')
+        ->whereHas('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->get(); // Get bundles that student buy it with its subjects
+        $bundles_subjects = [];
+        foreach ($student_bundles as $item) {
+            $bundles_subjects = array_merge($bundles_subjects, 
+            $item->subjects->pluck('id')->toArray());
+        } 
         $subjects = $this->subjects
         ->where('category_id', auth()->user()->category_id)
-        ->whereDoesntHave('users')
+        ->whereDoesntHave('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->whereNotIn('id', $bundles_subjects)
         ->with('discount')
         ->get(); // Get subject that havs the same category of student and student does not buy it
         $live = $this->live

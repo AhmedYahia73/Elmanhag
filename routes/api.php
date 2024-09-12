@@ -1,7 +1,7 @@
 <?php
 
 // use App\Http\Controllers\api\v1\payment\PaymentController;
-use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\FawryPayController;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -45,8 +45,11 @@ Route::controller(ProfileAdminController::class)->prefix('admin')->group(functio
     Route::get('profile/view','view')->name('profile.admin')->middleware('auth:sanctum');
 });
 
-Route::post('payment/charge', [PaymentController::class, 'charge']);
-Route::post('payment/respose_payment', [PaymentController::class, 'respose_payment']);
+
+Route::post('/pay-at-fawry', [FawryPayController::class, 'payAtFawry']);
+
+Route::post('fawry/check-status', [FawryPayController::class, 'checkPaymentStatus']);
+
 
 
 Route::get('/unauthorized', function () {

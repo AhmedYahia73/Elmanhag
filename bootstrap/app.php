@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AffilateMiddleware;
+use App\Http\Middleware\ParentMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\StudentMiddleware;
@@ -43,6 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'IsStudent' => StudentMiddleware::class,
             'IsAdmin' => AdminMiddleware::class,
             'IsAffilate' => AffilateMiddleware::class,
+            'IsParent' => ParentMiddleware::class,
         ]);
          $middleware->redirectGuestsTo(function (Request $request) {
             if (!$request->is('api/*')) {

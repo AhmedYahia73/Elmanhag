@@ -15,6 +15,7 @@ class CreateHomeworkController extends Controller
     protected $homeworkRequest = [
         'title',
         'semester',
+        'due_date',
         'category_id',
         'subject_id',
         'chapter_id',
@@ -28,7 +29,7 @@ class CreateHomeworkController extends Controller
     public function create(HomeworkRequest $request){
         // https://bdev.elmanhag.shop/admin/homework/add
         // Keys 
-        // title, semester, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
+        // title, semester, due_date, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
         // groups[$iteration]
         // questions[$iteration][]
         $homework_data = $request->only($this->homeworkRequest); // Get Data
@@ -52,7 +53,7 @@ class CreateHomeworkController extends Controller
     public function modify(HomeworkRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/homework/update/{id}
         // Keys 
-        // title, semester, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
+        // title, semester, due_date, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
         // groups[$iteration]
         // questions[$iteration][]
         $homework_data = $request->only($this->homeworkRequest);

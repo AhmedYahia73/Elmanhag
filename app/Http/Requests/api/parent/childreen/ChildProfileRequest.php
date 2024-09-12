@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\api\admin\homework;
+namespace App\Http\Requests\api\parent\childreen;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class HomeworkRequest extends FormRequest
+class ChildProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,11 @@ class HomeworkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'in:H.W1,H.W2,H.W3'],
-            'semester' => ['required', 'in:first,second'],
-            'due_date' => ['required', 'date'],
+            'name' => ['required'],
             'category_id' => ['required', 'exists:categories,id'],
-            'subject_id' => ['required', 'exists:subjects,id'],
-            'chapter_id' => ['required', 'exists:chapters,id'],
-            'lesson_id' => ['required', 'exists:lessons,id'],
-            'difficulty' => ['required', 'in:A,B,C'],
-            'mark' => ['required', 'numeric'],
-            'pass' => ['required', 'numeric'],
-            'status' => ['required', 'boolean'],
+            'education_id' => ['required', 'exists:education,id'],
+            'country_id' => ['required', 'exists:countries,id'],
+            'city_id' => ['required', 'exists:cities,id'],
         ];
     }
 
