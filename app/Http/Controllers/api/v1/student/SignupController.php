@@ -25,8 +25,8 @@ class SignupController extends Controller
    'sudent_jobs_id',
    'parent_relation_id',
    'education_id',
-   'affilate_code',
    'affilate_id',
+     'parent_id',
    'language'
    ];
     protected $parentRequest = [
@@ -35,7 +35,7 @@ class SignupController extends Controller
     'parent_password',
     'parent_phone',
     'parent_role',
-    'parent_id',
+  
     'parent_relation_id',
     ];
     // This Controller About Create New Student
@@ -45,15 +45,15 @@ class SignupController extends Controller
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
         $newStudent['image'] = $image_path;
         $newStudent['role'] = 'student';
-         if(isset($newStudent['affilate_code'])){ // If Student Append Affiliate Code
-            $affiliate = $this->user->where('affilate_code', $newStudent['affilate_code'])->first();
+         if(isset($request->affilate_code)){ // If Student Append Affiliate Code
+            $affiliate = $this->user->where('affilate_code', $request->affilate_code)->first();
             $newStudent['affilate_id'] = $affiliate->id;
          }
-        $user = $this->user->create($newStudent); // Start Create New Student
+      
            
         if($this->parentRequest){
             $newParent = $request->only($this->parentRequest);
-              $newParent['parent_id'] = $user->id;
+            //   $newParent['parent_id'] = $user->id;
               $newParent['role'] = 'parent';
               $parent = $this->user->create([
               'name' => $newParent['parent_name'],
@@ -65,6 +65,8 @@ class SignupController extends Controller
               'parent_relation_id' => $newParent['parent_relation_id'],
               ]); // Start Create Parent
         }
+            $newStudent['parent_id'] = $parent->id; // Relational Parent With Student
+            $user = $this->user->create($newStudent); // Start Create New Student
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
         return response()->json([
