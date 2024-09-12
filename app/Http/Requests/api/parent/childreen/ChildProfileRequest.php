@@ -5,7 +5,6 @@ namespace App\Http\Requests\api\parent\childreen;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class ChildProfileRequest extends FormRequest
 {
@@ -24,14 +23,12 @@ class ChildProfileRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('id');
         return [
             'name' => ['required'],
             'category_id' => ['required', 'exists:categories,id'],
             'education_id' => ['required', 'exists:education,id'],
             'country_id' => ['required', 'exists:countries,id'],
             'city_id' => ['required', 'exists:cities,id'],
-            'phone' => ['required', Rule::unique('users')->ignore($userId)],
         ];
     }
 

@@ -17,7 +17,6 @@ class ChildreenController extends Controller
         'education_id',
         'country_id',
         'city_id',
-        'phone',
     ];
 
     public function show(){
@@ -36,6 +35,9 @@ class ChildreenController extends Controller
     }
 
     public function child_profile($id, ChildProfileRequest $request){
+        // https://bdev.elmanhag.shop/parent/childreen/profile/{id}
+        // Keys
+        // name, category_id, education_id, country_id, city_id
         $childData = $request->only($this->childRequest);
         $this->users
         ->where('id', $id)
