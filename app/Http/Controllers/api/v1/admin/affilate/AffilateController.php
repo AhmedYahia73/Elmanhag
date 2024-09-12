@@ -210,6 +210,8 @@ class AffilateController extends Controller
 
     public function rejected_payout(Request $request, $payout_id){
         // https://bdev.elmanhag.shop/admin/affilate/payout/rejected/{payout_id}
+        // keys 
+        // rejected_reason
         $payout = $this->payout
         ->where('id', $payout_id)
         ->first(); 
