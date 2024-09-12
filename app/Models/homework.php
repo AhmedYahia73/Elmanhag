@@ -22,6 +22,7 @@ class homework extends Model
         'chapter_id' ,
         'lesson_id' ,
         'difficulty' ,
+        'due_date',
         'mark' ,
         'pass' ,
         'status' ,

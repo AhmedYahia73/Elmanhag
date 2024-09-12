@@ -26,6 +26,7 @@ class HomeworkRequest extends FormRequest
         return [
             'title' => ['required', 'in:H.W1,H.W2,H.W3'],
             'semester' => ['required', 'in:first,second'],
+            'due_date' => ['required', 'date'],
             'category_id' => ['required', 'exists:categories,id'],
             'subject_id' => ['required', 'exists:subjects,id'],
             'chapter_id' => ['required', 'exists:chapters,id'],

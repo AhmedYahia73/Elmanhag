@@ -19,12 +19,13 @@ class ProfileController extends Controller
         // https://bdev.elmanhag.shop/parent/profile
         // Keys
         // name, password
-        $parentData = $request->only($this->parentRequest);
-        if (isset($request->password) && !empty($request->password)) {
-            $parentData['password'] = Hash::make($request->password);
+        $parent = $this->user->where('id', auth()->user()->id)
+        ->first();
+        $parent->name = $request->name;
+        if ($request->filled('password')) {
+            $parent->password = $request->password;
         }
-        $this->user->where('id', auth()->user()->id)
-        ->update($parentData);
+        $parent->save();
 
         return response()->json([
             'success' => 'You update data success'
