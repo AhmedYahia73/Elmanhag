@@ -16,6 +16,9 @@ class ProfileController extends Controller
     ];
 
     public function modify(Request $request){
+        // https://bdev.elmanhag.shop/parent/profile
+        // Keys
+        // name, password
         $parentData = $request->only($this->parentRequest);
         if (isset($request->password) && !empty($request->password)) {
             $parentData['password'] = Hash::make($request->password);
