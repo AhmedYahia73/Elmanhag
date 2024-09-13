@@ -61,7 +61,6 @@ class SignupController extends Controller
               'password' => $newParent['parent_password'],
               'phone' => $newParent['parent_phone'],
               'role' => 'parent',
-              'parent_id' => $newParent['parent_id'],
               'parent_relation_id' => $newParent['parent_relation_id'],
               ]); // Start Create Parent
         }
