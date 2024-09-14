@@ -80,4 +80,18 @@ class AffVideoController extends Controller
             'success' => 'You update data success'
         ]);
     }
+
+    public function delete($id){
+        // https://bdev.elmanhag.shop/admin/affilate/videos/update/{id}
+        
+        $affilate_video = $this->videos
+        ->where('id', $id)
+        ->first();
+        $this->deleteImage($affilate_video->video); // Delete old video
+        $affilate_video->delete();
+
+        return response()->json([
+            'success' => 'You delete data success'
+        ]);
+    }
 }

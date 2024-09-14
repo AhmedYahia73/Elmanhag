@@ -279,7 +279,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         ->prefix('videos')->group(function(){
             Route::get('/', 'show')->name('affilate_videos.show');
             Route::post('/add', 'add')->name('affilate_videos.add');
-            Route::post('/update/{id}', 'modify')->name('affilate_videos.update');
+            Route::put('/update/{id}', 'modify')->name('affilate_videos.update');
+            Route::delete('/delete/{id}', 'delete')->name('affilate_videos.delete');
         });
 
         Route::controller(Aff_CommessionController::class)->group(function(){
