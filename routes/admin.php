@@ -147,6 +147,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add/{sub_id}', 'create')->name('lesson.add');
             Route::put('/update/{id}', 'modify')->name('lesson.update');
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
+
+            Route::put('/switch/{id}', 'switch')->name('lesson.switch');
         });
     });
 

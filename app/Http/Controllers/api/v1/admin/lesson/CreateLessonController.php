@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\trait\image;
 use App\trait\translaion;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\api\admin\lesson\LessonRequest;
 
 use App\Models\lesson;
@@ -161,6 +163,26 @@ class CreateLessonController extends Controller
 
         return response()->json([
             'success' => 'You add data success'
+        ]);
+    }
+
+    public function switch(Request $request, $id){
+
+        $validator = Validator::make($request->all(), [
+            'switch' => 'required',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+        lesson::where('id', $id)
+        ->update([
+            'switch' => $request->switch
+        ]);
+
+        return response()->json([
+            'success' => 'You make proccess success'
         ]);
     }
 
