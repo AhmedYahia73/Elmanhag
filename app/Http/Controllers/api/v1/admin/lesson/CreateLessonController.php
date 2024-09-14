@@ -21,6 +21,7 @@ class CreateLessonController extends Controller
         'description',
         'paid',
         'status',
+        'switch',
         'order',
         'drip_content',
         'chapter_id',
@@ -29,7 +30,7 @@ class CreateLessonController extends Controller
     public function create( LessonRequest $request, $ch_id ){
         // https://bdev.elmanhag.shop/admin/lesson/add/{chapter_id}  
         // Keys 
-        // name, ar_name, description, paid, status, order, drip_content
+        // name, ar_name, description, paid, status, order, drip_content, switch
         // voice[], voice_link[]
         // voice_source[] لما يكون link فقط
         // video[], video_link[]
@@ -165,7 +166,7 @@ class CreateLessonController extends Controller
 
     public function modify( LessonRequest $request, $id ){
         //Keys 
-        // name, ar_name, description, paid, status, order, drip_content
+        // name, ar_name, description, paid, status, order, drip_content, switch
         // voice[], voice_source[]
         // video_source[], video[]
         // pdf_source[], pdf[]

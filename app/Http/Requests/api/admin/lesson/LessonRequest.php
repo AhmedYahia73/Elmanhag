@@ -28,6 +28,7 @@ class LessonRequest extends FormRequest
             'ar_name' => ['required'],
             'paid' => ['required'],
             'status' => ['required'],
+            'switch' => ['required', 'boolean'],
             'drip_content' => ['required']
         ];
     }

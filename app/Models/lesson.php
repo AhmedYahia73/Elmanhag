@@ -17,6 +17,7 @@ class lesson extends Model
         'paid' ,
         'chapter_id' ,
         'status' ,
+        'switch',
         'order' ,
         'drip_content' ,
     ];
