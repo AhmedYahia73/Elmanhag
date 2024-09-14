@@ -271,6 +271,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::controller(AffVideoGroupController::class)
         ->prefix('groups')->group(function(){
             Route::get('/', 'show')->name('affilate_groups.show');
+            Route::post('/add', 'add')->name('affilate_groups.add');
         });
 
         Route::controller(Aff_CommessionController::class)->group(function(){
