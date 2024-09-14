@@ -82,7 +82,7 @@ class AffVideoController extends Controller
     }
 
     public function delete($id){
-        // https://bdev.elmanhag.shop/admin/affilate/videos/update/{id}
+        // https://bdev.elmanhag.shop/admin/affilate/videos/delete/{id}
         
         $affilate_video = $this->videos
         ->where('id', $id)
