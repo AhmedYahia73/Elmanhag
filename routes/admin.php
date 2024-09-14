@@ -52,6 +52,7 @@ use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PaymentMethodController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_BonusController;
+use App\Http\Controllers\api\v1\admin\affilate\AffVideoGroupController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -265,6 +266,11 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/payout/approve/{payout_id}', 'approve_payout')->name('affilate.approve_payout');
             Route::post('/payout/rejected/{payout_id}', 'rejected_payout')->name('affilate.rejected_payout');
             Route::get('/payout_history/{affilate_id}', 'payout_history')->name('affilate.payout_history');
+        });
+
+        Route::controller(AffVideoGroupController::class)
+        ->prefix('groups')->group(function(){
+            Route::get('/', 'show')->name('affilate_groups.show');
         });
 
         Route::controller(Aff_CommessionController::class)->group(function(){
