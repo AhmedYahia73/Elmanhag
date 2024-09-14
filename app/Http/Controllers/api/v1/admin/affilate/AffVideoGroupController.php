@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
+use App\trait\image;
 
 use App\Models\AffilateGroupVideos;
 
 class AffVideoGroupController extends Controller
 {
+    use image;
     public function __construct(private AffilateGroupVideos $groups){}
 
     public function show(){
@@ -22,7 +24,10 @@ class AffVideoGroupController extends Controller
         ]);
     }
 
-    public function add(Request $request){      
+    public function add(Request $request){
+        // https://bdev.elmanhag.shop/admin/affilate/groups/add
+        // Keys
+        // name  
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -37,6 +42,22 @@ class AffVideoGroupController extends Controller
 
         return response()->json([
             'success' => 'You add data success'
+        ]);
+    }
+
+    public function delete($id){
+        // https://bdev.elmanhag.shop/admin/affilate/groups/delete/{id}
+        $group = $this->groups
+        ->where('id', $id)
+        ->first();
+        $videos = $group->affilate_videos; // Get videos that is inside group
+        foreach ($videos as $video) {
+            $this->deleteImage($video->video); // Delete videos that is inside group
+        }
+
+        $group->delete();
+        return response()->json([
+            'success' => 'You delete data success'
         ]);
     }
 }

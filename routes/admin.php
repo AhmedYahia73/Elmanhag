@@ -53,6 +53,7 @@ use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PaymentMethodController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_BonusController;
 use App\Http\Controllers\api\v1\admin\affilate\AffVideoGroupController;
+use App\Http\Controllers\api\v1\admin\affilate\AffVideoController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -272,6 +273,12 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         ->prefix('groups')->group(function(){
             Route::get('/', 'show')->name('affilate_groups.show');
             Route::post('/add', 'add')->name('affilate_groups.add');
+        });
+
+        Route::controller(AffVideoController::class)
+        ->prefix('videos')->group(function(){
+            Route::get('/', 'show')->name('affilate_videos.show');
+            Route::post('/add', 'add')->name('affilate_videos.add');
         });
 
         Route::controller(Aff_CommessionController::class)->group(function(){

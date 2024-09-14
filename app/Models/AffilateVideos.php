@@ -20,4 +20,8 @@ class AffilateVideos extends Model
     public function affilate_group_video(){
         return $this->belongsTo(AffilateGroupVideos::class, 'affilate_group_video_id');
     }
+
+    public function getvideoAttribute($video){
+        return url('storage/' . $video);
+    }
 }
