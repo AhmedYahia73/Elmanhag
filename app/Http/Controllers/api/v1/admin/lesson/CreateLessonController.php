@@ -167,7 +167,7 @@ class CreateLessonController extends Controller
     }
 
     public function switch(Request $request, $id){
-
+        // https://bdev.elmanhag.shop/admin/lesson/switch/{id}
         $validator = Validator::make($request->all(), [
             'switch' => 'required',
         ]);
