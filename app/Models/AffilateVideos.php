@@ -16,12 +16,13 @@ class AffilateVideos extends Model
         'video',
         'affilate_group_video_id',
     ];
+    protected $appends = ['video_link'];
 
     public function affilate_group_video(){
         return $this->belongsTo(AffilateGroupVideos::class, 'affilate_group_video_id');
     }
 
-    public function getvideoAttribute($video){
-        return url('storage/' . $video);
+    public function getVideoLinkAttribute(){
+        return url('storage/' . $this->attributes['video']);
     }
 }
