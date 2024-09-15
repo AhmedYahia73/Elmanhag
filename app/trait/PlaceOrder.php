@@ -26,7 +26,9 @@ trait PlaceOrder
             $itemId = $item['itemId'];
             $service = $item['description'];
             $item_price = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
-            $amount = $this->$item_price->where('id',$itemId)->sum('price'); // Get Price For Item
+           try {
+             $amount = $this->$item_price->where('id',$itemId)->sum('price'); // Get Price For Item
+           
             $item['student_id'] =$user->id;
             $item['purchase_date'] =now(); // Purchase Date Now
             $item['merchantRefNum'] =$newOrder['merchantRefNum']; // This Is Reference Number For Order ID
@@ -47,6 +49,13 @@ trait PlaceOrder
                 $newbundle = $createPayment->bundle()->sync($itemId);
               }elseif($service == 'Subject'){
                 $newSubjects = $createPayment->subject()->sync($itemId);
+              }
+              } catch (\Throwable $th) {
+              return response()->json(
+                [
+                    'faield'=>'Your Order Not Found',
+                    'message'=>$th->getMessage()
+            ],403);
               }
                $order = [ // This Is Data Returned For Payment Request
                'chargeItems'=> $items
