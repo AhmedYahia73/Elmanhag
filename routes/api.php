@@ -45,15 +45,13 @@ Route::controller(ProfileAdminController::class)->prefix('admin')->group(functio
     Route::get('profile/view','view')->name('profile.admin')->middleware('auth:sanctum');
 });
 
-
-Route::post('/pay-at-fawry', [FawryPayController::class, 'payAtFawry']);
-
-Route::post('fawry/check-status', [FawryPayController::class, 'checkPaymentStatus']);
+Route::middleware(['auth:sanctum','IsStudent'])->group(function () {
+    Route::post('/pay-at-fawry', [FawryPayController::class, 'payAtFawry']);
+    Route::post('fawry/check-status', [FawryPayController::class, 'checkPaymentStatus']);
+});
 
 
 
 Route::get('/unauthorized', function () {
 return response()->json(['error'=>'Unauthorized'],401);
 })->name('unauthorized');
-
-
