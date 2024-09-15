@@ -13,6 +13,7 @@ class Aff_PayoutController extends Controller
     public function payouts(){
         // https://bdev.elmanhag.shop/admin/affilate/payouts
         $payouts = $this->payouts->where('status', null)
+        ->with('affilate')
         ->orderBy('affilate_id')
         ->get();
 
