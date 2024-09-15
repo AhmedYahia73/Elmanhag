@@ -29,6 +29,16 @@ class CreateLessonController extends Controller
         'chapter_id',
     ];
 
+    public function lesson($id){
+        $lesson = lesson::
+        where('id', $id)
+        ->first();
+
+        return response()->json([
+            'lesson' => $lesson
+        ]);
+    }
+
     public function create( LessonRequest $request, $ch_id ){
         // https://bdev.elmanhag.shop/admin/lesson/add/{chapter_id}  
         // Keys 

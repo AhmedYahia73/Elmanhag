@@ -146,6 +146,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     // Start Lesson Module
     Route::prefix('lesson')->middleware('can:isLessons')->group(function () {
         Route::controller(CreateLessonController::class)->group(function(){
+            Route::get('/{lesson_id}', 'lesson')->name('lesson.lesson');
             Route::post('/add/{sub_id}', 'create')->name('lesson.add');
             Route::put('/update/{id}', 'modify')->name('lesson.update');
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
