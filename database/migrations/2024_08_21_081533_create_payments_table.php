@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('receipt')->nullable();
             $table->string('rejected_reason')->nullable();
             $table->date('purchase_date');
+            $table->string('merchantRefNum');
             $table->boolean('status')->nullable();
             $table->timestamps();
         });

@@ -51,7 +51,6 @@ class FawryPayController extends Controller
 
         // Generate signature
         $signature = $this->fawryPayService->generateSignature($merchantRefNum, $customerProfileId, $paymentMethod, $amount);
-      
         // Prepare the request payload
         $data = [
             'merchantCode' => env('FAWRY_MERCHANT_CODE'),

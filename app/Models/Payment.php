@@ -20,6 +20,7 @@ class Payment extends Model
         'student_id',
         'payment_method_id',
         'purchase_date',
+        'merchantRefNum',
         'receipt',
         'rejected_reason',
         'status',

@@ -29,7 +29,7 @@ trait PlaceOrder
             $amount = $this->$item_price->where('id',$itemId)->sum('price'); // Get Price For Item
             $item['student_id'] =$user->id;
             $item['purchase_date'] =now(); // Purchase Date Now
-            $item['merchantRefNum'] =$newOrder['merchantRefNum']; // This Is Reference Number For Order ID 
+            $item['merchantRefNum'] =$newOrder['merchantRefNum']; // This Is Reference Number For Order ID
             $item['service'] =$service ; // This Is Reference Number For Order ID
             try {
                 $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
