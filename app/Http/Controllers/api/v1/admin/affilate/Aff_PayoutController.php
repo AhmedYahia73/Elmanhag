@@ -26,6 +26,7 @@ class Aff_PayoutController extends Controller
         // https://bdev.elmanhag.shop/admin/affilate/payoutsHistory
         $payouts = $this->payouts->where('status', '!=', null)
         ->orderBy('affilate_id')
+        ->with('affilate')
         ->get();
 
         return response()->json([
