@@ -47,6 +47,8 @@ use App\Http\Controllers\api\v1\admin\admin\AdminController;
 
 use App\Http\Controllers\api\v1\admin\role\RoleController;
 
+use App\Http\Controllers\api\v1\admin\complaint\ComplaintController;
+
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
@@ -239,6 +241,15 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
             Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
+        });
+    });
+    
+    // Start Complaints Module
+    Route::prefix('complaint')->middleware('can:isComplaint')->group(function() {
+        Route::controller(ComplaintController::class)->group(function(){
+            Route::get('/', 'pendding')->name('complaint.pendding');
+            Route::get('/history', 'history')->name('complaint.history');
+            Route::put('/active/{id}', 'active')->name('complaint.active');
         });
     });
     
