@@ -51,10 +51,12 @@ class CreateLessonController extends Controller
         $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
         $lesson = lesson::create($lesson_data); // Create lesson record
 
-        foreach ($request->materials as $item) {
+        foreach ($request->materials as $key => $item) {
             // if source file
             if ($item['source'] == 'upload') {
-                $file_paths = $this->uploadFile($item['material'], 'admin/lessons/' . $item['type']);
+                
+                $file = Request::file('request')[$key]['material'];
+                $file_paths = $this->uploadFile($file, 'admin/lessons/' . $item['type']);
                 LessonResource::create([
                     'type' => $item['type'], 
                     'source' => $item['source'], 

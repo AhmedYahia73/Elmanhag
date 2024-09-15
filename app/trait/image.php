@@ -20,12 +20,11 @@ trait image
 
     // This to upload file
     public function uploadFile($file, $directory) {
-        if($request->has($fileName)){// if Request has a Image
-            $uploadImage = new request();
-            $imagePath = $request->file($fileName)->store($directory,'public'); // Take Image from Request And Save inStorage;
-            return $imagePath;
+        if ($file) {
+            $filePath = $file->store($directory, 'public');
+            return $filePath;
         }
-        return Null;
+        return null;
     }
 
     // This Trait Aboute file
