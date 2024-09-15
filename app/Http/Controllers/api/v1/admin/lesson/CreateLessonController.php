@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\trait\image;
 use App\trait\translaion;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\api\admin\lesson\LessonRequest;
 
 use App\Models\lesson;
@@ -21,6 +23,7 @@ class CreateLessonController extends Controller
         'description',
         'paid',
         'status',
+        'switch',
         'order',
         'drip_content',
         'chapter_id',
@@ -29,7 +32,7 @@ class CreateLessonController extends Controller
     public function create( LessonRequest $request, $ch_id ){
         // https://bdev.elmanhag.shop/admin/lesson/add/{chapter_id}  
         // Keys 
-        // name, ar_name, description, paid, status, order, drip_content
+        // name, ar_name, description, paid, status, order, drip_content, switch
         // voice[], voice_link[]
         // voice_source[] لما يكون link فقط
         // video[], video_link[]
@@ -163,9 +166,29 @@ class CreateLessonController extends Controller
         ]);
     }
 
+    public function switch(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/lesson/switch/{id}
+        $validator = Validator::make($request->all(), [
+            'switch' => 'required',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+        lesson::where('id', $id)
+        ->update([
+            'switch' => $request->switch
+        ]);
+
+        return response()->json([
+            'success' => 'You make proccess success'
+        ]);
+    }
+
     public function modify( LessonRequest $request, $id ){
         //Keys 
-        // name, ar_name, description, paid, status, order, drip_content
+        // name, ar_name, description, paid, status, order, drip_content, switch
         // voice[], voice_source[]
         // video_source[], video[]
         // pdf_source[], pdf[]

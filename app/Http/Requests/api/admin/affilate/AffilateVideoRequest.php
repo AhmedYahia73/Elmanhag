@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\api\admin\lesson;
+namespace App\Http\Requests\api\admin\affilate;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LessonRequest extends FormRequest
+class AffilateVideoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,9 @@ class LessonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'ar_name' => ['required'],
-            'paid' => ['required'],
-            'status' => ['required'],
-            'switch' => ['required', 'boolean'],
-            'drip_content' => ['required']
+            'title' => ['required'],
+            'affilate_group_video_id' => ['required', 'exists:affilate_group_videos,id'],
+            'video' => ['required', 'file']
         ];
     }
 

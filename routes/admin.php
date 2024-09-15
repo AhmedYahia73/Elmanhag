@@ -47,11 +47,15 @@ use App\Http\Controllers\api\v1\admin\admin\AdminController;
 
 use App\Http\Controllers\api\v1\admin\role\RoleController;
 
+use App\Http\Controllers\api\v1\admin\complaint\ComplaintController;
+
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PaymentMethodController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_BonusController;
+use App\Http\Controllers\api\v1\admin\affilate\AffVideoGroupController;
+use App\Http\Controllers\api\v1\admin\affilate\AffVideoController;
 
 use App\Http\Controllers\api\v1\admin\settings\RelationController;
 use App\Http\Controllers\api\v1\admin\settings\CountriesController;
@@ -145,6 +149,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add/{sub_id}', 'create')->name('lesson.add');
             Route::put('/update/{id}', 'modify')->name('lesson.update');
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
+
+            Route::put('/switch/{id}', 'switch')->name('lesson.switch');
         });
     });
 
@@ -238,6 +244,15 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
     });
     
+    // Start Complaints Module
+    Route::prefix('complaint')->middleware('can:isComplaint')->group(function() {
+        Route::controller(ComplaintController::class)->group(function(){
+            Route::get('/', 'pendding')->name('complaint.pendding');
+            Route::get('/history', 'history')->name('complaint.history');
+            Route::put('/active/{id}', 'active')->name('complaint.active');
+        });
+    });
+    
     // Start Live Module
     Route::prefix('live')->middleware('can:isLive')->group(function() {
         Route::controller(LiveController::class)->group(function(){
@@ -265,6 +280,20 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/payout/approve/{payout_id}', 'approve_payout')->name('affilate.approve_payout');
             Route::post('/payout/rejected/{payout_id}', 'rejected_payout')->name('affilate.rejected_payout');
             Route::get('/payout_history/{affilate_id}', 'payout_history')->name('affilate.payout_history');
+        });
+
+        Route::controller(AffVideoGroupController::class)
+        ->prefix('groups')->group(function(){
+            Route::get('/', 'show')->name('affilate_groups.show');
+            Route::post('/add', 'add')->name('affilate_groups.add');
+        });
+
+        Route::controller(AffVideoController::class)
+        ->prefix('videos')->group(function(){
+            Route::get('/', 'show')->name('affilate_videos.show');
+            Route::post('/add', 'add')->name('affilate_videos.add');
+            Route::put('/update/{id}', 'modify')->name('affilate_videos.update');
+            Route::delete('/delete/{id}', 'delete')->name('affilate_videos.delete');
         });
 
         Route::controller(Aff_CommessionController::class)->group(function(){

@@ -35,9 +35,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('students', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('students', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -48,9 +50,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('teachers', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('teachers', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -61,9 +65,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('admins', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('admins', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -74,9 +80,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('categories', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('categories', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -87,9 +95,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('subjects', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('subjects', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -100,9 +110,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('bundles', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('bundles', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -113,9 +125,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('questions', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('questions', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -126,9 +140,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('hw', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('hw', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -139,9 +155,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('live', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('live', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -152,9 +170,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('discounts', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('discounts', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -165,9 +185,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('promocode', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('promocode', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -178,9 +200,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('promocode', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('promocode', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -191,9 +215,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('affilate', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('affilate', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -204,9 +230,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('settings', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('settings', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -216,9 +244,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('payments', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('payments', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -229,9 +259,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('chapters', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('chapters', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -242,9 +274,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('lessons', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('lessons', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
@@ -255,9 +289,26 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
-                $arr = $user->admin_position->roles->pluck('role')->toArray();
-                if (in_array('admin_roles', $arr)) {
-                    return true;
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('admin_roles', $arr)) {
+                        return true;
+                    }
+                }
+            }
+        });
+        
+        // if roles have admin_roles module
+        Gate::define('isComplaint', function (User $user) {
+            if ( $user->role == 'supAdmin' ) {
+                return true;
+            }
+            elseif ( $user->role == 'admin' ) {
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('complaint', $arr)) {
+                        return true;
+                    }
                 }
             }
         });
