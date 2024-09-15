@@ -12,6 +12,7 @@ class ComplaintController extends Controller
     public function __construct(private Complaint $complaints){}
 
     public function pendding(){
+        // https://bdev.elmanhag.shop/admin/complaint
         $complaints = $this->complaints
         ->where('status', 0)
         ->with('student')
@@ -23,6 +24,7 @@ class ComplaintController extends Controller
     }
 
     public function history(){
+        // https://bdev.elmanhag.shop/admin/complaint/history
         $complaints = $this->complaints
         ->where('status', 1)
         ->with('student')
@@ -34,6 +36,7 @@ class ComplaintController extends Controller
     }
 
     public function active($id){
+        // https://bdev.elmanhag.shop/admin/complaint/active/{id}
         $this->complaints
         ->where('id', $id)
         ->update(['status' => 1]);
