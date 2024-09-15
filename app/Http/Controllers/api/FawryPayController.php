@@ -69,13 +69,17 @@ class FawryPayController extends Controller
             'description' => $request->description
         ];
        
+             // Start Create Order If Operation Payment Success
+        $placeOrder = $this->placeOrder($request);
+             // Start Create Order If Operation Payment Success
+             if($placeOrder->status() != 200){
+                      return $placeOrder;
+             }
         // Make the charge request
        $response = $this->fawryPayService->createCharge($data);
         // Return response to the client
 
-        // Start Create Order If Operation Payment Success
-        $response['statusCode'] == 200 ? $placeOrder = $this->placeOrder($request) : $response;
-        // Start Create Order If Operation Payment Success 
+   
         
         return response()->json($response);
     }
