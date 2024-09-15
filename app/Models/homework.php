@@ -9,6 +9,7 @@ use App\Models\subject;
 use App\Models\category;
 use App\Models\chapter;
 use App\Models\lesson;
+use App\Models\User;
 
 class homework extends Model
 {
@@ -41,10 +42,14 @@ class homework extends Model
         return $this->belongsTo(category::class);
     }
     public function question_groups(){
-    return $this->hasMany(QuestionGroup::class);
+        return $this->hasMany(QuestionGroup::class);
     }
 
     public function lesson(){
         return $this->belongsTo(lesson::class);
+    }
+
+    public function seen_notifications(){
+        return $this->belongsToMany(User::class, 'seen_notifications', 'homework_id', 'student_id');
     }
 }

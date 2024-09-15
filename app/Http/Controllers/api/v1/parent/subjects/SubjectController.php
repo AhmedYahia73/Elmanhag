@@ -4,20 +4,30 @@ namespace App\Http\Controllers\api\v1\parent\subjects;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Models\subject;
-use App\Models\bundle;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
+use App\trait\student_subjects;
+ 
 
 class SubjectController extends Controller
 {
-    public function __construct(private subject $subject, private bundle $bundle){}
+    public function __construct(){}
 
     public function subjects(Request $request){
+        $validator = Validator::make($request->all(), [
+            'student_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+
         $student_id = $request->student_id;
-        $subjects = $this->subject
-        ->whereHas('users', function($query) use($student_id){
-            $query->where('id', $student_id);
-        })
-        ->get(); // Get subjects of student
+        $subjects = $this->student_subject($student_id);
+
+        return response()->json([
+            'subjects' => $subjects,
+        ]);
     }
 }

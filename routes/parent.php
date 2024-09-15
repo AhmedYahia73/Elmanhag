@@ -30,7 +30,7 @@ Route::middleware(['auth:sanctum', 'IsParent'])->group(function(){
     // Start Notifications Module
     Route::prefix('notification')->group(function() {
         Route::controller(NotificationController::class)->group(function(){
-            Route::put('/', 'show')->name('notification.show');
+            Route::post('/', 'show')->name('notification.show');
         });
     });
 });
