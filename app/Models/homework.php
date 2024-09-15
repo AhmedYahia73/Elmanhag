@@ -29,7 +29,6 @@ class homework extends Model
         'status' ,
     ];
 
-
     public function subject(){
         return $this->belongsTo(subject::class);
     }

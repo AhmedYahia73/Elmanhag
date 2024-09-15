@@ -30,6 +30,7 @@ class CreateLessonController extends Controller
     ];
 
     public function lesson($id){
+        // https://bdev.elmanhag.shop/admin/lesson/{id}
         $lesson = lesson::
         where('id', $id)
         ->first();
@@ -43,15 +44,8 @@ class CreateLessonController extends Controller
         // https://bdev.elmanhag.shop/admin/lesson/add/{chapter_id}  
         // Keys 
         // name, ar_name, description, paid, status, order, drip_content, switch
-        // voice[], voice_link[]
-        // voice_source[] لما يكون link فقط
-        // video[], video_link[]
-        // video_source[]  لما يكون link فقط
-        // pdf[], pdf_link[]
-        // pdf_source[] لما يكون link فقط
-
-        // Keys
         // materials [{type, source, material}]
+        
         $lesson_data = $request->only($this->lessonRequest); // Get data
         $lesson_data['chapter_id'] = $ch_id;
         $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
