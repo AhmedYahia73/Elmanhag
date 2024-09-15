@@ -27,7 +27,7 @@ class AffVideoGroupController extends Controller
     public function add(Request $request){
         // https://bdev.elmanhag.shop/admin/affilate/groups/add
         // Keys
-        // name  
+        // name
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
