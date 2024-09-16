@@ -45,7 +45,7 @@ class CreateLessonController extends Controller
         // Keys 
         // name, ar_name, description, paid, status, order, drip_content, switch
         // materials [{type, source, material}]
-        
+        return response()->json(['data' => $request->all()]);
         $lesson_data = $request->only($this->lessonRequest); // Get data
         $lesson_data['chapter_id'] = $ch_id;
         $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
@@ -54,9 +54,6 @@ class CreateLessonController extends Controller
         foreach ($request->materials as $item) {
             // if source file
             if ($item['source'] == 'upload') {
-                return response()->json([
-                    'material' => $item['material']
-                ]);
                 $file_paths = $this->uploadFile($item['material'], 'admin/lessons/' . $item['type']);
                 LessonResource::create([
                     'type' => $item['type'], 
