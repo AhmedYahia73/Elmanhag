@@ -12,6 +12,7 @@ use App\trait\student_subjects;
 class SubjectController extends Controller
 {
     public function __construct(){}
+    use student_subjects;
 
     public function subjects(Request $request){
         $validator = Validator::make($request->all(), [
@@ -24,7 +25,8 @@ class SubjectController extends Controller
         }
 
         $student_id = $request->student_id;
-        $subjects = $this->student_subject($student_id);
+        $subjects = $this->student_subject($student_id); // Get subjects
+        
 
         return response()->json([
             'subjects' => $subjects,
