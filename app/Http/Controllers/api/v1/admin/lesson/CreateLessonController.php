@@ -55,8 +55,7 @@ class CreateLessonController extends Controller
             // if source file
             if ($item['source'] == 'upload') {  
                 $file = $request->file("materials.$key.material");
-                $path = $file->store('admin/lessons/' . $item['type']); // Store file in 'storage/app/uploads'
-                $file_paths = $this->uploadFile($item['material'], 'admin/lessons/' . $item['type']);
+                $file_paths = $file->store('admin/lessons/' . $item['type'],'public'); // Store file in 'storage/app/uploads'
                 LessonResource::create([
                     'type' => $item['type'], 
                     'source' => $item['source'], 
