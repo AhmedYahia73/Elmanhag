@@ -72,6 +72,7 @@ class FawryPayController extends Controller
              // Start Create Order If Operation Payment Success
         $placeOrder = $this->placeOrder($request);
              // Start Create Order If Operation Payment Success
+             
              if($placeOrder->status() != 200){
                       return $placeOrder;
              }

@@ -61,6 +61,6 @@ trait PlaceOrder
                'chargeItems'=> $items
                ];
             }
-                  return $order;
+                  return response()->json($order,200);
     }
 }
