@@ -51,8 +51,25 @@ class SubjectController extends Controller
             }
         }
 
+        $progress = 0;
+
+        foreach ($success_homeworks as $item) {
+            if ($item->title == 'H.W1') {
+                $progress += 50;
+            }
+            elseif ($item->title == 'H.W2') {
+                $progress += 35;
+            }
+            elseif ($item->title == 'H.W3') {
+                $progress += 15;
+            }
+        }
+
+        $progress = $progress / $lesson_count;
+
         return response()->json([
-            'subjects' => $success_homeworks,
+            'subjects' => $subjects,
+            'progress' => $progress,
         ]);
     }
 }
