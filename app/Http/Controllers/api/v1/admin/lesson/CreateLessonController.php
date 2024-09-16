@@ -45,7 +45,7 @@ class CreateLessonController extends Controller
         // Keys 
         // name, ar_name, description, paid, status, order, drip_content, switch
         // materials [{type, source, material}]
-        
+        return response()->json(['data' => $request->all()]);
         $lesson_data = $request->only($this->lessonRequest); // Get data
         $lesson_data['chapter_id'] = $ch_id;
         $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
