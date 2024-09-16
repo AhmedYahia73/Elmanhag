@@ -29,8 +29,7 @@ class LessonRequest extends FormRequest
             'paid' => ['required'],
             'status' => ['required'],
             'switch' => ['required', 'boolean'],
-            'drip_content' => ['required'],
-            'materials.*.material' => ['required'],
+            'drip_content' => ['required'], 
             'materials.*.source' => ['required', 'in:external,embedded,upload'],
             'materials.*.type' => ['required', 'in:voice,video,pdf'],
         ];
