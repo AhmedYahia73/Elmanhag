@@ -30,7 +30,6 @@ class LessonRequest extends FormRequest
             'status' => ['required'],
             'switch' => ['required', 'boolean'],
             'drip_content' => ['required'],
-            'materials.*.material' => ['required', 'file'],
             'materials.*.source' => ['required', 'in:external,embedded,upload'],
             'materials.*.type' => ['required', 'in:voice,video,pdf'],
         ];
