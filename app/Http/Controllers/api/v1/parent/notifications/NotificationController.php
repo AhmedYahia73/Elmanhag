@@ -18,6 +18,9 @@ class NotificationController extends Controller
     use student_subjects;
     
     public function show(Request $request){
+        // https://bdev.elmanhag.shop/parent/notification
+        // Keys
+        // student_id
         $validator = Validator::make($request->all(), [
             'student_id' => 'required|exists:users,id',
         ]);

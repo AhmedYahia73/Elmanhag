@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\parent\childreen\ChildreenController;
 use App\Http\Controllers\api\v1\parent\profile\ProfileController;
 use App\Http\Controllers\api\v1\parent\notifications\NotificationController;
+use App\Http\Controllers\api\v1\parent\subjects\SubjectController;
 
 Route::middleware(['auth:sanctum', 'IsParent'])->group(function(){    
     // Start Childreen Module
@@ -22,9 +23,9 @@ Route::middleware(['auth:sanctum', 'IsParent'])->group(function(){
         });
     });
     // Start Profile Module
-    Route::prefix('profile')->group(function() {
-        Route::controller(ProfileController::class)->group(function(){
-            Route::put('/', 'modify')->name('profile.update');
+    Route::prefix('subjects')->group(function() {
+        Route::controller(SubjectController::class)->group(function(){
+            Route::post('/', 'subjects')->name('subjects.subjects');
         });
     });
     // Start Notifications Module
