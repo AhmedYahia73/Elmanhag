@@ -23,9 +23,10 @@ class AffVideoController extends Controller
         'affilate_group_video_id',
     ];
 
-    public function show(){
-        // https://bdev.elmanhag.shop/admin/affilate/videos
+    public function show($id){
+        // https://bdev.elmanhag.shop/admin/affilate/videos/{id}
         $videos = $this->videos
+        ->where('affilate_group_video_id', $id)
         ->get();
         $groups = $this->groups
         ->get();

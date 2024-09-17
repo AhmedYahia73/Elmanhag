@@ -190,6 +190,7 @@ class CreateLessonController extends Controller
     }
 
     public function modify( LessonRequest $request, $id ){
+        // https://bdev.elmanhag.shop/admin/lesson/update/{id}
         //Keys 
         // name, ar_name, description, paid, status, order, drip_content, switch
         // voice[], voice_source[]
