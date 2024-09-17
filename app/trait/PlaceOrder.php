@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 trait PlaceOrder
@@ -16,7 +17,7 @@ trait PlaceOrder
  // This Is Trait About Make any Order 
    
 
-    public function placeOrder(Request $request ){
+    public function placeOrder(Request $request ):mixed{
         $user = $request->user();
         $newOrder = $request->only($this->orderPlaceReqeust);
         $items = $newOrder['chargeItems'];
@@ -25,9 +26,9 @@ trait PlaceOrder
         foreach ($items as $item) {
             $itemId = $item['itemId'];
             $service = $item['description'];
-            $item_price = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
+            $item_type = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
            try {
-             $amount = $this->$item_price->where('id',$itemId)->sum('price'); // Get Price For Item
+             $amount = $this->$item_type->where('id',$itemId)->sum('price'); // Get Price For Item
            
             $item['student_id'] =$user->id;
             $item['purchase_date'] =now(); // Purchase Date Now
@@ -57,10 +58,44 @@ trait PlaceOrder
                     'message'=>$th->getMessage()
             ],403);
               }
-               $order = [ // This Is Data Returned For Payment Request
-               'chargeItems'=> $items
-               ];
+            $data = [
+                    'chargeItems'=>[
+                        'itemId'=>$itemId,
+                        'description'=>$item_type,
+                        'price'=>$amount,
+                        'quantity'=>'1',
+                    ]
+            ];
+              
             }
-                  return response()->json($order,200);
+                  return $data;
+    }
+
+    public function confirmOrder( $request): mixed{
+        $merchantRefNumber = $request['merchantRefNumber'];
+        $customerMerchantId = $request['customerMerchantId'];
+      $orderStatus = $request['orderStatus'];
+            if($orderStatus == 'PAID'){
+            $payment =
+                $this->payment->where('merchantRefNum', $merchantRefNumber)->with('bundle', function ($query):void {
+                    $query->with('users');
+                }, 'subject', function ($query):void {
+                    $query->with('users');
+           })->first();
+            $order = $payment->service == 'Bundle' ? 'bundle' : 'subject';
+            if($order == 'bundle'){
+                $orderBundle = $payment->bundle;
+                foreach($orderBundle as $student_bundle){
+                     $student_bundle->users()->sync([$student_bundle->id=>['user_id'=>$customerMerchantId]] );
+                }
+            }elseif($order == 'subject'){
+                $orderSubject= $payment->subject;
+                 foreach($orderSubject as $student_subject){
+                 return $student_subject->users()->sync([$student_subject->id=>['user_id'=>$customerMerchantId]] );
+                 }
+            }
+
+        }
+        return response()->json($request);
     }
 }

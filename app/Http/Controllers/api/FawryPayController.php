@@ -30,24 +30,32 @@ class FawryPayController extends Controller
     use PlaceOrder; // This Trait For Make Order 
     public function payAtFawry(Request $request)
     {
+
+
+        
          $request['customerProfileId'] = $request->user()->id ;
+         $request['customerMobile'] = $request->user()->phone ;
         // Validate incoming request data
         $request->validate([
-            'customerName' => 'required|string',
+            // 'customerName' => 'required|string',
             'customerMobile' => 'required|string',
-            'customerEmail' => 'required|email',
+            // 'customerEmail' => 'required|email',
             'customerProfileId' => 'required|numeric',
-            'merchantRefNum' => 'required|string',
-            'amount' => 'required|numeric',
-            'description' => 'required|string',
+            // 'merchantRefNum' => 'required|string',
+            // 'amount' => 'required|numeric',
+            // 'description' => 'required|string',
             'chargeItems' => 'required|array',
         ]);
 
+             // Start Create Order If Operation Payment Success
+           $placeOrder = $this->placeOrder($request);
+             // Start Create Order If Operation Payment Success
+       
         // Extract data
         $merchantRefNum = $request->merchantRefNum;
         $customerProfileId =$request->customerProfileId;
         $paymentMethod = 'PayAtFawry';
-        $amount = $request->amount;
+        $amount = $placeOrder['chargeItems']['price'];
 
         // Generate signature
         $signature = $this->fawryPayService->generateSignature($merchantRefNum, $customerProfileId, $paymentMethod, $amount);
@@ -59,23 +67,18 @@ class FawryPayController extends Controller
             'customerEmail' => $request->customerEmail,
             'customerProfileId' => $request->customerProfileId, // old Request => $request->customerProfileId Changed Cause When Pass Token I Will Get user_id
             'merchantRefNum' => $merchantRefNum,
-            'amount' => number_format($amount, 2, '.', ''),
+            'amount' => number_format($placeOrder['chargeItems']['price'], 2, '.', ''),
             'paymentExpiry' => $request->paymentExpiry ?? null,
             'currencyCode' => 'EGP',
             'language' => $request->language ?? 'en-gb',
-            'chargeItems' => $request->chargeItems,
+            'chargeItems' => [$placeOrder['chargeItems']],
             'signature' => $signature,
             'paymentMethod' => $paymentMethod,
             'description' => $request->description
         ];
-       
-             // Start Create Order If Operation Payment Success
-        $placeOrder = $this->placeOrder($request);
-             // Start Create Order If Operation Payment Success
-             
-             if($placeOrder->status() != 200){
-                      return $placeOrder;
-             }
+ 
+        
+            
         // Make the charge request
        $response = $this->fawryPayService->createCharge($data);
         // Return response to the client
@@ -94,9 +97,11 @@ class FawryPayController extends Controller
 
     // Extract the reference number
     $merchantRefNum = $request->merchantRefNum;
-
-    // Get payment status
-    $response = $this->fawryPayService->getPaymentStatus($merchantRefNum);
+                // Start Confirmation Order
+                // Start Confirmation Order
+                // Get payment status
+                $response = $this->fawryPayService->getPaymentStatus($merchantRefNum);
+                return $this->confirmOrder($response);
 
     // Return response to the client
     return response()->json($response);
