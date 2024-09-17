@@ -72,4 +72,26 @@ class NotificationController extends Controller
             'due_homework' => $due_homework
         ]);
     }
+
+    public function seen_notifications(Request $request){
+        // Keys
+        // type [homework, id]   
+        $validator = Validator::make($request->all(), [
+            'type' => 'required',
+            'id' => 'required|numeric',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+        if ($request->type == 'homework') {
+            $this->homeworks->seen_notifications()
+            ->sync($request->id);
+        }
+
+        return response()->json([
+            'success' => 'You success'
+        ]);
+    }
 }
