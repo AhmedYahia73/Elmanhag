@@ -79,7 +79,7 @@ class SubjectController extends Controller
     }
 
     public function subjects_progress(Request $request){
-        // https://bdev.elmanhag.shop/parent/subjects
+        // https://bdev.elmanhag.shop/parent/subjects/progress
         // Keys
         // student_id
         

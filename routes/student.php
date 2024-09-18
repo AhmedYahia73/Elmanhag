@@ -14,6 +14,7 @@ use App\Http\Controllers\api\v1\student\subject\SubjectController;
 use App\Http\Controllers\api\v1\student\bundles\BundlesController;
 use App\Http\Controllers\api\v1\student\complaint\ComplaintController;
 use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
+use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -76,7 +77,10 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                 });
         });
 
-        
+        Route::controller(PaymentMethodController::class)->prefix('paymentMethods')
+        ->group(function(){
+            Route::get('/', 'view')->name('payment_methods.view');
+        });
 
         
 });
