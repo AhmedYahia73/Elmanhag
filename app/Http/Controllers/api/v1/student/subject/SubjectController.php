@@ -24,6 +24,9 @@ class SubjectController extends Controller
         try {
             if ($category_id && $education_id) {
                 $subject = $subject->orderBy('education_id')
+                    ->where('category_id', $category_id)
+                    ->where('education_id', NULL)
+                    ->orwhere('education_id', $education_id)
                     ->where('category_id', $category_id);
             } elseif ($category_id) {
                 $subject = $subject->orderBy('name')
