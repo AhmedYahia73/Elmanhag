@@ -59,21 +59,13 @@ class CreateSubjectController extends Controller
         $demo_video = null;
         $cover_photo = null;
         $thumbnail = null;
-        return response()->json([
-            'demo_video_request' => $request->demo_video ,
-            'demo_video' => $subject->demo_video ,
-            'cover_photo_request' => $request->cover_photo ,
-            'cover_photo' => $subject->cover_photo ,
-            'thumbnail_request' => $request->thumbnail ,
-            'thumbnail' => $subject->thumbnail ,
-        ]);
-        if ($request->demo_video != $subject->demo_video) {
+        if ($request->demo_video != $subject->demo_video_url) {
             $demo_video = $this->upload($request,'demo_video','admin/subjects/demo_video');// Upload new video
         }
-        if ($request->cover_photo != $subject->cover_photo) {
+        if ($request->cover_photo != $subject->cover_photo_url) {
             $cover_photo = $this->upload($request,'cover_photo','admin/subjects/cover_photo');// Upload new Cover Photo
         }
-        if ($request->thumbnail != $subject->thumbnail) {
+        if ($request->thumbnail != $subject->thumbnail_url) {
             $thumbnail = $this->upload($request,'thumbnail','admin/subjects/thumbnail');// Upload new thumbnail
         }
         $this->translate($data['name'], $data['ar_name']); // Translate in file json
