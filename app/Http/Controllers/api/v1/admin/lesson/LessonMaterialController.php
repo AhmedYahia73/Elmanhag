@@ -27,27 +27,51 @@ class LessonMaterialController extends Controller
         // type ['voice', 'video', 'pdf'], source ['upload', 'external', 'embedded'], material
         // https://bdev.elmanhag.shop/admin/lessonMaterial/add/{$lesson_id}
  
-        // Add Source
-        if ( $request->source == 'upload' ) {
-            // Upload file
-            $path = $this->upload($request, 'material', 'admin/lessons/' . $request->type);
-            // Create lesson source
-            LessonResource::create([
-                'type' => $request->type,
-                'source' => $request->source,
-                'file' => $path,
-                'lesson_id' => $lesson_id,
-            ]); 
+        
+        if(isset($request->materials)){
+            foreach ($request->materials as $key => $item) {
+                // if source file
+                if ($item['source'] == 'upload') {
+                    $file = $request->file("materials.$key.material");
+                    $file_paths = $file->store('admin/lessons/' . $item['type'],'public'); // Store file in 'storage/app/uploads'
+                    LessonResource::create([
+                        'type' => $item['type'], 
+                        'source' => $item['source'], 
+                        'file' => $file_paths, 
+                        'lesson_id' => $lesson->id,
+                    ]);
+                }
+                else{
+                    LessonResource::create([
+                        'type' => $item['type'], 
+                        'source' => $item['source'], 
+                        'file' => $item['material'], 
+                        'lesson_id' => $lesson->id,
+                    ]);
+                }
+            } 
         }
-        else{
-            // Create lesson source
-            LessonResource::create([
-                'type' => $request->type,
-                'source' => $request->source,
-                'file' => $request->material,
-                'lesson_id' => $lesson_id,
-            ]); 
-        }
+        // // Add Source
+        // if ( $request->source == 'upload' ) {
+        //     // Upload file
+        //     $path = $this->upload($request, 'material', 'admin/lessons/' . $request->type);
+        //     // Create lesson source
+        //     LessonResource::create([
+        //         'type' => $request->type,
+        //         'source' => $request->source,
+        //         'file' => $path,
+        //         'lesson_id' => $lesson_id,
+        //     ]); 
+        // }
+        // else{
+        //     // Create lesson source
+        //     LessonResource::create([
+        //         'type' => $request->type,
+        //         'source' => $request->source,
+        //         'file' => $request->material,
+        //         'lesson_id' => $lesson_id,
+        //     ]); 
+        // }
 
         return response()->json([
             'success' => 'You add data success'
