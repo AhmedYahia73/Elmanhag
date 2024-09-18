@@ -9,6 +9,8 @@ use App\Models\Education;
 use Illuminate\Http\Request;
 use App\Models\ParentRelation;
 use App\Http\Controllers\Controller;
+use App\Models\AffilateGroupVideos;
+use App\Models\AffilateVideos;
 use App\Models\PaymentMethodAffilate;
 use App\Models\StudentJob;
 
@@ -25,6 +27,7 @@ class SettingController extends Controller
         private ParentRelation $parentRelation,
         private StudentJob $studentJobs,
         private PaymentMethodAffilate $paymentMethodAffilate,
+        private AffilateGroupVideos $affilateGroupVideos,
     ){}
 
     public function show(){
@@ -48,5 +51,14 @@ class SettingController extends Controller
             'studentJobs'=>$studentJobs,
             'paymentMethodAffilate'=>$paymentMethodAffilate,
         ],200);
+    }
+
+    public function videos_explain(Request $request){
+            $affiliate_group_video = $this->affilateGroupVideos::with('affilate_videos')->get();
+
+        return response()->json([
+            'success'=>'Data Returned Successfully',
+            'affiliate_group_video'=>$affiliate_group_video,
+        ]);
     }
 }

@@ -34,11 +34,12 @@ Route::prefix('profile')->middleware(['auth:sanctum','IsStudent'])->group(functi
 });
 Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         Route::prefix('setting')->group(function () {
-            Route::controller(SettingController::class)->withoutMiddleware(['auth:sanctum','IsStudent'])->group(function () {
-                Route::get('view','show')->name('setting.view');
+            Route::controller(SettingController::class)->group(function () {
+                Route::get('view','show')->withoutMiddleware(['auth:sanctum','IsStudent'])->name('setting.view');
+                Route::get('video','videos_explain')->name('setting.view');
             }); // Guest Data
             Route::controller(SubjectController::class)->group(function () { // This All Subject For Student
-                Route::post('subject/view','show')->name('setting.view');
+                Route::post('subject/view','show')->withoutMiddleware(['IsStudent'])->name('setting.view');
                 Route::get('subject/student','student_subject')->name('setting.view');
             });
         });
