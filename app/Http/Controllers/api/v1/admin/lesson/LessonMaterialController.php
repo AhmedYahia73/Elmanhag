@@ -38,7 +38,7 @@ class LessonMaterialController extends Controller
                         'type' => $item['type'], 
                         'source' => $item['source'], 
                         'file' => $file_paths, 
-                        'lesson_id' => $lesson->id,
+                        'lesson_id' => $lesson_id,
                     ]);
                 }
                 else{
@@ -46,7 +46,7 @@ class LessonMaterialController extends Controller
                         'type' => $item['type'], 
                         'source' => $item['source'], 
                         'file' => $item['material'], 
-                        'lesson_id' => $lesson->id,
+                        'lesson_id' => $lesson_id,
                     ]);
                 }
             } 
