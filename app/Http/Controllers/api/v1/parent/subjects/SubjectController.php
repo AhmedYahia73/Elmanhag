@@ -108,7 +108,7 @@ class SubjectController extends Controller
             $student_homework = $student_homework
             ->whereIn('lesson_id', $lessons->pluck('id'));
             return response()->json([
-                'student_homework' => $subject
+                'student_homework' => $student_homework
             ]);
             $success_homeworks = [];
             // homework that student success in it
