@@ -103,7 +103,7 @@ class SubjectController extends Controller
             $subjects_ids = $subjects->pluck('id'); // Get subjects ids
             $student_homework = $this->users
             ->with('user_homework', function($query) use($lessons){
-                $query->whereIn('lesson_id', $lessons);
+                $query->whereIn('lesson_id', $lessons->pluck('id'));
             })
             ->where('id', $student_id)
             ->first()->user_homework; // Get homework that student solve it
