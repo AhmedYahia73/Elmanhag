@@ -33,7 +33,7 @@ class ComplaintController extends Controller
         $complaint = $this->complaint;
         try {
             $complaint->create($newCompaint);
-                    return response()->json(['success'=>'Your Complaint'],200);
+                    return response()->json(['success'=>'Your Complaint Sent Successfully'],200);
         } catch (QueryException $th) {
                     return response()->json(['faield'=>'Something Wrong'],500);
                 }
