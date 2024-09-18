@@ -47,9 +47,9 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                 Route::prefix('mySubject')->group(function () {
                     Route::post('chapter/view', 'show')->name('student_chapter_view');
                 });
-                  Route::prefix('subject')->group(function () {
-                  Route::post('chapter/view', 'chapters')->name('chapters');
-                  });
+                //   Route::prefix('subject')->group(function () {
+                //   Route::post('chapter/view', 'chapters')->name('chapters');
+                //   });
         });
         Route::controller(LessonController::class)->group(function () { // This All Chapters For Student
                 Route::prefix('chapter')->group(function () {
