@@ -12,6 +12,7 @@ use App\Http\Controllers\api\v1\student\SignupController;
 use App\Http\Controllers\api\v1\student\profile\ProfileController;
 use App\Http\Controllers\api\v1\student\subject\SubjectController;
 use App\Http\Controllers\api\v1\student\bundles\BundlesController;
+use App\Http\Controllers\api\v1\student\complaint\ComplaintController;
 use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 
 Route::prefix('auth')->group(function () {
@@ -67,6 +68,11 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         Route::controller(PlaceOrderController::class)->group(function () { // This All Chapters For Student
                 Route::prefix('order')->group(function () {
                     Route::post('/place', 'place_order')->name('order.place');
+                });
+        });
+        Route::controller(ComplaintController::class)->group(function () { // This All Chapters For Student
+                Route::prefix('complaint')->group(function () {
+                    Route::post('/store', 'place_order')->name('complaint.store');
                 });
         });
 
