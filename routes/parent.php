@@ -26,12 +26,14 @@ Route::middleware(['auth:sanctum', 'IsParent'])->group(function(){
     Route::prefix('subjects')->group(function() {
         Route::controller(SubjectController::class)->group(function(){
             Route::post('/', 'subjects')->name('subjects.subjects');
+            Route::post('/progress', 'subjects_progress')->name('subjects.subjects_progress');
         });
     });
     // Start Notifications Module
     Route::prefix('notification')->group(function() {
         Route::controller(NotificationController::class)->group(function(){
             Route::post('/', 'show')->name('notification.show');
+            Route::post('/seen', 'seen_notifications')->name('notification.seen');
         });
     });
 });
