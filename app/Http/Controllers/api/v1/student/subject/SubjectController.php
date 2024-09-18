@@ -28,9 +28,12 @@ class SubjectController extends Controller
                     ->where('education_id', $education_id);
             } elseif ($category_id) {
                 $subject = $subject->orderBy('name')
-                    ->where('category_id', $category_id);
+                    ->where('category_id', $category_id)
+                    ->where('education','=',NULL);
             } elseif ($education_id) {
-                $subject = $subject->where('education_id', $education_id)
+                $subject = $subject
+                ->where('education_id', $education_id)
+                ->where('category_id', '=',NULL)
                     ->orderBy('name');
             }
             $subject = $subject->get();
