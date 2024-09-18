@@ -75,19 +75,23 @@ class NotificationController extends Controller
 
     public function seen_notifications(Request $request){
         // Keys
-        // type [homework, id]   
+        // homework_id, student_id, live_id
         $validator = Validator::make($request->all(), [
-            'type' => 'required',
-            'id' => 'required|numeric',
+            'homework_id' => 'exists:homework,id',
+            'student_id' => 'required|exists:users,id',
+            'live_id' => 'exists:lives,id',
         ]);
         if ($validator->fails()) { // if Validate Make Error Return Message Error
             return response()->json([
                 'error' => $validator->errors(),
             ],400);
         }
-        if ($request->type == 'homework') {
-            $this->homeworks->seen_notifications()
-            ->sync($request->id);
+        if (isset($request->homework_id)) {
+            $homeworks = $this->homeworks
+            ->where('id', $request->homework_id)
+            ->first();
+            $homeworks->seen_notifications()
+            ->sync($request->student_id);
         }
 
         return response()->json([

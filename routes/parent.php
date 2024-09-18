@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum', 'IsParent'])->group(function(){
     Route::prefix('notification')->group(function() {
         Route::controller(NotificationController::class)->group(function(){
             Route::post('/', 'show')->name('notification.show');
+            Route::post('/seen', 'seen_notifications')->name('notification.seen');
         });
     });
 });
