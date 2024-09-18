@@ -91,7 +91,7 @@ trait PlaceOrder
             }elseif($order == 'subject'){
                 $orderSubject= $payment->subject;
                  foreach($orderSubject as $student_subject){
-                 return $student_subject->users()->sync([$student_subject->id=>['user_id'=>$customerMerchantId]] );
+                  $student_subject->users()->sync([$student_subject->id=>['user_id'=>$customerMerchantId]] );
                  }
             }
 
