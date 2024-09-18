@@ -92,6 +92,7 @@ class SubjectController extends Controller
             ],400);
         }
 
+        $data = [];
         $student_id = $request->student_id;
         $subjects = $this->student_subject($student_id); // Get subjects
         foreach ($subjects as $subject) {
@@ -107,9 +108,6 @@ class SubjectController extends Controller
             ->first()->user_homework; // Get homework that student solve it
             $student_homework = $student_homework
             ->whereIn('lesson_id', $lessons->pluck('id'));
-            return response()->json([
-                'student_homework' => $student_homework
-            ]);
             $success_homeworks = [];
             // homework that student success in it
             foreach ($student_homework as $item) {
@@ -138,11 +136,12 @@ class SubjectController extends Controller
             else {
                 $progress = $progress / $lesson_count;
             }
+            $data[] = [
+                'subject' => $subject,
+                'progress' => $progress,
+            ];
         }
 
-        return response()->json([
-            'subjects' => $subjects,
-            'progress' => $progress,
-        ]);
+        return response()->json($data);
     }
 }
