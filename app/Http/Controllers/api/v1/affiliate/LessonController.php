@@ -29,7 +29,7 @@ class LessonController extends Controller
         try {
             $lesson = $this->lesson
                 ->where('id', $lesson_id)
-                ->where('id', false)
+                ->where('paid', false)
                 ->with('resources')
                 ->with('homework')
                 ->first(); // Start Get Leeon
