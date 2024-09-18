@@ -59,6 +59,14 @@ class CreateSubjectController extends Controller
         $demo_video = null;
         $cover_photo = null;
         $thumbnail = null;
+        return response()->json([
+            'demo_video_request' => $request->demo_video ,
+            'demo_video' => $subject->demo_video ,
+            'cover_photo_request' => $request->cover_photo ,
+            'cover_photo' => $subject->cover_photo ,
+            'thumbnail_request' => $request->thumbnail ,
+            'thumbnail' => $subject->thumbnail ,
+        ]);
         if ($request->demo_video != $subject->demo_video) {
             $demo_video = $this->upload($request,'demo_video','admin/subjects/demo_video');// Upload new video
         }
