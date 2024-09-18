@@ -148,6 +148,7 @@ class CreateQuestionController extends Controller
     }
     
     public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/question/delete/{id}
         $question = question::where('id', $id)
         ->first();
         $this->deleteImage($question->image);
