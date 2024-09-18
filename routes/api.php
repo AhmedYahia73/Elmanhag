@@ -33,9 +33,9 @@ Route::controller(LoginController::class)->prefix('admin')->group(function () {
     Route::post('auth/logout','logout')->name('user.logout')->middleware('auth:sanctum');
 });
 
-Route::controller(LoginController::class)->prefix('user')->group(function () {
-    Route::post('auth/login','user_login')->name('user_login');
-});
+// Route::controller(LoginController::class)->prefix('user')->group(function () {
+//     Route::post('auth/login','user_login')->name('user_login');
+// });
 
 Route::controller(SignupController::class)->prefix('admin')->group(function () {
     Route::get('auth/signup','signup')->name('signup');
