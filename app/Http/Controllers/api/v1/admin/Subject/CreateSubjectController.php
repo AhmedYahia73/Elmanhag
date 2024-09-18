@@ -56,9 +56,18 @@ class CreateSubjectController extends Controller
         $data = $request->only($this->subjectRequest); // Get Data
         $subject = subject::where('id', $id)
         ->first();
-        $demo_video = $this->upload($request,'demo_video','admin/subjects/demo_video');// Upload new video
-        $cover_photo = $this->upload($request,'cover_photo','admin/subjects/cover_photo');// Upload new Cover Photo
-        $thumbnail = $this->upload($request,'thumbnail','admin/subjects/thumbnail');// Upload new thumbnail
+        $demo_video = null;
+        $cover_photo = null;
+        $thumbnail = null;
+        if ($request->demo_video != $subject->demo_video) {
+            $demo_video = $this->upload($request,'demo_video','admin/subjects/demo_video');// Upload new video
+        }
+        if ($request->cover_photo != $subject->cover_photo) {
+            $cover_photo = $this->upload($request,'cover_photo','admin/subjects/cover_photo');// Upload new Cover Photo
+        }
+        if ($request->thumbnail != $subject->thumbnail) {
+            $thumbnail = $this->upload($request,'thumbnail','admin/subjects/thumbnail');// Upload new thumbnail
+        }
         $this->translate($data['name'], $data['ar_name']); // Translate in file json
         // If new Video is found delete old image
         if ( !empty($demo_video) && $demo_video != null ) {
