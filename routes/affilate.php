@@ -5,6 +5,7 @@ use App\Http\Controllers\api\v1\affiliate\AffiliateController;
 use App\Http\Controllers\api\v1\affiliate\BonusController;
 use App\Http\Controllers\api\v1\affiliate\PayoutController;
 use App\Http\Controllers\api\v1\affiliate\ProfileController;
+use App\Http\Controllers\api\v1\student\setting\SettingController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,4 +24,11 @@ Route::middleware(['auth:sanctum', 'IsAffilate'])->group(function () {
     Route::controller(BonusController::class)->prefix('bonus')->group(function () {
         Route::get('/view','get_bonus')->name('affilate.bonus');
     });
+
+    
 });
+        Route::middleware(['auth:sanctum','IsAffilate'])->group(function(){
+                     Route::prefix('setting')->controller(SettingController::class)->group(function () {
+                     Route::get('video','videos_explain')->name('setting.view');
+                     }); // Guest Data
+        });
