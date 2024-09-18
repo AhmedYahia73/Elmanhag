@@ -22,9 +22,7 @@ class lesson extends Model
         'drip_content' ,
     ];
 
-    public function materials(){
-        return $this->hasMany(MaterialLesson::class);
-    }
+  
     public function resources(){
         return $this->hasMany(LessonResource::class);
     }
