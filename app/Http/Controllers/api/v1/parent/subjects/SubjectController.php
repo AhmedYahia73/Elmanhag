@@ -92,6 +92,9 @@ class SubjectController extends Controller
             ],400);
         }
 
+        return response()->json([
+            'student_homework' => 'bvgh'
+        ]);
         $student_id = $request->student_id;
         $subjects = $this->student_subject($student_id); // Get subjects
         foreach ($subjects as $subject) {
