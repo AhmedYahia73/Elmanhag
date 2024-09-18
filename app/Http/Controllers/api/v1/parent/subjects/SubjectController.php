@@ -92,9 +92,6 @@ class SubjectController extends Controller
             ],400);
         }
 
-        return response()->json([
-            'student_homework' => 'bvgh'
-        ]);
         $student_id = $request->student_id;
         $subjects = $this->student_subject($student_id); // Get subjects
         foreach ($subjects as $subject) {
@@ -104,6 +101,9 @@ class SubjectController extends Controller
             }
             $lesson_count = count($lessons);
             $subjects_ids = $subjects->pluck('id'); // Get subjects ids
+            return response()->json([
+                'student_homework' => 'bvgh'
+            ]);
             $student_homework = $this->users
             ->with('user_homework', function($query) use($lessons){
                 $query->whereIn('user_homework.lesson_id', $lessons->pluck('id'));
