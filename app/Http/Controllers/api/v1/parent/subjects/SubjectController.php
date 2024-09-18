@@ -101,15 +101,12 @@ class SubjectController extends Controller
             }
             $lesson_count = count($lessons);
             $subjects_ids = $subjects->pluck('id'); // Get subjects ids
-            return response()->json([
-                'student_homework' => 'bvgh'
-            ]);
             $student_homework = $this->users
             ->with('user_homework', function($query) use($lessons){
                 $query->whereIn('user_homework.lesson_id', $lessons->pluck('id'));
             })
             ->where('id', $student_id)
-            ->first()->user_homework; // Get homework that student solve it
+            ->first(); // Get homework that student solve it
             return response()->json([
                 'student_homework' => $student_homework
             ]);
