@@ -78,7 +78,9 @@ class CreateSubjectController extends Controller
         $subject->update($data);
 
         return response()->json([
-            'success' => 'You Updated Success', 200
+            'demo_video' => $demo_video,
+            'cover_photo' => $cover_photo,
+            'thumbnail' => $thumbnail,
         ]);
     }
     
