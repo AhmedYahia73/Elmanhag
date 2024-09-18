@@ -74,6 +74,7 @@ class NotificationController extends Controller
     }
 
     public function seen_notifications(Request $request){
+        // https://bdev.elmanhag.shop/parent/notification/seen
         // Keys
         // homework_id, student_id, live_id
         $validator = Validator::make($request->all(), [
