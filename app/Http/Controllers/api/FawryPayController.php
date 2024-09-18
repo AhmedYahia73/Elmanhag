@@ -31,7 +31,6 @@ class FawryPayController extends Controller
     public function payAtFawry(Request $request)
     {
 
-
         
          $request['customerProfileId'] = $request->user()->id ;
          $request['customerMobile'] = $request->user()->phone ;
