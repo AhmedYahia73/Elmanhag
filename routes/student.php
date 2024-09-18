@@ -72,7 +72,7 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         });
         Route::controller(ComplaintController::class)->group(function () { // This All Chapters For Student
                 Route::prefix('complaint')->group(function () {
-                    Route::post('/store', 'place_order')->name('complaint.store');
+                    Route::post('/store', 'store')->name('complaint.store');
                 });
         });
 
