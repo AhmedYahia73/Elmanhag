@@ -35,14 +35,19 @@ Route::middleware(['auth:sanctum', 'IsAffilate'])->group(function () {
     }); // Guest Data
 
 
-    Route::controller(ChapterController::class)->group(function () { // This All Chapters For Student
-        Route::prefix('subject')->group(function () {
+  
+  
+});
+Route::middleware(['auth:sanctum'])->group(function () {
+          Route::controller(ChapterController::class)->group(function () { // This All Chapters For Student
+            Route::prefix('subject')->group(function () {
             Route::post('chapter/view', 'chapters')->name('chapters');
         });
     });
-    Route::controller(LessonController::class)->group(function () { // This All Chapters For Student
+
+      Route::controller(LessonController::class)->group(function () { // This All Chapters For Student
         Route::prefix('chapter')->group(function () {
-            Route::post('lesson/view', 'show')->name('chapters');
+            Route::post('lesson/view', 'show')->name('chapters')->middleware('IsStudent');
         });
     });
 });
