@@ -26,7 +26,8 @@ class AffilateVideoRequest extends FormRequest
         return [
             'title' => ['required'],
             'affilate_group_video_id' => ['required', 'exists:affilate_group_videos,id'],
-            'video' => ['required', 'file']
+            'video' => ['required'],
+            'type' => ['required', 'in:upload,external,embedded']
         ];
     }
 
