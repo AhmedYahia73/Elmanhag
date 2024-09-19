@@ -20,6 +20,7 @@ Route::middleware(['auth:sanctum', 'IsAffilate'])->group(function () {
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('view', 'show')->name('affilate.profile');
         Route::post('update', 'modify')->name('affilate.modify');
+        Route::post('delete', 'delete_profile')->name('affilate.delete');
     });
     Route::controller(PayoutController::class)->prefix('account')->group(function () {
         Route::post('withdraw', 'payout')->name('affilate.payout');

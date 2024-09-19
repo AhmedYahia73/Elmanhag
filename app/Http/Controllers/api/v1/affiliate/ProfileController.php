@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\trait\image;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -66,6 +67,21 @@ class ProfileController extends Controller
                             ]);
 
      }
+
+
+
+     public function delete_profile(Request $request):JsonResponse{
+        $user = $request->user();
+            if($user->delete()){
+            return response()->json([
+                'success'=>'Profile Deleted Successfully',
+            ]);
+        }else{
+               return response()->json([
+               'faield'=>'Profile Deleted faield',
+               ]);
+        }
+    }
 }   
 
 
