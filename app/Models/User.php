@@ -86,7 +86,7 @@ class User extends Authenticatable
         if(isset($this->image)){
             return $this->image = url('storage/app/public/'.$this->image);
         }
-        return 'C:\xampp\tmp'.$this->name;
+        return 'storage/'.$this->name;
     }
 
     public function admin_position(){
@@ -123,7 +123,14 @@ class User extends Authenticatable
     }
 
     public function getImageLinkAttribute(){
-        return url('storage/' . $this->attributes['image']);
+            if($this->gender == 'male' && is_null($this->image)){
+            return url('storage/' .'male.png');
+            }elseif($this->gender == 'female' && is_null($this->image)){
+            return url('storage/' .'female.png');
+            }else{
+                return url('storage/' . $this->attributes['image']);
+            }
+                
     }
 
     public function getcreatedAtAttribute($datetime){

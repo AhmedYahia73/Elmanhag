@@ -33,12 +33,11 @@ class SettingController extends Controller
     public function show(){
         $country = $this->country::orderBy('name')->get();
         $city = $this->city::orderBy('name')->where('country_id','!=',null)->get();
-        $category = $this->category::where('category_id', '!=', null)->orderBy('name')->get();
+        $category = $this->category::where('category_id', '!=', null)->orderBy('order')->get();
         $education = $this->education::orderBy('name')->get();
         $parentRelation = $this->parentRelation::orderBy('name')->get();
         $studentJobs = $this->studentJobs::get();
         $paymentMethodAffilate = $this->paymentMethodAffilate::get();
-        
 
         return response()->json(
         [
