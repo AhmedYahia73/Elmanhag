@@ -36,8 +36,10 @@ class ChapterController extends Controller
                                 }
                         try {
                         $chapter = $this->chapter
-                        ->where('subject_id',$subject_id)
-                        ->with('lessons')
+                                ->where('subject_id', $subject_id)
+                                ->with('lessons', function ($query) {
+                                        $query->orderBy('order');
+                        })
                         ->get();
                         
                         } catch (QueryException $th) {

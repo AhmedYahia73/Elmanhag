@@ -1,7 +1,7 @@
 <?php
 
 // use App\Http\Controllers\api\v1\payment\PaymentController;
-use App\Http\Controllers\Api\FawryPayController;
+use App\Http\Controllers\api\FawryPayController;
 
 use App\Models\User;
 use Illuminate\Http\Request;

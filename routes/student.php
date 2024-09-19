@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                 Route::get('view','show')->withoutMiddleware(['auth:sanctum','IsStudent'])->name('setting.view');
             }); // Guest Data
             Route::controller(SubjectController::class)->group(function () { // This All Subject For Student
-                Route::post('subject/view','show')->withoutMiddleware(['IsStudent'])->name('setting.view');
+                Route::post('subject/view','show')->withoutMiddleware(['IsStudent','IsAffilate'])->name('setting.view');
                 Route::get('subject/student','student_subject')->name('setting.view');
             });
         });
@@ -47,9 +47,9 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
                 Route::prefix('mySubject')->group(function () {
                     Route::post('chapter/view', 'show')->name('student_chapter_view');
                 });
-                //   Route::prefix('subject')->group(function () {
-                //   Route::post('chapter/view', 'chapters')->name('chapters');
-                //   });
+                  Route::prefix('subject')->group(function () {
+                  Route::post('chapter/view', 'chapters')->name('chapters');
+                  });
         });
         Route::controller(LessonController::class)->group(function () { // This All Chapters For Student
                 Route::prefix('chapter')->group(function () {

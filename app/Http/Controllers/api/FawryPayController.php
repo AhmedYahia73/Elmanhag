@@ -11,7 +11,7 @@ use App\Models\subject;
 use App\Models\User;
 use App\trait\PlaceOrder;
 use Illuminate\Http\Request;
-use App\Services\FawryPayService;
+use App\services\FawryPayService;
 
 class FawryPayController extends Controller
 {
@@ -100,7 +100,7 @@ class FawryPayController extends Controller
                 // Start Confirmation Order
                 // Get payment status
                 $response = $this->fawryPayService->getPaymentStatus($merchantRefNum);
-                return $this->confirmOrder($response);
+                $this->confirmOrder($response);
 
     // Return response to the client
     return response()->json($response);
