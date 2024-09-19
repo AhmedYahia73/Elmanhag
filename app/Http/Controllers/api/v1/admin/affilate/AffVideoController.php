@@ -21,6 +21,7 @@ class AffVideoController extends Controller
     protected $affilateVideoRequest = [
         'title',
         'affilate_group_video_id',
+        'type',
     ];
 
     public function show($id){
