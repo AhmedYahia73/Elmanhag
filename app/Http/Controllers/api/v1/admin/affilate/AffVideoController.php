@@ -77,8 +77,7 @@ class AffVideoController extends Controller
         ->where('id', $id)
         ->first(); 
         if ($request->type == 'upload' && $request->video != $affilate_video->video_link) {
-            $video =  $this->upload($request,'video','admin/affilate/affilate_videos'); // Upload Video
-            $data['video'] = $video;
+            $video_path =  $this->upload($request,'video','admin/affilate/affilate_videos'); // Upload Video
             if (!empty($video_path) && $video_path != null) {
                 $this->deleteImage($affilate_video->video); // Delete old video 
                 $data['video'] = $video_path;
@@ -87,7 +86,6 @@ class AffVideoController extends Controller
         elseif($request->video != $affilate_video->video_link){ 
             $data['video'] = $request->video;
         }
-        $video_path =  $this->upload($request,'video','admin/affilate/affilate_videos'); // Upload Video
 
         $affilate_video->update($data);
 
