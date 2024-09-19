@@ -15,6 +15,7 @@ class AffilateVideos extends Model
         'title',
         'video',
         'affilate_group_video_id',
+        'type',
     ];
     protected $appends = ['video_link'];
 
