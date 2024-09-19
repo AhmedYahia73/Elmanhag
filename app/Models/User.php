@@ -124,7 +124,7 @@ class User extends Authenticatable
 
     public function getImageLinkAttribute(){
             if($this->gender == 'male' && is_null($this->image)){
-            return url('storage/' .'male.png');
+            return url('storage/' .'default.png');
             }elseif($this->gender == 'female' && is_null($this->image)){
             return url('storage/' .'female.png');
             }else{
