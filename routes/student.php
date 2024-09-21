@@ -82,8 +82,8 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         ->group(function(){
             Route::get('/', 'view')->name('payment_methods.view');
         });
-    Route::controller(CorrectingHomeWork::class)->group(function () {
-        Route::post('correct','getData'); // This Route About Correct All Questions 
+    Route::prefix('homework')->controller(CorrectingHomeWork::class)->group(function () {
+        Route::post('correct','store'); // This Route About Correct All Questions
         });
         
 });
