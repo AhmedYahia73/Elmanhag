@@ -29,6 +29,7 @@ class LessonController extends Controller
         try {
             $lesson = $this->lesson
                 ->where('id', $lesson_id)
+                ->orderBy('order')
                 ->where('paid', false)
                 ->with('resources')
                 ->with('homework')
