@@ -56,9 +56,14 @@ class SubjectController extends Controller
     {
         $user_id = $request->user()->id;
         $category_id = $request->user()->category_id;
+        $education_id = $request->user()->education_id;
        
         try {
-            $subject = $this->subject->where('category_id', $category_id)
+            $subject = $this->subject
+            ->where('education_id', $education_id)
+            ->where('category_id', $category_id)
+            ->orWhereNull('education_id')
+            ->where('category_id', $category_id)
             ->with('chapters')
             ->get();
         } catch (QueryException $queryException) {

@@ -51,4 +51,8 @@ class homework extends Model
     public function seen_notifications(){
         return $this->belongsToMany(User::class, 'seen_notifications', 'homework_id', 'student_id');
     }
+
+     public function user_homework(){
+     return $this->belongsToMany(homework::class,'users_homework');
+     }
 }
