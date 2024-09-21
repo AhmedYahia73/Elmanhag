@@ -13,6 +13,7 @@ use App\Http\Controllers\api\v1\student\profile\ProfileController;
 use App\Http\Controllers\api\v1\student\subject\SubjectController;
 use App\Http\Controllers\api\v1\student\bundles\BundlesController;
 use App\Http\Controllers\api\v1\student\complaint\ComplaintController;
+use App\Http\Controllers\api\v1\student\correct\CorrectingHomeWork;
 use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
 
@@ -81,6 +82,8 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         ->group(function(){
             Route::get('/', 'view')->name('payment_methods.view');
         });
-
+    Route::controller(CorrectingHomeWork::class)->group(function () {
+        Route::post('correct','getData'); // This Route About Correct All Questions 
+        });
         
 });
