@@ -13,8 +13,8 @@ use App\Models\chapter;
 class QuestionController extends Controller
 {
 
-    public function __construct(private question $question, private category $category, 
-    private subject $subject, private lesson $lesson, private chapter $chapter){}
+    public function __construct(private question $question,
+    private lesson $lesson, private chapter $chapter){}
     public function show(){
         // https://bdev.elmanhag.shop/admin/question
         $questions = $this->question
@@ -23,8 +23,6 @@ class QuestionController extends Controller
         ->with('lesson')
         ->with('chapter')
         ->get();
-        $category = $this->category->get();
-        $subject = $this->subject->get();
         $lesson = $this->lesson->get();
         $chapter = $this->chapter->get();
         $question_types = ['text', 'image', 'audio'];
@@ -32,8 +30,6 @@ class QuestionController extends Controller
         return response()->json([
             'questions' => $questions,
             'question_types' => $question_types,
-            'category' => $category,
-            'subject' => $subject,
             'lesson' => $lesson,
             'chapter' => $chapter,
         ]);
