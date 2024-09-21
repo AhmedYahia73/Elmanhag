@@ -16,6 +16,7 @@ class Live extends Model
     
     protected $fillable = [
         'name',
+        'link',
         'from',
         'to',
         'date',

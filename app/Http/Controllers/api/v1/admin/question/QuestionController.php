@@ -6,22 +6,36 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\question;
+use App\Models\category;
+use App\Models\subject;
+use App\Models\chapter;
 
 class QuestionController extends Controller
 {
+
+    public function __construct(private question $question, private category $category, 
+    private subject $subject, private lesson $lesson, private chapter $chapter){}
     public function show(){
         // https://bdev.elmanhag.shop/admin/question
-        $questions = question::
-        with('category')
+        $questions = $this->question
+        ->with('category')
         ->with('subject')
         ->with('lesson')
         ->with('chapter')
         ->get();
+        $category = $this->category->get();
+        $subject = $this->subject->get();
+        $lesson = $this->lesson->get();
+        $chapter = $this->chapter->get();
         $question_types = ['text', 'image', 'audio'];
 
         return response()->json([
             'questions' => $questions,
             'question_types' => $question_types,
+            'category' => $category,
+            'subject' => $subject,
+            'lesson' => $lesson,
+            'chapter' => $chapter,
         ]);
     }
 }
