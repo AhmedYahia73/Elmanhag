@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\question;
-use App\Models\category;
-use App\Models\subject;
+use App\Models\lesson;
 use App\Models\chapter;
 
 class QuestionController extends Controller
