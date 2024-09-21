@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('video');
+            $table->enum('type', ['upload', 'external', 'embedded']);
             $table->foreignId('affilate_group_video_id')->nullable()->constrained('affilate_group_videos')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

@@ -31,7 +31,7 @@ class CreateQuestionController extends Controller
         // https://bdev.elmanhag.shop/admin/question/add 
         // keys => question, image, audio, status, category_id, subject_id, 
         // chapter_id, lesson_id, semester['first', 'second'], difficulty,
-        // answer_type ['Mcq', 'T/F', 'Join', 'Complete'], question_type ['text', 'image', 'audio']
+        // answer_type ['Mcq', 'T/F', 'Join', 'Complete', 'Reorder'], question_type ['text', 'image', 'audio']
         // answer, true_answer
         $question_data = $request->only($this->questionRequest); // Get request
         if ( $question_data['question_type'] == 'image' ) { // if request send image
@@ -79,7 +79,7 @@ class CreateQuestionController extends Controller
     public function modify(QuestionRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/question/update/{id}
         // keys => question, image, audio, status, category_id, subject_id, chapter_id, 
-        // lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'T/F', 'Join', 'Complete'], 
+        // lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'Reorder', 'T/F', 'Join', 'Complete'], 
         // question_type ['text', 'image', 'audio']
         // answer, true_answer
         $question_data = $request->only($this->questionRequest); // Get request

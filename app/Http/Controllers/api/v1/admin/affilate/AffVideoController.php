@@ -21,6 +21,7 @@ class AffVideoController extends Controller
     protected $affilateVideoRequest = [
         'title',
         'affilate_group_video_id',
+        'type',
     ];
 
     public function show($id){
@@ -40,10 +41,15 @@ class AffVideoController extends Controller
     public function add(AffilateVideoRequest $request){
         // https://bdev.elmanhag.shop/admin/affilate/videos/add
         // Keys
-        // title, affilate_group_video_id, video
+        // title, affilate_group_video_id, video, type => [upload, external, embedded]
         $data = $request->only($this->affilateVideoRequest);
-        $video =  $this->upload($request,'video','admin/affilate/affilate_videos'); // Upload Video
-        $data['video'] = $video;
+        if ($request->type == 'upload') {
+            $video =  $this->upload($request,'video','admin/affilate/affilate_videos'); // Upload Video
+            $data['video'] = $video;
+        }
+        else{ 
+            $data['video'] = $request->video;
+        }
         $this->videos
         ->create($data);
 
@@ -55,9 +61,10 @@ class AffVideoController extends Controller
     public function modify(Request $request, $id){
         // https://bdev.elmanhag.shop/admin/affilate/videos/update/{id}
         // Keys
-        // title, affilate_group_video_id, video
+        // title, affilate_group_video_id, video, type => [upload, external, embedded]
         $validator = Validator::make($request->all(), [
             'title' => 'required',
+            'type' => 'required|in:upload,external,embedded',
             'affilate_group_video_id' => 'required|exists:affilate_group_videos,id',
         ]);
         if ($validator->fails()) { // if Validate Make Error Return Message Error
@@ -68,13 +75,18 @@ class AffVideoController extends Controller
         $data = $request->only($this->affilateVideoRequest);
         $affilate_video = $this->videos
         ->where('id', $id)
-        ->first();
-        $video_path =  $this->upload($request,'video','admin/affilate/affilate_videos'); // Upload Video
-
-        if (!empty($video_path) && $video_path != null) {
-            $this->deleteImage($affilate_video->video); // Delete old video 
-            $data['video'] = $video_path;
+        ->first(); 
+        if ($request->type == 'upload' && $request->video != $affilate_video->video_link) {
+            $video_path =  $this->upload($request,'video','admin/affilate/affilate_videos'); // Upload Video
+            if (!empty($video_path) && $video_path != null) {
+                $this->deleteImage($affilate_video->video); // Delete old video 
+                $data['video'] = $video_path;
+            }
         }
+        elseif($request->video != $affilate_video->video_link){ 
+            $data['video'] = $request->video;
+        }
+
         $affilate_video->update($data);
 
         return response()->json([
