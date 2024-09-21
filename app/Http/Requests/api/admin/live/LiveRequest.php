@@ -30,6 +30,8 @@ class LiveRequest extends FormRequest
             'date' => ['required', 'date'],
             'teacher_id' => ['required', 'exists:users,id'],
             'subject_id' => ['required', 'exists:subjects,id'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'education_id' => ['required'],
             'paid' => ['required', 'boolean'],
             'inculded' => ['required', 'boolean']
         ];

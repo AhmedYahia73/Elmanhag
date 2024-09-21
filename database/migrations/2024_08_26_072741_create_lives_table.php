@@ -18,8 +18,10 @@ return new class extends Migration
             $table->time('to');
             $table->date('date');
             $table->string('day');
-            $table->foreignId('teacher_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('teacher_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->boolean('paid');
             $table->float('price');
             $table->boolean('inculded');
