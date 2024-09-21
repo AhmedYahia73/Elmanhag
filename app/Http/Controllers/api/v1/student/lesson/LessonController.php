@@ -44,6 +44,7 @@ class LessonController extends Controller
             $order = $lesson->order;
             $lesson_order = $lesson->order;
             $lesson_status = $lesson->status;
+            $lesson_switch = $lesson->switch;
             if($lesson_status == false){
                 return response()->json([
                     'faield'=>'This Lesson Is Closed',
@@ -116,8 +117,15 @@ class LessonController extends Controller
                         ->first(); // Finaly Get Lesson for Studnet
 
                     // $lessons->materials ; // With Materials
-                    $lessons->resources; // With Resource
-                    $lessons->homework; // With Homework
+                    if($lesson_switch == true){
+
+                        $lessons->resources; // With Resource
+                        $lessons->homework; // With Homework
+                    }else{
+                        return response()->json([
+                            'faield'=>'This Material for This Lesson is Closed',
+                        ]);
+                    }
 
                 }
             }
