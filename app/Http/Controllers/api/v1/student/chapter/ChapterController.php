@@ -68,9 +68,11 @@ class ChapterController extends Controller
                         }
                         try {
                              $subject_id = $request->subject_id;
-                             $chapter = $this->chapter
-                             ->where('subject_id',$subject_id)
-                             ->with('lessons')
+                        $chapter = $this->chapter
+                                ->where('subject_id', $subject_id)
+                                ->with('lessons', function ($query) {
+                                        $query->orderBy('order');
+                             })
                              ->get();
                         } catch (QueryException $th) {
                                        return response()->json([
