@@ -44,4 +44,8 @@ class Live extends Model
     public function education(){
         return $this->belongsTo(Education::class);
     }
+
+    public function students(){
+        return $this->belongsToMany(User::class, 'user_live');
+    }
 }
