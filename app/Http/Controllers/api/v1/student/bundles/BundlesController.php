@@ -16,17 +16,29 @@ class BundlesController extends Controller
     public function show(){
         $bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
-        ->with('discount')
+        ->where('education_id', auth()->user()->education_id)
         ->whereDoesntHave('users', function ($query) {
             $query->where('users.id', auth()->user()->id);
         })
+        ->orWhereNull('education_id')
+        ->where('category_id', auth()->user()->category_id)
+        ->whereDoesntHave('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->with('discount')
         ->get(); // Get bundles that havs the same category of student and student does not buy it
         $student_bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
-        ->with('subjects')
+        ->where('education_id', auth()->user()->education_id)
         ->whereHas('users', function ($query) {
             $query->where('users.id', auth()->user()->id);
         })
+        ->orWhereNull('education_id')
+        ->where('category_id', auth()->user()->category_id)
+        ->whereHas('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->with('subjects')
         ->get(); // Get bundles that student buy it with its subjects
         $bundles_subjects = [];
         foreach ($student_bundles as $item) {
@@ -34,6 +46,13 @@ class BundlesController extends Controller
             $item->subjects->pluck('id')->toArray());
         } 
         $subjects = $this->subjects
+        ->where('category_id', auth()->user()->category_id)
+        ->where('education_id', auth()->user()->education_id)
+        ->whereDoesntHave('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->whereNotIn('id', $bundles_subjects)
+        ->orWhereNull('education_id')
         ->where('category_id', auth()->user()->category_id)
         ->whereDoesntHave('users', function ($query) {
             $query->where('users.id', auth()->user()->id);
