@@ -50,6 +50,15 @@ class LessonController extends Controller
                     'faield'=>'This Lesson Is Closed',
                 ],204);
             }
+              if($lesson_switch == true){
+
+                        $lesson->resources; // With Resource
+                        $lesson->homework; // With Homework
+                    }else{
+                        return response()->json([
+                            'faield'=>'This Material for This Lesson is Closed',
+                        ]);
+                    }
             //  Geck Previos 
             if ($drip_content == true && $order   > 1) {
                 try {
@@ -134,6 +143,7 @@ class LessonController extends Controller
                 'lesson' => $lessons,
             ]);
         } else {
+            
             return response()->json([
                 'data' => 'Lesson Return Successfully',
                 'lesson' => $lesson,
