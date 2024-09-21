@@ -109,6 +109,10 @@ class BundlesController extends Controller
         ->where('date', '>=', date('Y-m-d'))
         ->get(); // Get live that havs the same category of student
 
+        $bundles = $bundles->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
+        $subjects = $subjects->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
         return response()->json([
             'bundles' => $bundles,
             'subjects' => $subjects,

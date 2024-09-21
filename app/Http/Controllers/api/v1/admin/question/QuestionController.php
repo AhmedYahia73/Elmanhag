@@ -24,7 +24,7 @@ class QuestionController extends Controller
         ->get();
         $lesson = $this->lesson->get();
         $chapter = $this->chapter->get();
-        $question_types = ['text', 'image', 'audio'];
+        $question_types = ['name'=>'text', 'name'=>'image', 'name'=>'audio'];
 
         return response()->json([
             'questions' => $questions,

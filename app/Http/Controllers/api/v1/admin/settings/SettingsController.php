@@ -5,31 +5,66 @@ namespace App\Http\Controllers\api\v1\admin\settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Setting;
+use App\Models\subject;
+use App\Models\bundle;
 
 class SettingsController extends Controller
 {
-    public function __construct(private Setting $settings){}
+    public function __construct(private subject $subjects, private bundle $bundle){}
 
     // Determine Semester
     public function semester(Request $request){
         // key
         // semester
-        $semester = $this->settings
-        ->where('name', 'semester')
-        ->first(); // Get setting of semester
-
-        if ( empty($semester) ) {
-            $semester->create([
-                'name' => 'semester',
-                'setting' => $request->semester,
-            ]); // if semester settings is not found insert new semester
+        if ($request->semester == 'first') {
+            // Active 
+            $this->subjects
+            ->where('semester', 'first')
+            ->update([
+                'status' => 1
+            ]);
+            $this->bundle
+            ->where('semester', 'first')
+            ->update([
+                'status' => 1
+            ]);
+            // Disable
+            $this->subjects
+            ->where('semester', 'second')
+            ->update([
+                'status' => 0
+            ]);
+            $this->bundle
+            ->where('semester', 'second')
+            ->update([
+                'status' => 0
+            ]);
         }
         else{
-            $semester->update([
-                'setting' => $request->semester,
+            // Active 
+            $this->subjects
+            ->where('semester', 'second')
+            ->update([
+                'status' => 1
             ]);
-        } // if semester settings is found update semester
+            $this->bundle
+            ->where('semester', 'second')
+            ->update([
+                'status' => 1
+            ]);
+        
+            // Disable
+            $this->subjects
+            ->where('semester', 'first')
+            ->update([
+                'status' => 0
+            ]);
+            $this->bundle
+            ->where('semester', 'first')
+            ->update([
+                'status' => 0
+            ]);
+        }
 
         return response()->json([
             'success' => 'You active semester success'
