@@ -61,9 +61,10 @@ class BundlesController extends Controller
         ->with('discount')
         ->get(); // Get subject that havs the same category of student and student does not buy it
         $live = $this->live
-        ->whereHas('subject', function($query) {
-            $query->where('category_id', auth()->user()->category_id);
-        })
+        ->where('category_id', auth()->user()->category_id)
+        ->where('education_id', auth()->user()->education_id)
+        ->orWhereNull('education_id')
+        ->where('category_id', auth()->user()->category_id)
         ->get(); // Get live that havs the same category of student
 
         foreach ($subjects as $subject) {
