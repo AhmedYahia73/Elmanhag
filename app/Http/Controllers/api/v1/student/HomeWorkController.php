@@ -26,9 +26,10 @@ class HomeWorkController extends Controller
                 'homework'=>$queryException->getMessage(),
             ]);
         }
-           return response()->json([
-                'success'=>'Data Returned Successfully',
-                'homework'=>$homework,
-            ]);
+        return response()->json([
+            'success'=>'Data Returned Successfully',
+            'homework'=>$homework,
+        ]);
     }
+    
 }

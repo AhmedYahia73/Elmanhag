@@ -17,7 +17,7 @@ class LiveController extends Controller
     public function show(){
         // https://bdev.elmanhag.shop/admin/live
         $live = $this->live
-        ->with(['subject', 'teacher'])
+        ->with(['subject', 'teacher', 'category', 'education'])
         ->get();
         $teachers = $this->users
         ->where('role', 'teacher')

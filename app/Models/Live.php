@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\subject;
 use App\Models\User;
+use App\Models\category;
+use App\Models\Education;
 
 class Live extends Model
 {
@@ -20,6 +22,8 @@ class Live extends Model
         'day',
         'teacher_id',
         'subject_id',
+        'category_id',
+        'education_id',
         'paid',
         'price',
         'inculded',
@@ -31,5 +35,13 @@ class Live extends Model
 
     public function teacher(){
         return $this->belongsTo(User::class,'teacher_id');
+    }
+
+    public function category(){
+        return $this->belongsTo(category::class);
+    }
+
+    public function education(){
+        return $this->belongsTo(Education::class);
     }
 }

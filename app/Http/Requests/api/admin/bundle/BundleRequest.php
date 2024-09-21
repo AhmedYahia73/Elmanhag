@@ -29,7 +29,7 @@ class BundleRequest extends FormRequest
             'price' => ['required', 'numeric'],
             'semester' => ['required', 'in:first,second'],
             'category_id' => ['required', 'exists:categories,id'],
-            'education_id' => ['required', 'exists:education,id'],
+            'education_id' => ['required'],
             'expired_date' => ['required', 'date'],
             'status' => ['required']
         ];
