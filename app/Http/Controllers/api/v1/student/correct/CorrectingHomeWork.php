@@ -19,11 +19,16 @@ class CorrectingHomeWork extends Controller
         $score = $request->score;
         $homework_id = $request->homework_id;
         $homework = $this->homework->where('id', $homework_id)->first();
-        $lesson_id = $homework->lesson_id;
+          if(!isset( $homework )){
+                       return response()->json([
+                       'faield' => 'HomeWork Not Found'
+                       ],404);
+            }
+        $lesson_id = $homework->lesson_id ?? 'Not Found';
         if (count($user->user_homework) >= 1) {
             return response()->json([
                 'faield' => 'This homework has been solved'
-            ]);
+            ],400);
         }
         $homework->user_homework()->attach([
             $user_id => [
