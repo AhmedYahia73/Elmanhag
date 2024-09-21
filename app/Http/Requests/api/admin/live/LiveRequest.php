@@ -25,6 +25,7 @@ class LiveRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'link' => ['required'],
             'from' => ['required', 'date_format:H:i:s'],
             'to' => ['required', 'date_format:H:i:s'],
             'date' => ['required', 'date'],

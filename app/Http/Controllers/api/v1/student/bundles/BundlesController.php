@@ -60,11 +60,6 @@ class BundlesController extends Controller
         ->whereNotIn('id', $bundles_subjects)
         ->with('discount')
         ->get(); // Get subject that havs the same category of student and student does not buy it
-        $live = $this->live
-        ->whereHas('subject', function($query) {
-            $query->where('category_id', auth()->user()->category_id);
-        })
-        ->get(); // Get live that havs the same category of student
 
         foreach ($subjects as $subject) {
             $lessons = 0;
@@ -93,7 +88,26 @@ class BundlesController extends Controller
                 }
                 break;
             }
-        }
+        }        
+        $live = $this->live
+        ->where('category_id', auth()->user()->category_id)
+        ->where('education_id', auth()->user()->education_id)
+        ->whereDoesntHave('students', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->where('inculded', 0)
+        ->where('date', '>=', now())
+        ->orWhereNull('education_id')
+        ->where('category_id', auth()->user()->category_id)
+        ->whereDoesntHave('students', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->where('inculded', 0)
+        ->where('date', '>=', now())
+        ->orWhereIn('subject_id', $subjects->pluck('id'))
+        ->where('inculded', 1)
+        ->where('date', '>=', date('Y-m-d'))
+        ->get(); // Get live that havs the same category of student
 
         return response()->json([
             'bundles' => $bundles,
