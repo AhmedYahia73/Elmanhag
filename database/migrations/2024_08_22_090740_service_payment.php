@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('bundle_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('live_id')->nullable()->constrained('lives')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('payment_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
