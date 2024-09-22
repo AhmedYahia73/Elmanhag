@@ -11,10 +11,12 @@ use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\homework;
+use App\Models\Live;
 
 class NotificationController extends Controller
 {
-    public function __construct(private User $users, private homework $homeworks){}
+    public function __construct(private User $users, private homework $homeworks,
+    private Live $live){}
     use student_subjects;
     
     public function show(Request $request){
@@ -66,10 +68,18 @@ class NotificationController extends Controller
         $due_homework = $homeworks
         ->where('due_date', '>', now())
         ->where('due_date', '<', Carbon::now()->addDays(1));
+        $live = $this->live
+        ->whereHas('students', function($query) use($student_id){
+            $query->where('users.id', $student_id);
+        })
+        ->where('date', '>=', date('Y-m-d'))
+        ->where('date', '<', Carbon::now()->addDays(1))
+        ->get();
 
         return response()->json([
             'old_homework' => $old_homework,
-            'due_homework' => $due_homework
+            'due_homework' => $due_homework,
+            'lives' => $live,
         ]);
     }
 
