@@ -24,6 +24,11 @@ class Bonus extends Model
     }
 
     public function getImageLinkAttribute(){
-        return url('storage/' . $this->attributes['image']);
+        if (!empty($this->attributes['image'])) {
+            return url('storage/' . $this->attributes['image']);
+        } else {
+            return null;
+        }
+        
     }
 }
