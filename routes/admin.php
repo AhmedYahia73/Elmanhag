@@ -78,6 +78,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('student')->middleware('can:isStudent')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
             Route::get('/', 'show')->name('student.show');
+            Route::post('/purchases', 'purchases')->name('student.purchases');
         });
         Route::controller(CreateStudentController::class)->group(function () {
             Route::post('/add', 'store')->name('student.add');

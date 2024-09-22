@@ -56,17 +56,28 @@ class StudentsDataController extends Controller
         ]);
     }
 
-    public function purchases(){
+    public function purchases(Request $request){
         $payments = $this->payments
-        ->with(['bundle.category', 'subject.category', 'payment_method'])
-        ->where('student_id', auth()->user()->id)
+        ->with(['bundle.category', 'subject.category', 'live.category', 'payment_method'])
+        ->where('student_id', $request->student_id)
         ->get();
         foreach ($payments as $item) {
-            
+            $price = 0;
+            foreach ($item->bundle as $element) {
+                $price += $element->price;
+            }
+            foreach ($item->subject as $element) {
+                $price += $element->price;
+            }
+            foreach ($item->live as $element) {
+                $price += $element->price;
+            }
+            $item->price = $price;
+            $item->discount = $price - $item->amount;
         }
 
         return response()->json([
-            'payments' => $payments
+            'purchases' => $payments
         ]);
     }
 }

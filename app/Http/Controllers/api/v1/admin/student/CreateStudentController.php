@@ -100,7 +100,7 @@ class CreateStudentController extends Controller
             }
 
             $user->update($student); // Start Create New Studetn
-            User::where('id', $user->parent_id)
+            $this->user->where('id', $user->parent_id)
             ->update([
                 'name' => $request->parent_name,
                 'phone' => $request->parent_phone,
@@ -117,7 +117,7 @@ class CreateStudentController extends Controller
 
     public function delete( $id ){
         // Get User Data
-        $user = User::where('id', $id)
+        $user = $this->user->where('id', $id)
         ->where('role', 'student')
         ->first();
 
