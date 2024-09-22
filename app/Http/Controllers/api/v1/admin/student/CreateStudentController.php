@@ -100,14 +100,16 @@ class CreateStudentController extends Controller
             }
 
             $user->update($student); // Start Create New Studetn
-            $this->user->where('id', $user->parent_id)
-            ->update([
-                'name' => $request->parent_name,
-                'phone' => $request->parent_phone,
-                'email' => $request->parent_email,
-                'password' => $request->parent_password,
-                'parent_relation_id' => $request->relation_id,
-            ]);
+            $parent = $this->user->where('id', $user->parent_id)
+            ->first();
+            $parent->name = $request->parent_name;
+            $parent->phone = $request->parent_phone;
+            $parent->email = $request->parent_email;
+            if ($request->filled('parent_password')) {
+                $parent->password = $request->parent_password;
+            }
+            $parent->parent_relation_id = $request->relation_id;
+            $parent->save();
             return response()->json(['success'=>'Student Updated Successfully'],200); 
         }
         else{

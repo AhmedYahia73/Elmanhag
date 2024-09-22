@@ -38,7 +38,10 @@ class SubjectController extends Controller
                 ->where('category_id', '=',NULL)
                     ->orderBy('name');
             }
+            $subject = $subject->where('status', 1)
+            ->where('expired_date', '>=', date('Y-m-d'));
             $subject = $subject->get();
+            
             return response()->json([
                 'success' => 'Data Returned Successfully',
                 'subject' => $subject,
@@ -62,6 +65,7 @@ class SubjectController extends Controller
             $subject = $this->subject
             ->where('education_id', $education_id)
             ->where('category_id', $category_id)
+
             ->orWhereNull('education_id')
             ->where('category_id', $category_id)
             ->with('chapters')

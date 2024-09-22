@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api\v1\admin\student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\api\admin\student\PurchaseRequest;
+
 use App\Models\User;
 use App\Models\country;
 use App\Models\city;
@@ -23,6 +25,10 @@ class StudentsDataController extends Controller
     private ParentRelation $parent_relation, private Payment $payments, private bundle $bundles,
     private subject $subjects, private Live $live, private PaymentMethod $payment_method
     ){}
+    protected $purchasesRequest = [
+        'amount',
+        'payment_method_id',
+    ];
 
     public function show(){
         $students = $this->users->where('role', 'student')
@@ -206,7 +212,29 @@ class StudentsDataController extends Controller
         ]);
     }
 
-    public function add_purchases(){
-        
+    public function add_purchases(PurchaseRequest $request){
+        $data = $request->only($this->purchasesRequest);
+        $data['student_id'] = $request->student_id;
+        $data['purchase_date'] = now();
+        $data['status'] = 1;
+        if (isset($request->bundle_id) && !empty($request->bundle_id)) {
+            $data['service'] = 'Bundle';
+            $payments = $this->payments->create($data);
+            $payments->bundle()->sync($request->bundle_id);
+        }
+        if (isset($request->subject_id) && !empty($request->subject_id)) {
+            $data['service'] = 'Subject';
+            $payments = $this->payments->create($data);
+            $payments->subject()->sync($request->subject_id);
+        }
+        if (isset($request->live_id) && !empty($request->live_id)) {
+            $data['service'] = 'Live session';
+            $payments = $this->payments->create($data);
+            $payments->live()->sync($request->live_id);
+        }
+
+        return response()->json([
+            'success' => 'You add purchases success'
+        ]);
     }
 }
