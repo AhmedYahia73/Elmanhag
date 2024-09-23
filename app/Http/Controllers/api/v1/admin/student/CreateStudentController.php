@@ -144,6 +144,9 @@ class CreateStudentController extends Controller
     }
 
     public function status(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/student/status/{id}
+        // Keys
+        // status
         $validator = Validator::make($request->all(), [
             'status' => 'required|boolean',
         ]);
