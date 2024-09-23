@@ -272,10 +272,11 @@ class StudentsDataController extends Controller
                 'error' => $validator->errors(),
             ],400);
         }
+        $student_id = $request->student_id;
         $data = $this->subjects
-        ->with('chapters.lessons.user_homework', function($query){
-            $query->with('user_homework');
-        })
+        ->with(['chapters.lessons.user_homework' => function($query) use($student_id){
+            $query->where('user_id', $student_id);
+        }])
         ->where('id', $id)
         ->first();
 
