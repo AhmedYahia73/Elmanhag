@@ -41,6 +41,8 @@ use App\Http\Controllers\api\v1\admin\live\CreateLiveController;
 
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
+use App\Http\Controllers\api\v1\admin\parent\ParentController;
+
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 
 use App\Http\Controllers\api\v1\admin\admin\AdminController;
@@ -90,6 +92,14 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/status/{id}', 'status')->name('student.status');
         });
     });
+
+    // Start Parent Module
+    Route::prefix('parent')->middleware('can:isParent')->group(function () {
+        Route::controller(ParentController::class)->group(function () {
+            Route::get('/', 'show')->name('parent.show');
+        });
+    });
+  
 
     // Start Admin Module
     Route::prefix('admins')->middleware('can:isAdmins')->group(function () {
