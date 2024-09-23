@@ -244,17 +244,17 @@ class StudentsDataController extends Controller
         if (isset($request->bundle_id) && !empty($request->bundle_id)) {
             $data['service'] = 'Bundle';
             $payments = $this->payments->create($data);
-            $payments->bundle()->sync($request->bundle_id);
+            $payments->bundle()->attach($request->bundle_id);
         }
         if (isset($request->subject_id) && !empty($request->subject_id)) {
             $data['service'] = 'Subject';
             $payments = $this->payments->create($data);
-            $payments->subject()->sync($request->subject_id);
+            $payments->subject()->attach($request->subject_id);
         }
         if (isset($request->live_id) && !empty($request->live_id)) {
             $data['service'] = 'Live session';
             $payments = $this->payments->create($data);
-            $payments->live()->sync($request->live_id);
+            $payments->live()->attach($request->live_id);
         }
 
         return response()->json([
