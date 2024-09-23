@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\api\admin\student\StudentRequest;
 use App\Http\Requests\api\admin\student\UpdateStudentRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 
@@ -139,6 +141,27 @@ class CreateStudentController extends Controller
         else{
             return response()->json(['faild'=>'Student Is not Found'],400); 
         }
+    }
+
+    public function status(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|boolean',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+
+        $this->user->where('id', $id)
+        ->where('role', 'student')
+        ->update([
+            'status' => $request->status
+        ]);
+
+        return response()->json([
+            'success' => 'You update success'
+        ]);
     }
    
 }
