@@ -81,7 +81,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/purchases', 'purchases')->name('student.purchases');
             Route::post('/purchasesData', 'purchases_data')->name('student.purchases_data');
             Route::post('/addPurchases', 'add_purchases')->name('student.add_purchases');
-            Route::post('/subjectProgress', 'subject_progress')->name('student.subject_progress');
+            Route::post('/subjectProgress/{id}', 'subject_progress')->name('student.subject_progress');
         });
         Route::controller(CreateStudentController::class)->group(function () {
             Route::post('/add', 'store')->name('student.add');

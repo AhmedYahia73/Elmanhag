@@ -162,9 +162,16 @@ class CreateStudentController extends Controller
             'status' => $request->status
         ]);
 
-        return response()->json([
-            'success' => 'You update success'
-        ]);
+        if ($request->status == 0) {
+            return response()->json([
+                'success' => 'banned'
+            ]);
+        } else {
+            return response()->json([
+                'success' => 'active'
+            ]);
+        }
+        
     }
    
 }

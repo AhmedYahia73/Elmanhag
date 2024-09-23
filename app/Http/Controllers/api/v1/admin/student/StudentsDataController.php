@@ -33,6 +33,7 @@ class StudentsDataController extends Controller
     ];
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/student
         $students = $this->users->where('role', 'student')
         ->with(['subjects', 'bundles', 'category', 'country', 'education', 
         'city', 'student_job', 'logins'])
@@ -67,6 +68,17 @@ class StudentsDataController extends Controller
     }
 
     public function purchases(Request $request){
+        // https://bdev.elmanhag.shop/admin/student/purchases
+        // Keys
+        // student_id
+        $validator = Validator::make($request->all(), [
+            'student_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
         $payments = $this->payments
         ->with(['bundle.category', 'subject.category', 'live.category', 'payment_method'])
         ->where('student_id', $request->student_id)
@@ -92,6 +104,17 @@ class StudentsDataController extends Controller
     }
 
     public function purchases_data(Request $request){
+        // https://bdev.elmanhag.shop/admin/student/purchasesData
+        // Keys 
+        // student_id
+        $validator = Validator::make($request->all(), [
+            'student_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
         $student = $this->users
         ->where('id', $request->student_id)
         ->first();
@@ -211,6 +234,7 @@ class StudentsDataController extends Controller
     }
 
     public function add_purchases(PurchaseRequest $request){
+        // https://bdev.elmanhag.shop/admin/student/addPurchases
         // Keys
         // amount, student_id, payment_method_id, bundle_id, subject_id, live_id
         $data = $request->only($this->purchasesRequest);
@@ -238,8 +262,8 @@ class StudentsDataController extends Controller
         ]);
     }
 
-    public function subject_progress(){
-        
+    public function subject_progress($id, Request $request){
+        // https://bdev.elmanhag.shop/admin/student/subjectProgress
         $validator = Validator::make($request->all(), [
             'student_id' => 'required|exists:users,id',
         ]);
@@ -248,12 +272,15 @@ class StudentsDataController extends Controller
                 'error' => $validator->errors(),
             ],400);
         }
-        $subject = $this->subjects
+        $data = $this->subjects
+        ->with('chapters.lessons.user_homework', function($query){
+            $query->with('user_homework');
+        })
         ->where('id', $id)
         ->first();
 
         return response()->json([
-            ''
+            'data' => $data
         ]);
     }
 }

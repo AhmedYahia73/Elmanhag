@@ -30,7 +30,8 @@ class lesson extends Model
         return $this->hasMany(homework::class);
     }
     public function user_homework(){
-        return $this->belongsToMany(homework::class,'users_homework');
+        return $this->belongsToMany(homework::class,'users_homework')
+        ->withPivot('user_id');
     }
 
 }
