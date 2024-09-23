@@ -114,7 +114,7 @@ class TeacherController extends Controller
     public function delete( $id ){
         // https://bdev.elmanhag.shop/admin/teacher/delete/{id}
         // Get User Data
-        $user = $this->user->where('id', $id)
+        $user = $this->users->where('id', $id)
         ->where('role', 'teacher')
         ->first();
 
