@@ -247,6 +247,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
             Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
+            Route::delete('/delete/{id}', 'delete')->name('teachers.delete');
         });
     });
     
