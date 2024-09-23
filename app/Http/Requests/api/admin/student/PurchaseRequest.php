@@ -29,7 +29,7 @@ class PurchaseRequest extends FormRequest
             'bundle_id' => ['exists:bundles,id'],
             'subject_id' => ['exists:subjects,id'],
             'live_id' => ['exists:lives,id'],
-            'student_id' => ['exists:users,id'],
+            'student_id' => ['required', 'exists:users,id'],
         ];
     }
 

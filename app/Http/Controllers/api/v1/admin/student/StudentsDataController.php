@@ -52,7 +52,7 @@ class StudentsDataController extends Controller
         ->whereHas('subjects')
         ->count();
         $free_students = $total_students - $paid_students;
-        $relations = $parent_relation->get();
+        $relations = $this->parent_relation->get();
 
         return response()->json([
             'students' => $students,
@@ -213,6 +213,8 @@ class StudentsDataController extends Controller
     }
 
     public function add_purchases(PurchaseRequest $request){
+        // Keys
+        // amount, student_id, payment_method_id, bundle_id, subject_id, live_id
         $data = $request->only($this->purchasesRequest);
         $data['student_id'] = $request->student_id;
         $data['purchase_date'] = now();
