@@ -21,6 +21,8 @@ class CreateStudentController extends Controller
         'phone',
         'role',
         'email',
+        'gender',
+        'sudent_jobs_id',
         'category_id',
         'education_id',
         'password',
@@ -31,7 +33,10 @@ class CreateStudentController extends Controller
     // This Controller About Student
     use image;
     public function store(StudentRequest $request){
-        // https://bdev.elmanhag.shop/admin/student/add?name=Ahmed&phone=146345&email=ahmed@gmail.com&parent_name=Aziz&parent_phone=167556&parent_email=sdfsdggbh@gmail.com&parent_password=123&category_id=1&education_id=39&password=123&country_id=71&city_id=42&status=1&relation_id=1
+        // https://bdev.elmanhag.shop/admin/student/add
+        // name, phone, email, parent_name, parent_phone, parent_email, parent_password,
+        // category_id, education_id, password, country_id, city_id=, status=1, relation_id
+        // gender, sudent_jobs_id
         $newStudent =  $request->only($this->studentRequest); // Take only Request From Protected studentRequest names 
         $newStudent['status'] = 1;
         $parent =  $this->user->where('email', $request->parent_email)
@@ -65,6 +70,7 @@ class CreateStudentController extends Controller
         // https://bdev.elmanhag.shop/admin/student/update/{id}
         // name, phone, email, parent_name, parent_phone, parent_email, relation_id,
         // parent_password, category_id, education_id, password, country_id, city_id, status
+        // gender, sudent_jobs_id
         // Take only Request From Protected studentRequest names 
         $student =  $request->only($this->studentRequest); 
         // Get User Data
