@@ -30,8 +30,6 @@ class UpdateAdminRequest extends FormRequest
             'name'=>['required'],
             'phone'=>['required', Rule::unique('users')->ignore($userId)],
             'email'=>['required', Rule::unique('users')->ignore($userId), 'email'],
-            'gender'=>['required', 'in:male,female'],
-            'sudent_jobs_id'=>['required', 'exists:student_jobs,id'],
             'status'=>['required', 'boolean'],
             'password'=>['required'],
             'admin_position_id'=>['required', 'exists:admin_positions,id'],

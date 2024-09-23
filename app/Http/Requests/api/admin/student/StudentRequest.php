@@ -31,6 +31,8 @@ class StudentRequest extends FormRequest
             'category_id'=>['required'],
             'education_id'=>['required', 'exists:education,id'],
             'password'=>['required'],
+            'gender'=>['required', 'in:male,female'],
+            'sudent_jobs_id'=>['required', 'exists:student_jobs,id'],
             'country_id'=>['required', 'exists:countries,id'],
             'city_id'=>['required', 'exists:cities,id'],
             'parent_name'=>['required'],
