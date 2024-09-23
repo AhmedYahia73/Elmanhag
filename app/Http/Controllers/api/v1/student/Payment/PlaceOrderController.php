@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class PlaceOrderController extends Controller
 {
-   
     protected $orderPlaceReqeust = [
          'amount',
          'service',

@@ -32,66 +32,6 @@ class LessonController extends Controller
         $lesson_id = $request->lesson_id;
         $subject_id = $request->subject_id;
         $data_now = Carbon::now();
-        try {
-            $lesson = $this->lesson->where('id', $lesson_id)
-                ->with('resources')
-                ->with('homework')
-                ->first(); // Start Get Leeon
-            $chapter_id = $lesson->chapter_id; // Start Get The chapter about Lesson
-            $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
-            // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
-            $drip_content = $lesson->drip_content;
-            $order = $lesson->order;
-            $lesson_order = $lesson->order;
-            $lesson_status = $lesson->status;
-            $lesson_switch = $lesson->switch;
-            if($lesson_status == false){
-                return response()->json([
-                    'faield'=>'This Lesson Is Closed',
-                ],204);
-            }
-              if($lesson_switch == true){
-
-                        $lesson->resources; // With Resource
-                        $lesson->homework; // With Homework
-                    }else{
-                        return response()->json([
-                            'faield'=>'This Material for This Lesson is Closed',
-                        ]);
-                    }
-            //  Geck Previos 
-            if ($drip_content == true && $order   > 1) {
-                try {
-                    $beforLesson = $lesson
-                        ->orderBy('order', 'DESC')
-                        ->with('user_homework')->where('chapter_id', $chapter_id)
-                        ->where('order', '<', $lesson_order)
-                        ->orwhere('order', '=', '1')
-                        ->first();
-                        if(empty($beforLesson)){
-                                return response()->json([
-                                'not_found' => 'Not Found homeWork for previous lesson.',
-                            ], 404);
-                        }
-                    $user_homework = $beforLesson->user_homework;
-                    if (count($user_homework) === 0) {
-                        return response()->json([
-                            'lesson_not_solved' => 'The previous lesson was not solved.',
-                        ], 500);
-                    }
-                } catch (QueryException $th) {
-                    return response()->json([
-                        'faield' => 'You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson',
-                    ], 403);
-                }
-            }
-            //  Geck Previos 
-        } catch (ErrorException $e) {
-
-            return response()->json([
-                'faield' => 'This Lesson Not Found',
-            ], 404);
-        }
         if ($purchaseStatus == true) {
              //  $user_subject =$user->subjects->where('category_id',$category_id)->where('education_id',$education_id);
            $user_bundle = $user->bundles->where('category_id', $category_id)->where('education_id', $education_id);
@@ -137,6 +77,66 @@ class LessonController extends Controller
                     }
 
                 }
+            }
+            try {
+                $lesson = $this->lesson->where('id', $lesson_id)
+                    ->with('resources')
+                    ->with('homework')
+                    ->first(); // Start Get Leeon
+                $chapter_id = $lesson->chapter_id; // Start Get The chapter about Lesson
+                $purchaseStatus = $lesson->paid; // Start Get Purchase Status Lesson
+                // $user_bundle = $user->where('id',$user_id)->with('bundles')->get(); // Test
+                $drip_content = $lesson->drip_content;
+                $order = $lesson->order;
+                $lesson_order = $lesson->order;
+                $lesson_status = $lesson->status;
+                $lesson_switch = $lesson->switch;
+                if($lesson_status == false){
+                    return response()->json([
+                        'faield'=>'This Lesson Is Closed',
+                    ],204);
+                }
+                  if($lesson_switch == true){
+    
+                            $lesson->resources; // With Resource
+                            $lesson->homework; // With Homework
+                        }else{
+                            return response()->json([
+                                'faield'=>'This Material for This Lesson is Closed',
+                            ]);
+                        }
+                //  Geck Previos 
+                if ($drip_content == true && $order   > 1) {
+                    try {
+                        $beforLesson = $lesson
+                            ->orderBy('order', 'DESC')
+                            ->with('user_homework')->where('chapter_id', $chapter_id)
+                            ->where('order', '<', $lesson_order)
+                            ->orwhere('order', '=', '1')
+                            ->first();
+                            if(empty($beforLesson)){
+                                    return response()->json([
+                                    'not_found' => 'Not Found homeWork for previous lesson.',
+                                ], 404);
+                            }
+                        $user_homework = $beforLesson->user_homework;
+                        if (count($user_homework) === 0) {
+                            return response()->json([
+                                'lesson_not_solved' => 'The previous lesson was not solved.',
+                            ], 500);
+                        }
+                    } catch (QueryException $th) {
+                        return response()->json([
+                            'faield' => 'You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson',
+                        ], 403);
+                    }
+                }
+                //  Geck Previos 
+            } catch (ErrorException $e) {
+    
+                return response()->json([
+                    'faield' => 'This Lesson Not Found',
+                ], 404);
             }
             return response()->json([
                 'data' => 'Lesson Return Successfully',
