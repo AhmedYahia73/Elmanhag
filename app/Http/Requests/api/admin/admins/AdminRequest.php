@@ -29,8 +29,6 @@ class AdminRequest extends FormRequest
             'phone'=>['required', 'unique:users,phone'],
             'email'=>['required', 'unique:users,email', 'email'],
             'status'=>['required', 'boolean'],
-            'gender'=>['required', 'in:male,female'],
-            'sudent_jobs_id'=>['required', 'exists:student_jobs,id'],
             'password'=>['required'],
             'admin_position_id'=>['required', 'exists:admin_positions,id'],
         ];
