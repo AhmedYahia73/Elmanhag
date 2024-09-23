@@ -33,6 +33,7 @@ class CreateStudentController extends Controller
     public function store(StudentRequest $request){
         // https://bdev.elmanhag.shop/admin/student/add?name=Ahmed&phone=146345&email=ahmed@gmail.com&parent_name=Aziz&parent_phone=167556&parent_email=sdfsdggbh@gmail.com&parent_password=123&category_id=1&education_id=39&password=123&country_id=71&city_id=42&status=1&relation_id=1
         $newStudent =  $request->only($this->studentRequest); // Take only Request From Protected studentRequest names 
+        $newStudent['status'] = 1;
         $parent =  $this->user->where('email', $request->parent_email)
         ->first();
         if (!empty($parent) && $parent->role == 'parent') {

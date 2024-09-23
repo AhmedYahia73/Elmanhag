@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api\v1\admin\student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\api\admin\student\PurchaseRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use App\Models\country;
@@ -32,12 +34,7 @@ class StudentsDataController extends Controller
 
     public function show(){
         $students = $this->users->where('role', 'student')
-        ->with('subjects')
-        ->with('bundles')
-        ->with('category')
-        ->with('country')
-        ->with('education')
-        ->with('city')
+        ->with(['subjects', 'bundles', 'category', 'country', 'education', 'city'])
         ->get();
         $categories = $this->categories->where('category_id', '!=', null)
         ->get();
@@ -237,6 +234,25 @@ class StudentsDataController extends Controller
 
         return response()->json([
             'success' => 'You add purchases success'
+        ]);
+    }
+
+    public function subject_progress(){
+        
+        $validator = Validator::make($request->all(), [
+            'student_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+        $subject = $this->subjects
+        ->where('id', $id)
+        ->first();
+
+        return response()->json([
+            ''
         ]);
     }
 }
