@@ -132,7 +132,7 @@ class CreateStudentController extends Controller
 
         // Remove User
         if ( !empty($user) ) {
-            $this->deleteImage($user->image['path']);
+            $this->deleteImage($user->image);
             $user->delete();
             return response()->json(['success'=>'Student Deleted Successfully'],200); 
         }
