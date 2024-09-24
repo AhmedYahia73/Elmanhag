@@ -18,6 +18,7 @@ class LiveSessionController extends Controller
         $user = $request->user();
         $user_category = $user->category_id; 
         $user_education = $user->education_id; 
+        $session_id = $request->session_id;
                 try {
                       $student = $user->where('id', $user->id)->with('bundles.subjects')->with('subjects')
                       ->first();    
@@ -31,9 +32,9 @@ class LiveSessionController extends Controller
                         $live = $this->live;
                                $sessions = $live
                                 ->whereIn('subject_id',$subject_list)
-                                ->where('education_id',$user_education)    
-                                ->where('category_id',$user_category)    
-                                ->get();
+                                ->where('inculded',true)
+                                ->where('id',$session_id)    
+                                ->first();
                       }     
                        
                 } catch (QueryException $queryException) {
