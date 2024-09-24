@@ -14,6 +14,7 @@ use App\Http\Controllers\api\v1\student\subject\SubjectController;
 use App\Http\Controllers\api\v1\student\bundles\BundlesController;
 use App\Http\Controllers\api\v1\student\complaint\ComplaintController;
 use App\Http\Controllers\api\v1\student\correct\CorrectingHomeWork;
+use App\Http\Controllers\api\v1\student\liveSession\LiveSessionController;
 use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
 use App\Http\Controllers\api\v1\student\promocode\PromoCodeController;
@@ -90,6 +91,11 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         Route::controller(PromoCodeController::class)->group(function () { // This All Chapters For Student
             Route::prefix('promoCode')->group(function () {
                 Route::post('/', 'promo_code')->name('promoCode.promo_code');
+            });
+        });
+        Route::controller(LiveSessionController::class)->group(function () { // This All Chapters For Student
+            Route::prefix('live')->group(function () {
+                Route::post('session/view', 'show')->name('session.show');
             });
         });
         

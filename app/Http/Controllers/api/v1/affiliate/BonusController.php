@@ -18,12 +18,14 @@ class BonusController extends Controller
     public function get_bonus(Request $request){
         $user_id = $request->user()->id;
             try {
+                   $all_bonus = $this->bound->get();
+
                     $user = $request->user()->where('id',$user_id)->with('bonuses',function($query){
                     $query->orderByDesc('id');
                     })->first();
-                    $bonus = $user->bonuses->unique()->first();
-                    $bonus->bundle_paid = $user->affiliate_history->where('service_type','bundle')->count();
-                    $bonus->total_bonus = $this->bound->get();
+                    $bonus = $user->bonuses->unique()->first() ;
+                   $bundle_paid = $user->affiliate_history->where('service_type','bundle')->count()??0 ;
+                  
             } catch (QueryException $queryException) {
             return response()->json([
                 'error'=>'Bonus Not Found',
@@ -34,7 +36,9 @@ class BonusController extends Controller
 
         return response()->json([
             'success'=>'Bonus Returned Successfully',
-            'affiliate_bonus'=>$bonus,
+            'affiliate_bonus'=>$bonus ,
+            'bundle_paid'=>$bundle_paid,
+            'bonus'=>$all_bonus,
         ]);
     }
 }
