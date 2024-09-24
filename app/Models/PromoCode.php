@@ -21,6 +21,7 @@ class PromoCode extends Model
         'usage' ,
         'number_users' ,
         'status',
+        'live',
     ];
 
     public function subjects(){
