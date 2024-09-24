@@ -17,6 +17,7 @@ use App\Http\Controllers\api\v1\student\correct\CorrectingHomeWork;
 use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
 use App\Http\Controllers\api\v1\student\promoCode\PromoCodeController;
+use App\Http\Controllers\api\v1\student\liveSession\LiveSessionController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -86,7 +87,10 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
     Route::prefix('homework')->controller(CorrectingHomeWork::class)->group(function () {
         Route::post('correct','store'); // This Route About Correct All Questions
         });
+  
 
-    
+       Route::prefix('live')->controller(LiveSessionController::class)->group(function () {
+       Route::post('session/view','show'); // This Route About Live Session For Studnet
+       });
         
 });
