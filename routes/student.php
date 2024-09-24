@@ -16,6 +16,7 @@ use App\Http\Controllers\api\v1\student\complaint\ComplaintController;
 use App\Http\Controllers\api\v1\student\correct\CorrectingHomeWork;
 use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
+use App\Http\Controllers\api\v1\student\promocode\PromoCodeController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -82,8 +83,14 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         ->group(function(){
             Route::get('/', 'view')->name('payment_methods.view');
         });
-    Route::prefix('homework')->controller(CorrectingHomeWork::class)->group(function () {
-        Route::post('correct','store'); // This Route About Correct All Questions
+        Route::prefix('homework')->controller(CorrectingHomeWork::class)->group(function () {
+            Route::post('correct','store'); // This Route About Correct All Questions
+        });
+
+        Route::controller(PromoCodeController::class)->group(function () { // This All Chapters For Student
+            Route::prefix('promoCode')->group(function () {
+                Route::post('/', 'promo_code')->name('promoCode.promo_code');
+            });
         });
         
 });
