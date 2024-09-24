@@ -32,6 +32,9 @@ class PromocodeRequest extends FormRequest
             'usage' => ['numeric'],
             'number_users' => ['numeric'],
             'status' => ['required', 'boolean'],
+            'live' => ['required', 'boolean'],
+            'bundles.*' => ['exists:bundles,id'],
+            'subjects.*' => ['exists:subjects,id']
         ];
     }
 

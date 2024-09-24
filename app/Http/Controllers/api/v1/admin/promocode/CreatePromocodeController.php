@@ -20,12 +20,13 @@ class CreatePromocodeController extends Controller
         'usage',
         'number_users',
         'status',
+        'live',
     ];
 
     public function create(PromocodeRequest $request){
         // https://bdev.elmanhag.shop/admin/promoCode/add
         // Keys
-        // title, code, status, value, precentage, usage_type, usage, number_users
+        // title, code, status, value, precentage, usage_type, usage, number_users, live
         // subjects[], bundles[]
         $promocode_data = $request->only($this->promoCodeRequest);
         $promo_code = $this->promo_code->create($promocode_data); // create promo code
@@ -46,7 +47,7 @@ class CreatePromocodeController extends Controller
     public function modify(PromocodeRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/promoCode/update/{id}
         // Keys
-        // title, code, status, value, precentage, usage_type, usage, number_users
+        // title, code, status, value, precentage, usage_type, usage, number_users, live
         // subjects[], bundles[]
         $promocode_data = $request->only($this->promoCodeRequest);
         $promo_code = $this->promo_code->where('id', $id)
