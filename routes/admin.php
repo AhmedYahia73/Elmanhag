@@ -44,6 +44,7 @@ use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 use App\Http\Controllers\api\v1\admin\parent\ParentController;
 
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
+use App\Http\Controllers\api\v1\admin\teacher\SubjectController as T_SubjectController;
 
 use App\Http\Controllers\api\v1\admin\admin\AdminController;
 
@@ -258,6 +259,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
             Route::delete('/delete/{id}', 'delete')->name('teachers.delete');
+        });
+        Route::controller(T_SubjectController::class)->prefix('subjects')->group(function(){
+            Route::post('/', 'view')->name('teachers.subject.view');
         });
     });
     
