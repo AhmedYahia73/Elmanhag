@@ -27,13 +27,13 @@ class PromoCodeController extends Controller
         ->first();
 
         if (!empty($promo_code)) {
-            if ($request->type == 'bundle') {
+            if ($request->type == 'Bundle') {
                 $promo_code_state = $promo_code->bundles->where('id', $request->id);
             }
-            elseif ($request->type == 'subject') {
+            elseif ($request->type == 'Subject') {
                 $promo_code_state = $promo_code->subjects->where('id', $request->id);
             }
-            elseif ($request->type == 'live') {
+            elseif ($request->type == 'Live') {
                 if ($promo_code->live) {
                     $promo_code_state = 1;
                 } else {

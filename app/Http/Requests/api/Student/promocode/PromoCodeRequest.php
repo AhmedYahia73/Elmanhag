@@ -24,7 +24,7 @@ class PromoCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'in:bundle,subject,live'],
+            'type' => ['required', 'in:Bundle,Subject,Live'],
             'id' =>['required', 'numeric'],
             'code' => ['required'],
             'price' => ['required', 'numeric']
