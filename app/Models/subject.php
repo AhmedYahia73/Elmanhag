@@ -67,4 +67,8 @@ class subject extends Model
         ->where('statue', 1)
         ->orderByDesc('id');
     }
+    // Feat =>  Live Session Relational
+      public function live(){
+      return $this->hasMany(live::class);
+      }
 }
