@@ -25,19 +25,44 @@ class PromoCodeController extends Controller
 
         if (!empty($promo_code)) {
             if ($request->type == 'bundle') {
-                // $promo_code->bundles->
+                $promo_code_state = $promo_code->bundles->where('id', $request->id);
             }
             elseif ($request->type == 'subject') {
-                # code...
+                $promo_code_state = $promo_code->subjects->where('id', $request->id);
             }
             elseif ($request->type == 'live') {
-                # code...
+                if ($promo_code->live) {
+                    $promo_code_state = 1;
+                } else {
+                    $promo_code_state = 0;
+                }
+                
             }
         } else {
             return response()->json([
                 'faild' => 'This promoCode is expired'
-            ]);
+            ], 400);
+        }
+
+        if ((!empty($promo_code_state) && $promo_code_state != 0) || $promo_code_state == 1) {
+            $price = $request->price;
+            if (!empty($promo_code->value)) {
+                $price = $request->price - $promo_code->value;
+            }
+            elseif (!empty($promo_code->precentage)) {
+                $price = $request->price - $request->price * $promo_code->precentage / 100;
+            }
+
+            return response()->json([
+                'price' => $price
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'faild' => 'promo code does not support this service'
+            ], 400);
         }
         
+        // if promocode have value or h
     }
 }
