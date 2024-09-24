@@ -100,7 +100,7 @@ class PaymentController extends Controller
         }
         
         //if student has affilate and it is the first payment for him
-       if (!empty($user->affilate_id) && $user->affilate_id  != null && $first_payment->id == $payment->id) {
+       if (!empty($user->affilate_id) && $user->affilate_id  != null && empty($first_payment)) {
            $affilate_account = $this->affilate_account
            ->where('affilate_id', $user->affilate_id)
            ->first();
