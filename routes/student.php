@@ -87,10 +87,6 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         Route::post('correct','store'); // This Route About Correct All Questions
         });
 
-    Route::controller(PromoCodeController::class)->prefix('promo')->group(function () {
-                Route::post('code/info','promo_code')->name('promo.info');
-
-        
-        });
+    
         
 });
