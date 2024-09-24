@@ -26,18 +26,18 @@ class LoginController extends Controller
         ->orwhere('phone',$login['email'])->first();
         if ($user->status == 0) {
             return response()->json([
-                'success' => 'You are banned', 403
-            ]);
+                'success' => 'You are banned'
+            ], 403);
         }
         // return $user->password . ' '. bcrypt($login['password']);
         $error = response()->json([
-        'faield'=>'creational not Valid', 400
-        ]);
+        'faield'=>'creational not Valid'
+        ], 400);
         if(!$user)
             {
                   return response()->json([
-                  'faield'=>'creational not Valid', 400
-                  ]);
+                  'faield'=>'creational not Valid'
+                  ], 400);
             }
         if( !password_verify($request->input('password'),$user->password)){
                 return $error ;

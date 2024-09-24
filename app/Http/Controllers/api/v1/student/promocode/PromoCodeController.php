@@ -25,7 +25,7 @@ class PromoCodeController extends Controller
 
         if (!empty($promo_code)) {
             if ($request->type == 'bundle') {
-                # code...
+                // $promo_code->bundles->
             }
             elseif ($request->type == 'subject') {
                 # code...
