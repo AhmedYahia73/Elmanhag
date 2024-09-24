@@ -85,7 +85,7 @@ class User extends Authenticatable
 
     public function getImageUrl (){
         if(isset($this->image)){
-            return $this->image = url('storage/app/public/'.$this->image);
+            return $this->image = url('storage/'.$this->image);
         }
         return 'storage/'.$this->name;
     }
