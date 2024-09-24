@@ -13,6 +13,9 @@ class PromoCodeController extends Controller
     public function __construct(private PromoCode $promo_code){}
 
     public function promo_code(PromoCodeRequest $request){
+        // https://bdev.elmanhag.shop/student/promoCode
+        // Keys
+        // type[bundle,subject,live], id, code, price
         $promo_code = $this->promo_code
         ->where('status', 1)
         ->whereColumn('usage', '>', 'number_users')

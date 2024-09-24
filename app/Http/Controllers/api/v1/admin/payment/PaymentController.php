@@ -67,6 +67,7 @@ class PaymentController extends Controller
         ->first(); // Get User To Add Service to him
         $first_payment = $this->payments
         ->where('student_id', $payment->student_id)
+        ->where('status', 1)
         ->first(); // Get first payment for student
         $service_type = null;
 
