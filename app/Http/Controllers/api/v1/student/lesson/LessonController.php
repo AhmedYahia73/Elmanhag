@@ -57,7 +57,7 @@ class LessonController extends Controller
                     }else{
                         return response()->json([
                             'faield'=>'This Material for This Lesson is Closed',
-                        ]);
+                        ],400);
                     }
             //  Geck Previos 
             if ($drip_content == true && $order   > 1) {
