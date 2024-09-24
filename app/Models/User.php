@@ -124,14 +124,13 @@ class User extends Authenticatable
     }
 
     public function getImageLinkAttribute(){
-            if($this->gender == 'male' && is_null($this->image)){
+        if($this->gender == 'male' && is_null($this->image)){
             return url('storage/' .'default.png');
-            }elseif($this->gender == 'female' && is_null($this->image)){
+        }elseif($this->gender == 'female' && is_null($this->image)){
             return url('storage/' .'female.png');
-            }else{
-                return url('storage/' . $this->attributes['image']);
-            }
-                
+        }else{
+            return url('storage/' . $this->attributes['image']);
+        }
     }
 
     public function getcreatedAtAttribute($datetime){

@@ -46,8 +46,8 @@ class PromoCodeController extends Controller
                 'faild' => 'This promoCode is expired'
             ], 400);
         }
-
-        if ((!empty($promo_code_state) && $promo_code_state != 0) || $promo_code_state == 1) {
+        
+        if ((is_array($promo_code_state) && count($promo_code_state) != 0) || (is_numeric($promo_code_state) && $promo_code_state == 1)) {
             $price = $request->price;
             if (!empty($promo_code->value)) {
                 $price = $request->price - $promo_code->value;
