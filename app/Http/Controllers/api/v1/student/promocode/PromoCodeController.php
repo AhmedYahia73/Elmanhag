@@ -28,10 +28,10 @@ class PromoCodeController extends Controller
 
         if (!empty($promo_code)) {
             if ($request->type == 'Bundle') {
-                $promo_code_state = $promo_code->bundles->where('id', $request->id);
+                $promo_code_state = $promo_code->bundles->where('id', $request->id)->toArray();
             }
             elseif ($request->type == 'Subject') {
-                $promo_code_state = $promo_code->subjects->where('id', $request->id);
+                $promo_code_state = $promo_code->subjects->where('id', $request->id)->toArray();
             }
             elseif ($request->type == 'Live') {
                 if ($promo_code->live) {
@@ -40,7 +40,7 @@ class PromoCodeController extends Controller
                     $promo_code_state = 0;
                 }
                 
-            }
+            } 
         } else {
             return response()->json([
                 'faild' => 'This promoCode is expired'
