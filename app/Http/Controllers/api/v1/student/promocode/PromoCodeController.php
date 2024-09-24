@@ -55,6 +55,7 @@ class PromoCodeController extends Controller
             elseif (!empty($promo_code->precentage)) {
                 $price = $request->price - $request->price * $promo_code->precentage / 100;
             }
+            $promo_code->update(['number_users' => $promo_code->number_users + 1]);
 
             return response()->json([
                 'price' => $price
