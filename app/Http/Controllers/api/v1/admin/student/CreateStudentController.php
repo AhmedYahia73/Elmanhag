@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\api\admin\student\StudentRequest;
 use App\Http\Requests\api\admin\student\UpdateStudentRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 
@@ -21,6 +23,8 @@ class CreateStudentController extends Controller
         'phone',
         'role',
         'email',
+        'gender',
+        'sudent_jobs_id',
         'category_id',
         'education_id',
         'password',
@@ -31,8 +35,12 @@ class CreateStudentController extends Controller
     // This Controller About Student
     use image;
     public function store(StudentRequest $request){
-        // https://bdev.elmanhag.shop/admin/student/add?name=Ahmed&phone=146345&email=ahmed@gmail.com&parent_name=Aziz&parent_phone=167556&parent_email=sdfsdggbh@gmail.com&parent_password=123&category_id=1&education_id=39&password=123&country_id=71&city_id=42&status=1&relation_id=1
+        // https://bdev.elmanhag.shop/admin/student/add
+        // name, phone, email, parent_name, parent_phone, parent_email, parent_password,
+        // category_id, education_id, password, country_id, city_id=, status=1, relation_id
+        // gender, sudent_jobs_id
         $newStudent =  $request->only($this->studentRequest); // Take only Request From Protected studentRequest names 
+        $newStudent['status'] = 1;
         $parent =  $this->user->where('email', $request->parent_email)
         ->first();
         if (!empty($parent) && $parent->role == 'parent') {
@@ -61,7 +69,10 @@ class CreateStudentController extends Controller
     }
     
     public function modify(UpdateStudentRequest $request, $id){
-        // https://bdev.elmanhag.shop/admin/student/update/22?name=Ahmed&phone=146345&email=ahmed@gmail.com&parent_name=Aziz&parent_phone=167556&parent_email=sdfsdggbh@gmail.com&parent_password=123&category_id=1&education_id=39&password=123&country_id=71&city_id=42&status=1
+        // https://bdev.elmanhag.shop/admin/student/update/{id}
+        // name, phone, email, parent_name, parent_phone, parent_email, relation_id,
+        // parent_password, category_id, education_id, password, country_id, city_id, status
+        // gender, sudent_jobs_id
         // Take only Request From Protected studentRequest names 
         $student =  $request->only($this->studentRequest); 
         // Get User Data
@@ -98,14 +109,16 @@ class CreateStudentController extends Controller
             }
 
             $user->update($student); // Start Create New Studetn
-            User::where('id', $user->parent_id)
-            ->update([
-                'name' => $request->parent_name,
-                'phone' => $request->parent_phone,
-                'email' => $request->parent_email,
-                'password' => $request->parent_password,
-                'parent_relation_id' => $request->relation_id,
-            ]);
+            $parent = $this->user->where('id', $user->parent_id)
+            ->first();
+            $parent->name = $request->parent_name;
+            $parent->phone = $request->parent_phone;
+            $parent->email = $request->parent_email;
+            if ($request->filled('parent_password')) {
+                $parent->password = $request->parent_password;
+            }
+            $parent->parent_relation_id = $request->relation_id;
+            $parent->save();
             return response()->json(['success'=>'Student Updated Successfully'],200); 
         }
         else{
@@ -115,19 +128,50 @@ class CreateStudentController extends Controller
 
     public function delete( $id ){
         // Get User Data
-        $user = User::where('id', $id)
+        $user = $this->user->where('id', $id)
         ->where('role', 'student')
         ->first();
 
         // Remove User
         if ( !empty($user) ) {
-            $this->deleteImage($user->image['path']);
+            $this->deleteImage($user->image);
             $user->delete();
             return response()->json(['success'=>'Student Deleted Successfully'],200); 
         }
         else{
             return response()->json(['faild'=>'Student Is not Found'],400); 
         }
+    }
+
+    public function status(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/student/status/{id}
+        // Keys
+        // status
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|boolean',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+
+        $this->user->where('id', $id)
+        ->where('role', 'student')
+        ->update([
+            'status' => $request->status
+        ]);
+
+        if ($request->status == 0) {
+            return response()->json([
+                'success' => 'banned'
+            ]);
+        } else {
+            return response()->json([
+                'success' => 'active'
+            ]);
+        }
+        
     }
    
 }

@@ -59,33 +59,6 @@ class LessonController extends Controller
                             'faield'=>'This Material for This Lesson is Closed',
                         ],400);
                     }
-            //  Geck Previos 
-            if ($drip_content == true && $order   > 1) {
-                try {
-                    $beforLesson = $lesson
-                        ->orderBy('order', 'DESC')
-                        ->with('user_homework')->where('chapter_id', $chapter_id)
-                        ->where('order', '<', $lesson_order)
-                        ->orwhere('order', '=', '1')
-                        ->first();
-                        if(empty($beforLesson)){
-                                return response()->json([
-                                'not_found' => 'Not Found homeWork for previous lesson.',
-                            ], 404);
-                        }
-                    $user_homework = $beforLesson->user_homework;
-                    if (count($user_homework) === 0) {
-                        return response()->json([
-                            'lesson_not_solved' => 'The previous lesson was not solved.',
-                        ], 500);
-                    }
-                } catch (QueryException $th) {
-                    return response()->json([
-                        'faield' => 'You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson',
-                    ], 403);
-                }
-            }
-            //  Geck Previos 
         } catch (ErrorException $e) {
 
             return response()->json([
@@ -138,12 +111,65 @@ class LessonController extends Controller
 
                 }
             }
+            //  Geck Previos 
+            if ($drip_content == true && $order   > 1) {
+                try {
+                    $beforLesson = $lesson
+                        ->orderBy('order', 'DESC')
+                        ->with('user_homework')->where('chapter_id', $chapter_id)
+                        ->where('order', '<', $lesson_order)
+                        ->orwhere('order', '=', '1')
+                        ->first();
+                        if(empty($beforLesson)){
+                                return response()->json([
+                                'not_found' => 'Not Found homeWork for previous lesson.',
+                            ], 404);
+                        }
+                    $user_homework = $beforLesson->user_homework;
+                    if (count($user_homework) === 0) {
+                        return response()->json([
+                            'lesson_not_solved' => 'The previous lesson was not solved.',
+                        ], 500);
+                    }
+                } catch (QueryException $th) {
+                    return response()->json([
+                        'faield' => 'You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson',
+                    ], 403);
+                }
+            }
+            //  Geck Previos 
             return response()->json([
                 'data' => 'Lesson Return Successfully',
                 'lesson' => $lessons,
             ]);
         } else {
-            
+            //  Geck Previos 
+            if ($drip_content == true && $order   > 1) {
+                try {
+                    $beforLesson = $lesson
+                        ->orderBy('order', 'DESC')
+                        ->with('user_homework')->where('chapter_id', $chapter_id)
+                        ->where('order', '<', $lesson_order)
+                        ->orwhere('order', '=', '1')
+                        ->first();
+                        if(empty($beforLesson)){
+                                return response()->json([
+                                'not_found' => 'Not Found homeWork for previous lesson.',
+                            ], 404);
+                        }
+                    $user_homework = $beforLesson->user_homework;
+                    if (count($user_homework) === 0) {
+                        return response()->json([
+                            'lesson_not_solved' => 'The previous lesson was not solved.',
+                        ], 500);
+                    }
+                } catch (QueryException $th) {
+                    return response()->json([
+                        'faield' => 'You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson',
+                    ], 403);
+                }
+            }
+            //  Geck Previos 
             return response()->json([
                 'data' => 'Lesson Return Successfully',
                 'lesson' => $lesson,

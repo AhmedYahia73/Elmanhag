@@ -110,4 +110,22 @@ class TeacherController extends Controller
         $user->teacher_subjects()->sync($request->subject);
         return response()->json(['success'=>'Teacher Updated Successfully'],200); 
     }
+
+    public function delete( $id ){
+        // https://bdev.elmanhag.shop/admin/teacher/delete/{id}
+        // Get User Data
+        $user = $this->users->where('id', $id)
+        ->where('role', 'teacher')
+        ->first();
+
+        // Remove User
+        if ( !empty($user) ) {
+            $this->deleteImage($user->image);
+            $user->delete();
+            return response()->json(['success'=>'Teacher Deleted Successfully'],200); 
+        }
+        else{
+            return response()->json(['faild'=>'Teacher Is not Found'],400); 
+        }
+    }
 }

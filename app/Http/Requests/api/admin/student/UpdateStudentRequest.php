@@ -28,6 +28,8 @@ class UpdateStudentRequest extends FormRequest
             'name'=>['required'],
             'phone'=>['required'],
             'email'=>['required', 'email'],
+            'gender'=>['required', 'in:male,female'],
+            'sudent_jobs_id'=>['required', 'exists:student_jobs,id'],
             'parent_name'=>['required'],
             'parent_phone'=>['required'],
             'parent_email'=>['required', 'email'],

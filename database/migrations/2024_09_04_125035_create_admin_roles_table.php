@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('admin_roles', function (Blueprint $table) {
             $table->id();
-            $table->enum('role', ['students', 'teachers', 'admins', 'categories',
+            $table->enum('role', ['students', 'teachers', 'parent', 'admins', 'categories',
             'subjects', 'bundles', 'questions', 'hw', 'revisions', 'exams', 'live',
             'discounts', 'promocode', 'pop up', 'reviews', 'payments', 'affilate', 
             'support', 'reports', 'settings', 'notice board',

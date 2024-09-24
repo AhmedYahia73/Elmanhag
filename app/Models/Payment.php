@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\PaymentMethod;
 use App\Models\bundle;
 use App\Models\subject;
+use App\Models\Live;
 
 class Payment extends Model
 {
@@ -44,5 +45,9 @@ class Payment extends Model
 
     public function subject(){
         return $this->belongsToMany(subject::class, 'service_payment');
+    }
+
+    public function live(){
+        return $this->belongsToMany(Live::class, 'service_payment');
     }
 }

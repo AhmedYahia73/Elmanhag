@@ -41,6 +41,8 @@ use App\Http\Controllers\api\v1\admin\live\CreateLiveController;
 
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
+use App\Http\Controllers\api\v1\admin\parent\ParentController;
+
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 
 use App\Http\Controllers\api\v1\admin\admin\AdminController;
@@ -78,13 +80,26 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('student')->middleware('can:isStudent')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
             Route::get('/', 'show')->name('student.show');
+            Route::post('/purchases', 'purchases')->name('student.purchases');
+            Route::post('/purchasesData', 'purchases_data')->name('student.purchases_data');
+            Route::post('/addPurchases', 'add_purchases')->name('student.add_purchases');
+            Route::post('/subjectProgress/{id}', 'subject_progress')->name('student.subject_progress');
         });
         Route::controller(CreateStudentController::class)->group(function () {
             Route::post('/add', 'store')->name('student.add');
             Route::put('/update/{id}', 'modify')->name('student.modify');
             Route::delete('/delete/{id}', 'delete')->name('student.delete');
+            Route::put('/status/{id}', 'status')->name('student.status');
         });
     });
+
+    // Start Parent Module
+    Route::prefix('parent')->middleware('can:isParent')->group(function () {
+        Route::controller(ParentController::class)->group(function () {
+            Route::get('/', 'show')->name('parent.show');
+        });
+    });
+  
 
     // Start Admin Module
     Route::prefix('admins')->middleware('can:isAdmins')->group(function () {
@@ -242,6 +257,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
             Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
+            Route::delete('/delete/{id}', 'delete')->name('teachers.delete');
         });
     });
     

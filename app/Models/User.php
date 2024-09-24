@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Models\subject;
+use App\Models\StudentJob;
 use App\Models\bundle;
 use App\Models\category;
 use App\Models\country;
@@ -177,8 +178,9 @@ class User extends Authenticatable
      public function affiliate_history(){
         return $this->hasMany(AffilateHistory::class,'affilate_id')->with('student');
      }
-     
 
-
+     public function student_job(){
+         return $this->belongsTo(StudentJob::class, 'sudent_jobs_id');
+     }
 
 }

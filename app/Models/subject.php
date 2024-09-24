@@ -40,15 +40,18 @@ class subject extends Model
     }
     
        
-         public function getDemoVideoUrlAttribute(){
+    public function getDemoVideoUrlAttribute(){
         return url('storage/' . $this->attributes['demo_video']) ?? url('storage/' . 'default.png');
-         }
-           public function getCoverPhotoUrlAttribute(){
-           return url('storage/' . $this->attributes['cover_photo']) ?? url('storage/' . 'default.png');
-           }    
-         public function getThumbnailUrlAttribute(){
-         return url('storage/'.$this->attributes['thumbnail']) ?? url('storage/'.'default.png');
-         }
+    }
+    
+    public function getCoverPhotoUrlAttribute(){
+        return url('storage/' . $this->attributes['cover_photo']) ?? url('storage/' . 'default.png');
+    }
+
+    public function getThumbnailUrlAttribute(){
+        return url('storage/'.$this->attributes['thumbnail']) ?? url('storage/'.'default.png');
+    }
+
     public function category(){
         return $this->belongsTo(category::class);
     }

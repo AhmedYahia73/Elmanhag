@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class PlaceOrderController extends Controller
 {
-   
     protected $orderPlaceReqeust = [
          'amount',
          'service',
@@ -52,17 +51,14 @@ class PlaceOrderController extends Controller
         $payment = $this->payment;
         $newOrder = $payment->create($newOrder);
         if($newOrder['service'] == 'Bundle'){
-            
             $newbundle = $newOrder->bundle()->sync($bundle_id);
         }elseif($newOrder['service'] == 'Subject'){
              $subject_id = json_decode($subject_id);
             $newSubjects = $newOrder->subject()->sync($subject_id);
         }
-     
-     
 
         return response()->json([
-                                    'success'=>'The request has been sent and is awaiting approval from the Admin'
-                                ]);
+            'success'=>'The request has been sent and is awaiting approval from the Admin'
+        ]);
     }
 } 

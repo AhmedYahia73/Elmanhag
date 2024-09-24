@@ -17,8 +17,18 @@ class Bonus extends Model
         'bonus',
         'image',
     ];
+    protected $appends = ['image_link'];
 
     public function affilate(){
         return $this->belongsToMany(User::class, 'affilate_bonuses', 'bonus_id', 'affilate_id');
+    }
+
+    public function getImageLinkAttribute(){
+        if (!empty($this->attributes['image'])) {
+            return url('storage/' . $this->attributes['image']);
+        } else {
+            return null;
+        }
+        
     }
 }

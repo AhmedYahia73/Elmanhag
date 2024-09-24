@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\api\admin\promocode;
+namespace App\Http\Requests\api\admin\student;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class PromocodeRequest extends FormRequest
+class PurchaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,12 @@ class PromocodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required'],
-            'code' => ['required'],
-            'value' => ['numeric'],
-            'precentage' => ['numeric'],
-            'usage_type' => ['required', 'in:fixed,unlimited'],
-            'usage' => ['numeric'],
-            'number_users' => ['numeric'],
-            'status' => ['required', 'boolean'],
-            'live' => ['required', 'boolean'],
-            'bundles.*' => ['exists:bundles,id'],
-            'subjects.*' => ['exists:subjects,id']
+            'amount' => ['required', 'numeric'],
+            'payment_method_id' => ['exists:payment_methods,id'],
+            'bundle_id' => ['exists:bundles,id'],
+            'subject_id' => ['exists:subjects,id'],
+            'live_id' => ['exists:lives,id'],
+            'student_id' => ['required', 'exists:users,id'],
         ];
     }
 

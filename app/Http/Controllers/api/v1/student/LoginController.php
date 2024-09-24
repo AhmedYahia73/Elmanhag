@@ -21,9 +21,14 @@ class LoginController extends Controller
     public function login(LoginRequest $request){
         $login = $request->only($this->loginRequest);
        $checkLogin =  is_numeric($login['email']) ? $name ='phone':$name ='email'; // Old Selution
-         $user = $this->user
-         ->where('email',$login['email'])
-         ->orwhere('phone',$login['email'])->first();
+        $user = $this->user
+        ->where('email',$login['email'])
+        ->orwhere('phone',$login['email'])->first();
+        if ($user->status == 0) {
+            return response()->json([
+                'success' => 'You are banned'
+            ]);
+        }
         // return $user->password . ' '. bcrypt($login['password']);
         $error = response()->json([
         'faield'=>'creational not Valid',
