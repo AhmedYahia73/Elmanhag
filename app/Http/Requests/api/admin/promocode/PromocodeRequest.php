@@ -30,7 +30,6 @@ class PromocodeRequest extends FormRequest
             'precentage' => ['numeric'],
             'usage_type' => ['required', 'in:fixed,unlimited'],
             'usage' => ['numeric'],
-            'number_users' => ['numeric'],
             'status' => ['required', 'boolean'],
             'live' => ['required', 'boolean'],
             'bundles.*' => ['exists:bundles,id'],
