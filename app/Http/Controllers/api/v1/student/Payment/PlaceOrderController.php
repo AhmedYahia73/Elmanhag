@@ -49,15 +49,15 @@ class PlaceOrderController extends Controller
         }
        $newOrder['purchase_date']= now();
        $newOrder['student_id']= $student_id ;
-            if($payment_title == 'fawry'){
-                        return response ()->json(['This Method UnAvailable Now']);
-            }
+        if($payment_title == 'fawry'){
+            return response ()->json(['This Method UnAvailable Now']);
+        }
         $payment = $this->payment;
         $newOrder = $payment->create($newOrder);
         if($newOrder['service'] == 'Bundle'){
             $newbundle = $newOrder->bundle()->sync($bundle_id);
         }elseif($newOrder['service'] == 'Subject'){
-             $subject_id = json_decode($subject_id);
+            $subject_id = json_decode($subject_id);
             $newSubjects = $newOrder->subject()->sync($subject_id);
         }
 

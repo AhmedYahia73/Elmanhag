@@ -59,4 +59,27 @@ class SubjectController extends Controller
         ]);
     }
 
+    public function delete($id, Request $request){
+        // https://bdev.elmanhag.shop/admin/teacher/subjects/add
+        // Keys
+        // teacher_id
+        $validator = Validator::make($request->all(), [
+            'teacher_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+
+        $user = $this->user
+        ->where('id', $request->teacher_id)
+        ->first();
+        $user->teacher_subjects()->detach($id); // Add subject to teacher using pivot table
+
+        return response()->json([
+            'success' => 'You delete subject success'
+        ]);
+    }
+
 }

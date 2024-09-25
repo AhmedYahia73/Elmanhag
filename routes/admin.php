@@ -45,6 +45,7 @@ use App\Http\Controllers\api\v1\admin\parent\ParentController;
 
 use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 use App\Http\Controllers\api\v1\admin\teacher\SubjectController as T_SubjectController;
+use App\Http\Controllers\api\v1\admin\teacher\LiveController as T_LiveController;
 
 use App\Http\Controllers\api\v1\admin\admin\AdminController;
 
@@ -263,6 +264,10 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::controller(T_SubjectController::class)->prefix('subjects')->group(function(){
             Route::post('/', 'view')->name('teachers.subject.view');
             Route::post('/add', 'add')->name('teachers.subject.add');
+            Route::delete('/delete/{id}', 'delete')->name('teachers.subject.delete');
+        });
+        Route::controller(T_LiveController::class)->prefix('lives')->group(function(){
+            Route::post('/', 'view')->name('teachers.live.view');
         });
     });
     
