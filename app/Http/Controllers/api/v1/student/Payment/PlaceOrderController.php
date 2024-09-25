@@ -40,9 +40,13 @@ class PlaceOrderController extends Controller
         $subject_id = $request->subject_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title;
-       $payment_title == 'vodafon cach' ? 
-       $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
-       : $newOrder['receipt'] = 'default.png';
+    //    $payment_title == 'vodafon cach' ? 
+    //    $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
+    //    : $newOrder['receipt'] = 'default.png';
+        $receipt = $this->upload($request,'receipt','student/receipt');
+        if (!empty($receipt)) {
+            $newOrder['receipt'] = $receipt;
+        }
        $newOrder['purchase_date']= now();
        $newOrder['student_id']= $student_id ;
             if($payment_title == 'fawry'){
