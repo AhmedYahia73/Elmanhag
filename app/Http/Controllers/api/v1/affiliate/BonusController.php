@@ -21,9 +21,16 @@ class BonusController extends Controller
                    $all_bonus = $this->bound->get();
 
                     $user = $request->user()->where('id',$user_id)->with('bonuses',function($query){
-                    $query->orderByDesc('id');
+                    $query->orderByDesc('target');
                     })->first();
-                    $bonus = $user->bonuses->unique()->first() ;
+                    $bonus = $user->bonuses->unique()->first();
+                    $current_bonus = $this->bound
+                    ->where('target', '>', empty($bonus->target) ? 0 : $bonus->target)
+                    ->orderBy('target')
+                    ->first();
+                    if (!empty($current_bonus)) {
+                        $bonus = $current_bonus;
+                    }
                    $bundle_paid = $user->affiliate_history->where('service_type','bundle')->count()??0 ;
                   
             } catch (QueryException $queryException) {

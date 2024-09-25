@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\api\v1\lang\LangController;
 
-use App\Http\Controllers\api\v1\admin\student\CreateStudent;
 use App\Http\Controllers\api\v1\admin\student\CreateStudentController;
 use App\Http\Controllers\api\v1\admin\student\StudentsDataController;
+use App\Http\Controllers\api\v1\admin\student\SubjectController as Stu_SubjectController;
 
 use App\Http\Controllers\api\v1\admin\Category\CategoryController;
 use App\Http\Controllers\api\v1\admin\Category\CreateCategoryController;
@@ -93,6 +93,10 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('student.delete');
             Route::put('/status/{id}', 'status')->name('student.status');
         });
+        // Route::controller(Stu_SubjectController::class)->group(function () {
+        //     Route::post('/add', 'store')->name('student.add');
+        // });
+        
     });
 
     // Start Parent Module
