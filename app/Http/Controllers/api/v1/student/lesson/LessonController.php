@@ -69,7 +69,7 @@ class LessonController extends Controller
              //  $user_subject =$user->subjects->where('category_id',$category_id)->where('education_id',$education_id);
            $user_bundle = $user->bundles->where('category_id', $category_id)->where('education_id', $education_id);
           if (count($user_bundle) === 0) {
-                $user_subject = $user->subjects->where('category_id', $category_id)->where('id', $subject_id)->where('education_id', $education_id)->first();
+                $user_subject = $user->subjects->where('category_id', $category_id)->where('id', $subject_id)->first();
                 if( empty($user_subject) ){
                         return response()->json([
                         'faield'=>'This Lesson Unpaid',
@@ -106,7 +106,7 @@ class LessonController extends Controller
                     }else{
                         return response()->json([
                             'faield'=>'This Material for This Lesson is Closed',
-                        ]);
+                        ], 405);
                     }
 
                 }

@@ -128,10 +128,9 @@ class User extends Authenticatable
             return url('storage/' .'default.png');
             }elseif($this->gender == 'female' or is_null($this->image)){
             return url('storage/' .'female.png');
-            }else{
-                return url('storage/' . $this->attributes['image']);
-            }
-                
+        }else{
+            return url('storage/' . $this->attributes['image']);
+        }
     }
 
     public function getcreatedAtAttribute($datetime){

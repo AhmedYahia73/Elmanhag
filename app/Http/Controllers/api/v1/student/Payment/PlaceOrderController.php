@@ -40,20 +40,24 @@ class PlaceOrderController extends Controller
         $subject_id = $request->subject_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title;
-       $payment_title == 'vodafon cach' ? 
-       $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
-       : $newOrder['receipt'] = 'default.png';
+    //    $payment_title == 'vodafon cach' ? 
+    //    $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
+    //    : $newOrder['receipt'] = 'default.png';
+        $receipt = $this->upload($request,'receipt','student/receipt');
+        if (!empty($receipt)) {
+            $newOrder['receipt'] = $receipt;
+        }
        $newOrder['purchase_date']= now();
        $newOrder['student_id']= $student_id ;
-            if($payment_title == 'fawry'){
-                        return response ()->json(['This Method UnAvailable Now']);
-            }
+        if($payment_title == 'fawry'){
+            return response ()->json(['This Method UnAvailable Now']);
+        }
         $payment = $this->payment;
         $newOrder = $payment->create($newOrder);
         if($newOrder['service'] == 'Bundle'){
             $newbundle = $newOrder->bundle()->sync($bundle_id);
         }elseif($newOrder['service'] == 'Subject'){
-             $subject_id = json_decode($subject_id);
+            $subject_id = json_decode($subject_id);
             $newSubjects = $newOrder->subject()->sync($subject_id);
         }
 

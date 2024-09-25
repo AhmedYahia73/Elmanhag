@@ -28,10 +28,10 @@ class PromoCodeController extends Controller
 
         if (!empty($promo_code)) {
             if ($request->type == 'Bundle') {
-                $promo_code_state = $promo_code->bundles->where('id', $request->id);
+                $promo_code_state = $promo_code->bundles->where('id', $request->id)->toArray();
             }
             elseif ($request->type == 'Subject') {
-                $promo_code_state = $promo_code->subjects->where('id', $request->id);
+                $promo_code_state = $promo_code->subjects->where('id', $request->id)->toArray();
             }
             elseif ($request->type == 'Live') {
                 if ($promo_code->live) {
@@ -40,14 +40,14 @@ class PromoCodeController extends Controller
                     $promo_code_state = 0;
                 }
                 
-            }
+            } 
         } else {
             return response()->json([
                 'faild' => 'This promoCode is expired'
             ], 400);
         }
-
-        if ((!empty($promo_code_state) && $promo_code_state != 0) || $promo_code_state == 1) {
+        
+        if ((is_array($promo_code_state) && count($promo_code_state) != 0) || (is_numeric($promo_code_state) && $promo_code_state == 1)) {
             $price = $request->price;
             if (!empty($promo_code->value)) {
                 $price = $request->price - $promo_code->value;
@@ -55,6 +55,7 @@ class PromoCodeController extends Controller
             elseif (!empty($promo_code->precentage)) {
                 $price = $request->price - $request->price * $promo_code->precentage / 100;
             }
+            $promo_code->update(['number_users' => $promo_code->number_users + 1]);
 
             return response()->json([
                 'price' => $price
