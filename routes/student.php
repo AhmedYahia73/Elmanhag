@@ -18,6 +18,7 @@ use App\Http\Controllers\api\v1\student\liveSession\LiveSessionController;
 use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
 use App\Http\Controllers\api\v1\student\promocode\PromoCodeController;
+use App\Http\Controllers\api\v1\student\subsription\SubscriptionController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -37,15 +38,21 @@ Route::prefix('profile')->middleware(['auth:sanctum','IsStudent'])->group(functi
     });
 });
 Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
-        Route::prefix('setting')->group(function () {
-            Route::controller(SettingController::class)->group(function () {
-                Route::get('view','show')->withoutMiddleware(['auth:sanctum','IsStudent'])->name('setting.view');
-            }); // Guest Data
-            Route::controller(SubjectController::class)->group(function () { // This All Subject For Student
-                Route::post('subject/view','show')->withoutMiddleware(['IsStudent','IsAffilate'])->name('setting.view');
-                Route::get('subject/student','student_subject')->name('setting.view');
-            });
+    Route::prefix('setting')->group(function () {
+        Route::controller(SettingController::class)->group(function () {
+            Route::get('view','show')->withoutMiddleware(['auth:sanctum','IsStudent'])->name('setting.view');
+        }); // Guest Data
+        Route::controller(SubjectController::class)->group(function () { // This All Subject For Student
+            Route::post('subject/view','show')->withoutMiddleware(['IsStudent','IsAffilate'])->name('setting.view');
+            Route::get('subject/student','student_subject')->name('setting.view');
         });
+    });   
+    
+    Route::prefix('subscription')->group(function () {
+        Route::controller(SubscriptionController::class)->group(function () {
+            Route::get('/','view')->name('subscription.view');
+        }); 
+    });
         Route::controller(ChapterController::class)->group(function () { // This All Chapters For Student
                 Route::prefix('mySubject')->group(function () {
                     Route::post('chapter/view', 'show')->name('student_chapter_view');
