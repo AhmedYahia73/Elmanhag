@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\bundle;
@@ -31,9 +31,23 @@ class FawryPayController extends Controller
     public function payAtFawry(Request $request)
     {
 
-        
+
          $request['customerProfileId'] = $request->user()->id ;
          $request['customerMobile'] = $request->user()->phone ;
+                // Make Random Number For MerchantRefNumber
+                          do {
+            $length = 6;
+          // Generate a random number of the desired length
+            $min = pow(10, $length - 1); // Minimum number based on length ( 1000000000 for 10 digits)
+            $max = pow(10, $length) - 1; // Maximum number based on length ( 9999999999 for 10 digits)
+            $randomNumber = random_int($min, $max);
+
+          // Check if this number already exists in Payment
+          $exists = $this->payment::where('merchantRefNum', $randomNumber)->exists();
+                $request['merchantRefNum'] = $randomNumber ;
+          } while ($exists); // Repeat until a unique number is generated
+                // End Random Number For MerchantRefNumber
+
         // Validate incoming request data
         $request->validate([
             // 'customerName' => 'required|string',
@@ -45,9 +59,10 @@ class FawryPayController extends Controller
             // 'description' => 'required|string',
             'chargeItems' => 'required|array',
         ]);
-
+      
+        
              // Start Create Order If Operation Payment Success
-           $placeOrder = $this->placeOrder($request);
+            $placeOrder = $this->placeOrder($request);
              // Start Create Order If Operation Payment Success
        
         // Extract data
@@ -101,9 +116,10 @@ class FawryPayController extends Controller
                 // Get payment status
                 $response = $this->fawryPayService->getPaymentStatus($merchantRefNum);
                 $this->confirmOrder($response);
+                 
 
     // Return response to the client
-    return response()->json($response);
+    return response()->json($response,200);
 }
 
 }

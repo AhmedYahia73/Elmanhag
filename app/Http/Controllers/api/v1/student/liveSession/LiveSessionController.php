@@ -14,10 +14,10 @@ class LiveSessionController extends Controller
     // feat => This About Get All Live Sessions For Student
 
     public function  __construct(private Live $live) {}
-        public function show(Request $request){
+        public function show(Request $request):JsonResponse{
         $user = $request->user();
-        $user_category = $user->category_id; 
-        $user_education = $user->education_id; 
+        // $user_category = $user->category_id; 
+        // $user_education = $user->education_id; 
         $session_id = $request->session_id;
                 try {
                       $student = $user->where('id', $user->id)->with('bundles.subjects')->with('subjects')
@@ -36,19 +36,16 @@ class LiveSessionController extends Controller
                                 ->where('id',$session_id)    
                                 ->first();
                       }     
-                       
                 } catch (QueryException $queryException) {
                         return response()->json([
                             'faield'=>'Something wrong!'
                         ],400);
                 }
-     
         $student_subject = $user->subjects;
         return response()->json(
          data:[
             'success'=>'data returned successfully',
             'liveSession'=>$sessions,
-            // 'subject'=>$student_subject,
         ]
             
         ,status: 200);

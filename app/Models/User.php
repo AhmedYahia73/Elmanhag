@@ -124,9 +124,9 @@ class User extends Authenticatable
     }
 
     public function getImageLinkAttribute(){
-            if($this->gender == 'male' && is_null($this->image)){
+            if($this->gender == 'male' or is_null($this->image)){
             return url('storage/' .'default.png');
-            }elseif($this->gender == 'female' && is_null($this->image)){
+            }elseif($this->gender == 'female' or is_null($this->image)){
             return url('storage/' .'female.png');
             }else{
                 return url('storage/' . $this->attributes['image']);
@@ -169,6 +169,9 @@ class User extends Authenticatable
     public function user_homework(){
         return $this->belongsToMany(homework::class,'users_homework')
         ->withPivot(['score', 'lesson_id']);
+    }
+    public function liveSessions(){
+        return $this->hasMany(Live::class, 'teacher_id');
     }
 
      public function payout_history(){

@@ -6,6 +6,9 @@ use App\Models\bundle;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\User;
+use DragonCode\Contracts\Cashier\Config\Payments\Statuses;
+use Error;
+use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,35 +20,40 @@ trait PlaceOrder
  // This Is Trait About Make any Order 
    
 
-    public function placeOrder(Request $request ):mixed{
+    public function placeOrder(Request $request ):array|JsonResponse{
         $user = $request->user();
         $newOrder = $request->only($this->orderPlaceReqeust);
         $items = $newOrder['chargeItems'];
         // $user_id = $request->user()->id;
         $new_item = [];
+
+       
+         $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
+     
+            if(empty($paymentMethod)){
+                    return response()->json(['faield'=>'Payment Method Fawry Not Found'],404);
+            }
+                    
         foreach ($items as $item) {
             $itemId = $item['itemId'];
             $service = $item['description'];
             $item_type = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
-           try {
+            
+            try {
              $amount = $this->$item_type->where('id',$itemId)->sum('price'); // Get Price For Item
            
             $item['student_id'] =$user->id;
             $item['purchase_date'] =now(); // Purchase Date Now
             $item['merchantRefNum'] =$newOrder['merchantRefNum']; // This Is Reference Number For Order ID
             $item['service'] =$service ; // This Is Reference Number For Order ID
-            try {
-                $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
-            } catch (QueryException $qe) {
-                return response()->json([
-                    'faield'=>'payment Method Don\'t Available',
-                    'message'=>$qe->getMessage()
-                ]);
-            }
+         
+           
+
             $item['payment_method_id'] =$paymentMethod->id; // This Payment Static casue Don't Have Name Request In Item Charge
             $item['price'] = $amount ; // Price Take Amount Cause I Have just One Item
             $item['amount']=$amount;
             $createPayment = $this->payment->create($item);
+            $payment_number = $createPayment->id;
             if($service == 'Bundle'){
                 $newbundle = $createPayment->bundle()->sync($itemId);
               }elseif($service == 'Subject'){
@@ -56,9 +64,11 @@ trait PlaceOrder
                 [
                     'faield'=>'Your Order Not Found',
                     'message'=>$th->getMessage()
-            ],403);
+            ],404);
               }
             $data = [
+                
+                'paymentProcess' => $payment_number,
                     'chargeItems'=>[
                         'itemId'=>$itemId,
                         'description'=>$item_type,
@@ -68,13 +78,16 @@ trait PlaceOrder
             ];
               
             }
-                  return $data;
+                  return $data ;
     }
 
-    public function confirmOrder( $request): mixed{
-        $merchantRefNumber = $request['merchantRefNumber'];
-        $customerMerchantId = $request['customerMerchantId'];
-      $orderStatus = $request['orderStatus'];
+    public function confirmOrder(  $response){
+        if(isset($response['code']) && $response['code'] == 9938){
+                return response()->json($response);
+            }
+        $merchantRefNumber = $response['merchantRefNumber'];
+        $customerMerchantId = $response['customerMerchantId'];
+      $orderStatus = $response['orderStatus'];
             if($orderStatus == 'PAID'){
             $payment =
                 $this->payment->where('merchantRefNum', $merchantRefNumber)->with('bundle', function ($query):void {
@@ -96,6 +109,6 @@ trait PlaceOrder
             }
 
         }
-        return response()->json($request);
+        return response()->json($response);
     }
 }
