@@ -93,9 +93,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('student.delete');
             Route::put('/status/{id}', 'status')->name('student.status');
         });
-        // Route::controller(Stu_SubjectController::class)->group(function () {
-        //     Route::post('/add', 'store')->name('student.add');
-        // });
+        Route::controller(Stu_SubjectController::class)->prefix('progress')->group(function () {
+            Route::get('/{id}', 'progress')->name('student.progress');
+        });
         
     });
 
