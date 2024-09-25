@@ -262,6 +262,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         Route::controller(T_SubjectController::class)->prefix('subjects')->group(function(){
             Route::post('/', 'view')->name('teachers.subject.view');
+            Route::post('/add', 'add')->name('teachers.subject.add');
         });
     });
     

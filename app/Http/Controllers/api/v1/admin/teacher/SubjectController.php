@@ -42,6 +42,15 @@ class SubjectController extends Controller
                 'error' => $validator->errors(),
             ],400);
         }
+
+        $user = $this->user
+        ->where('id', $request->teacher_id)
+        ->first();
+        $user->teacher_subjects()->attach($request->subject_id); // Add subject to teacher using pivot table
+
+        return response()->json([
+            'success' => 'You add subject success'
+        ]);
     }
 
 }
