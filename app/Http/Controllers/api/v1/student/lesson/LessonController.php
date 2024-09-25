@@ -69,7 +69,8 @@ class LessonController extends Controller
              //  $user_subject =$user->subjects->where('category_id',$category_id)->where('education_id',$education_id);
            $user_bundle = $user->bundles->where('category_id', $category_id)->where('education_id', $education_id);
           if (count($user_bundle) === 0) {
-                $user_subject = $user->subjects->where('category_id', $category_id)->where('id', $subject_id)->where('education_id', $education_id)->first();
+                $user_subject = $user->subjects->where('category_id', $category_id)->where('id', $subject_id)->where('education_id', $education_id)
+                ->orWhere('category_id', $category_id)->where('id', $subject_id)->where('education_id', null)->first();
                 if( empty($user_subject) ){
                         return response()->json([
                         'faield'=>'This Lesson Unpaid',

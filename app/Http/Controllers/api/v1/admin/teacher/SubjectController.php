@@ -14,6 +14,9 @@ class SubjectController extends Controller
     public function __construct(private User $user){}
 
     public function view(Request $request){
+        // https://bdev.elmanhag.shop/admin/teacher/subjects
+        // Keys
+        // teacher_id
         $validator = Validator::make($request->all(), [
             'teacher_id' => 'required|exists:users,id',
         ]);
@@ -33,6 +36,9 @@ class SubjectController extends Controller
     }
 
     public function add(Request $request){
+        // https://bdev.elmanhag.shop/admin/teacher/subjects/add
+        // Keys
+        // teacher_id, subject_id
         $validator = Validator::make($request->all(), [
             'teacher_id' => 'required|exists:users,id',
             'subject_id' => 'required|exists:subjects,id',
