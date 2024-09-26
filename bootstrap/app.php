@@ -6,6 +6,7 @@ use App\Http\Middleware\ParentMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\StudentMiddleware;
+use App\Http\Middleware\TeacherMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
@@ -35,6 +36,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('parent')
                 ->name('parent.')
                 ->group(base_path('routes/parent.php'));
+            Route::middleware(['api',TeacherMiddleware::class])
+                ->prefix('teacher')
+                ->name('teacher.')
+                ->group(base_path('routes/teacher.php'));
         },
     )
 
@@ -45,6 +50,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'IsAdmin' => AdminMiddleware::class,
             'IsAffilate' => AffilateMiddleware::class,
             'IsParent' => ParentMiddleware::class,
+            'IsTeacher  ' => TeacherMiddleware::class,
         ]);
          $middleware->redirectGuestsTo(function (Request $request) {
             if (!$request->is('api/*')) {
