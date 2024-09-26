@@ -14,6 +14,7 @@ class BundlesController extends Controller
     public function __construct(private bundle $bundles, private subject $subjects, private Live $live){}
     
     public function show(){
+        // https://bdev.elmanhag.shop/student/bundles
         $bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
         ->where('education_id', auth()->user()->education_id)
@@ -89,6 +90,12 @@ class BundlesController extends Controller
                 break;
             }
         }        
+
+        $bundles = $bundles->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
+        $subjects = $subjects->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
+        
         $live = $this->live
         ->where('category_id', auth()->user()->category_id)
         ->where('education_id', auth()->user()->education_id)
@@ -108,11 +115,6 @@ class BundlesController extends Controller
         ->where('inculded', 1)
         ->where('date', '>=', date('Y-m-d'))
         ->get(); // Get live that havs the same category of student
-
-        $bundles = $bundles->where('status', 1)
-        ->where('expired_date', '>=', date('Y-m-d'));
-        $subjects = $subjects->where('status', 1)
-        ->where('expired_date', '>=', date('Y-m-d'));
         return response()->json([
             'bundles' => $bundles,
             'subjects' => $subjects,

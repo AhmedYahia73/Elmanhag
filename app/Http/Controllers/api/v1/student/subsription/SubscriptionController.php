@@ -14,6 +14,7 @@ class SubscriptionController extends Controller
     public function __construct(private bundle $bundles, private subject $subjects, private Live $live){}
     
     public function view(){
+        // https://bdev.elmanhag.shop/student/subscription
         $bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
         ->whereHas('users', function ($query) {
@@ -31,8 +32,14 @@ class SubscriptionController extends Controller
         ->whereHas('users', function ($query) {
             $query->where('users.id', auth()->user()->id);
         })
-        ->whereNotIn('id', $bundles_subjects)
+        ->orWhereIn('id', $bundles_subjects)
+        ->where('category_id', auth()->user()->category_id)
         ->get(); // Get subject that havs the same category of student and student does not buy it
+
+        $bundles = $bundles->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
+        $subjects = $subjects->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
 
       
         $live = $this->live
@@ -40,16 +47,13 @@ class SubscriptionController extends Controller
         ->whereHas('students', function ($query) {
             $query->where('users.id', auth()->user()->id);
         })
-        ->where('inculded', 0)
+        ->where('date', '>=', now())
+        ->orWhereIn('subject_id', $subjects->pluck('id'))
+        ->where('inculded', 1)
+        ->where('category_id', auth()->user()->category_id)
         ->where('date', '>=', now())
         ->get(); // Get live that havs the same category of student
-
-        $bundles = $bundles->where('status', 1)
-        ->where('expired_date', '>=', date('Y-m-d'));
-        $subjects = $subjects->where('status', 1)
-        ->where('expired_date', '>=', date('Y-m-d'));
         return response()->json([
-            'bundles' => $bundles,
             'subjects' => $subjects,
             'live' => $live,
         ]);
