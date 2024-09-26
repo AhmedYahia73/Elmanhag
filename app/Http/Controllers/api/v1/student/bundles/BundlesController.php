@@ -45,7 +45,7 @@ class BundlesController extends Controller
         foreach ($student_bundles as $item) {
             $bundles_subjects = array_merge($bundles_subjects, 
             $item->subjects->pluck('id')->toArray());
-        } 
+        }
         $subjects = $this->subjects
         ->where('category_id', auth()->user()->category_id)
         ->where('education_id', auth()->user()->education_id)
@@ -95,7 +95,7 @@ class BundlesController extends Controller
         ->where('expired_date', '>=', date('Y-m-d'));
         $subjects = $subjects->where('status', 1)
         ->where('expired_date', '>=', date('Y-m-d'));
-        
+
         $live = $this->live
         ->where('category_id', auth()->user()->category_id)
         ->where('education_id', auth()->user()->education_id)

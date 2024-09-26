@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_live', function (Blueprint $table) {
+        Schema::create('student_question_issue', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('live_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('score');
+            $table->foreignId('question_id')->nullable()->constrained('questions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
