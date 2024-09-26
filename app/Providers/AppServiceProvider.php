@@ -59,6 +59,21 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
+        // if roles have student module
+        Gate::define('isIssue', function (User $user) {
+            if ( $user->role == 'supAdmin' ) {
+                return true;
+            }
+            elseif ( $user->role == 'admin' ) {
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('issues', $arr)) {
+                        return true;
+                    }
+                }
+            }
+        });
+
         // if roles have teachers module
         Gate::define('isTeachers', function (User $user) {
             if ( $user->role == 'supAdmin' ) {

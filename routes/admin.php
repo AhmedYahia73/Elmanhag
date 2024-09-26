@@ -47,6 +47,9 @@ use App\Http\Controllers\api\v1\admin\teacher\TeacherController;
 use App\Http\Controllers\api\v1\admin\teacher\SubjectController as T_SubjectController;
 use App\Http\Controllers\api\v1\admin\teacher\LiveController as T_LiveController;
 
+use App\Http\Controllers\api\v1\admin\issues\QuestionIssuesController;
+use App\Http\Controllers\api\v1\admin\issues\VideoIssuesController;
+
 use App\Http\Controllers\api\v1\admin\admin\AdminController;
 
 use App\Http\Controllers\api\v1\admin\role\RoleController;
@@ -66,8 +69,8 @@ use App\Http\Controllers\api\v1\admin\settings\CountriesController;
 use App\Http\Controllers\api\v1\admin\settings\CitiesController;
 use App\Http\Controllers\api\v1\admin\settings\JobsController;
 use App\Http\Controllers\api\v1\admin\settings\PaymentMethodsController;
-use App\Http\Controllers\api\v1\admin\settings\QuestionIssuesController;
-use App\Http\Controllers\api\v1\admin\settings\VideoIssuesController;
+use App\Http\Controllers\api\v1\admin\settings\QuestionIssuesController as ListQuestionIssuesController;
+use App\Http\Controllers\api\v1\admin\settings\VideoIssuesController as ListVideoIssuesController;
 
 
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
@@ -75,6 +78,19 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('translation')->group(function () {
         Route::controller(LangController::class)->group(function () {
             Route::get('/', 'languages_api')->name('translation.link');
+        });
+    });
+
+    // Start Module Issues
+    Route::prefix('issues')->middleware('can:isIssue')->group(function () {
+        Route::controller(QuestionIssuesController::class)
+        ->prefix('question')->group(function () {
+            Route::get('/', 'show')->name('issues.show_questions');
+        });
+        Route::controller(VideoIssuesController::class)
+        ->prefix('video')->group(function () {
+            Route::get('/', 'show')->name('issues.show_videos');
+            Route::put('/seen/{id}', 'seen')->name('issues.seen');
         });
     });
 
@@ -402,7 +418,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         // Start Question Issues
         Route::prefix('questionIssues')->group(function() {
-            Route::controller(QuestionIssuesController::class)->group(function(){
+            Route::controller(ListQuestionIssuesController::class)->group(function(){
                 Route::get('/', 'show')->name('question_issues.show');
                 Route::post('/add', 'add')->name('question_issues.add');
                 Route::put('/update/{id}', 'modify')->name('question_issues.update');
@@ -411,7 +427,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         // Start Video Issues
         Route::prefix('videoIssues')->group(function() {
-            Route::controller(VideoIssuesController::class)->group(function(){
+            Route::controller(ListVideoIssuesController::class)->group(function(){
                 Route::get('/', 'show')->name('video_issues.show');
                 Route::post('/add', 'add')->name('video_issues.add');
                 Route::put('/update/{id}', 'modify')->name('video_issues.update');
