@@ -86,11 +86,12 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::controller(QuestionIssuesController::class)
         ->prefix('question')->group(function () {
             Route::get('/', 'show')->name('issues.show_questions');
+            Route::put('/seen/{id}', 'seen')->name('issues.seen_question_issue');
         });
         Route::controller(VideoIssuesController::class)
         ->prefix('video')->group(function () {
             Route::get('/', 'show')->name('issues.show_videos');
-            Route::put('/seen/{id}', 'seen')->name('issues.seen');
+            Route::put('/seen/{id}', 'seen')->name('issues.seen_video_issue');
         });
     });
 
