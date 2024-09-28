@@ -87,7 +87,10 @@ class PaymentController extends Controller
             $service_type = 'bundle';
         }
         elseif ( $payment->service == 'Live session' ) {
-            // code
+            $lives = $payment->live->pluck('id')->toArray(); // Get lives as array
+            if (count($lives) > 0) {
+                $user->live()->attach($lives); // Add bundles to student
+            }
             $service_type = 'live_session';
         }
         elseif ( $payment->service == 'Live Package' ) {
