@@ -46,7 +46,7 @@ class SignupController extends Controller
     ];
     // This Controller About Create New Student
     use image;
-    public function store(SignupRequest $request){
+    public function store(){
         Mail::to('ahmedahmadahmid73@gmail.com')->send(new SignupNotificationMail([]));
         return response()->json([
             'success'=>'Welcome,Student Created Successfully'
