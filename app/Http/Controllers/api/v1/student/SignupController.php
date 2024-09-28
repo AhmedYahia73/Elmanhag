@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\api\v1\student;
 
 use App\Models\User;
+use App\Models\category;
+use App\Models\Education;
+use App\Models\StudentJob;
 use App\trait\image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\student\SignupRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
 
 class SignupController extends Controller
 {
-        public function __construct(private User $user) {}
+        public function __construct(private User $user, private category $category,
+        private Education $education, private StudentJob $job) {}
 
    protected $studentRequest = [
    'name',
@@ -68,6 +74,17 @@ class SignupController extends Controller
             $user = $this->user->create($newStudent); // Start Create New Student
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
+        $user->category = $this->category
+        ->where('id', $user->category_id )
+        ->first()->name;
+        $user->education = $this->education
+        ->where('id', $user->education_id  )
+        ->first()->name;
+        $user->job = $this->job
+        ->where('id', $user->sudent_jobs_id)
+        ->first()->job;
+        $user->parent = $request->parent_name;
+        Mail::to('ahmedahmadahmid73@gmail.com')->send(new SignupNotificationMail($user));
         return response()->json([
             'success'=>'Welcome,Student Created Successfully',
             'user'=>$user,

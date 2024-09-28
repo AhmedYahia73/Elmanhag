@@ -16,7 +16,7 @@ class SignupNotificationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public $data)
     {
         //
     }
@@ -37,7 +37,7 @@ class SignupNotificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'Email.Signup',
         );
     }
 
