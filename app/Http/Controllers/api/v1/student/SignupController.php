@@ -16,7 +16,7 @@ use App\Mail\SignupNotificationMail;
 class SignupController extends Controller
 {
         public function __construct(private User $user, private category $category,
-        private Education $education, private StudentJob $job) {}
+        private Education $education, private StudentJob $student_job) {}
 
    protected $studentRequest = [
    'name',
@@ -80,9 +80,7 @@ class SignupController extends Controller
         $user->education = $this->education
         ->where('id', $user->education_id  )
         ->first()->name;
-        $user->job = $this->job
-        ->where('id', $user->sudent_jobs_id)
-        ->first()->job;
+        $user->job = 'Dr';
         $user->parent = $request->parent_name;
         Mail::to('ahmedahmadahmid73@gmail.com')->send(new SignupNotificationMail($user));
         return response()->json([

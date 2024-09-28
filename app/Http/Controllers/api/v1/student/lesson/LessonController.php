@@ -45,20 +45,6 @@ class LessonController extends Controller
             $lesson_order = $lesson->order;
             $lesson_status = $lesson->status;
             $lesson_switch = $lesson->switch;
-            if($lesson_status == false){
-                return response()->json([
-                    'faield'=>'This Lesson Is Closed',
-                ],204);
-            }
-              if($lesson_switch == true){
-
-                        $lesson->resources; // With Resource
-                        $lesson->homework; // With Homework
-                    }else{
-                        return response()->json([
-                            'faield'=>'This Material for This Lesson is Closed',
-                        ],400);
-                    }
         } catch (ErrorException $e) {
 
             return response()->json([
@@ -137,6 +123,20 @@ class LessonController extends Controller
                     ], 403);
                 }
             }
+            if($lesson_status == false){
+                return response()->json([
+                    'faield'=>'This Lesson Is Closed',
+                ],204);
+            }
+              if($lesson_switch == true){
+
+                        $lesson->resources; // With Resource
+                        $lesson->homework; // With Homework
+                    }else{
+                        return response()->json([
+                            'faield'=>'This Material for This Lesson is Closed',
+                        ],400);
+                    }
             //  Geck Previos 
             return response()->json([
                 'data' => 'Lesson Return Successfully',
