@@ -53,6 +53,7 @@ class BundleController extends Controller
         // https://bdev.elmanhag.shop/admin/bundle/{id}
         $bundle = bundle::
         with(['category', 'education', 'subjects'])
+        ->where('id', $id)
         ->first();
 
         return response()->json([
