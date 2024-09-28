@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use App\trait\image;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class PlaceOrderController extends Controller
@@ -38,6 +39,8 @@ class PlaceOrderController extends Controller
         $payment_method_id = $request->payment_method_id;
         $bundle_id = $request->bundle_id;
         $subject_id = $request->subject_id;
+        $subject_id = $request->subject_id;
+        $live_id = $request->live_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title;
     //    $payment_title == 'vodafon cach' ? 
@@ -52,14 +55,27 @@ class PlaceOrderController extends Controller
         if($payment_title == 'fawry'){
             return response ()->json(['This Method UnAvailable Now']);
         }
-        $payment = $this->payment;
-        $newOrder = $payment->create($newOrder);
-        if($newOrder['service'] == 'Bundle'){
-            $newbundle = $newOrder->bundle()->sync($bundle_id);
+        try {
+            $payment = $this->payment;
+          $newOrder = $payment->create($newOrder);
+          if($newOrder['service'] == 'Bundle'){
+            $bundlePayment = $newOrder->bundle()->sync($bundle_id);
         }elseif($newOrder['service'] == 'Subject'){
             $subject_id = json_decode($subject_id);
-            $newSubjects = $newOrder->subject()->sync($subject_id);
+            $subjectPayment = $newOrder->subject()->sync($subject_id);
+        }elseif($newOrder['service'] == 'Live session'){
+            $livePayment = $newOrder->live()->sync($live_id);
+
+        }else{
+            return response()->json([
+                'faield' => 'This Service UnAvailable' ,
+            ]);
         }
+      } catch (QueryException $th) {
+            return response() -> json([
+                'faield' => 'Something Wrong Payment Faield !',
+            ]);
+      }
 
         return response()->json([
             'success'=>'The request has been sent and is awaiting approval from the Admin'
