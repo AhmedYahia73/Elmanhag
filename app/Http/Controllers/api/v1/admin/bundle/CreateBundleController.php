@@ -65,13 +65,13 @@ class CreateBundleController extends Controller
         $demo_video = null;
         $cover_photo = null;
         $thumbnail = null;
-        if ($request->demo_video != $bundle->demo_video_url) {
+        if ($request->demo_video != $bundle->demo_video_link) {
             $demo_video = $this->upload($request,'demo_video','admin/bundles/demo_video'); // Upload Demo Video
         }
-        if ($request->cover_photo != $subject->cover_photo_url) {
+        if ($request->cover_photo != $bundle->cover_photo_link) {
             $cover_photo = $this->upload($request,'cover_photo','admin/bundles/cover_photo'); // Upload Cover Photo
         }
-        if ($request->thumbnail != $subject->thumbnail_url) {
+        if ($request->thumbnail != $bundle->thumbnail_link) {
             $thumbnail = $this->upload($request,'thumbnail','admin/bundles/thumbnail'); // Upload thumbnail
 
         }
