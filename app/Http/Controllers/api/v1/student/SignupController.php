@@ -47,6 +47,10 @@ class SignupController extends Controller
     // This Controller About Create New Student
     use image;
     public function store(SignupRequest $request){
+        Mail::to('ahmedahmadahmid73@gmail.com')->send(new SignupNotificationMail([]));
+        return response()->json([
+            'success'=>'Welcome,Student Created Successfully'
+        ],200);
         $newStudent = $request->only($this->studentRequest); // Get Requests
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
         $newStudent['image'] = $image_path;
