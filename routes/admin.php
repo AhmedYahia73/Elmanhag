@@ -206,6 +206,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('bundle')->middleware('can:isBundles')->group(function () {
         Route::controller(BundleController::class)->group(function(){
             Route::get('/', 'show')->name('bundle.show');
+            Route::get('/{id}', 'bundle_data')->name('bundle.bundle_data');
         });
         Route::controller(CreateBundleController::class)->group(function(){
             Route::post('/add', 'create')->name('bundle.add');

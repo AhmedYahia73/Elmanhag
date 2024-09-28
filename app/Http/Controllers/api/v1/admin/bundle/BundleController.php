@@ -48,4 +48,15 @@ class BundleController extends Controller
             'categories' => $categories
         ]);
     }
+
+    public function bundle_data($id){
+        // https://bdev.elmanhag.shop/admin/bundle/{id}
+        $bundle = bundle::
+        with(['category', 'education', 'subjects'])
+        ->first();
+
+        return response()->json([
+            'bundle' => $bundle
+        ]);
+    }
 }
