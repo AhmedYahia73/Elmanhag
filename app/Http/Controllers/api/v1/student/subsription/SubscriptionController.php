@@ -43,6 +43,7 @@ class SubscriptionController extends Controller
 
       
         $live = $this->live
+        ->with(['subject', 'teacher'])
         ->where('category_id', auth()->user()->category_id)
         ->whereHas('students', function ($query) {
             $query->where('users.id', auth()->user()->id);
