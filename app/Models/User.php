@@ -22,6 +22,8 @@ use App\Models\Bonus;
 use App\Models\AdminPosition;
 use App\Models\PersonalAccessToken;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -184,5 +186,12 @@ class User extends Authenticatable
      public function student_job(){
          return $this->belongsTo(StudentJob::class, 'sudent_jobs_id');
      }
+
+      public function live():BelongsToMany{
+      return $this->belongsToMany(Live::class, 'user_Live');
+      }
+      public function services():BelongsToMany{
+      return $this->belongsToMany(Live::class, 'user_Live');
+      }
 
 }

@@ -10,6 +10,7 @@ use App\Models\PaymentMethod;
 use App\Models\bundle;
 use App\Models\subject;
 use App\Models\Live;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Payment extends Model
 {
@@ -47,7 +48,7 @@ class Payment extends Model
         return $this->belongsToMany(subject::class, 'service_payment');
     }
 
-    public function live(){
+    public function live():BelongsToMany{
         return $this->belongsToMany(Live::class, 'service_payment');
     }
 }
