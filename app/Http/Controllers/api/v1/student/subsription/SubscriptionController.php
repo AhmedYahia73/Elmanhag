@@ -74,9 +74,20 @@ class SubscriptionController extends Controller
                 'success' => 'You are allowed to attend'
             ], 200);
         } else {
-            return response()->json([
-                'faild' => 'You must buy live first'
-            ], 400);
+            $live = $this->live
+            ->where('id', $id)
+            ->where('paid', 0)
+            ->first();
+            if (empty($live)) {
+                return response()->json([
+                    'faild' => 'You must buy live first'
+                ], 400);
+            } else {
+                return response()->json([
+                    'success' => 'You are allowed to attend'
+                ], 200);
+            }
+            
         }
         
     }
