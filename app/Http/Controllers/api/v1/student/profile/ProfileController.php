@@ -71,18 +71,18 @@ class ProfileController extends Controller
       $updateProfile = $request->only($this->requestProfile);
                 $user->name = $updateProfile['name'] ?? $user->name;
                 $user->email = $updateProfile['email'] ?? $user->email ;
-                $image_path = $this->upload($request, 'image', 'student/user');
-                $user->image = $image_path ?? $user->image;
                 if( isset($updateProfile['password'])){
                     $user->password = $updateProfile['password'] ;
-                }
-                if ($user->image != 'female.png' && $user->image != 'default.png' && $image_path) {
-                    $this->deleteImage($user->image);
-                }
+                } 
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
                 $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
                 $user->role = 'student';
+                $image_path = $this->upload($request, 'image', 'student/user');
+                $user->image = $image_path ?? $user->image;
+                if ($user->image != 'female.png' && $user->image != 'default.png' && $image_path != null) {
+                    $this->deleteImage($user->image);
+                }
                 $user->city_id = $updateProfile['city_id']?? $user->city_id;
                 $user->country_id = $updateProfile['country_id']?? $user->country_id;
                 $user->category_id = $updateProfile['category_id']?? $user->category_id;
