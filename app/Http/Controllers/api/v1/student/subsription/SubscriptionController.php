@@ -41,7 +41,19 @@ class SubscriptionController extends Controller
         $subjects = $subjects->where('status', 1)
         ->where('expired_date', '>=', date('Y-m-d'));
 
-      
+        $live = $this->live
+        ->with(['subject', 'teacher'])
+        ->where('category_id', auth()->user()->category_id)
+        ->where('date', '>=', now())
+        ->get(); // Get live
+
+        return response()->json([
+            'subjects' => $subjects,
+            'live' => $live,
+        ]);
+    }
+
+    public function check_live($id){
         $live = $this->live
         ->with(['subject', 'teacher'])
         ->where('category_id', auth()->user()->category_id)
@@ -53,10 +65,18 @@ class SubscriptionController extends Controller
         ->where('inculded', 1)
         ->where('category_id', auth()->user()->category_id)
         ->where('date', '>=', now())
-        ->get(); // Get live that havs the same category of student
-        return response()->json([
-            'subjects' => $subjects,
-            'live' => $live,
-        ]);
+        ->first(); // Get live that havs the same category of student
+        $live = $live->where('id', $id);
+
+        if (!empty($live)) {
+            return response()->json([
+                'success' => 'You are allowed to attend'
+            ], 200);
+        } else {
+            return response()->json([
+                'faild' => 'You must buy live first'
+            ], 400);
+        }
+        
     }
 }

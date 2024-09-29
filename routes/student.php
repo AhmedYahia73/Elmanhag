@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
     Route::prefix('subscription')->group(function () {
         Route::controller(SubscriptionController::class)->group(function () {
             Route::get('/','view')->name('subscription.view');
+            Route::post('/check/{id}','check_live')->name('subscription.check_live');
         }); 
     });
         Route::controller(ChapterController::class)->group(function () { // This All Chapters For Student
