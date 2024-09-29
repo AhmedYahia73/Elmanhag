@@ -7,9 +7,11 @@ use App\Models\category;
 use App\Models\Education;
 use App\Models\StudentJob;
 use App\trait\image;
+use Faker\Provider\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\student\SignupRequest;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SignupNotificationMail;
 
@@ -47,6 +49,17 @@ class SignupController extends Controller
     // This Controller About Create New Student
     use image;
     public function store(SignupRequest $request){
+     try {
+        // This Email Must Be Email Login With Mailtrab
+           Mail::to('ziadm57@yahoo.com')->send(new SignupNotificationMail([$request]));
+     } catch (\Throwable $th) {
+            return response()->json([
+                'faield'=>'Something Wrong Send Email Faield',
+            ],500);
+     }
+        return response()->json([
+            'success'=>'Welcome,Student Created Successfully'
+        ],200);
         $newStudent = $request->only($this->studentRequest); // Get Requests
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
         $newStudent['image'] = $image_path;

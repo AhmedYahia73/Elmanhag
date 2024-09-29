@@ -1,4 +1,3 @@
-
 <table>
     <tr>
         <td>{{$data->name}}</td>
