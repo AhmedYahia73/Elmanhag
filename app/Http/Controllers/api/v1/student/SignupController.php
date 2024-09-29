@@ -81,7 +81,7 @@ class SignupController extends Controller
         
         if($this->parentRequest){
             $parent = $this->user
-            ->where('email', $newParent['parent_email'])
+            ->where('email', $request->parent_email)
             ->first();
             if (empty($parent)) {
                 $newParent = $request->only($this->parentRequest);

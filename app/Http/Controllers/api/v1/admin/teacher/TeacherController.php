@@ -58,7 +58,7 @@ class TeacherController extends Controller
     public function teacher_profile_update(TeacherRequest $request, $id){ 
         // https://bdev.elmanhag.shop/admin/teacher/profile/update/{id}
         // Key
-        // name, phone, status, email, image, password
+        // name, phone, status, email, image, password, subject
         // Get User Data
         $user = $this->users->where('id', $id)
         ->where('role', 'teacher')
@@ -101,7 +101,7 @@ class TeacherController extends Controller
     public function add_teacher(AddTeacherRequest $request){
         // https://bdev.elmanhag.shop/admin/teacher/add
         // Key
-        // name, phone, status, email, image, password
+        // name, phone, status, email, image, password, subject
         $teacherData = $request->only($this->teacherRequest); // Get data
         $image =  $this->upload($request,'image','teacher/user'); // Upload teacher image
         $teacherData['role'] = 'teacher'; // Determine role of user
