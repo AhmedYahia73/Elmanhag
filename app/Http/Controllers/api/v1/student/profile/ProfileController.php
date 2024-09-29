@@ -74,7 +74,7 @@ class ProfileController extends Controller
                 if( isset($updateProfile['password'])){
                     $user->password = $updateProfile['password'] ;
                 }
-                if ($user->image != 'female.png' && $user->image != 'default.png') {
+                if ($user->image != 'female.png' && $user->image != 'default.png' && $image_path) {
                     $this->deleteImage($user->image);
                 }
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
