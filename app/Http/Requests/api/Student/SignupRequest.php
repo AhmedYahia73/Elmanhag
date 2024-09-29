@@ -24,17 +24,17 @@ class SignupRequest extends FormRequest
     {
         return [
             // This About All Name Request and Validate Request 
-    'name' => ['required'],
-    'email' => ['email', 'unique:users', 'required'],
-    'password' => ['required'],
-    'conf_password' => ['required', 'same:password'],
-    'phone' => ['required', 'unique:users'],
-    'city_id' => ['required','exists:cities,id'],
-    'country_id' => ['required','exists:countries,id'],
-    'category_id' => ['required','exists:categories,id'],
-    'education_id' => ['required','exists:education,id'],
-    'gender' => ['required'],
-    'sudent_jobs_id' => ['required'],
+            'name' => ['required'],
+            'email' => ['email', 'unique:users', 'required'],
+            'password' => ['required'],
+            'conf_password' => ['required', 'same:password'],
+            'phone' => ['required', 'unique:users'],
+            'city_id' => ['required','exists:cities,id'],
+            'country_id' => ['required','exists:countries,id'],
+            'category_id' => ['required','exists:categories,id'],
+            'education_id' => ['required','exists:education,id'],
+            'gender' => ['required'],
+            'sudent_jobs_id' => ['required'],
         ];
     }
     public function failedValidation(Validator $validator){

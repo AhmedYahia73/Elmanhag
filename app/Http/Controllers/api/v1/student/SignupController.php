@@ -68,7 +68,6 @@ class SignupController extends Controller
             } else {
                 $newStudent['image'] = 'female.png';
             }
-            
        } 
        else {
             $newStudent['image'] = $image_path;
@@ -78,9 +77,10 @@ class SignupController extends Controller
             $affiliate = $this->user->where('affilate_code', $request->affilate_code)->first();
             $newStudent['affilate_id'] = $affiliate->id;
          }
-      
-           
+        
+        
         if($this->parentRequest){
+            
             $newParent = $request->only($this->parentRequest);
             //   $newParent['parent_id'] = $user->id;
               $newParent['role'] = 'parent';
@@ -93,8 +93,8 @@ class SignupController extends Controller
               'parent_relation_id' => $newParent['parent_relation_id'],
               ]); // Start Create Parent
         }
-            $newStudent['parent_id'] = $parent->id; // Relational Parent With Student
-            $user = $this->user->create($newStudent); // Start Create New Student
+        $newStudent['parent_id'] = $parent->id; // Relational Parent With Student
+        $user = $this->user->create($newStudent); // Start Create New Student
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
         // $user->category = $this->category
