@@ -39,4 +39,16 @@ class LiveController extends Controller
             'education' => $education,
         ]);
     }
+
+    public function live($id){
+        // https://bdev.elmanhag.shop/admin/live/{id}
+        $live = $this->live
+        ->with(['subject', 'teacher', 'category', 'education'])
+        ->where('id', $id)
+        ->get();
+    
+        return response()->json([
+            'live' => $live
+        ]);
+    }
 }

@@ -306,6 +306,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('live')->middleware('can:isLive')->group(function() {
         Route::controller(LiveController::class)->group(function(){
             Route::get('/', 'show')->name('live.show');
+            Route::get('/{id}', 'live')->name('live.live');
         });
         Route::controller(CreateLiveController::class)->group(function(){
             Route::post('/add', 'create')->name('live.add');
