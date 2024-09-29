@@ -17,6 +17,7 @@ class MaterialsController extends Controller
     private chapter $chapter, private lesson $lesson, private MaterialLesson $materials){}
 
     public function view(){
+        // https://bdev.elmanhag.shop/admin/materials
         $category = $this->category
         ->get();
         $subject = $this->subject
