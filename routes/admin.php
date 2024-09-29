@@ -18,6 +18,8 @@ use App\Http\Controllers\api\v1\admin\Subject\CreateSubjectController;
 use App\Http\Controllers\api\v1\admin\chapter\ChapterController;
 use App\Http\Controllers\api\v1\admin\chapter\CreateChapterController;
 
+use App\Http\Controllers\api\v1\admin\materials\MaterialsController;
+
 use App\Http\Controllers\api\v1\admin\lesson\LessonMaterialController;
 use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
 
@@ -190,6 +192,13 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
 
             Route::put('/switch/{id}', 'switch')->name('lesson.switch');
+        });
+    });
+
+    // Start Module Materials
+    Route::prefix('materials')->middleware('can:isMaterial')->group(function () {
+        Route::controller(MaterialsController::class)->group(function(){
+            Route::get('/', 'view')->name('material.view');
         });
     });
 

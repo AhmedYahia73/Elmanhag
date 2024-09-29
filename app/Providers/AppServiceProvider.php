@@ -313,6 +313,21 @@ class AppServiceProvider extends ServiceProvider
             }
         });
         
+        // if roles have material module
+        Gate::define('isMaterial', function (User $user) {
+            if ( $user->role == 'supAdmin' ) {
+                return true;
+            }
+            elseif ( $user->role == 'admin' ) {
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('material', $arr)) {
+                        return true;
+                    }
+                }
+            }
+        });
+        
         // if roles have admin_roles module
         Gate::define('isAdminRoles', function (User $user) {
             if ( $user->role == 'supAdmin' ) {
