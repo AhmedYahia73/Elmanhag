@@ -34,7 +34,7 @@ class SignupController extends Controller
    'parent_relation_id',
    'education_id',
    'affilate_id',
-     'parent_id',
+    'parent_id',
    'language'
    ];
     protected $parentRequest = [
@@ -72,8 +72,7 @@ class SignupController extends Controller
        } 
        else {
             $newStudent['image'] = $image_path;
-       }
-       
+       } 
         $newStudent['role'] = 'student';
          if(isset($request->affilate_code)){ // If Student Append Affiliate Code
             $affiliate = $this->user->where('affilate_code', $request->affilate_code)->first();
