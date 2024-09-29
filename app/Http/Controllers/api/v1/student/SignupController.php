@@ -63,7 +63,7 @@ class SignupController extends Controller
         $newStudent = $request->only($this->studentRequest); // Get Requests
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
        if (empty($image_path) || $image_path == null) {
-            if ($newStudent->gender == 'male') {
+            if ($newStudent['gender'] == 'male') {
                 # code...
             } else {
                 # code...
