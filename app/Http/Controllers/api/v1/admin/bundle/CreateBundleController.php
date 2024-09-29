@@ -73,7 +73,6 @@ class CreateBundleController extends Controller
         }
         if ($request->thumbnail != $bundle->thumbnail_link) {
             $thumbnail = $this->upload($request,'thumbnail','admin/bundles/thumbnail'); // Upload thumbnail
-
         }
         // If new Video is found delete old image
         if ( !empty($demo_video) && $demo_video != null ) {
