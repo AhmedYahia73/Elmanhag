@@ -50,9 +50,11 @@ class ProfileController extends Controller
         ->where('id',$user_id )
         ->first();
             try {
-                       $user->education = $user->education->name;
+                       $user->edu = $user->education->name;
                        $user->country_name = $user->country->name;
                        $user->city_name = $user->city->name;
+
+                       return $user;
             } catch (QueryException $th) {
             return response()->json([
                 'faield'=>'This user Don\'t have City  ',
