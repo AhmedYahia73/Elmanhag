@@ -54,6 +54,7 @@ class SubscriptionController extends Controller
     }
 
     public function check_live($id){
+        // https://bdev.elmanhag.shop/student/subscription/check/{id}
         $live = $this->live
         ->with(['subject', 'teacher'])
         ->where('category_id', auth()->user()->category_id)
