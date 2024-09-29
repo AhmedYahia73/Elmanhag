@@ -87,15 +87,17 @@ class SignupController extends Controller
             $user = $this->user->create($newStudent); // Start Create New Student
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
-        $user->category = $this->category
-        ->where('id', $user->category_id )
-        ->first()->name;
-        $user->education = $this->education
-        ->where('id', $user->education_id  )
-        ->first()->name;
-        $user->job = 'Dr';
-        $user->parent = $request->parent_name;
-        Mail::to('ahmedahmadahmid73@gmail.com')->send(new SignupNotificationMail($user));
+        // $user->category = $this->category
+        // ->where('id', $user->category_id )
+        // ->first()->name;
+        // $user->education = $this->education
+        // ->where('id', $user->education_id  )
+        // ->first()->name;
+        // $user->job = $this->student_job
+        // ->where('id', $user->sudent_jobs_id)
+        // ->first()->job;
+        // $user->parent = $request->parent_name;
+        // Mail::to('ahmedahmadahmid73@gmail.com')->send(new SignupNotificationMail($user));
         return response()->json([
             'success'=>'Welcome,Student Created Successfully',
             'user'=>$user,

@@ -61,10 +61,20 @@ class CreateBundleController extends Controller
         $this->translate($bundle_data['name'], $bundle_data['ar_name']);
         $bundle = $this->bundle->where('id', $id)
         ->first();
-        $demo_video = $this->upload($request,'demo_video','admin/bundles/demo_video'); // Upload Demo Video
-        $cover_photo = $this->upload($request,'cover_photo','admin/bundles/cover_photo'); // Upload Cover Photo
-        $thumbnail = $this->upload($request,'thumbnail','admin/bundles/thumbnail'); // Upload thumbnail
         $bundle->subjects()->sync($request->subjects);
+        $demo_video = null;
+        $cover_photo = null;
+        $thumbnail = null;
+        if ($request->demo_video != $bundle->demo_video_link) {
+            $demo_video = $this->upload($request,'demo_video','admin/bundles/demo_video'); // Upload Demo Video
+        }
+        if ($request->cover_photo != $bundle->cover_photo_link) {
+            $cover_photo = $this->upload($request,'cover_photo','admin/bundles/cover_photo'); // Upload Cover Photo
+        }
+        if ($request->thumbnail != $bundle->thumbnail_link) {
+            $thumbnail = $this->upload($request,'thumbnail','admin/bundles/thumbnail'); // Upload thumbnail
+
+        }
         // If new Video is found delete old image
         if ( !empty($demo_video) && $demo_video != null ) {
             $this->deleteImage($bundle->demo_video);
