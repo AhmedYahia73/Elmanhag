@@ -80,18 +80,22 @@ class SignupController extends Controller
         
         
         if($this->parentRequest){
-            
-            $newParent = $request->only($this->parentRequest);
-            //   $newParent['parent_id'] = $user->id;
-              $newParent['role'] = 'parent';
-              $parent = $this->user->create([
-              'name' => $newParent['parent_name'],
-              'email' => $newParent['parent_email'],
-              'password' => $newParent['parent_password'],
-              'phone' => $newParent['parent_phone'],
-              'role' => 'parent',
-              'parent_relation_id' => $newParent['parent_relation_id'],
-              ]); // Start Create Parent
+            $parent = $this->user
+            ->where('email', $newParent['parent_email'])
+            ->first();
+            if (empty($parent)) {
+                $newParent = $request->only($this->parentRequest);
+                //   $newParent['parent_id'] = $user->id;
+                  $newParent['role'] = 'parent';
+                  $parent = $this->user->create([
+                  'name' => $newParent['parent_name'],
+                  'email' => $newParent['parent_email'],
+                  'password' => $newParent['parent_password'],
+                  'phone' => $newParent['parent_phone'],
+                  'role' => 'parent',
+                  'parent_relation_id' => $newParent['parent_relation_id'],
+                  ]); // Start Create Parent
+            }
         }
         $newStudent['parent_id'] = $parent->id; // Relational Parent With Student
         $user = $this->user->create($newStudent); // Start Create New Student
