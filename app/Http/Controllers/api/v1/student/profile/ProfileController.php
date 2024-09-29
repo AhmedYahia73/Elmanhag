@@ -79,7 +79,7 @@ class ProfileController extends Controller
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
                 $user->role = 'student';
                 $image_path = $this->upload($request, 'image', 'student/user');
-                $user->image = $image_path ?? $user->image;
+                $user->image = $image_path == null ? $user->image: $image_path;
                 if ($user->image != 'female.png' && $user->image != 'default.png' && $image_path != null) {
                     $this->deleteImage($user->image);
                 }
