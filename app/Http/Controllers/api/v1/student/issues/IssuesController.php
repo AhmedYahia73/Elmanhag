@@ -19,6 +19,7 @@ class IssuesController extends Controller
     private StudentVideoIssue $student_video_issue){}
 
     public function view(){
+        // https://bdev.elmanhag.shop/student/issues
         $question_issues = $this->question_issues
         ->get();
         $video_issues = $this->video_issues
@@ -31,8 +32,9 @@ class IssuesController extends Controller
     }
 
     public function add(Request $request){
+        // https://bdev.elmanhag.shop/student/issues
         // Keys
-        // type, issue_id, id
+        // type[question, video], issue_id, id
         $validator = Validator::make($request->all(), [
             'type' => 'required|in:question,video',
         ]);
