@@ -55,6 +55,32 @@ class SubscriptionController extends Controller
 
     public function check_live($id){
         // https://bdev.elmanhag.shop/student/subscription/check/{id}
+        $bundles = $this->bundles
+        ->where('category_id', auth()->user()->category_id)
+        ->whereHas('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->with('subjects')
+        ->get(); // Get bundles that havs the same category of student and student buy it
+        $bundles_subjects = [];
+        foreach ($bundles as $item) {
+            $bundles_subjects = array_merge($bundles_subjects, 
+            $item->subjects->pluck('id')->toArray());
+        } 
+        $subjects = $this->subjects
+        ->where('category_id', auth()->user()->category_id)
+        ->whereHas('users', function ($query) {
+            $query->where('users.id', auth()->user()->id);
+        })
+        ->orWhereIn('id', $bundles_subjects)
+        ->where('category_id', auth()->user()->category_id)
+        ->get(); // Get subject that havs the same category of student and student does not buy it
+
+        $bundles = $bundles->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
+        $subjects = $subjects->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
+        
         $live = $this->live
         ->with(['subject', 'teacher'])
         ->where('category_id', auth()->user()->category_id)
@@ -62,12 +88,13 @@ class SubscriptionController extends Controller
             $query->where('users.id', auth()->user()->id);
         })
         ->where('date', '>=', now())
+        ->where('id', $id)
         ->orWhereIn('subject_id', $subjects->pluck('id'))
         ->where('inculded', 1)
         ->where('category_id', auth()->user()->category_id)
         ->where('date', '>=', now())
-        ->first(); // Get live that havs the same category of student
-        $live = $live->where('id', $id);
+        ->where('id', $id)
+        ->get(); // Get live that havs the same category of student
 
         if (!empty($live)) {
             return response()->json([
