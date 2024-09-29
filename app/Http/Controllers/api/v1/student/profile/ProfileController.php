@@ -53,6 +53,7 @@ class ProfileController extends Controller
                 $user->edu = $user->education->name;
                 $user->country_name = $user->country->name;
                 $user->city_name = $user->city->name;
+                $user->category = $user->category->name;
 
             } catch (QueryException $th) {
             return response()->json([
@@ -70,10 +71,13 @@ class ProfileController extends Controller
       $updateProfile = $request->only($this->requestProfile);
                 $user->name = $updateProfile['name'] ?? $user->name;
                 $user->email = $updateProfile['email'] ?? $user->email ;
-                    if( isset($updateProfile['password'])){
-                        $user->password = $updateProfile['password'] ;
-                    }
-                     $this->deleteImage($user->image);
+                if( isset($updateProfile['password'])){
+                    $user->password = $updateProfile['password'] ;
+                }
+                if ($user->image ) {
+                    # code...
+                }
+                $this->deleteImage($user->image);
                 $user->phone = $updateProfile['phone'] ?? $user->phone ;
                 $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
                 $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
