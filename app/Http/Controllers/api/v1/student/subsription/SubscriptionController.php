@@ -94,7 +94,7 @@ class SubscriptionController extends Controller
         ->where('category_id', auth()->user()->category_id)
         ->where('date', '>=', now())
         ->where('id', $id)
-        ->get(); // Get live that havs the same category of student
+        ->first(); // Get live that havs the same category of student
 
         if (!empty($live)) {
             return response()->json([
