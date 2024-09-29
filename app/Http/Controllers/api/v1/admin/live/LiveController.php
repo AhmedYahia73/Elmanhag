@@ -45,7 +45,7 @@ class LiveController extends Controller
         $live = $this->live
         ->with(['subject', 'teacher', 'category', 'education'])
         ->where('id', $id)
-        ->get();
+        ->first();
     
         return response()->json([
             'live' => $live
