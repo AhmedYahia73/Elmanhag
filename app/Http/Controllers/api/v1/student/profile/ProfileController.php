@@ -50,7 +50,7 @@ class ProfileController extends Controller
         ->where('id',$user_id )
         ->first();
             try {
-                       $user->education = $user->category->name;
+                       $user->education = $user->education->name;
                        $user->country_name = $user->country->name;
                        $user->city_name = $user->city->name;
             } catch (QueryException $th) {

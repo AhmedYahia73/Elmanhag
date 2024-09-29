@@ -64,9 +64,9 @@ class SignupController extends Controller
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
        if (empty($image_path) || $image_path == null) {
             if ($newStudent['gender'] == 'male') {
-                # code...
+                $newStudent['image'] = 'default.png';
             } else {
-                # code...
+                $newStudent['image'] = 'female.png';
             }
             
        } 
