@@ -25,6 +25,9 @@ class CreatePopupController extends Controller
     ];
 // image
     public function create(PopupRequest $request){
+        // https://bdev.elmanhag.shop/admin/popup/add
+        // Keys
+        // title, ar_title, destination[student, parent, teacher], start_date, end_date, image
         $data = $request->only($this->popupRequest);
         $this->translate($data['title'], $data['ar_title']); // Translate at file json   
         $image =  $this->upload($request,'image','admin/popup'); // Upload popup
@@ -38,6 +41,9 @@ class CreatePopupController extends Controller
     }
 
     public function modify(UpdatePopupRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/popup/update/{id}
+        // Keys
+        // title, ar_title, destination[student, parent, teacher], start_date, end_date, image
         $data = $request->only($this->popupRequest);
         $this->translate($data['title'], $data['ar_title']); // Translate at file json
         $popup = $this->popup
@@ -56,6 +62,7 @@ class CreatePopupController extends Controller
     }
 
     public function delete($id){
+        // https://bdev.elmanhag.shop/admin/popup/delete/{id}
         $popup = $this->popup
         ->where('id', $id)
         ->first();

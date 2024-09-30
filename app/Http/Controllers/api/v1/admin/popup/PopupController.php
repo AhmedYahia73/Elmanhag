@@ -12,6 +12,7 @@ class PopupController extends Controller
     public function __construct(private Popup $popup){}
 
     public function show(){
+        // https://bdev.elmanhag.shop/admin/popup
         $popups = $this->popup
         ->get();
 
