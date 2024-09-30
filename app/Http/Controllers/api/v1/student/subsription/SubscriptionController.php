@@ -44,7 +44,7 @@ class SubscriptionController extends Controller
         $live = $this->live
         ->with(['subject', 'teacher'])
         ->where('category_id', auth()->user()->category_id)
-        ->where('date', '>=', now())
+        ->where('date', '>=', date('Y-m-d'))
         ->get(); // Get live
 
         return response()->json([
@@ -87,12 +87,12 @@ class SubscriptionController extends Controller
         ->whereHas('students', function ($query) {
             $query->where('users.id', auth()->user()->id);
         })
-        ->where('date', '>=', now())
+        ->where('date', '>=', date('Y-m-d'))
         ->where('id', $id)
         ->orWhereIn('subject_id', $subjects->pluck('id'))
         ->where('inculded', 1)
         ->where('category_id', auth()->user()->category_id)
-        ->where('date', '>=', now())
+        ->where('date', '>=', date('Y-m-d'))
         ->where('id', $id)
         ->first(); // Get live that havs the same category of student
 
