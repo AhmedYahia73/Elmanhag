@@ -12,6 +12,8 @@ use App\Http\Controllers\api\v1\auth\SignupController;
 
 use App\Http\Controllers\api\v1\admin\ProfileAdminController;
 
+use App\Http\Controllers\api\v1\popup\PopupController;
+
 use App\Http\Controllers\api\v1\student\SubjectsController;
 use App\Http\Controllers\api\v1\student\ProfileController as ProfileStudentController;
 
@@ -19,6 +21,8 @@ use App\Http\Controllers\api\v1\student\ProfileController as ProfileStudentContr
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::get('popup', [PopupController::class, 'view'])->middleware('auth:sanctum');
 
 
 // Route::middleware('auth:sanctum')->prefix('Student')->group(function () {

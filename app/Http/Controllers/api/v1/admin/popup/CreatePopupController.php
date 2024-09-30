@@ -23,7 +23,7 @@ class CreatePopupController extends Controller
         'start_date',
         'end_date',
     ];
-// image
+
     public function create(PopupRequest $request){
         // https://bdev.elmanhag.shop/admin/popup/add
         // Keys
