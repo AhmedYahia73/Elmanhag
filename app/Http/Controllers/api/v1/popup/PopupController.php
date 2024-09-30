@@ -12,6 +12,7 @@ class PopupController extends Controller
     public function __construct(private Popup $popup){}
 
     public function view(){
+        // https://bdev.elmanhag.shop/api/popup
         $popups = $this->popup
         ->where('start_date', '<=', date('Y-m-d'))
         ->where('end_date', '>=', date('Y-m-d'))
