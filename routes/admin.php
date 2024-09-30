@@ -41,6 +41,9 @@ use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
 use App\Http\Controllers\api\v1\admin\live\LiveController;
 use App\Http\Controllers\api\v1\admin\live\CreateLiveController;
 
+use App\Http\Controllers\api\v1\admin\popup\PopupController;
+use App\Http\Controllers\api\v1\admin\popup\CreatePopupController;
+
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
 use App\Http\Controllers\api\v1\admin\parent\ParentController;
@@ -122,6 +125,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('parent')->middleware('can:isParent')->group(function () {
         Route::controller(ParentController::class)->group(function () {
             Route::get('/', 'show')->name('parent.show');
+        });
+    });
+
+    // Start Popup Module
+    Route::prefix('popup')->middleware('can:isPopup')->group(function () {
+        Route::controller(PopupController::class)->group(function () {
+            Route::get('/', 'show')->name('popup.show');
+        });
+        Route::controller(CreatePopupController::class)->group(function(){
+            Route::post('/add', 'create')->name('popup.add');
+            Route::put('/update/{id}', 'modify')->name('popup.update');
+            Route::delete('/delete/{id}', 'delete')->name('popup.delete');
         });
     });
   
