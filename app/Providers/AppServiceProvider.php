@@ -224,15 +224,15 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        // if roles have promocode module
-        Gate::define('isPromocode', function (User $user) {
+        // if roles have popup module
+        Gate::define('isPopup', function (User $user) {
             if ( $user->role == 'supAdmin' ) {
                 return true;
             }
             elseif ( $user->role == 'admin' ) {
                 if (isset($user->admin_position->roles)) {
                     $arr = $user->admin_position->roles->pluck('role')->toArray();
-                    if (in_array('promocode', $arr)) {
+                    if (in_array('pop up', $arr)) {
                         return true;
                     }
                 }

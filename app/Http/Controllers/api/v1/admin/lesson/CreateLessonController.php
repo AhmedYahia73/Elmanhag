@@ -47,7 +47,7 @@ class CreateLessonController extends Controller
         // materials [{type, source, material}]
         $lesson_data = $request->only($this->lessonRequest); // Get data
         $lesson_data['chapter_id'] = $ch_id;
-        $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
+        $this->translate($lesson_data['name'], $lesson_data['ar_name']); // Translate at file json
         $lesson = lesson::create($lesson_data); // Create lesson record
 
         if(isset($request->materials)){
@@ -110,7 +110,7 @@ class CreateLessonController extends Controller
         $lesson_data = $request->only($this->lessonRequest); // Get data
         $lesson = lesson::where('id', $id)
         ->first();
-        $this->translate($lesson_data['name'], $lesson_data['name']); // Translate at file json
+        $this->translate($lesson_data['name'], $lesson_data['ar_name']); // Translate at file json
         $lesson->update($lesson_data);
         
         // Update Source

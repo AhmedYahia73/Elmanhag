@@ -16,4 +16,9 @@ class Popup extends Model
         'start_date' ,
         'end_date' ,
     ];
+    protected $appends = ['image_link'];
+
+    public function getImageLinkAttribute(){
+        return url('storage/' . $this->attributes['image']);
+    }
 }
