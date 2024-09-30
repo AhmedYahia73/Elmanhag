@@ -76,6 +76,7 @@ class ProfileController extends Controller
         $user->phone = $updateProfile['phone'] ?? $user->phone ;
         $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
         $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
+        $user->sudent_jobs_id = $updateProfile['sudent_jobs_id'] ?? $user->sudent_jobs_id;
         $user->role = 'student';
         $image_path = $this->upload($request, 'image', 'student/user');
         if ($image_path != null) {
