@@ -39,7 +39,7 @@ class CreatePopupController extends Controller
 
     public function modify(UpdatePopupRequest $request, $id){
         $data = $request->only($this->popupRequest);
-        $this->translate($data['title'], $data['ar_title']); // Translate at file json   
+        $this->translate($data['title'], $data['ar_title']); // Translate at file json
         $popup = $this->popup
         ->where('id', $id)
         ->first();
@@ -52,10 +52,18 @@ class CreatePopupController extends Controller
         $popup->update($data);
         return response()->json([
             'success' => 'You update data success'
-        ]);
+        ], 200);
     }
 
     public function delete($id){
-        
+        $popup = $this->popup
+        ->where('id', $id)
+        ->first();
+        $this->deleteImage($popup->image);
+        $popup->delete();
+
+        return response()->json([
+            'success' => 'You delete popup success'
+        ], 200);
     }
 }
