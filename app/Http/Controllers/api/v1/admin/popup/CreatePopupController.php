@@ -38,7 +38,21 @@ class CreatePopupController extends Controller
     }
 
     public function modify(UpdatePopupRequest $request, $id){
-        
+        $data = $request->only($this->popupRequest);
+        $this->translate($data['title'], $data['ar_title']); // Translate at file json   
+        $popup = $this->popup
+        ->where('id', $id)
+        ->first();
+        if (is_file($request->image)) {
+            $image =  $this->upload($request,'image','admin/popup'); // Upload popup
+            $this->deleteImage($popup->image);
+            $data['image'] = $image;
+        } // if admin upload file
+
+        $popup->update($data);
+        return response()->json([
+            'success' => 'You update data success'
+        ]);
     }
 
     public function delete($id){

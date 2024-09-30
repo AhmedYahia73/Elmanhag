@@ -135,7 +135,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         Route::controller(CreatePopupController::class)->group(function(){
             Route::post('/add', 'create')->name('popup.add');
-            Route::put('/update/{id}', 'modify')->name('popup.update');
+            Route::post('/update/{id}', 'modify')->name('popup.update');
             Route::delete('/delete/{id}', 'delete')->name('popup.delete');
         });
     });
