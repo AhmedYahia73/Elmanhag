@@ -31,7 +31,7 @@ trait PlaceOrder
          $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
      
             if(empty($paymentMethod)){
-                    return response()->json(['faield'=>'Payment Method Fawry Not Found'],404);
+                    return abort(404);
             }
                     
         foreach ($items as $item) {
@@ -60,11 +60,11 @@ trait PlaceOrder
                 $newSubjects = $createPayment->subject()->sync($itemId);
               }
               } catch (\Throwable $th) {
-              return response()->json(
-                [
-                    'faield'=>'Your Order Not Found',
-                    'message'=>$th->getMessage()
-            ],404);
+                return
+                    [
+                        'faield' => 'Your Order Not Found',
+                        'message' => $th->getMessage()
+                    ];
               }
             $data = [
                 

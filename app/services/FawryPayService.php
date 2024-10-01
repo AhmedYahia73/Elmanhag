@@ -17,7 +17,7 @@ class FawryPayService
         // Load environment variables
         $this->merchantCode = env('FAWRY_MERCHANT_CODE');  // Set in .env
         $this->secureKey = env('FAWRY_SECURE_KEY');  // Set in .env
-        $this->apiUrl = 'https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/charge';  // Staging API URL
+        $this->apiUrl = 'https://www.atfawry.com/ECommerceWeb/Fawry/payments/charge'; // Staging API URL
 
         // Check if SSL verification is needed
         $this->verifySSL = env('APP_ENV') === 'production';  // Verify SSL in production, ignore in other environments
@@ -55,7 +55,7 @@ class FawryPayService
         try {
             // Make the POST request to FawryPay API with SSL verification based on environment
             $response = Http::withOptions([
-                'verify' => true, // SSL verification in production only
+                'verify' => $this->verifySSL, // SSL verification in production only
             ])->post($this->apiUrl, $data);
 
             // Log the response for debugging
@@ -85,7 +85,7 @@ class FawryPayService
 
         // Make the GET request to FawryPay API
         $response = Http::withOptions([
-            'verify' => true,
+            'verify' => $this->verifySSL,
         ])->get('https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2', [
             'merchantCode' => $this->merchantCode,
             'merchantRefNumber' => $merchantRefNumber,
