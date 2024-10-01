@@ -27,7 +27,7 @@ class AfilliateRequest extends FormRequest
             // This Request About All Affilates
         'name'=>['required'],
         'email'=>['required','unique:users'],
-        'phone'=>['required'],
+        'phone'=>['required','unique:users'],
         'country_id' => ['required', 'exists:countries,id'],
         'city_id' => ['required', 'exists:cities,id'],
         'password' => ['required'],
