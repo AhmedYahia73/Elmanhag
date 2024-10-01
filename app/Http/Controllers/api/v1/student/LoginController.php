@@ -63,10 +63,8 @@ class LoginController extends Controller
                     // $city = $geoInfo['city'];
                     // $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
                     $start_session = now();
-                    $token_id = $this->tokens
-                    ->where('token', $token)
-                    ->first();
-
+                    $token_id = $user->logins->id;
+                    
                     $this->login_history
                     ->create([
                         'os' => $os,
