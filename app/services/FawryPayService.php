@@ -55,7 +55,7 @@ class FawryPayService
         try {
             // Make the POST request to FawryPay API with SSL verification based on environment
             $response = Http::withOptions([
-                'verify' => false, // SSL verification in production only
+                'verify' => true, // SSL verification in production only
             ])->post($this->apiUrl, $data);
 
             // Log the response for debugging
@@ -85,7 +85,7 @@ class FawryPayService
 
         // Make the GET request to FawryPay API
         $response = Http::withOptions([
-            'verify' => false,
+            'verify' => true,
         ])->get('https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2', [
             'merchantCode' => $this->merchantCode,
             'merchantRefNumber' => $merchantRefNumber,

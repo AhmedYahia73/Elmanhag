@@ -51,7 +51,7 @@ class SignupController extends Controller
     public function store(SignupRequest $request){
      try {
         // This Email Must Be Email Login With Mailtrab
-           Mail::to('ziadm57@yahoo.com')->send(new SignupNotificationMail([$request]));
+           Mail::to('ziad0176@gmail.com')->send(new SignupNotificationMail($request));
      } catch (\Throwable $th) {
             return response()->json([
                 'faield'=>'Something Wrong Send Email Faield',

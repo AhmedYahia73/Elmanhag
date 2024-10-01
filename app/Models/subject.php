@@ -10,6 +10,8 @@ use App\Models\Discount;
 use App\Models\category;
 use App\Models\chapter;
 use App\Models\bundle;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Auth;
 
 class subject extends Model
 {
@@ -38,6 +40,7 @@ class subject extends Model
     public function users(){
         return $this->belongsToMany(User::class, 'students_subjects');
     }
+
     
        
     public function getDemoVideoUrlAttribute(){
