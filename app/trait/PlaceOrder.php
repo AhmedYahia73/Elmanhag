@@ -20,7 +20,7 @@ trait PlaceOrder
  // This Is Trait About Make any Order 
    
 
-    public function placeOrder(Request $request ):array|JsonResponse{
+    public function placeOrder(Request $request ){
         $user = $request->user();
         $newOrder = $request->only($this->orderPlaceReqeust);
         $items = $newOrder['chargeItems'];
@@ -60,11 +60,7 @@ trait PlaceOrder
                 $newSubjects = $createPayment->subject()->sync($itemId);
               }
               } catch (\Throwable $th) {
-                return
-                    [
-                        'faield' => 'Your Order Not Found',
-                        'message' => $th->getMessage()
-                    ];
+               return abort(code: 500);
               }
             $data = [
                 
