@@ -20,10 +20,11 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->string('location')->nullable();
-            $table->string('start_session')->nullable();
-            $table->string('end_session')->nullable();
+            $table->datetime('start_session')->nullable();
+            $table->datetime('end_session')->nullable();
             $table->string('duration')->nullable();
             $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('token_id')->nullable()->constrained('personal_access_tokens')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

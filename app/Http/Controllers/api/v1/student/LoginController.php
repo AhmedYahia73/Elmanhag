@@ -6,12 +6,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Jenssegers\Agent\Agent;
+use GeoIP;
+use App\Models\LoginHistory;
+use App\Models\PersonalAccessToken;
 
 use App\Http\Requests\api\student\LoginRequest;
 use Hash;
+
 class LoginController extends Controller
 {
-    public function __construct(private User $user){}
+    public function __construct(private User $user, private LoginHistory $login_history,
+    private PersonalAccessToken $tokens){}
     protected $loginRequest = [
         'email',
         'password',
@@ -44,7 +50,36 @@ class LoginController extends Controller
        }
                 $token = $user->createToken('personal access token')->plainTextToken;
                 $user->token = $token;
-                if(!empty($user->role)){
+                if(!empty($user->role) && $user->role != 'admin' && $user->role != 'supAdmin'){
+                    $agent = new Agent(); 
+                    $agent->setUserAgent($request->header('User-Agent'));
+             
+                    $os = $agent->platform();
+                    $browser = $agent->browser();
+                    $device = $agent->device();
+                    $ip = $request->ip();
+                    $geoInfo = GeoIP::getLocation($ip);
+                    $country = $geoInfo['country'];
+                    $city = $geoInfo['city'];
+                    $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
+                    $start_session = now();
+                    $token_id = $this->tokens
+                    ->where('token', $token)
+                    ->first();
+
+                    $this->login_history
+                    ->create([
+                        'os' => $os,
+                        'browser' => $browser,
+                        'device' => $device,
+                        'ip' => $ip,
+                        'country' => $country,
+                        'city' => $city,
+                        'location' => $location,
+                        'start_session' => $start_session,
+                        'user_id' => $user->id,
+                        'token_id' => $token_id,
+                    ]);
                    return response()->json([
                    'success'=>'Welcome '.$login['email'],
                    'user'=>$user,
