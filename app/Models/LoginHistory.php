@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\User;
+
 class LoginHistory extends Model
 {
     use HasFactory;
@@ -23,4 +25,8 @@ class LoginHistory extends Model
         'user_id',
         'token_id',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
