@@ -62,6 +62,13 @@ class CreateStudentController extends Controller
             ]); // Start Create Parent
             $newStudent['parent_id'] = $parent->id;
         }
+
+        if ($newStudent['gender'] == 'male') {
+            $newStudent['image'] = 'default.png';
+        } 
+        else {
+            $newStudent['image'] = 'female.png';
+        }
         
         $newStudent['role'] = 'student'; // Type Of User
         $user = $this->user->create($newStudent); // Start Create New Studetn

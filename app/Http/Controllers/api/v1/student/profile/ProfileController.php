@@ -50,9 +50,10 @@ class ProfileController extends Controller
         ->where('id',$user_id )
         ->first();
             try {
-                       $user->education = $user->category->name;
-                       $user->country_name = $user->country->name;
-                       $user->city_name = $user->city->name;
+                $user->edu = $user->education->name;
+                $user->country_name = $user->country->name;
+                $user->city_name = $user->city->name;
+                $user->category = $user->category->name;
             } catch (QueryException $th) {
             return response()->json([
                 'faield'=>'This user Don\'t have City  ',
@@ -66,27 +67,32 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request){
         $user_id = $request->user()->id;
         $user = $this->user::findOrFail($user_id);
-      $updateProfile = $request->only($this->requestProfile);
-                $user->name = $updateProfile['name'] ?? $user->name;
-                $user->email = $updateProfile['email'] ?? $user->email ;
-                    if( isset($updateProfile['password'])){
-                        $user->password = $updateProfile['password'] ;
-                    }
-                     $this->deleteImage($user->image);
-                $user->phone = $updateProfile['phone'] ?? $user->phone ;
-                $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
-                $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
-                $user->role = 'student';
-                $image_path = $this->upload($request, 'image', 'student/user');
-                $user->image = $image_path ?? $user->image;
-                $user->city_id = $updateProfile['city_id']?? $user->city_id;
-                $user->country_id = $updateProfile['country_id']?? $user->country_id;
-                $user->category_id = $updateProfile['category_id']?? $user->category_id;
-                $user->save();
-               
-                        return response()->json([
-                            'success'=>'Data Updated Successfully',
-                            ]);
+        $updateProfile = $request->only($this->requestProfile);
+        $user->name = $updateProfile['name'] ?? $user->name;
+        $user->email = $updateProfile['email'] ?? $user->email;
+            if( isset($updateProfile['password'])){
+                $user->password = $updateProfile['password'] ;
+            }
+        $user->phone = $updateProfile['phone'] ?? $user->phone ;
+        $user->parent_relation_id = $updateProfile['parent_relation_id'] ?? $user->parent_relation_id ;
+        $user->education_id = $updateProfile['education_id'] ?? $user->education_id;
+        $user->sudent_jobs_id = $updateProfile['sudent_jobs_id'] ?? $user->sudent_jobs_id;
+        $user->role = 'student';
+        $image_path = $this->upload($request, 'image', 'student/user');
+        if ($image_path != null) {
+            if ($user->image != 'female.png' && $user->image != 'default.png') {
+                $this->deleteImage($user->image);
+            }
+            $user->image = $image_path;
+        }
+        $user->city_id = $updateProfile['city_id']?? $user->city_id;
+        $user->country_id = $updateProfile['country_id']?? $user->country_id;
+        $user->category_id = $updateProfile['category_id']?? $user->category_id;
+        $user->save();
+
+        return response()->json([
+            'success'=>'Data Updated Successfully',
+        ]);
     }
 
 

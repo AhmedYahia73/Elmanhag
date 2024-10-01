@@ -34,7 +34,7 @@ class SignupController extends Controller
    'parent_relation_id',
    'education_id',
    'affilate_id',
-     'parent_id',
+    'parent_id',
    'language'
    ];
     protected $parentRequest = [
@@ -49,42 +49,56 @@ class SignupController extends Controller
     // This Controller About Create New Student
     use image;
     public function store(SignupRequest $request){
-     try {
-        // This Email Must Be Email Login With Mailtrab
-           Mail::to('ziad0176@gmail.com')->send(new SignupNotificationMail($request));
-     } catch (\Throwable $th) {
-            return response()->json([
-                'faield'=>'Something Wrong Send Email Faield',
-            ],500);
-     }
-        return response()->json([
-            'success'=>'Welcome,Student Created Successfully'
-        ],200);
+    //  try {
+    //     // This Email Must Be Email Login With Mailtrab
+    //        Mail::to('ziadm57@yahoo.com')->send(new SignupNotificationMail([$request]));
+    //  } catch (\Throwable $th) {
+    //         return response()->json([
+    //             'faield'=>'Something Wrong Send Email Faield',
+    //         ],500);
+    //  }
+    //     return response()->json([
+    //         'success'=>'Welcome,Student Created Successfully'
+    //     ],200);
         $newStudent = $request->only($this->studentRequest); // Get Requests
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
-        $newStudent['image'] = $image_path;
+       if (empty($image_path) || $image_path == null) {
+            if ($newStudent['gender'] == 'male') {
+                $newStudent['image'] = 'default.png';
+            } else {
+                $newStudent['image'] = 'female.png';
+            }
+       } 
+       else {
+            $newStudent['image'] = $image_path;
+       }
         $newStudent['role'] = 'student';
          if(isset($request->affilate_code)){ // If Student Append Affiliate Code
             $affiliate = $this->user->where('affilate_code', $request->affilate_code)->first();
             $newStudent['affilate_id'] = $affiliate->id;
          }
-      
-           
+        
+        
         if($this->parentRequest){
-            $newParent = $request->only($this->parentRequest);
-            //   $newParent['parent_id'] = $user->id;
-              $newParent['role'] = 'parent';
-              $parent = $this->user->create([
-              'name' => $newParent['parent_name'],
-              'email' => $newParent['parent_email'],
-              'password' => $newParent['parent_password'],
-              'phone' => $newParent['parent_phone'],
-              'role' => 'parent',
-              'parent_relation_id' => $newParent['parent_relation_id'],
-              ]); // Start Create Parent
+            $parent = $this->user
+            ->where('email', $request->parent_email)
+            ->first();
+            if (empty($parent)) {
+                $newParent = $request->only($this->parentRequest);
+                //   $newParent['parent_id'] = $user->id;
+                  $newParent['role'] = 'parent';
+                  $parent = $this->user->create([
+                  'name' => $newParent['parent_name'],
+                  'email' => $newParent['parent_email'],
+                  'password' => $newParent['parent_password'],
+                  'phone' => $newParent['parent_phone'],
+                  'role' => 'parent',
+                  'parent_relation_id' => $newParent['parent_relation_id'],
+                  ]); // Start Create Parent
+            }
         }
-            $newStudent['parent_id'] = $parent->id; // Relational Parent With Student
-            $user = $this->user->create($newStudent); // Start Create New Student
+        $newStudent['parent_id'] = $parent->id; // Relational Parent With Student
+        $user = $this->user->create($newStudent); // Start Create New Student
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
         // $user->category = $this->category

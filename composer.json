@@ -7,10 +7,12 @@
     "require": {
         "php": "^8.2",
         "biscolab/laravel-recaptcha": "*",
+        "jenssegers/agent": "^2.6",
         "laravel-lang/lang": "^15.5",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "torann/geoip": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

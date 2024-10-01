@@ -19,6 +19,7 @@ use App\Http\Controllers\api\v1\student\Payment\PlaceOrderController;
 use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
 use App\Http\Controllers\api\v1\student\promocode\PromoCodeController;
 use App\Http\Controllers\api\v1\student\subsription\SubscriptionController;
+use App\Http\Controllers\api\v1\student\issues\IssuesController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -46,11 +47,19 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
             Route::post('subject/view','show')->withoutMiddleware(['IsStudent','IsAffilate'])->name('setting.view');
             Route::get('subject/student','student_subject')->name('setting.view');
         });
-    });   
+    });
+    
+    Route::prefix('issues')->group(function () {
+        Route::controller(IssuesController::class)->group(function () {
+            Route::get('/','view')->name('issues.view');
+            Route::post('/','add')->name('issues.add');
+        }); 
+    });
     
     Route::prefix('subscription')->group(function () {
         Route::controller(SubscriptionController::class)->group(function () {
             Route::get('/','view')->name('subscription.view');
+            Route::post('/check/{id}','check_live')->name('subscription.check_live');
         }); 
     });
         Route::controller(ChapterController::class)->group(function () { // This All Chapters For Student

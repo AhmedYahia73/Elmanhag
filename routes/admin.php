@@ -18,6 +18,8 @@ use App\Http\Controllers\api\v1\admin\Subject\CreateSubjectController;
 use App\Http\Controllers\api\v1\admin\chapter\ChapterController;
 use App\Http\Controllers\api\v1\admin\chapter\CreateChapterController;
 
+use App\Http\Controllers\api\v1\admin\materials\MaterialsController;
+
 use App\Http\Controllers\api\v1\admin\lesson\LessonMaterialController;
 use App\Http\Controllers\api\v1\admin\lesson\CreateLessonController;
 
@@ -38,6 +40,9 @@ use App\Http\Controllers\api\v1\admin\promocode\CreatePromocodeController;
 
 use App\Http\Controllers\api\v1\admin\live\LiveController;
 use App\Http\Controllers\api\v1\admin\live\CreateLiveController;
+
+use App\Http\Controllers\api\v1\admin\popup\PopupController;
+use App\Http\Controllers\api\v1\admin\popup\CreatePopupController;
 
 use App\Http\Controllers\api\v1\admin\payment\PaymentController;
 
@@ -122,6 +127,18 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::get('/', 'show')->name('parent.show');
         });
     });
+
+    // Start Popup Module
+    Route::prefix('popup')->middleware('can:isPopup')->group(function () {
+        Route::controller(PopupController::class)->group(function () {
+            Route::get('/', 'show')->name('popup.show');
+        });
+        Route::controller(CreatePopupController::class)->group(function(){
+            Route::post('/add', 'create')->name('popup.add');
+            Route::put('/update/{id}', 'modify')->name('popup.update');
+            Route::delete('/delete/{id}', 'delete')->name('popup.delete');
+        });
+    });
   
 
     // Start Admin Module
@@ -190,6 +207,13 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('lesson.delete');
 
             Route::put('/switch/{id}', 'switch')->name('lesson.switch');
+        });
+    });
+
+    // Start Module Materials
+    Route::prefix('materials')->middleware('can:isMaterial')->group(function () {
+        Route::controller(MaterialsController::class)->group(function(){
+            Route::get('/', 'view')->name('material.view');
         });
     });
 
@@ -306,6 +330,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('live')->middleware('can:isLive')->group(function() {
         Route::controller(LiveController::class)->group(function(){
             Route::get('/', 'show')->name('live.show');
+            Route::get('/{id}', 'live')->name('live.live');
         });
         Route::controller(CreateLiveController::class)->group(function(){
             Route::post('/add', 'create')->name('live.add');
