@@ -11,12 +11,13 @@ use App\trait\image;
 use App\Models\User;
 use App\Models\category;
 use App\Models\subject;
+use App\Models\LoginHistory;
 
 class TeacherController extends Controller
 {
     use image;
     public function __construct(private User $users, private category $categories, 
-    private subject $subject){}
+    private subject $subject, private LoginHistory $login_history){}
 
 
     public function teachers_list(){
@@ -127,5 +128,18 @@ class TeacherController extends Controller
         else{
             return response()->json(['faild'=>'Teacher Is not Found'],400); 
         }
+    }
+
+    public function login_history($id){
+        $logins = $this->login_history
+        ->where('user_id', $id)
+        ->whereHas('user', function($query){
+            $query->where('role', 'teacher');
+        })
+        ->get();
+
+        return response()->json([
+            'logins' => $logins
+        ]);
     }
 }
