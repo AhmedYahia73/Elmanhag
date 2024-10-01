@@ -38,7 +38,7 @@ class AfilliateRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'message'=>'Validation Error',
             'error'=>$validator->errors(),
-        ]));
+        ], 400));
  }
 
    

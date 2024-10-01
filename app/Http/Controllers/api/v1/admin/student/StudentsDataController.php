@@ -19,13 +19,15 @@ use App\Models\bundle;
 use App\Models\subject;
 use App\Models\Live;
 use App\Models\PaymentMethod;
+use App\Models\LoginHistory;
 
 class StudentsDataController extends Controller
 {
     public function __construct(private User $users, private category $categories,
     private Education $education, private country $countries, private city $cities,
     private ParentRelation $parent_relation, private Payment $payments, private bundle $bundles,
-    private subject $subjects, private Live $live, private PaymentMethod $payment_method
+    private subject $subjects, private Live $live, private PaymentMethod $payment_method,
+    private LoginHistory $login_history
     ){}
     protected $purchasesRequest = [
         'amount',
@@ -282,6 +284,19 @@ class StudentsDataController extends Controller
 
         return response()->json([
             'data' => $data
+        ]);
+    }
+
+    public function login_history($id){
+        $logins = $this->login_history
+        ->where('user_id', $id)
+        ->whereHas('user', function($query){
+            $query->where('role', 'student');
+        })
+        ->get();
+
+        return response()->json([
+            'logins' => $logins
         ]);
     }
 }

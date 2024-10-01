@@ -23,8 +23,8 @@ return new class extends Migration
             $table->datetime('start_session')->nullable();
             $table->datetime('end_session')->nullable();
             $table->string('duration')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('token_id')->nullable()->constrained('personal_access_tokens')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('token_id')->nullable()->constrained('personal_access_tokens')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

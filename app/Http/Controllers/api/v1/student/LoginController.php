@@ -10,6 +10,7 @@ use Jenssegers\Agent\Agent;
 use GeoIP;
 use App\Models\LoginHistory;
 use App\Models\PersonalAccessToken;
+use Carbon\Carbon;
 
 use App\Http\Requests\api\student\LoginRequest;
 use Hash;
@@ -64,7 +65,7 @@ class LoginController extends Controller
                     // $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
                     $start_session = now();
                     $token_id = $user->logins->id; 
-                    
+
                     $this->login_history
                     ->create([
                         'os' => $os,
@@ -92,7 +93,21 @@ class LoginController extends Controller
 
     public function logout(Request $request){
         if(Auth::check()){
-             $user = $request->user();
+            $user = $request->user();
+            $token_id = $user->currentAccessToken()->id;
+            $end_session = now();
+            $login_history = $this->login_history
+            ->where('token_id', $token_id)
+            ->orderByDesc('id')
+            ->first(); // get login data
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $login_history->start_session);
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', now());
+            $duration = $end->diff($start);
+            
+            $login_history->update([
+                'end_session' => $end_session, 
+                'duration' => $duration, 
+            ]); // update login data
             $logout = $user->tokens()->delete();
             if( $logout ){
                 return response()->json([
