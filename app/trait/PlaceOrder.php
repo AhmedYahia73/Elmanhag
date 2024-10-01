@@ -78,12 +78,16 @@ trait PlaceOrder
     }
 
     public function confirmOrder(  $response){
-        if(isset($response['code']) && $response['code'] == 9938){
+        if(isset($response['code']) && $response['code'] == 9901){
                 return response()->json($response);
+            }elseif(!isset($response['merchantRefNum'])){
+                       return response()->json($response);
+            }else{
+                  $merchantRefNumber = $response['merchantRefNum'];
+                  $customerMerchantId = $response['customerMerchantId'];
+                  $orderStatus = $response['orderStatus'];
             }
-        $merchantRefNumber = $response['merchantRefNum'];
-        $customerMerchantId = $response['customerMerchantId'];
-      $orderStatus = $response['orderStatus'];
+  
             if($orderStatus == 'PAID'){
             $payment =
                 $this->payment->where('merchantRefNum', $merchantRefNumber)->with('bundle', function ($query):void {
