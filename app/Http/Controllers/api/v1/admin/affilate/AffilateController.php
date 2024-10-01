@@ -241,6 +241,7 @@ class AffilateController extends Controller
     }
 
     public function login_history($id){
+        // https://bdev.elmanhag.shop/admin/affilate/loginHistory/{id}
         $logins = $this->login_history
         ->where('user_id', $id)
         ->whereHas('user', function($query){

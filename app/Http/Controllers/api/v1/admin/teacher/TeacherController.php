@@ -131,6 +131,7 @@ class TeacherController extends Controller
     }
 
     public function login_history($id){
+        // https://bdev.elmanhag.shop/admin/teacher/loginHistory/{id}
         $logins = $this->login_history
         ->where('user_id', $id)
         ->whereHas('user', function($query){
