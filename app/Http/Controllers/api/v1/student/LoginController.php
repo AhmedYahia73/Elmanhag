@@ -58,10 +58,10 @@ class LoginController extends Controller
                     $browser = $agent->browser();
                     $device = $agent->device();
                     $ip = $request->ip();
-                    $geoInfo = GeoIP::getLocation($ip);
-                    $country = $geoInfo['country'];
-                    $city = $geoInfo['city'];
-                    $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
+                    // $geoInfo = GeoIP::getLocation($ip);
+                    // $country = $geoInfo['country'];
+                    // $city = $geoInfo['city'];
+                    // $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
                     $start_session = now();
                     $token_id = $this->tokens
                     ->where('token', $token)
@@ -73,9 +73,9 @@ class LoginController extends Controller
                         'browser' => $browser,
                         'device' => $device,
                         'ip' => $ip,
-                        'country' => $country,
-                        'city' => $city,
-                        'location' => $location,
+                        // 'country' => $country,
+                        // 'city' => $city,
+                        // 'location' => $location,
                         'start_session' => $start_session,
                         'user_id' => $user->id,
                         'token_id' => $token_id,
