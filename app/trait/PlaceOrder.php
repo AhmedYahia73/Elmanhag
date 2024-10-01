@@ -20,7 +20,7 @@ trait PlaceOrder
  // This Is Trait About Make any Order 
    
 
-    public function placeOrder(Request $request ):array|JsonResponse{
+    public function placeOrder(Request $request ){
         $user = $request->user();
         $newOrder = $request->only($this->orderPlaceReqeust);
         $items = $newOrder['chargeItems'];
@@ -31,7 +31,7 @@ trait PlaceOrder
          $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
      
             if(empty($paymentMethod)){
-                    return response()->json(['faield'=>'Payment Method Fawry Not Found'],404);
+                    return abort(404);
             }
                     
         foreach ($items as $item) {
@@ -60,11 +60,7 @@ trait PlaceOrder
                 $newSubjects = $createPayment->subject()->sync($itemId);
               }
               } catch (\Throwable $th) {
-              return response()->json(
-                [
-                    'faield'=>'Your Order Not Found',
-                    'message'=>$th->getMessage()
-            ],404);
+               return abort(code: 500);
               }
             $data = [
                 
@@ -82,12 +78,16 @@ trait PlaceOrder
     }
 
     public function confirmOrder(  $response){
-        if(isset($response['code']) && $response['code'] == 9938){
+        if(isset($response['code']) && $response['code'] == 9901){
                 return response()->json($response);
+            }elseif(!isset($response['merchantRefNum'])){
+                       return response()->json($response);
+            }else{
+                  $merchantRefNumber = $response['merchantRefNum'];
+                  $customerMerchantId = $response['customerMerchantId'];
+                  $orderStatus = $response['orderStatus'];
             }
-        $merchantRefNumber = $response['merchantRefNumber'];
-        $customerMerchantId = $response['customerMerchantId'];
-      $orderStatus = $response['orderStatus'];
+  
             if($orderStatus == 'PAID'){
             $payment =
                 $this->payment->where('merchantRefNum', $merchantRefNumber)->with('bundle', function ($query):void {
