@@ -21,5 +21,6 @@ class LoginHistory extends Model
         'end_session',
         'duration',
         'user_id',
+        'token_id',
     ];
 }
