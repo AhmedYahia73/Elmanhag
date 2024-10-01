@@ -81,7 +81,7 @@ trait PlaceOrder
         if(isset($response['code']) && $response['code'] == 9938){
                 return response()->json($response);
             }
-        $merchantRefNumber = $response['merchantRefNumber'];
+        $merchantRefNumber = $response['merchantRefNum'];
         $customerMerchantId = $response['customerMerchantId'];
       $orderStatus = $response['orderStatus'];
             if($orderStatus == 'PAID'){
