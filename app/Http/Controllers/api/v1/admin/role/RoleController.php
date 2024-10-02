@@ -78,10 +78,10 @@ class RoleController extends Controller
     }
 
     public function delete($id){
-        // https://bdev.elmanhag.shop/admin/adminRole/delete/10
+        // https://bdev.elmanhag.shop/admin/adminRole/delete/{id}
         $admin_position = $this->admin_position
         ->where('id', $id)
-        ->delete(); 
+        ->delete();
 
         return response()->json([
             'success' => 'You delete data success'
