@@ -154,7 +154,8 @@ class TeacherController extends Controller
             $user->update([
                 'status' => $request->status
             ]);
-            return response()->json(['success'=>'Teacher Status is Changed'],200); 
+            $status = $request->status == 0 ? 'Banned' : 'Active';
+            return response()->json(['success'=> $status],200); 
         }
         else{
             return response()->json(['faild'=>'Teacher Is not Found'],400); 
