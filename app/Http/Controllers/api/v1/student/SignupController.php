@@ -49,18 +49,8 @@ class SignupController extends Controller
     // This Controller About Create New Student
     use image;
     public function store(SignupRequest $request){
-    //  try {
-    //     // This Email Must Be Email Login With Mailtrab
-    //        Mail::to('ziadm57@yahoo.com')->send(new SignupNotificationMail([$request]));
-    //  } catch (\Throwable $th) {
-    //         return response()->json([
-    //             'faield'=>'Something Wrong Send Email Faield',
-    //         ],500);
-    //  }
-    //     return response()->json([
-    //         'success'=>'Welcome,Student Created Successfully'
-    //     ],200);
-        $newStudent = $request->only($this->studentRequest); // Get Requests
+      
+         $newStudent = $request->only($this->studentRequest); // Get Requests
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
        if (empty($image_path) || $image_path == null) {
             if ($newStudent['gender'] == 'male') {
@@ -101,17 +91,18 @@ class SignupController extends Controller
         $user = $this->user->create($newStudent); // Start Create New Student
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
-        // $user->category = $this->category
-        // ->where('id', $user->category_id )
-        // ->first()->name;
-        // $user->education = $this->education
-        // ->where('id', $user->education_id  )
-        // ->first()->name;
-        // $user->job = $this->student_job
-        // ->where('id', $user->sudent_jobs_id)
-        // ->first()->job;
-        // $user->parent = $request->parent_name;
-        // Mail::to('ahmedahmadahmid73@gmail.com')->send(new SignupNotificationMail($user));
+        $user->category = $this->category
+        ->where('id', $user->category_id )
+        ->first()->name;
+        $user->education = $this->education
+        ->where('id', $user->education_id  )
+        ->first()->name;
+        $user->job = $this->student_job
+        ->where('id', $user->sudent_jobs_id)
+        ->first()->job;
+        $user->parent = $request->parent_name;
+         Mail::to('ziadm0176@gmail.com')->send(new SignupNotificationMail($user));
+
         return response()->json([
             'success'=>'Welcome,Student Created Successfully',
             'user'=>$user,
