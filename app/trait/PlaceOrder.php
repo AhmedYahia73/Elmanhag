@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 trait PlaceOrder
 {
 
-     protected $orderPlaceReqeust =['chargeItems','payment_method_id','merchantRefNum'];
+     protected $orderPlaceReqeust =['chargeItems','payment_method_id','merchantRefNumber'];
  // This Is Trait About Make any Order 
    
 
@@ -44,7 +44,7 @@ trait PlaceOrder
            
             $item['student_id'] =$user->id;
             $item['purchase_date'] =now(); // Purchase Date Now
-            $item['merchantRefNum'] =$newOrder['merchantRefNum']; // This Is Reference Number For Order ID
+            $item['merchantRefNumber'] =$newOrder['merchantRefNumber']; // This Is Reference Number For Order ID
             $item['service'] =$service ; // This Is Reference Number For Order ID
          
            
@@ -80,17 +80,17 @@ trait PlaceOrder
     public function confirmOrder(  $response){
         if(isset($response['code']) && $response['code'] == 9901){
                 return response()->json($response);
-            }elseif(!isset($response['merchantRefNum'])){
+            }elseif(!isset($response['merchantRefNumber'])){
                        return response()->json($response);
             }else{
-                  $merchantRefNumber = $response['merchantRefNum'];
+                  $merchantRefNumberber = $response['merchantRefNumber'];
                   $customerMerchantId = $response['customerMerchantId'];
                   $orderStatus = $response['orderStatus'];
             }
   
             if($orderStatus == 'PAID'){
             $payment =
-                $this->payment->where('merchantRefNum', $merchantRefNumber)->with('bundle', function ($query):void {
+                $this->payment->where('merchantRefNumber', $merchantRefNumberber)->with('bundle', function ($query):void {
                     $query->with('users');
                 }, 'subject', function ($query):void {
                     $query->with('users');
@@ -99,12 +99,12 @@ trait PlaceOrder
             if($order == 'bundle'){
                 $orderBundle = $payment->bundle;
                 foreach($orderBundle as $student_bundle){
-                     $student_bundle->users()->sync([$student_bundle->id=>['user_id'=>$customerMerchantId]] );
+                     $student_bundle->users()->attach([$student_bundle->id=>['user_id'=>$customerMerchantId]] );
                 }
             }elseif($order == 'subject'){
                 $orderSubject= $payment->subject;
                  foreach($orderSubject as $student_subject){
-                  $student_subject->users()->sync([$student_subject->id=>['user_id'=>$customerMerchantId]] );
+                  $student_subject->users()->attach([$student_subject->id=>['user_id'=>$customerMerchantId]] );
                  }
             }
 
