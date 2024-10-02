@@ -43,8 +43,8 @@ class FawryPayController extends Controller
             $randomNumber = random_int($min, $max);
 
           // Check if this number already exists in Payment
-          $exists = $this->payment::where('merchantRefNum', $randomNumber)->exists();
-                $request['merchantRefNum'] = $randomNumber ;
+          $exists = $this->payment::where('merchantRefNumber', $randomNumber)->exists();
+                $request['merchantRefNumber'] = $randomNumber ;
           } while ($exists); // Repeat until a unique number is generated
                 // End Random Number For MerchantRefNumber
 
