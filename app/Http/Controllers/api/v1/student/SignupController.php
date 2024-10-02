@@ -65,7 +65,9 @@ class SignupController extends Controller
         $newStudent['role'] = 'student';
          if(isset($request->affilate_code)){ // If Student Append Affiliate Code
             $affiliate = $this->user->where('affilate_code', $request->affilate_code)->first();
-            $newStudent['affilate_id'] = $affiliate->id;
+                if($affiliate){
+                     $newStudent['affilate_id'] = $affiliate->id;
+                }
          }
         
         
