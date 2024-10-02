@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\api\admin\teacher\TeacherRequest;
 use App\Http\Requests\api\admin\teacher\AddTeacherRequest;
 use App\trait\image;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use App\Models\category;
@@ -123,6 +125,33 @@ class TeacherController extends Controller
         if ( !empty($user) ) {
             $this->deleteImage($user->image);
             $user->delete();
+            return response()->json(['success'=>'Teacher Deleted Successfully'],200); 
+        }
+        else{
+            return response()->json(['faild'=>'Teacher Is not Found'],400); 
+        }
+    }
+
+    public function status( Request $request, $id ){
+        // https://bdev.elmanhag.shop/admin/teacher/status/{id}
+        // Get User Data
+        $validator = Validator::make($request->all(), [
+        'status' => 'required|boolean',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+                return response()->json([
+                        'error' => $validator->errors(),
+                ],400);
+        }
+        $user = $this->users->where('id', $id)
+        ->where('role', 'teacher')
+        ->first();
+
+        // Remove User
+        if ( !empty($user) ) {
+            $user->update([
+                'status' => $request->status
+            ]);
             return response()->json(['success'=>'Teacher Deleted Successfully'],200); 
         }
         else{

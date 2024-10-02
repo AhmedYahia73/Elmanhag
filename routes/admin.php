@@ -308,6 +308,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
             Route::delete('/delete/{id}', 'delete')->name('teachers.delete');
+            Route::put('/status/{id}', 'status')->name('teachers.status');
         });
         Route::controller(T_SubjectController::class)->prefix('subjects')->group(function(){
             Route::post('/', 'view')->name('teachers.subject.view');
