@@ -303,10 +303,12 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('teacher')->middleware('can:isTeachers')->group(function() {
         Route::controller(TeacherController::class)->group(function(){
             Route::get('/', 'teachers_list')->name('teachers.list');
+            Route::get('/loginHistory/{id}', 'login_history')->name('teachers.login_history');
             Route::get('/profile/{id}', 'teacher_profile')->name('teachers.profile');
             Route::put('/profile/update/{id}', 'teacher_profile_update')->name('teachers.profile_update');
             Route::post('/add', 'add_teacher')->name('teachers.add_teacher');
             Route::delete('/delete/{id}', 'delete')->name('teachers.delete');
+            Route::put('/status/{id}', 'status')->name('teachers.status');
         });
         Route::controller(T_SubjectController::class)->prefix('subjects')->group(function(){
             Route::post('/', 'view')->name('teachers.subject.view');
@@ -345,6 +347,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('affilate')->middleware('can:isAffilate')->group(function() {
         Route::controller(AffilateController::class)->group(function(){
             Route::get('/', 'affilate')->name('affilate.affilate');
+            Route::get('/loginHistory/{id}', 'login_history')->name('affilate.login_history');
             Route::post('/add', 'create')->name('affilate.add');
             Route::put('/update/{id}', 'modify')->name('affilate.update');
             Route::put('/banned/{id}', 'banned')->name('affilate.banned');

@@ -15,12 +15,13 @@ use App\Models\city;
 use App\Models\AffilateHistory;
 use App\Models\Payout;
 use App\Models\category;
+use App\Models\LoginHistory;
 
 class AffilateController extends Controller
 {
     public function __construct(private User $user, private AffilateAccount $affilate_account,
     private country $country, private city $city, private AffilateHistory $affilate_histories
-    , private category $category, private Payout $payout){}
+    , private category $category, private Payout $payout, private LoginHistory $login_history){}
     use image;
     protected $affilateRequest = [
         'name',
@@ -236,6 +237,20 @@ class AffilateController extends Controller
 
         return response()->json([
             'payouts' => $payouts,
+        ]);
+    }
+
+    public function login_history($id){
+        // https://bdev.elmanhag.shop/admin/affilate/loginHistory/{id}
+        $logins = $this->login_history
+        ->where('user_id', $id)
+        ->whereHas('user', function($query){
+            $query->where('role', 'affilate');
+        })
+        ->get();
+
+        return response()->json([
+            'logins' => $logins
         ]);
     }
     
