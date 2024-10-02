@@ -14,6 +14,9 @@ class AffilateController extends Controller
     public function __construct(private User $user){}
 
     public function create_affilate(Request $request){
+        // https://bdev.elmanhag.shop/api/createAffilate
+        // Keys
+        // user_id
         $validator = Validator::make($request->all(), [
         'user_id' => 'required|exists:users,id',
         ]);
