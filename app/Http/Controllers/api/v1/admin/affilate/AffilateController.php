@@ -263,5 +263,5 @@ class AffilateController extends Controller
             'logins' => $logins
         ]);
     }
-    
+
 }
