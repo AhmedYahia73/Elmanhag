@@ -30,6 +30,7 @@ class LoginController extends Controller
        $checkLogin =  is_numeric($login['email']) ? $name ='phone':$name ='email'; // Old Selution
         $user = $this->user
         ->where('email',$login['email'])
+        ->where('affilate_code',$login['email'])
         ->orwhere('phone',$login['email'])->first();
         if ($user->status == 0) {
             return response()->json([
