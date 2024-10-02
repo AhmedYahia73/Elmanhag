@@ -99,12 +99,12 @@ trait PlaceOrder
             if($order == 'bundle'){
                 $orderBundle = $payment->bundle;
                 foreach($orderBundle as $student_bundle){
-                     $student_bundle->users()->sync([$student_bundle->id=>['user_id'=>$customerMerchantId]] );
+                     $student_bundle->users()->attach([$student_bundle->id=>['user_id'=>$customerMerchantId]] );
                 }
             }elseif($order == 'subject'){
                 $orderSubject= $payment->subject;
                  foreach($orderSubject as $student_subject){
-                  $student_subject->users()->sync([$student_subject->id=>['user_id'=>$customerMerchantId]] );
+                  $student_subject->users()->attach([$student_subject->id=>['user_id'=>$customerMerchantId]] );
                  }
             }
 
