@@ -104,7 +104,7 @@ class TeacherController extends Controller
     public function add_teacher(AddTeacherRequest $request){
         // https://bdev.elmanhag.shop/admin/teacher/add
         // Key
-        // name, phone, status, email, image, password, subject
+        // name, phone, status, email, image, password
         $teacherData = $request->only($this->teacherRequest); // Get data
         $image =  $this->upload($request,'image','teacher/user'); // Upload teacher image
         $teacherData['role'] = 'teacher'; // Determine role of user
