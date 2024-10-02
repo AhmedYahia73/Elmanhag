@@ -16,9 +16,13 @@ class SignupNotificationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public $data)
+    public $subject;
+    public $view;
+    public function __construct(public $user,$subject,$view)
     {
         //
+        $this->subject = $subject;
+        $this->view = $view;
     }
 
     /**
@@ -27,7 +31,7 @@ class SignupNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Signup Notification Mail',
+            subject: $this->subject,
         );
     }
 
@@ -37,7 +41,7 @@ class SignupNotificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'Email.Signup',
+            view: "Email.$this->view",
         );
     }
 

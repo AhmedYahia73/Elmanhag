@@ -103,7 +103,9 @@ class SignupController extends Controller
         ->where('id', $user->sudent_jobs_id)
         ->first()->job;
         $user->parent = $request->parent_name;
-         Mail::to('ziadm0176@gmail.com')->send(new SignupNotificationMail($user));
+        $subject = "Signup Notification Mail";
+        $view = "Signup";
+         Mail::to('ziadm0176@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));
 
         return response()->json([
             'success'=>'Welcome,Student Created Successfully',
