@@ -17,7 +17,7 @@ class AffilateMiddleware
     public function handle(Request $request, Closure $next): Response
     {
           if(Auth::check()){
-          if(Auth::user()->role == 'affilate' && Auth::user()->status == 1){
+          if((Auth::user()->role == 'affilate' && Auth::user()->status == 1) || !empty(Auth::user()->affilate_code)){
           return $next($request);
           } else {abort(403);}
           }return response()->json(

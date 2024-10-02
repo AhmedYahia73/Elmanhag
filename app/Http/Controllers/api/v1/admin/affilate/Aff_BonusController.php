@@ -24,6 +24,7 @@ class Aff_BonusController extends Controller
         // https://bdev.elmanhag.shop/admin/affilate/bonus/affilates
         $affilates = $this->users
         ->where('role', 'affilate')
+        ->orWhereNotNull('affilate_code')
         ->with('bonuses')
         ->get();
 

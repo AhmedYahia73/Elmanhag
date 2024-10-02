@@ -37,12 +37,15 @@ class AffilateController extends Controller
         // https://bdev.elmanhag.shop/admin/affilate
         $affilates = $this->user
         ->where('role', 'affilate')
+        ->orWhereNotNull('affilate_code')
         ->with(['income', 'logins'])
         ->withCount(['signups'])
         ->get();
         $total_affilate = count($affilates);
         $active_affilate = $this->user
         ->where('role', 'affilate')
+        ->where('status', 1)
+        ->orWhereNotNull('affilate_code')
         ->where('status', 1)
         ->count();
         $revenue = $this->affilate_account
@@ -73,7 +76,7 @@ class AffilateController extends Controller
         // name, phone, email, country_id, city_id, password, status
         $affilate_data = $request->only($this->affilateRequest);
         $affilate_data['role'] = 'affilate';
-        $affilate_code = rand(1000000, 9999999);
+        $affilate_code = rand(100000, 999999);
         $db_affilate_code = $this->user->where('affilate_code', $affilate_code)
         ->first(); // get affilate that have the same code to check if code frequent
         while (!empty($db_affilate_code)) { // if code is exist it will changed
@@ -98,6 +101,7 @@ class AffilateController extends Controller
         // name, phone, email, country_id, city_id, password, status, image
         $affilate = $this->user->where('id', $id)
         ->where('role', 'affilate')
+        ->orWhereNotNull('affilate_code')
         ->first();
         $affilate_data = $request->only($this->affilateRequest);
         $image_path = $this->upload($request, 'image', 'affilate/users');
@@ -124,8 +128,11 @@ class AffilateController extends Controller
     
     public function banned($id){
         // https://bdev.elmanhag.shop/admin/affilate/banned/{id}
-        $affilate = $this->user->where('id', $id)
+        $affilate = $this->user
+        ->where('id', $id)
         ->where('role', 'affilate')
+        ->orWhereNotNull('affilate_code')
+        ->where('id', $id)
         ->update(['status' => 0]);
 
         return response()->json([
@@ -137,6 +144,8 @@ class AffilateController extends Controller
         // https://bdev.elmanhag.shop/admin/affilate/unblock/{id}
         $affilate = $this->user->where('id', $id)
         ->where('role', 'affilate')
+        ->orWhereNotNull('affilate_code')
+        ->where('id', $id)
         ->update(['status' => 1]);
 
         return response()->json([
@@ -245,7 +254,8 @@ class AffilateController extends Controller
         $logins = $this->login_history
         ->where('user_id', $id)
         ->whereHas('user', function($query){
-            $query->where('role', 'affilate');
+            $query->where('role', 'affilate')
+            ->orWhereNotNull('affilate_code');
         })
         ->get();
 
@@ -253,5 +263,5 @@ class AffilateController extends Controller
             'logins' => $logins
         ]);
     }
-    
+
 }

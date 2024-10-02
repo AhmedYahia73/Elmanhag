@@ -13,6 +13,7 @@ use App\Http\Controllers\api\v1\auth\SignupController;
 use App\Http\Controllers\api\v1\admin\ProfileAdminController;
 
 use App\Http\Controllers\api\v1\popup\PopupController;
+use App\Http\Controllers\api\v1\AffilateController;
 
 use App\Http\Controllers\api\v1\student\SubjectsController;
 use App\Http\Controllers\api\v1\student\ProfileController as ProfileStudentController;
@@ -23,6 +24,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('popup', [PopupController::class, 'view'])->middleware('auth:sanctum');
+
+Route::post('createAffilate', [AffilateController::class, 'create_affilate'])->middleware('auth:sanctum');
 
 
 // Route::middleware('auth:sanctum')->prefix('Student')->group(function () {
