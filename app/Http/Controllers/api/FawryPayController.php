@@ -34,7 +34,7 @@ class FawryPayController extends Controller
 
          $request['customerProfileId'] = $request->user()->id ;
          $request['customerMobile'] = $request->user()->phone ;
-                // Make Random Number For merchantRefNum
+                // Make Random Number For MerchantRefNumber
                           do {
             $length = 6;
           // Generate a random number of the desired length
@@ -43,11 +43,10 @@ class FawryPayController extends Controller
             $randomNumber = random_int($min, $max);
 
           // Check if this number already exists in Payment
-          $exists = $this->payment::where('
-          ', $randomNumber)->exists();
+          $exists = $this->payment::where('merchantRefNum', $randomNumber)->exists();
                 $request['merchantRefNum'] = $randomNumber ;
           } while ($exists); // Repeat until a unique number is generated
-                // End Random Number For merchantRefNum
+                // End Random Number For MerchantRefNumber
 
         // Validate incoming request data
         $request->validate([
