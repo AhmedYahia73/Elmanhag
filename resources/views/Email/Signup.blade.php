@@ -1,7 +1,7 @@
-<table>
+<table width="100%">
     <tr>
-        <td>{{$data->name}}</td>
         <td>الاسم</td>
+        <td>{{$data->name}}</td>
     </tr>
     <tr>
         <td>{{date('d-m-Y', strtotime($data->created_at))}}</td>
@@ -17,20 +17,20 @@
     </tr>
     @if ($data->role == 'student')
     <tr>
-        <td>{{$data->category}}</td>
         <td>الصف</td>
+        <td>{{$data->category}}</td>
     </tr>
     <tr>
-        <td>{{$data->parent}}</td>
         <td>أسم ولى الأمر</td>
+        <td>{{$data->parent}}</td>
     </tr>
     <tr>
-        <td>{{$data->education}}</td>
         <td>نوع التعليم</td>
+        <td>{{$data->education}}</td>
     </tr>
     <tr>
-        <td>{{$data->job}}</td>
         <td>الوظيفة</td>
+        <td>{{$data->job}}</td>
     </tr>
     @endif
 </table>
