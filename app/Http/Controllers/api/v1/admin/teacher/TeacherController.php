@@ -134,6 +134,8 @@ class TeacherController extends Controller
 
     public function status( Request $request, $id ){
         // https://bdev.elmanhag.shop/admin/teacher/status/{id}
+        // Keys
+        // status
         // Get User Data
         $validator = Validator::make($request->all(), [
         'status' => 'required|boolean',
@@ -152,7 +154,7 @@ class TeacherController extends Controller
             $user->update([
                 'status' => $request->status
             ]);
-            return response()->json(['success'=>'Teacher Deleted Successfully'],200); 
+            return response()->json(['success'=>'Teacher Status is Changed'],200); 
         }
         else{
             return response()->json(['faild'=>'Teacher Is not Found'],400); 
