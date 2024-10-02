@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 trait PlaceOrder
 {
 
-     protected $orderPlaceReqeust =['chargeItems','payment_method_id','merchantRefNumber'];
+     protected $orderPlaceReqeust =['chargeItems','payment_method_id','merchantRefNum'];
  // This Is Trait About Make any Order 
    
 
@@ -44,7 +44,7 @@ trait PlaceOrder
            
             $item['student_id'] =$user->id;
             $item['purchase_date'] =now(); // Purchase Date Now
-            $item['merchantRefNumber'] =$newOrder['merchantRefNumber']; // This Is Reference Number For Order ID
+            $item['merchantRefNum'] =$newOrder['merchantRefNum']; // This Is Reference Number For Order ID
             $item['service'] =$service ; // This Is Reference Number For Order ID
          
            
@@ -80,17 +80,17 @@ trait PlaceOrder
     public function confirmOrder(  $response){
         if(isset($response['code']) && $response['code'] == 9901){
                 return response()->json($response);
-            }elseif(!isset($response['merchantRefNumber'])){
+            }elseif(!isset($response['merchantRefNum'])){
                        return response()->json($response);
             }else{
-                  $merchantRefNumberber = $response['merchantRefNumber'];
+                  $merchantRefNum = $response['merchantRefNum'];
                   $customerMerchantId = $response['customerMerchantId'];
                   $orderStatus = $response['orderStatus'];
             }
   
             if($orderStatus == 'PAID'){
             $payment =
-                $this->payment->where('merchantRefNumber', $merchantRefNumberber)->with('bundle', function ($query):void {
+                $this->payment->where('merchantRefNum', $merchantRefNum)->with('bundle', function ($query):void {
                     $query->with('users');
                 }, 'subject', function ($query):void {
                     $query->with('users');
