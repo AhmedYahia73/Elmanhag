@@ -86,7 +86,7 @@ class FawryPayService
         // Make the GET request to FawryPay API
         $response = Http::withOptions([
             'verify' => $this->verifySSL,
-        ])->get('https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2', [
+        ])->get('https://atfawry.com/ECommerceWeb/Fawry/payments/status/v2', [
             'merchantCode' => $this->merchantCode,
             'merchantRefNumber' => $merchantRefNumber,
             'signature' => $signature
