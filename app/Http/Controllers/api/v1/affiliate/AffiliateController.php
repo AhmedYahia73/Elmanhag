@@ -5,6 +5,9 @@ namespace App\Http\Controllers\api\v1\affiliate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\admin\affilate\AffilateRequest;
 use App\Http\Requests\api\affiliate\AfilliateRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

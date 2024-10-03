@@ -10,6 +10,8 @@ use App\Http\Requests\api\admin\student\StudentRequest;
 use App\Http\Requests\api\admin\student\UpdateStudentRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
 
 use App\Models\User;
 use App\Models\category;
