@@ -103,6 +103,7 @@ class SignupController extends Controller
         ->where('id', $user->sudent_jobs_id)
         ->first()->job;
         $user->parent = $request->parent_name;
+        $user->parent_phone = $request->parent_phone;
         $subject = "Signup Notification Mail";
         $view = "Signup";
          Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));

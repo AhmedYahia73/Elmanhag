@@ -8,29 +8,37 @@
         <td>التاريخ</td>
     </tr>
     <tr>
-        <td>{{$user->role}}</td>
+        <td>{{$user->role == 'male' ? 'ولد' : 'بنت'}}</td>
         <td>النوع</td>
     </tr>
     <tr>
         <td>{{$user->gender}}</td>
-        <td>نوع الجنس</td>
+        <td>نوع</td>
+    </tr>
+    <tr>
+        <td>{{$user->phone}}</td>
+        <td>رقم التليفون</td>
     </tr>
     @if ($user->role == 'student')
     <tr>
-        <td>الصف</td>
+        <td>{{$user->parent_phone}}</td>
+        <td>رقم الوالد</td>
+    </tr>
+    <tr>
         <td>{{$user->category}}</td>
+        <td>الصف</td>
     </tr>
     <tr>
-        <td>أسم ولى الأمر</td>
         <td>{{$user->parent}}</td>
+        <td>أسم ولى الأمر</td>
     </tr>
     <tr>
-        <td>نوع التعليم</td>
         <td>{{$user->education}}</td>
+        <td>نوع التعليم</td>
     </tr>
     <tr>
-        <td>الوظيفة</td>
         <td>{{$user->job}}</td>
+        <td>الوظيفة</td>
     </tr>
     @endif
 </table>
