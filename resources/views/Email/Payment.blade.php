@@ -66,10 +66,12 @@
         </div>
         <div class="info-row">
             <div class="info-value">
+                @if ($user->order)
                 @foreach ($user->order as $order)
                     {{$order->name}}
                     <br />
                 @endforeach
+                @endif
             </div>
             <div class="info-label">المشتريات</div>
         </div>
