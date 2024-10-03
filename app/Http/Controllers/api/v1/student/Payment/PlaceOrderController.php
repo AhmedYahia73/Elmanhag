@@ -13,6 +13,8 @@ use App\Models\subject;
 use App\trait\image;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
 
 class PlaceOrderController extends Controller
 {
