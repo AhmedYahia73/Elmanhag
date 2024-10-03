@@ -105,7 +105,7 @@ class SignupController extends Controller
         $user->parent = $request->parent_name;
         $subject = "Signup Notification Mail";
         $view = "Signup";
-         Mail::to('ziadm0176@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));
+         Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));
 
         return response()->json([
             'success'=>'Welcome,Student Created Successfully',
