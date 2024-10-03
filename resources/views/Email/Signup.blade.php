@@ -24,12 +24,12 @@
         </tr>
         <tr>
             <td style="padding: 10px; border: 1px solid #ddd;">{{$user->phone}}</td>
-            <td style="padding: 10px; border: 1px solid #ddd;">رقم التليفون</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">رقم الطالب</td>
         </tr>
         @if ($user->role == 'student')
         <tr>
             <td style="padding: 10px; border: 1px solid #ddd;">{{$user->parent_phone}}</td>
-            <td style="padding: 10px; border: 1px solid #ddd;">رقم الوالد</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">رقم ولى الأمر</td>
         </tr>
         <tr>
             <td style="padding: 10px; border: 1px solid #ddd;">{{$user->category}}</td>
