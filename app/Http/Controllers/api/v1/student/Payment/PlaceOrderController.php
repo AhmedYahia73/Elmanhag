@@ -102,6 +102,7 @@ class PlaceOrderController extends Controller
       $payment_oreder['category'] = $request->user()->category->name;
       $payment_oreder['amount'] = $newOrder->amount;
       $payment_oreder['date'] = $newOrder->purchase_date;
+      return $payment_oreder;
        Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($payment,$subject,$view));
         return response()->json([
             'success'=>'The request has been sent and is awaiting approval from the Admin'
