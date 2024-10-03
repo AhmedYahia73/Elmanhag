@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
 
 use App\Models\User;
 
@@ -40,6 +42,9 @@ class AffilateController extends Controller
         $user->update([
             'affilate_code' => $affilate_code
         ]);
+        $subject = "Signup Notification Mail";
+        $view = "Signup";
+        Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));
 
         return response()->json([
             'affilate_code' => $affilate_code
