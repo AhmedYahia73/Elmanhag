@@ -34,14 +34,16 @@ class CreateHomeworkController extends Controller
         // questions[$iteration][]
         $homework_data = $request->only($this->homeworkRequest); // Get Data
         $homework = $this->homeworks->create($homework_data); // Create Homework
-        foreach ($request->groups as $key => $item) { 
-            $group = $this->question_groups->create([
-                'name' => $item,
-                'homework_id' => $homework->id
-            ]);
-
-            foreach ($request->questions[$key] as $element) {
-                $group->questions()->attach($element);
+        if ($request->groups) {
+            foreach ($request->groups as $key => $item) { 
+                $group = $this->question_groups->create([
+                    'name' => $item,
+                    'homework_id' => $homework->id
+                ]);
+    
+                foreach ($request->questions[$key] as $element) {
+                    $group->questions()->attach($element);
+                }
             }
         }
 
@@ -62,14 +64,16 @@ class CreateHomeworkController extends Controller
         ->update($homework_data);
         $this->question_groups->where('homework_id', $id)
         ->delete();
-        foreach ($request->groups as $key => $item) { 
-            $group = $this->question_groups->create([
-                'name' => $item,
-                'homework_id' => $id
-            ]);
-
-            foreach ($request->questions[$key] as $element) {
-                $group->questions()->attach($element);
+        if ($request->groups) {
+            foreach ($request->groups as $key => $item) { 
+                $group = $this->question_groups->create([
+                    'name' => $item,
+                    'homework_id' => $id
+                ]);
+    
+                foreach ($request->questions[$key] as $element) {
+                    $group->questions()->attach($element);
+                }
             }
         }
 
