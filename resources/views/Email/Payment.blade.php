@@ -49,22 +49,27 @@
     @endif
     <div class="info-table">
         <div class="info-row">
-            <div class="info-value">{{$user['student']}}</div>
             <div class="info-label">الاسم</div>
+            <div class="info-value">{{$user['student']}}</div>
         </div>
         <div class="info-row">
-            <div class="info-value">{{$user['category']}}</div>
             <div class="info-label">السنة الدراسية</div>
+            <div class="info-value">{{$user['category']}}</div>
         </div>
         <div class="info-row">
-            <div class="info-value">{{$user['amount']}}</div>
             <div class="info-label">المبلغ المدفوع</div>
+            <div class="info-value">{{$user['amount']}}</div>
         </div>
         <div class="info-row">
-            <div class="info-value">{{$user['date']}}</div>
+            <div class="info-label">طريقة الدفع</div>
+            <div class="info-value">{{$user['payment_method']}}</div>
+        </div>
+        <div class="info-row">
             <div class="info-label">التاريخ</div>
+            <div class="info-value">{{$user['date']}}</div>
         </div>
         <div class="info-row">
+            <div class="info-label">المشتريات</div>
             <div class="info-value">
                 @if ($user['order'])
                 @foreach ($user['order'] as $order)
@@ -73,7 +78,6 @@
                 @endforeach
                 @endif
             </div>
-            <div class="info-label">المشتريات</div>
         </div>
     </div>
 </div>
