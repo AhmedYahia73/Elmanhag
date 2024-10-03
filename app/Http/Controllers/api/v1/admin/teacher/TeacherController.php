@@ -111,7 +111,7 @@ class TeacherController extends Controller
         $user = $this->users
         ->create($teacherData); // Create teacher
         $user->teacher_subjects()->sync($request->subject);
-        return response()->json(['success'=>'Teacher Updated Successfully'],200); 
+        return response()->json(['success'=>'Teacher Added Successfully'],200); 
     }
 
     public function delete( $id ){
@@ -123,7 +123,9 @@ class TeacherController extends Controller
 
         // Remove User
         if ( !empty($user) ) {
-            $this->deleteImage($user->image);
+            if ($user->image != 'default.png' && $user->image != 'female.png') {
+                $this->deleteImage($user->image);
+            }
             $user->delete();
             return response()->json(['success'=>'Teacher Deleted Successfully'],200); 
         }

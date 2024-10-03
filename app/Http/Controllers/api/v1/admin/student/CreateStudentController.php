@@ -161,7 +161,9 @@ class CreateStudentController extends Controller
 
         // Remove User
         if ( !empty($user) ) {
-            $this->deleteImage($user->image);
+            if ($user->image != 'default.png' && $user->image != 'female.png') {
+                $this->deleteImage($user->image);
+            }
             $user->delete();
             return response()->json(['success'=>'Student Deleted Successfully'],200); 
         }
