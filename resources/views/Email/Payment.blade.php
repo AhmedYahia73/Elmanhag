@@ -44,30 +44,30 @@
 </style>
 
 <div class="receipt-container">
-    @if ($user->receipt)
-        <img src="{{$user->receipt}}" alt="Receipt Image" class="receipt-image" />
+    @if ($user['receipt'])
+        <img src="{{$user['receipt']}}" alt="Receipt Image" class="receipt-image" />
     @endif
     <div class="info-table">
         <div class="info-row">
-            <div class="info-value">{{$user->student}}</div>
+            <div class="info-value">{{$user['student']}}</div>
             <div class="info-label">الاسم</div>
         </div>
         <div class="info-row">
-            <div class="info-value">{{$user->category}}</div>
+            <div class="info-value">{{$user['category']}}</div>
             <div class="info-label">السنة الدراسية</div>
         </div>
         <div class="info-row">
-            <div class="info-value">{{$user->amount}}</div>
+            <div class="info-value">{{$user['amount']}}</div>
             <div class="info-label">المبلغ المدفوع</div>
         </div>
         <div class="info-row">
-            <div class="info-value">{{$user->date}}</div>
+            <div class="info-value">{{$user['date']}}</div>
             <div class="info-label">التاريخ</div>
         </div>
         <div class="info-row">
             <div class="info-value">
-                @if ($user->order)
-                @foreach ($user->order as $order)
+                @if ($user['order'])
+                @foreach ($user['order'] as $order)
                     {{$order->name}}
                     <br />
                 @endforeach
