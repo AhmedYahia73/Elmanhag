@@ -43,6 +43,8 @@ class AffiliateController extends Controller
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
         $user->image = 'default.png'; // Start User Take This Token ;
+        $subject = "Signup Notification Mail";
+        $view = "Signup";
         Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));
         return response()->json([
             'success'=>'affilate Add Successfully',
