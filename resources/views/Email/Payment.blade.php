@@ -44,7 +44,9 @@
 </style>
 
 <div class="receipt-container">
-    <img src="{{$user->receipt}}" alt="Receipt Image" class="receipt-image" />
+    @if ($user->receipt)
+        <img src="{{$user->receipt}}" alt="Receipt Image" class="receipt-image" />
+    @endif
     <div class="info-table">
         <div class="info-row">
             <div class="info-value">{{$user->student}}</div>
@@ -61,6 +63,15 @@
         <div class="info-row">
             <div class="info-value">{{$user->date}}</div>
             <div class="info-label">التاريخ</div>
+        </div>
+        <div class="info-row">
+            <div class="info-value">
+                @foreach ($user->order as $order)
+                    {{$order->name}}
+                    <br />
+                @endforeach
+            </div>
+            <div class="info-label">المشتريات</div>
         </div>
     </div>
 </div>

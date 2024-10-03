@@ -51,13 +51,14 @@ class PlaceOrderController extends Controller
         $live_id = $request->live_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title; 
-        $payment = collect([]);
+        $payment_oreder = collect([]);
     //    $payment_title == 'vodafon cach' ? 
     //    $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
     //    : $newOrder['receipt'] = 'default.png';
         $receipt = $this->upload($request,'receipt','student/receipt');
         if (!empty($receipt)) {
             $newOrder['receipt'] = $receipt;
+            $payment_oreder['receipt'] =  url('storage/' . $newOrder['receipt']);
         }
        $newOrder['purchase_date']= now();
        $newOrder['student_id']= $student_id ;
@@ -69,18 +70,18 @@ class PlaceOrderController extends Controller
           $newOrder = $payment->create($newOrder);
           if($newOrder['service'] == 'Bundle'){
             $bundlePayment = $newOrder->bundle()->sync($bundle_id);
-            $payment->order = $this->bundle
+            $payment_oreder['order'] = $this->bundle
             ->whereIn('id', $bundle_id)
             ->get();
         }elseif($newOrder['service'] == 'Subject'){
             $subject_id = json_decode($subject_id);
             $subjectPayment = $newOrder->subject()->sync($subject_id);
-            $payment->order = $this->subject
+            $payment_oreder['order'] = $this->subject
             ->whereIn('id', $subject_id)
             ->get();
         }elseif($newOrder['service'] == 'Live session'){
             $livePayment = $newOrder->live()->sync($live_id);
-            $payment->order = $this->live
+            $payment_oreder['order'] = $this->live
             ->whereIn('id', $live_id)
             ->get();
 
@@ -95,13 +96,12 @@ class PlaceOrderController extends Controller
             ]);
       }
 
-      $subject = "Signup Notification Mail";
+      $subject = "Payment Notification Mail";
       $view = "Payment";
-      $payment->student = $request->user()->name;
-      $payment->category = $request->user()->category->name;
-      $payment->amount = $newOrder->amount;
-      $payment->date = $newOrder->purchase_date;
-      $payment->receipt = url('storage/student/receipt/' . $newOrder['receipt']);
+      $payment_oreder['student'] = $request->user()->name;
+      $payment_oreder['category'] = $request->user()->category->name;
+      $payment_oreder['amount'] = $newOrder->amount;
+      $payment_oreder['date'] = $newOrder->purchase_date;
        Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($payment,$subject,$view));
         return response()->json([
             'success'=>'The request has been sent and is awaiting approval from the Admin'
