@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\services\GeoService;
 use Jenssegers\Agent\Agent;
 use GeoIP;
 use App\Models\LoginHistory;
@@ -17,8 +18,11 @@ use Hash;
 
 class LoginController extends Controller
 {
+    protected $geoService;
     public function __construct(private User $user, private LoginHistory $login_history,
-    private PersonalAccessToken $tokens){}
+    private PersonalAccessToken $tokens, GeoService $geoService){
+        $this->geoService = $geoService;
+    }
     protected $loginRequest = [
         'email',
         'password',
@@ -64,6 +68,13 @@ class LoginController extends Controller
                     // $country = $geoInfo['country'];
                     // $city = $geoInfo['city'];
                     // $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
+                    $ip = $request->ip(); // Get the user's IP address
+                    $location = $this->geoService->getLocation($ip);
+
+                    return response()->json([
+                        'city' => $location['city'] ?? null,
+                        'country' => $location['country'] ?? null,
+                    ]);
                     $start_session = now();
                     $token_id = $user->logins->id; 
 
