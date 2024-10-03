@@ -90,6 +90,9 @@ class AffilateController extends Controller
             'affilate_id' => $affilate->id
         ]);
 
+        $subject = "Signup Notification Mail";
+        $view = "Signup";
+        Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($affilate,$subject,$view));
         return response()->json([
             'success' => 'You add affilate success'
         ]);
