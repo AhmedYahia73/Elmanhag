@@ -8,11 +8,11 @@
         <td>التاريخ</td>
     </tr>
     <tr>
-        <td>{{$user->role == 'male' ? 'ولد' : 'بنت'}}</td>
+        <td>{{$user->role == 'student' ? 'طالب' : $user->role}}</td>
         <td>النوع</td>
     </tr>
     <tr>
-        <td>{{$user->gender}}</td>
+        <td>{{$user->gender == 'male' ? 'ولد' : 'بنت'}}</td>
         <td>نوع</td>
     </tr>
     <tr>
