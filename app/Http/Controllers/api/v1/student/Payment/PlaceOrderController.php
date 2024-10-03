@@ -51,7 +51,7 @@ class PlaceOrderController extends Controller
         $live_id = $request->live_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title; 
-        $payment_oreder = collect([]);
+        $payment_oreder = [];
     //    $payment_title == 'vodafon cach' ? 
     //    $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
     //    : $newOrder['receipt'] = 'default.png';
