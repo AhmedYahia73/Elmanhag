@@ -29,4 +29,12 @@ class LoginHistory extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getcreatedAtAttribute($datetime){
+        return date('d-m-Y', strtotime($datetime));
+    }
+
+    public function getupdatedAtAttribute($datetime){
+        return date('d-m-Y', strtotime($datetime));
+    }
 }

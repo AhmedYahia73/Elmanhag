@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Models\subject;
+use App\Models\LoginHistory;
 use App\Models\StudentJob;
 use App\Models\bundle;
 use App\Models\category;
@@ -105,7 +106,7 @@ class User extends Authenticatable
     }
 
     public function logins(){
-        return $this->hasOne(PersonalAccessToken::class, 'tokenable_id')
+        return $this->hasOne(LoginHistory::class, 'user_id')
         ->orderByDesc('id');
     }
 

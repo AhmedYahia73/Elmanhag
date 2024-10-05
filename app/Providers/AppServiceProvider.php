@@ -25,9 +25,24 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     { 
         
-        // 'revisions', 'exams', 'pop up', 'reviews',
+        // '', 'exams', 'reviews',
         // '', 'support', 'reports', 'notice board'
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+
+        // if roles have student module
+        Gate::define('isRevision', function (User $user) {
+            if ( $user->role == 'supAdmin' ) {
+                return true;
+            }
+            elseif ( $user->role == 'admin' ) {
+                if (isset($user->admin_position->roles)) {
+                    $arr = $user->admin_position->roles->pluck('role')->toArray();
+                    if (in_array('revisions', $arr)) {
+                        return true;
+                    }
+                }
+            }
+        });
 
         // if roles have student module
         Gate::define('isStudent', function (User $user) {

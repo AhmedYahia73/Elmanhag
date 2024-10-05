@@ -5,6 +5,9 @@ namespace App\Http\Controllers\api\v1\affiliate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\admin\affilate\AffilateRequest;
 use App\Http\Requests\api\affiliate\AfilliateRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -40,6 +43,9 @@ class AffiliateController extends Controller
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
         $user->image = 'default.png'; // Start User Take This Token ;
+        $subject = "Signup Notification Mail";
+        $view = "Signup";
+        Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));
         return response()->json([
             'success'=>'affilate Add Successfully',
             '_tokent'=>$token,

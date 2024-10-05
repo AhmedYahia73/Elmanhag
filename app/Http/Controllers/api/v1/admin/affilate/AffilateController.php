@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\api\admin\affilate\AffilateRequest;
 use App\Http\Requests\api\admin\affilate\UpdateAffilateRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
 use App\trait\image;
 
 use App\Models\User;
@@ -90,6 +92,9 @@ class AffilateController extends Controller
             'affilate_id' => $affilate->id
         ]);
 
+        $subject = "Signup Notification Mail";
+        $view = "Signup";
+        Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($affilate,$subject,$view));
         return response()->json([
             'success' => 'You add affilate success'
         ]);

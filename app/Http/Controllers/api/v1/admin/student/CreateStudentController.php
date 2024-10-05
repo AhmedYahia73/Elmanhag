@@ -10,12 +10,18 @@ use App\Http\Requests\api\admin\student\StudentRequest;
 use App\Http\Requests\api\admin\student\UpdateStudentRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
 
 use App\Models\User;
+use App\Models\category;
+use App\Models\Education;
+use App\Models\StudentJob;
 
 class CreateStudentController extends Controller
 {
-    public function __construct(private User $user){
+    public function __construct(private User $user, private category $category, 
+    private Education $education, private StudentJob $student_job ){
 
     }
     protected $studentRequest = [
@@ -72,6 +78,20 @@ class CreateStudentController extends Controller
         
         $newStudent['role'] = 'student'; // Type Of User
         $user = $this->user->create($newStudent); // Start Create New Studetn
+        $user->category = $this->category
+        ->where('id', $user->category_id )
+        ->first()->name;
+        $user->education = $this->education
+        ->where('id', $user->education_id  )
+        ->first()->name;
+        $user->job = $this->student_job
+        ->where('id', $user->sudent_jobs_id)
+        ->first()->job;
+        $user->parent = $request->parent_name;
+        $user->parent_phone = $request->parent_phone;
+        $subject = "Signup Notification Mail";
+        $view = "Signup";
+         Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($user,$subject,$view));
         return response()->json(['success'=>'Student Created Successfully'],200); 
     }
     
@@ -141,7 +161,9 @@ class CreateStudentController extends Controller
 
         // Remove User
         if ( !empty($user) ) {
-            $this->deleteImage($user->image);
+            if ($user->image != 'default.png' && $user->image != 'female.png') {
+                $this->deleteImage($user->image);
+            }
             $user->delete();
             return response()->json(['success'=>'Student Deleted Successfully'],200); 
         }

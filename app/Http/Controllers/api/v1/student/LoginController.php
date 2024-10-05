@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\services\GeoService;
 use Jenssegers\Agent\Agent;
 use GeoIP;
 use App\Models\LoginHistory;
@@ -17,8 +18,11 @@ use Hash;
 
 class LoginController extends Controller
 {
+    protected $geoService;
     public function __construct(private User $user, private LoginHistory $login_history,
-    private PersonalAccessToken $tokens){}
+    private PersonalAccessToken $tokens, GeoService $geoService){
+        $this->geoService = $geoService;
+    }
     protected $loginRequest = [
         'email',
         'password',
@@ -30,8 +34,8 @@ class LoginController extends Controller
        $checkLogin =  is_numeric($login['email']) ? $name ='phone':$name ='email'; // Old Selution
         $user = $this->user
         ->where('email',$login['email'])
-        ->where('affilate_code',$login['email'])
-        ->orwhere('phone',$login['email'])->first();
+        ->orWhere('affilate_code',$login['email'])
+        ->orWhere('phone',$login['email'])->first();
         if ($user->status == 0) {
             return response()->json([
                 'success' => 'You are banned'
@@ -55,31 +59,35 @@ class LoginController extends Controller
                 if(!empty($user->role) && $user->role != 'admin' && $user->role != 'supAdmin'){
                     $agent = new Agent(); 
                     $agent->setUserAgent($request->header('User-Agent'));
+                    $ip = $request->ip(); // Get the user's IP address
+                    $location = $this->geoService->getLocation($ip);
              
                     $os = $agent->platform();
                     $browser = $agent->browser();
                     $device = $agent->device();
                     $ip = $request->ip();
                     // $geoInfo = GeoIP::getLocation($ip);
-                    // $country = $geoInfo['country'];
-                    // $city = $geoInfo['city'];
-                    // $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
+                    $country = $location['country'] ?? null;
+                    $city = $location['city'] ?? null;
+                    $location = "https://www.google.com/maps?q={$location['loc']}";
+
                     $start_session = now();
                     $token_id = $user->logins->id; 
 
-                    $this->login_history
+                    $login_history = $this->login_history
                     ->create([
                         'os' => $os,
                         'browser' => $browser,
                         'device' => $device,
                         'ip' => $ip,
-                        // 'country' => $country,
-                        // 'city' => $city,
-                        // 'location' => $location,
+                        'country' => $country,
+                        'city' => $city,
+                        'location' => $location,
                         'start_session' => $start_session,
                         'user_id' => $user->id,
                         'token_id' => $token_id,
                     ]);
+                    
                    return response()->json([
                    'success'=>'Welcome '.$login['email'],
                    'user'=>$user,

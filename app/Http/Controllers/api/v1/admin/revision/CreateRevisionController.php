@@ -1,44 +1,41 @@
 <?php
 
-namespace App\Http\Controllers\api\v1\admin\homework;
+namespace App\Http\Controllers\api\v1\admin\revision;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\api\admin\homework\HomeworkRequest;
+use App\Http\Requests\api\admin\revision\RevisionRequest;
 
-use App\Models\homework;
-use App\Models\QuestionGroup;
+use App\Models\Revision;
+use App\Models\RevisionQuestionGroup;
 
-class CreateHomeworkController extends Controller
+class CreateRevisionController extends Controller
 {
-    public function __construct(private homework $homeworks, private QuestionGroup $question_groups){}
-    protected $homeworkRequest = [
+    public function __construct(private Revision $revisions, private RevisionQuestionGroup $question_groups){}
+    protected $revisionRequest = [
         'title',
         'semester',
-        'due_date',
         'category_id',
         'subject_id',
-        'chapter_id',
-        'lesson_id',
-        'difficulty',
         'mark',
-        'pass',
+        'type',
+        'month',
         'status',
     ];
 
-    public function create(HomeworkRequest $request){
-        // https://bdev.elmanhag.shop/admin/homework/add
+    public function create(RevisionRequest $request){
+        // https://bdev.elmanhag.shop/admin/revisions/add
         // Keys 
-        // title, semester, due_date, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
+        // title, semester[first, second], category_id, subject_id, mark, type[monthly, final], month, status
         // groups[$iteration]
         // questions[$iteration][]
-        $homework_data = $request->only($this->homeworkRequest); // Get Data
-        $homework = $this->homeworks->create($homework_data); // Create Homework
+        $revision_data = $request->only($this->revisionRequest); // Get Data
+        $revision = $this->revisions->create($revision_data); // Create revisions
         if ($request->groups) {
             foreach ($request->groups as $key => $item) { 
                 $group = $this->question_groups->create([
                     'name' => $item,
-                    'homework_id' => $homework->id
+                    'revision_id' => $revision->id
                 ]);
     
                 foreach ($request->questions[$key] as $element) {
@@ -52,25 +49,25 @@ class CreateHomeworkController extends Controller
         ]);
     }
     
-    public function modify(HomeworkRequest $request, $id){
-        // https://bdev.elmanhag.shop/admin/homework/update/{id}
+    public function modify(RevisionRequest $request, $id){
+        // https://bdev.elmanhag.shop/admin/revisions/update/{id}
         // Keys 
-        // title, semester, due_date, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
+        // title, semester[first, second], category_id, subject_id, mark, type[monthly, final], month, status
         // groups[$iteration]
         // questions[$iteration][]
-        $homework_data = $request->only($this->homeworkRequest);
-        $homework = $this->homeworks->where('id', $id)
+        $revision_data = $request->only($this->revisionRequest);
+        $revision = $this->revisions->where('id', $id)
         ->first()
-        ->update($homework_data);
-        $this->question_groups->where('homework_id', $id)
+        ->update($revision_data);
+        $this->question_groups->where('revision_id', $id)
         ->delete();
         if ($request->groups) {
             foreach ($request->groups as $key => $item) { 
                 $group = $this->question_groups->create([
                     'name' => $item,
-                    'homework_id' => $id
+                    'revision_id' => $id
                 ]);
-    
+
                 foreach ($request->questions[$key] as $element) {
                     $group->questions()->attach($element);
                 }
@@ -83,8 +80,8 @@ class CreateHomeworkController extends Controller
     }
 
     public function delete($id){
-        // https://bdev.elmanhag.shop/admin/homework/delete/{id}
-        $this->homeworks->where('id', $id)
+        // https://bdev.elmanhag.shop/admin/revisions/delete/{id}
+        $this->revisions->where('id', $id)
         ->delete();
 
         return response()->json([

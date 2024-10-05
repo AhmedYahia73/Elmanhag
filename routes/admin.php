@@ -61,6 +61,9 @@ use App\Http\Controllers\api\v1\admin\role\RoleController;
 
 use App\Http\Controllers\api\v1\admin\complaint\ComplaintController;
 
+use App\Http\Controllers\api\v1\admin\revision\RevisionController;
+use App\Http\Controllers\api\v1\admin\revision\CreateRevisionController;
+
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
@@ -138,6 +141,19 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'create')->name('popup.add');
             Route::put('/update/{id}', 'modify')->name('popup.update');
             Route::delete('/delete/{id}', 'delete')->name('popup.delete');
+        });
+    });
+  
+
+    // Start Revision Module
+    Route::prefix('revisions')->middleware('can:isRevision')->group(function () {
+        Route::controller(RevisionController::class)->group(function(){
+            Route::get('/', 'show')->name('revision.show');
+        }); 
+        Route::controller(CreateRevisionController::class)->group(function(){
+            Route::post('/add', 'create')->name('revision.add');
+            Route::put('/update/{id}', 'modify')->name('revision.update');
+            Route::delete('/delete/{id}', 'delete')->name('revision.delete');
         });
     });
   

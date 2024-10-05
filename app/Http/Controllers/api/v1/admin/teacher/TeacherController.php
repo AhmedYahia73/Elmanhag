@@ -104,14 +104,14 @@ class TeacherController extends Controller
     public function add_teacher(AddTeacherRequest $request){
         // https://bdev.elmanhag.shop/admin/teacher/add
         // Key
-        // name, phone, status, email, image, password
+        // name, phone, status, email, image, password, subject
         $teacherData = $request->only($this->teacherRequest); // Get data
         $image =  $this->upload($request,'image','teacher/user'); // Upload teacher image
         $teacherData['role'] = 'teacher'; // Determine role of user
         $user = $this->users
         ->create($teacherData); // Create teacher
         $user->teacher_subjects()->sync($request->subject);
-        return response()->json(['success'=>'Teacher Updated Successfully'],200); 
+        return response()->json(['success'=>'Teacher Added Successfully'],200); 
     }
 
     public function delete( $id ){
@@ -123,7 +123,9 @@ class TeacherController extends Controller
 
         // Remove User
         if ( !empty($user) ) {
-            $this->deleteImage($user->image);
+            if ($user->image != 'default.png' && $user->image != 'female.png') {
+                $this->deleteImage($user->image);
+            }
             $user->delete();
             return response()->json(['success'=>'Teacher Deleted Successfully'],200); 
         }
