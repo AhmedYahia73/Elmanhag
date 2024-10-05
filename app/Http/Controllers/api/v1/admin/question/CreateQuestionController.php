@@ -31,7 +31,7 @@ class CreateQuestionController extends Controller
         // https://bdev.elmanhag.shop/admin/question/add 
         // keys => question, image, audio, status, category_id, subject_id, 
         // chapter_id, lesson_id, semester['first', 'second'], difficulty,
-        // answer_type ['Mcq', 'T/F', 'Join', 'Complete', 'Reorder'], question_type ['text', 'image', 'audio']
+        // answer_type ['Mcq', 'T/F', 'Join', 'Complete', 'Reorder', 'Essay'], question_type ['text', 'image', 'audio']
         // answer, true_answer
         $question_data = $request->only($this->questionRequest); // Get request
         if ( $question_data['question_type'] == 'image' ) { // if request send image
@@ -43,7 +43,8 @@ class CreateQuestionController extends Controller
             $question_data['audio'] = $audio_path;
         }
 
-        if ($question_data['answer_type'] != 'Complete' && $question_data['answer_type'] != 'Reorder') {
+        if ($question_data['answer_type'] != 'Complete' && $question_data['answer_type'] != 'Reorder'
+        && $question_data['answer_type'] != 'Essay') {
             $question_data['question'] = $request->question;
             $question = $this->question->create($question_data); // Create Question
             $this->question_answer->create([
@@ -66,6 +67,15 @@ class CreateQuestionController extends Controller
             $question = $this->question->create($question_data); // Create Question
             $this->question_answer->create([
                 'answer' => json_encode($request->answer),
+                'true_answer' => json_encode($request->answer),
+                'question_id' => $question->id
+            ]); // Create Answer
+        }
+        elseif ($question_data['answer_type'] == 'Essay') {
+            $question_data['question'] = json_encode($request->question);
+            $question = $this->question->create($question_data); // Create Question
+            $this->question_answer->create([
+                'answer' => json_encode([]),
                 'true_answer' => json_encode($request->answer),
                 'question_id' => $question->id
             ]); // Create Answer
