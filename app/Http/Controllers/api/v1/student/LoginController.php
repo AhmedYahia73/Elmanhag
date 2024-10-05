@@ -59,37 +59,36 @@ class LoginController extends Controller
                 if(!empty($user->role) && $user->role != 'admin' && $user->role != 'supAdmin'){
                     $agent = new Agent(); 
                     $agent->setUserAgent($request->header('User-Agent'));
+                    $ip = $request->ip(); // Get the user's IP address
+                    $location = $this->geoService->getLocation($ip);
              
                     $os = $agent->platform();
                     $browser = $agent->browser();
                     $device = $agent->device();
                     $ip = $request->ip();
                     // $geoInfo = GeoIP::getLocation($ip);
-                    // $country = $geoInfo['country'];
-                    // $city = $geoInfo['city'];
-                    // $location = "https://www.google.com/maps?q={$geoInfo['lat']},{$geoInfo['lon']}";
-                    $ip = $request->ip(); // Get the user's IP address
-                    $location = $this->geoService->getLocation($ip);
+                    $country = $location['country'] ?? null;
+                    $city = $location['city'] ?? null;
+                    $location = "https://www.google.com/maps?q={$location['latitude']},{$location['longitude']}";
 
-                    return response()->json([
-                        'city' => $location['city'] ?? null,
-                        'country' => $location['country'] ?? null,
-                    ]);
                     $start_session = now();
                     $token_id = $user->logins->id; 
 
-                    $this->login_history
+                    $login_history = $this->login_history
                     ->create([
                         'os' => $os,
                         'browser' => $browser,
                         'device' => $device,
                         'ip' => $ip,
-                        // 'country' => $country,
-                        // 'city' => $city,
-                        // 'location' => $location,
+                        'country' => $country,
+                        'city' => $city,
+                        'location' => $location,
                         'start_session' => $start_session,
                         'user_id' => $user->id,
                         'token_id' => $token_id,
+                    ]);
+                    return response()->json([
+                        'login_history' => $login_history
                     ]);
                    return response()->json([
                    'success'=>'Welcome '.$login['email'],
