@@ -105,12 +105,12 @@ class User extends Authenticatable
         return $this->hasOne(AffilateAccount::class, 'affilate_id');
     }
 
-    public function logins(){
-        return $this->hasOne(LoginHistory::class, 'user_id')
-        ->orderByDesc('id');
-    }
+    // public function logins(){
+    //     return $this->hasOne(LoginHistory::class, 'user_id')
+    //     ->orderByDesc('id');
+    // }
 
-    public function tokens(){
+    public function logins(){
         return $this->hasOne(PersonalAccessToken::class, 'tokenable_id')
         ->orderByDesc('id');
     }
