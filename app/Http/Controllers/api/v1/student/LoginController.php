@@ -69,6 +69,7 @@ class LoginController extends Controller
                     // $geoInfo = GeoIP::getLocation($ip);
                     $country = $location['country'] ?? null;
                     $city = $location['city'] ?? null;
+                    return $location;
                     $location = "https://www.google.com/maps?q=$location";
 
                     $start_session = now();
