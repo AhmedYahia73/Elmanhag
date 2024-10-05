@@ -46,17 +46,21 @@ class CreateChapterController extends Controller
         ->first();
         $this->translate($chapterData['name'], $chapterData['ar_name']);// Translate in file json
  
-        $cover_photo = $this->upload($request, 'cover_photo', 'admin/chapters/cover_photo'); // Upload cover photo
-        $thumbnail = $this->upload($request, 'thumbnail', 'admin/chapters/thumbnail'); // Upload thumbnail
-        // If new Cover Photo is found delete old image
-        if ( !empty($cover_photo) && $cover_photo != null ) {
-            $this->deleteImage($chapter->cover_photo);
-            $chapterData['cover_photo'] =$cover_photo; // Image Value From traid Image 
+        if (is_file($request->cover_photo)) {
+            $cover_photo = $this->upload($request, 'cover_photo', 'admin/chapters/cover_photo'); // Upload cover photo
+            // If new Cover Photo is found delete old image
+            if ( !empty($cover_photo) && $cover_photo != null ) {
+                $this->deleteImage($chapter->cover_photo);
+                $chapterData['cover_photo'] =$cover_photo; // Image Value From traid Image 
+            }
         }
-        // If new Thumbnail is found delete old image
-        if ( !empty($thumbnail) && $thumbnail != null ) {
-            $this->deleteImage($chapter->thumbnail);
-            $chapterData['thumbnail'] =$thumbnail; // Image Value From traid Image 
+        if (is_file($request->thumbnail)) {
+            $thumbnail = $this->upload($request, 'thumbnail', 'admin/chapters/thumbnail'); // Upload thumbnail
+            // If new Thumbnail is found delete old image
+            if ( !empty($thumbnail) && $thumbnail != null ) {
+                $this->deleteImage($chapter->thumbnail);
+                $chapterData['thumbnail'] =$thumbnail; // Image Value From traid Image 
+            }
         }
         $this->translate($chapterData['name'], $chapterData['ar_name']);// Translate in file json
         $chapter->update($chapterData);

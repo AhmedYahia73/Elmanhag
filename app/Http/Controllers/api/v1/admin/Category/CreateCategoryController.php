@@ -41,12 +41,14 @@ class CreateCategoryController extends Controller
         $data = $request->only($this->categoryRequest); // Get Request
         $category = category::where('id', $id)
         ->first(); //Get Category
-        $image =  $this->upload($request,'thumbnail','admin/categories/thumbnail'); // Upload Thumbnail
+        if (is_file($request->thumbnail)) { 
+            $image =  $this->upload($request,'thumbnail','admin/categories/thumbnail'); // Upload Thumbnail
         
-        // If new image is found delete old image
-        if ( !empty($image) && $image != null ) { 
-            $this->deleteImage($category->thumbnail); // Delete old Thumbnail
-            $data['thumbnail'] = $image;
+            // If new image is found delete old image
+            if ( !empty($image) && $image != null ) { 
+                $this->deleteImage($category->thumbnail); // Delete old Thumbnail
+                $data['thumbnail'] = $image;
+            }
         }
 
         $this->translate($data['name'], $data['ar_name']); // Translate Item

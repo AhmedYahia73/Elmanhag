@@ -96,21 +96,25 @@ class CreateQuestionController extends Controller
         $question = $this->question->where('id', $id)
         ->first(); //Get Question
         if ( $question_data['question_type'] == 'image' ) { // if request send image
-            $image_path = $this->upload($request, 'image', 'admin/questions/image'); // Upload image
-            if ( !empty($image_path) && $image_path != null ) { // if he upload new image
-                $question_data['image'] = $image_path;
-                $question_data['audio'] = null;
-                $this->deleteImage($question->image); // Delete old image
-                $this->deleteImage($question->audio); // Delete old audio
+            if (is_file($request->image)) {
+                $image_path = $this->upload($request, 'image', 'admin/questions/image'); // Upload image
+                if ( !empty($image_path) && $image_path != null ) { // if he upload new image
+                    $question_data['image'] = $image_path;
+                    $question_data['audio'] = null;
+                    $this->deleteImage($question->image); // Delete old image
+                    $this->deleteImage($question->audio); // Delete old audio
+                }
             }
         }
         elseif ( $question_data['question_type'] == 'audio' ) { // if request send audio
-            $audio_path = $this->upload($request, 'audio', 'admin/questions/audio'); // Upload audio
-            if ( !empty($audio_path) && $audio_path != null ) { // if he upload new audio
-                $question_data['audio'] = $audio_path;
-                $question_data['image'] = null;
-                $this->deleteImage($question->image);
-                $this->deleteImage($question->audio);
+            if (is_file($request->audio)) {
+                $audio_path = $this->upload($request, 'audio', 'admin/questions/audio'); // Upload audio
+                if ( !empty($audio_path) && $audio_path != null ) { // if he upload new audio
+                    $question_data['audio'] = $audio_path;
+                    $question_data['image'] = null;
+                    $this->deleteImage($question->image);
+                    $this->deleteImage($question->audio);
+                }
             }
         }
         elseif ( $question_data['question_type'] == 'text' ) {

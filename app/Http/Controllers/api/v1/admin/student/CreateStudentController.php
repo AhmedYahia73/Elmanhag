@@ -127,12 +127,14 @@ class CreateStudentController extends Controller
 
         // Update Image
         if ( !empty($user) ) {
-            $image =  $this->upload($request,'image','student/user'); // Upload teacher image
-          
-            // If new image is found delete old image
-            if ( !empty($image) && $image != null ) { 
-                $this->deleteImage($user->image['path']); // Delete old teacher image
-                $data['image'] = $image;
+            if (is_file($request->image)) {
+                $image =  $this->upload($request,'image','student/user'); // Upload teacher image
+              
+                // If new image is found delete old image
+                if ( !empty($image) && $image != null ) { 
+                    $data['image'] = $image;
+                    $this->deleteImage($user->image['path']); // Delete old teacher image
+                }
             }
 
             $user->update($student); // Start Create New Studetn
