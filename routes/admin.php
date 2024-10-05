@@ -402,6 +402,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
         Route::controller(Aff_PaymentMethodController::class)->group(function(){
             Route::get('/affilateMethod', 'affilate_method')->name('affilate.affilate_method');
+            Route::get('/affilateMethod/{id}', 'payment_method')->name('affilate.payment_method');
             Route::post('/affilateMethodAdd', 'add')->name('affilate.affilate_method_add');
             Route::put('/affilateMethodUpdate/{id}', 'update')->name('affilate.affilate_method_update');
             Route::delete('/affilateMethodDelete/{id}', 'delete')->name('affilate.affilate_method_delete');

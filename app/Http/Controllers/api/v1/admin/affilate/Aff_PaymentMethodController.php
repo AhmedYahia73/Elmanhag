@@ -57,6 +57,17 @@ class Aff_PaymentMethodController extends Controller
         ]);
     }
 
+    public function payment_method(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/affilate/affilateMethod/{id}
+        $payment_method = $this->payment_method
+        ->where('id', $id)
+        ->first();
+
+        return response()->json([
+            'payment_method' => $payment_method
+        ]);
+    }
+
     public function update(Request $request, $id){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodUpdate/{id}
         // Keys
