@@ -33,7 +33,7 @@ class SignupRequest extends FormRequest
             'country_id' => ['required','exists:countries,id'],
             'category_id' => ['required','exists:categories,id'],
             'education_id' => ['required','exists:education,id'],
-            'gender' => ['required'],
+            // 'gender' => ['required'],
             'sudent_jobs_id' => ['required'],
         ];
     }
