@@ -44,7 +44,7 @@ class StudentsDataController extends Controller
         ->get();
         $education = $this->education->get();
         $countries = $this->countries->get();
-        $cities = $this->cities->get();
+        $cities = $this->cities->orderBy('id')->get();
         $total_students = count($students);
         $banned_students = count($students->where('status', 0));
         $paid_students = $this->users->where('role', 'student')
