@@ -86,10 +86,12 @@ class Aff_PaymentMethodController extends Controller
         $payment_methods = $this->payment_method
         ->where('id', $id)
         ->first();
-        $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
-        if (!empty($thumbnail) && $thumbnail != null) {
-            $data['thumbnail'] = $thumbnail; // add to data image if is found
-            $this->deleteImage($payment_methods->thumbnail); // delete old image
+        if (is_file($request->thumbnail)) {
+            $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
+            if (!empty($thumbnail) && $thumbnail != null) {
+                $data['thumbnail'] = $thumbnail; // add to data image if is found
+                $this->deleteImage($payment_methods->thumbnail); // delete old image
+            }
         }
         $payment_methods->update($data);
 
