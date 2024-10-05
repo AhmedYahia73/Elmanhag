@@ -72,7 +72,7 @@ class LoginController extends Controller
                     $location = "https://www.google.com/maps?q={$location['loc']}";
 
                     $start_session = now();
-                    $token_id = $user->logins->id; 
+                    $token_id = $user->tokens->id; 
 
                     $login_history = $this->login_history
                     ->create([

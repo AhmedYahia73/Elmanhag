@@ -110,6 +110,11 @@ class User extends Authenticatable
         ->orderByDesc('id');
     }
 
+    public function tokens(){
+        return $this->hasOne(PersonalAccessToken::class, 'tokenable_id')
+        ->orderByDesc('id');
+    }
+
     public function bonuses(){
         return $this->belongsToMany(Bonus::class, 'affilate_bonuses', 'affilate_id', 'bonus_id');
     }
