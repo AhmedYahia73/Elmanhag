@@ -77,7 +77,7 @@ trait PlaceOrder
                   return $data ;
     }
 
-    public function confirmOrder(  $response){
+    public function confirmOrder($response){
         if(isset($response['code']) && $response['code'] == 9901){
                 return response()->json($response);
             }elseif(!isset($response['merchantRefNum'])){
