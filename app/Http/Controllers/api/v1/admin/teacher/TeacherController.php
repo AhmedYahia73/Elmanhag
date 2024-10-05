@@ -68,12 +68,16 @@ class TeacherController extends Controller
         ->first();
         // Update Image
         if ( !empty($user) ) {
-            $image =  $this->upload($request,'image','teacher/user'); // Upload teacher image
-            
-            // If new image is found delete old image
-            if ( !empty($image) && $image != null ) { 
-                $this->deleteImage($user->image['path']); // Delete old teacher image
-                $user->image = $image;
+            if (is_file($request->image)) {
+                $image =  $this->upload($request,'image','teacher/user'); // Upload teacher image
+                
+                // If new image is found delete old image
+                if ( !empty($image) && $image != null ) { 
+                    if ($user->image != 'default.png' && $user->image != 'female.png') {
+                        $this->deleteImage($user->image['path']); // Delete old teacher image
+                    }
+                    $user->image = $image;
+                }
             }
              
             $user->name = $request->name;

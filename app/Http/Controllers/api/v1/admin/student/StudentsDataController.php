@@ -38,13 +38,13 @@ class StudentsDataController extends Controller
         // https://bdev.elmanhag.shop/admin/student
         $students = $this->users->where('role', 'student')
         ->with(['subjects', 'bundles', 'category', 'country', 'education', 
-        'city', 'student_job', 'logins'])
+        'city', 'student_job', 'last_login'])
         ->get();
         $categories = $this->categories->where('category_id', '!=', null)
         ->get();
         $education = $this->education->get();
         $countries = $this->countries->get();
-        $cities = $this->cities->get();
+        $cities = $this->cities->orderBy('id')->get();
         $total_students = count($students);
         $banned_students = count($students->where('status', 0));
         $paid_students = $this->users->where('role', 'student')

@@ -109,9 +109,12 @@ class AffilateController extends Controller
         ->orWhereNotNull('affilate_code')
         ->first();
         $affilate_data = $request->only($this->affilateRequest);
-        $image_path = $this->upload($request, 'image', 'affilate/users');
-        if (!empty($image_path) && $image_path != null) {
-            $affilate_data['image'] = $image_path;
+        if (is_file($request->image)) {
+            $image_path = $this->upload($request, 'image', 'affilate/users');
+            if (!empty($image_path) && $image_path != null) {
+                $this->deleteImage($affilate->image);
+                $affilate_data['image'] = $image_path;
+            }
         }
         $affilate->update($affilate_data);
 

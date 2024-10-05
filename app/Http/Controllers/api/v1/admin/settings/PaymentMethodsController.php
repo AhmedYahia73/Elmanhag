@@ -51,10 +51,12 @@ class PaymentMethodsController extends Controller
         $payment_method = $this->payment_methods
         ->where('id', $id)
         ->first(); // Get Data of Payment Method
-        $image =  $this->upload($request,'thumbnail','admin/settings/paymentMethods/thumbnail'); // Upload Thumbnail
-        if ( !empty($image) && $image != null ) {
-            $this->deleteImage($payment_method->thumbnail); // Delete old Thumbnail
-            $payment_method_data['thumbnail'] = $image;
+        if (is_file($request->thumbnail)) {
+            $image =  $this->upload($request,'thumbnail','admin/settings/paymentMethods/thumbnail'); // Upload Thumbnail
+            if ( !empty($image) && $image != null ) {
+                $this->deleteImage($payment_method->thumbnail); // Delete old Thumbnail
+                $payment_method_data['thumbnail'] = $image;
+            }
         }
         $payment_method->update($payment_method_data);
 

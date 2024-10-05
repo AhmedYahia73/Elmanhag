@@ -57,6 +57,17 @@ class Aff_PaymentMethodController extends Controller
         ]);
     }
 
+    public function payment_method(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/affilate/affilateMethod/{id}
+        $payment_method = $this->payment_method
+        ->where('id', $id)
+        ->first();
+
+        return response()->json([
+            'payment_method' => $payment_method
+        ]);
+    }
+
     public function update(Request $request, $id){
         // https://bdev.elmanhag.shop/admin/affilate/affilateMethodUpdate/{id}
         // Keys
@@ -75,10 +86,12 @@ class Aff_PaymentMethodController extends Controller
         $payment_methods = $this->payment_method
         ->where('id', $id)
         ->first();
-        $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
-        if (!empty($thumbnail) && $thumbnail != null) {
-            $data['thumbnail'] = $thumbnail; // add to data image if is found
-            $this->deleteImage($payment_methods->thumbnail); // delete old image
+        if (is_file($request->thumbnail)) {
+            $thumbnail = $this->upload($request,'thumbnail','admin/affilate/thumbnail'); // Upload thumbnail
+            if (!empty($thumbnail) && $thumbnail != null) {
+                $data['thumbnail'] = $thumbnail; // add to data image if is found
+                $this->deleteImage($payment_methods->thumbnail); // delete old image
+            }
         }
         $payment_methods->update($data);
 

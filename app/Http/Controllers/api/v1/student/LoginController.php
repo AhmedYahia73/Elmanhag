@@ -73,7 +73,7 @@ class LoginController extends Controller
 
                     $start_session = now();
                     $token_id = $user->logins->id; 
-
+                    
                     $login_history = $this->login_history
                     ->create([
                         'os' => $os,

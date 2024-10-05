@@ -67,7 +67,7 @@ class Aff_BonusController extends Controller
         $bonus = $this->bonus
         ->where('id', $id)
         ->first();
-        if (isset($request->image) && !empty($request->image)) {
+        if (isset($request->image) && is_file($request->image)) {
             $image = $this->upload($request,'image','admin/affilate/bonus'); // Upload Image
             // If new image is found delete old image
             if ( !empty($image) && $image != null ) {

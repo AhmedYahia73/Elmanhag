@@ -68,14 +68,16 @@ class QuestionIssuesController extends Controller
             ],400);
         }
         $issues_data = $request->only($this->issuesRequest); // Get data of question request
-        $thumbnail = $this->upload($request,'thumbnail','admin/questionIssues/thumbnail'); // Upload Thumbnail
-        if (!empty($thumbnail) && $thumbnail != null) {
-            $issues_data['thumbnail'] = $thumbnail;
-        }
         $question_issues = $this->question_issues
         ->where('id', $id)
         ->first(); // Get question issue
-        $this->deleteImage($question_issues->thumbnail);
+        if (is_file($request->thumbnail)) {
+            $thumbnail = $this->upload($request,'thumbnail','admin/questionIssues/thumbnail'); // Upload Thumbnail
+            if (!empty($thumbnail) && $thumbnail != null) {
+                $issues_data['thumbnail'] = $thumbnail;
+                $this->deleteImage($question_issues->thumbnail);
+            }
+        }
         $question_issues->update($issues_data); // Update question issues
 
         return response()->json([
