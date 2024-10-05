@@ -81,8 +81,9 @@ trait PlaceOrder
         if(isset($response['code']) && $response['code'] == 9901){
                 return response()->json($response);
             }elseif(!isset($response['merchantRefNum'])){
-                       return response()->json($response);
-            }else{
+                       $response =  response()->json(['faield'=>'Merchant Reference Number Not Found'],404);
+                        return $response;
+                    }else{
                   $merchantRefNum = $response['merchantRefNum'];
                   $customerMerchantId = $response['customerMerchantId'];
                   $orderStatus = $response['orderStatus'];

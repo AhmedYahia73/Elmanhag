@@ -114,12 +114,27 @@ class FawryPayController extends Controller
                 // Start Confirmation Order
                 // Start Confirmation Order
                 // Get payment status
-                $response = $this->fawryPayService->getPaymentStatus($merchantRefNum);
-                $this->confirmOrder($response);
-                 
+                  $response = $this->fawryPayService->getPaymentStatus($merchantRefNum);
+
+        if(isset($response['orderStatus']) && $response['orderStatus'] == 'EXPIRED' or $response['orderStatus'] == 'UNPAID'){
+            return response()->json([
+                'faield'=>'Something Wrong',
+            ],498);
+        };
+       
+           $orderConfirmation =      $this->confirmOrder($response);
+            if($orderConfirmation){
+                    return response()->json([
+                        'success'=>'Order Success',
+                        'orderDetales'=>[
+                            'paymentAmount'=>$response['paymentAmount'],
+                            'paymentMethod'=>$response['paymentMethod'],
+                        ]
+                    ]);
+            }
 
     // Return response to the client
-    return response()->json($response,200);
+    // return response()->json($response,200);
 }
 
 }
