@@ -65,7 +65,7 @@ class PlaceOrderController extends Controller
         if($payment_title == 'fawry'){
             return response ()->json(['This Method UnAvailable Now']);
         }
-        try {
+    
             $payment = $this->payment;
           $newOrder = $payment->create($newOrder);
           if($newOrder['service'] == 'Bundle'){
@@ -96,11 +96,7 @@ class PlaceOrderController extends Controller
                 'faield' => 'This Service UnAvailable' ,
             ]);
         }
-      } catch (QueryException $th) {
-            return response() -> json([
-                'faield' => 'Something Wrong Payment Faield !',
-            ]);
-      }
+     
 
       $subject = "Payment Notification Mail";
       $view = "Payment";
