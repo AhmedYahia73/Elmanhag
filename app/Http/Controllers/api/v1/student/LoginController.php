@@ -87,9 +87,7 @@ class LoginController extends Controller
                         'user_id' => $user->id,
                         'token_id' => $token_id,
                     ]);
-                    return response()->json([
-                        'login_history' => $login_history
-                    ]);
+                    
                    return response()->json([
                    'success'=>'Welcome '.$login['email'],
                    'user'=>$user,
