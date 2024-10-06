@@ -29,7 +29,7 @@ class SignupController extends Controller
    'country_id',
    'category_id',
    'role',
-//    'gender',
+   'gender',
    'sudent_jobs_id',
    'parent_relation_id',
    'education_id',
@@ -43,7 +43,6 @@ class SignupController extends Controller
     'parent_password',
     'parent_phone',
     'parent_role',
-  
     'parent_relation_id',
     ];
     // This Controller About Create New Student
@@ -53,11 +52,11 @@ class SignupController extends Controller
          $newStudent = $request->only($this->studentRequest); // Get Requests
         $image_path = $this->upload($request,'image', 'student/user'); // Upload New Image For Student
        if (empty($image_path) || $image_path == null) {
-            // if ($newStudent['gender'] == 'male') {
+            if ($newStudent['gender'] == 'male') {
             $newStudent['image'] = 'default.png';
-            // } else {
-            //     $newStudent['image'] = 'female.png';
-            // }
+            } else {
+                $newStudent['image'] = 'female.png';
+            }
        } 
        else {
             $newStudent['image'] = $image_path;
