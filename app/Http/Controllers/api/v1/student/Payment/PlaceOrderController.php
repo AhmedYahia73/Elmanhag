@@ -65,10 +65,10 @@ class PlaceOrderController extends Controller
         if($payment_title == 'fawry'){
             return response ()->json(['This Method UnAvailable Now']);
         }
-        return 1;
     
             $payment = $this->payment;
           $newOrder = $payment->create($newOrder);
+          return 2;
           if($newOrder['service'] == 'Bundle'){
             $bundlePayment = $newOrder->bundle()->sync($bundle_id);
             $payment_oreder['order'] = $this->bundle
