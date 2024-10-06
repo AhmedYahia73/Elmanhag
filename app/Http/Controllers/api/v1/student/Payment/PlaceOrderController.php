@@ -68,13 +68,13 @@ class PlaceOrderController extends Controller
     
             $payment = $this->payment;
           $newOrder = $payment->create($newOrder);
-          return 2;
           if($newOrder['service'] == 'Bundle'){
             $bundlePayment = $newOrder->bundle()->sync($bundle_id);
             $payment_oreder['order'] = $this->bundle
             ->whereIn('id', $bundle_id)
             ->get();
         }elseif($newOrder['service'] == 'Subject'){
+            return 2;
             $subject_id = json_decode($subject_id);
             $bundleSubject = $student->bundles;
                 if(is_array($bundleSubject) && count($bundleSubject) > 0){
