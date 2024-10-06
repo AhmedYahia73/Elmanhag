@@ -65,6 +65,7 @@ class PlaceOrderController extends Controller
         if($payment_title == 'fawry'){
             return response ()->json(['This Method UnAvailable Now']);
         }
+        return 1;
     
             $payment = $this->payment;
           $newOrder = $payment->create($newOrder);
@@ -74,7 +75,6 @@ class PlaceOrderController extends Controller
             ->whereIn('id', $bundle_id)
             ->get();
         }elseif($newOrder['service'] == 'Subject'){
-            return 1;
             $subject_id = json_decode($subject_id);
             $bundleSubject = $student->bundles;
                 if(is_array($bundleSubject) && count($bundleSubject) > 0){
