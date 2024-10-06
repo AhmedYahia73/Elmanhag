@@ -76,10 +76,10 @@ class PlaceOrderController extends Controller
         }elseif($newOrder['service'] == 'Subject'){
             $subject_id = json_decode($subject_id);
             $bundleSubject = $student->bundles;
-                if(count($bundleSubject) > 0){
-                              $studentSubject = $bundleSubject[0]->subjects->whereIn('id',$subject_id);
-                              $studentSubjectID = $studentSubject->pluck('id')->toArray();
-                              $subject_id = array_diff($subject_id,$studentSubjectID);
+                if(is_array($bundleSubject) && count($bundleSubject) > 0){
+                    $studentSubject = $bundleSubject[0]->subjects->whereIn('id',$subject_id);
+                    $studentSubjectID = $studentSubject->pluck('id')->toArray();
+                    $subject_id = array_diff($subject_id,$studentSubjectID);
                 }
              $subjectPayment = $newOrder->subject()->attach($subject_id);
             $payment_oreder['order'] = $this->subject
