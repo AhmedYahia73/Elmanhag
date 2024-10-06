@@ -20,6 +20,15 @@ class LiveController extends Controller
         // https://bdev.elmanhag.shop/admin/live
         $live = $this->live
         ->with(['subject', 'teacher', 'category', 'education'])
+        ->where('date', '>', date('Y-m-d'))
+        ->orWhere('date', '=', date('Y-m-d'))
+        ->where('from', '>=', date('H:i:s'))
+        ->get();
+        $history = $this->live
+        ->with(['subject', 'teacher', 'category', 'education'])
+        ->where('date', '<', date('Y-m-d'))
+        ->orWhere('date', '=', date('Y-m-d'))
+        ->where('from', '<=', date('H:i:s'))
         ->get();
         $teachers = $this->users
         ->where('role', 'teacher')
@@ -33,6 +42,7 @@ class LiveController extends Controller
 
         return response()->json([
             'live' => $live,
+            'history' => $history,
             'teachers' => $teachers,
             'subjects' => $subjects,
             'category' => $category,
