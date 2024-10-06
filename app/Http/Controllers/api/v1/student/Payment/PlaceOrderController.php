@@ -52,9 +52,11 @@ class PlaceOrderController extends Controller
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title; 
         $payment_oreder = [];
+        $amount = json_decode($newOrder['amount']);
     //    $payment_title == 'vodafon cach' ? 
     //    $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
     //    : $newOrder['receipt'] = 'default.png';
+        $newOrder['amount'] =  collect($amount)->sum();
         $receipt = $this->upload($request,'receipt','student/receipt');
         if (!empty($receipt)) {
             $newOrder['receipt'] = $receipt;
@@ -65,7 +67,7 @@ class PlaceOrderController extends Controller
         if($payment_title == 'fawry'){
             return response ()->json(['This Method UnAvailable Now']);
         }
-    
+                    
             $payment = $this->payment;
           $newOrder = $payment->create($newOrder);
           if($newOrder['service'] == 'Bundle'){
