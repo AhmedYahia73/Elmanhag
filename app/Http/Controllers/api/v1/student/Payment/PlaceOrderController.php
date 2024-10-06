@@ -74,6 +74,7 @@ class PlaceOrderController extends Controller
             ->whereIn('id', $bundle_id)
             ->get();
         }elseif($newOrder['service'] == 'Subject'){
+            return 1;
             $subject_id = json_decode($subject_id);
             $bundleSubject = $student->bundles;
                 if(is_array($bundleSubject) && count($bundleSubject) > 0){
