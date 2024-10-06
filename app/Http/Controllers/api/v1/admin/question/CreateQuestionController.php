@@ -29,7 +29,7 @@ class CreateQuestionController extends Controller
 
     public function create(QuestionRequest $request){
         // https://bdev.elmanhag.shop/admin/question/add 
-        // keys => question, image, audio, status, category_id, subject_id, 
+        // keys => question, image, audio, status, category_id, subject_id,
         // chapter_id, lesson_id, semester['first', 'second'], difficulty,
         // answer_type ['Mcq', 'T/F', 'Join', 'Complete', 'Reorder', 'Essay'], question_type ['text', 'image', 'audio']
         // answer, true_answer
@@ -158,11 +158,11 @@ class CreateQuestionController extends Controller
         }
         elseif ($question_data['answer_type'] == 'Essay') {
             $question_data['question'] = json_encode($request->question);
-            $question = $this->question->create($question_data); // Create Question
+            $question->update($question_data);
             $this->question_answer->create([
                 'answer' => json_encode([]),
                 'true_answer' => json_encode($request->answer),
-                'question_id' => $question->id
+                'question_id' => $id
             ]); // Create Answer
         } 
 
