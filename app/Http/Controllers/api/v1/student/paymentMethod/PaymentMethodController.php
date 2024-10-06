@@ -13,7 +13,8 @@ class PaymentMethodController extends Controller
 
     public function view(){
         // https://bdev.elmanhag.shop/student/paymentMethods
-        $payment_methods = $this->payment_methods->get();
+        $payment_methods = $this->payment_methods
+        ->where('status', 1)->get();
 
         return response()->json([
             'payment_methods' => $payment_methods

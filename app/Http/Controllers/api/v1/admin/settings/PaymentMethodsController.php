@@ -69,6 +69,7 @@ class PaymentMethodsController extends Controller
         // https://bdev.elmanhag.shop/admin/Settings/paymentMethods/delete/{id}
         $payment_method = $this->payment_methods
         ->where('id', $id)
+        ->where('title', '!=', 'fawry')
         ->first();
         $this->deleteImage($payment_method->thumbnail); // Delete old Thumbnail
         $payment_method->delete();

@@ -89,7 +89,7 @@ class CreateQuestionController extends Controller
     public function modify(QuestionRequest $request, $id){
         // https://bdev.elmanhag.shop/admin/question/update/{id}
         // keys => question, image, audio, status, category_id, subject_id, chapter_id, 
-        // lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'Reorder', 'T/F', 'Join', 'Complete'], 
+        // lesson_id, semester['first', 'second'], difficulty, answer_type ['Mcq', 'Reorder', 'T/F', 'Join', 'Complete', 'Essay'], 
         // question_type ['text', 'image', 'audio']
         // answer, true_answer
         $question_data = $request->only($this->questionRequest); // Get request
@@ -126,7 +126,8 @@ class CreateQuestionController extends Controller
         
         $this->question_answer
         ->where('question_id', $id)->delete();
-        if ($question_data['answer_type'] != 'Complete' && $question_data['answer_type'] != 'Reorder') {
+        if ($question_data['answer_type'] != 'Complete' && $question_data['answer_type'] != 'Reorder'
+        && $question_data['answer_type'] != 'Essay') {
             $question_data['question'] = $request->question;
             $question->update($question_data);
             $this->question_answer->create([
@@ -153,6 +154,15 @@ class CreateQuestionController extends Controller
                 'answer' => json_encode($request->answer),
                 'true_answer' => json_encode($request->answer),
                 'question_id' => $id
+            ]); // Create Answer
+        }
+        elseif ($question_data['answer_type'] == 'Essay') {
+            $question_data['question'] = json_encode($request->question);
+            $question = $this->question->create($question_data); // Create Question
+            $this->question_answer->create([
+                'answer' => json_encode([]),
+                'true_answer' => json_encode($request->answer),
+                'question_id' => $question->id
             ]); // Create Answer
         } 
 
