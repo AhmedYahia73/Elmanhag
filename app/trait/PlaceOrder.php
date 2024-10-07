@@ -51,7 +51,15 @@ trait PlaceOrder
             if($service == 'Bundle'){
                 $newbundle = $createPayment->bundle()->sync($itemId);
               }elseif($service == 'Subject'){
-                $newSubjects = $createPayment->subject()->attach($itemId);
+
+                  $subject_id = json_decode($item['itemId']);
+                  $bundleSubject = $user->bundles;
+                  if(is_array($bundleSubject) && count($bundleSubject) > 0){
+                            $studentSubject = $bundleSubject[0]->subjects->whereIn('id',$subject_id);
+                            $studentSubjectID = $studentSubject->pluck('id')->toArray();
+                            $subject_id = array_diff($subject_id,$studentSubjectID);
+                  }
+                $newSubjects = $createPayment->subject()->attach($subject_id);
               }
               } catch (\Throwable $th) {
                return abort(code: 500);
