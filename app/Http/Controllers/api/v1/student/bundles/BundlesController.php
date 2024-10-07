@@ -104,6 +104,7 @@ class BundlesController extends Controller
         })
         ->where('inculded', 0)
         ->where('date', '>=', now())
+        ->where('fixed', 0) 
         ->orWhereNull('education_id')
         ->where('category_id', auth()->user()->category_id)
         ->whereDoesntHave('students', function ($query) {
@@ -111,9 +112,11 @@ class BundlesController extends Controller
         })
         ->where('inculded', 0)
         ->where('date', '>=', now())
+        ->where('fixed', 0) 
         ->orWhereIn('subject_id', $subjects->pluck('id'))
         ->where('inculded', 1)
         ->where('date', '>=', date('Y-m-d'))
+        ->where('fixed', 0)
         ->get(); // Get live that havs the same category of student
         return response()->json([
             'bundles' => $bundles,
