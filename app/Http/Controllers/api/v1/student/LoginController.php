@@ -55,7 +55,7 @@ class LoginController extends Controller
                 return $error ;
        }
                 $token = $user->createToken('personal access token')->plainTextToken;
-                $user->token = $token;
+              return  $user->token = $token;
                 if(!empty($user->role) && $user->role != 'admin' && $user->role != 'supAdmin'){
                     $agent = new Agent(); 
                     $agent->setUserAgent($request->header('User-Agent'));

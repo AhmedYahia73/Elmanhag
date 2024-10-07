@@ -16,48 +16,42 @@ use Illuminate\Http\Request;
 trait PlaceOrder
 {
 
-     protected $orderPlaceReqeust =['chargeItems','payment_method_id','merchantRefNum'];
+     protected $orderPlaceReqeust =['chargeItems','amount','customerProfileId','payment_method_id','merchantRefNum'];
  // This Is Trait About Make any Order 
    
 
     public function placeOrder(Request $request ){
+        
         $user = $request->user();
         $newOrder = $request->only($this->orderPlaceReqeust);
         $items = $newOrder['chargeItems'];
         // $user_id = $request->user()->id;
         $new_item = [];
-
-       
+        $service = $newOrder['chargeItems'][0]['description'];
+        $amount = $newOrder['amount'];
+         $paymentData = [
+               "merchantRefNum"=> $newOrder['merchantRefNum'],
+               "student_id"=> $newOrder['customerProfileId'],
+               "amount"=> $newOrder['amount'],
+               "service"=> $service,
+               "purchase_date"=>now(),
+        ];
          $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
      
             if(empty($paymentMethod)){
                     return abort(404);
             }
-                    
+                   $createPayment = $this->payment->create($paymentData);
         foreach ($items as $item) {
             $itemId = $item['itemId'];
-            $service = $item['description'];
             $item_type = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
             
             try {
-             $amount = $this->$item_type->where('id',$itemId)->sum('price'); // Get Price For Item
-           
-            $item['student_id'] =$user->id;
-            $item['purchase_date'] =now(); // Purchase Date Now
-            $item['merchantRefNum'] =$newOrder['merchantRefNum']; // This Is Reference Number For Order ID
-            $item['service'] =$service ; // This Is Reference Number For Order ID
-         
-           
-
-            $item['payment_method_id'] =$paymentMethod->id; // This Payment Static casue Don't Have Name Request In Item Charge
-            $item['price'] = $amount ; // Price Take Amount Cause I Have just One Item
-            $item['amount']=$amount;
-            $createPayment = $this->payment->create($item);
-            $payment_number = $createPayment->id;
+             $payment_number = $createPayment->id;
             if($service == 'Bundle'){
                 $newbundle = $createPayment->bundle()->sync($itemId);
               }elseif($service == 'Subject'){
-                $newSubjects = $createPayment->subject()->sync($itemId);
+                $newSubjects = $createPayment->subject()->attach($itemId);
               }
               } catch (\Throwable $th) {
                return abort(code: 500);
