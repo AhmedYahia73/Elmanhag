@@ -34,7 +34,7 @@ class LiveRequest extends FormRequest
             'category_id' => ['required', 'exists:categories,id'],
             'paid' => ['required', 'boolean'],
             'inculded' => ['required', 'boolean'],
-            'fixed' => ['required', 'boolean'],
+            'fixed' => ['boolean'],
         ];
     }
 
