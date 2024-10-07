@@ -28,6 +28,7 @@ class Live extends Model
         'paid',
         'price',
         'inculded',
+        'fixed',
     ];
 
     public function subject(){
