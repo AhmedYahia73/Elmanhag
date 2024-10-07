@@ -6,6 +6,11 @@ use App\Models\User;
 use App\Models\category;
 use App\Models\Education;
 use App\Models\StudentJob;
+use App\services\GeoService;
+use Jenssegers\Agent\Agent;
+use App\Models\LoginHistory;
+use App\Models\PersonalAccessToken;
+use Carbon\Carbon;
 use App\trait\image;
 use Faker\Provider\Address;
 use Illuminate\Http\Request;
@@ -18,9 +23,12 @@ use App\Mail\SignupNotificationMail;
 class SignupController extends Controller
 {
         public function __construct(private User $user, private category $category,
-        private Education $education, private StudentJob $student_job) {}
+        private Education $education, private StudentJob $student_job, private LoginHistory $login_history,
+        private PersonalAccessToken $tokens, GeoService $geoService) {
+        $this->geoService = $geoService;}
 
-   protected $studentRequest = [
+protected $geoService;
+protected $studentRequest = [
    'name',
    'email',
    'password',
@@ -92,6 +100,45 @@ class SignupController extends Controller
         $user = $this->user->create($newStudent); // Start Create New Student
         $token = $user->createToken('personal access token')->plainTextToken; // Start Create Token
         $user->token = $token; // Start User Take This Token ;
+            //  Get location
+                    $agent = new Agent();
+                    $agent->setUserAgent($request->header('User-Agent'));
+                    $ip = $request->ip(); // Get the user's IP address
+                    $location = $this->geoService->getLocation($ip);
+
+                    $os = $agent->platform();
+                    $browser = $agent->browser();
+                    $device = $agent->device();
+                    $ip = $request->ip();
+                    // $geoInfo = GeoIP::getLocation($ip);
+                    $country = $location['country'] ?? null;
+                    $city = $location['city'] ?? null;
+                    $location = "https://www.google.com/maps?q={$location['loc']}";
+
+                    $start_session = now();
+                    $token_id = $user->logins->id;
+
+                    $login_history = $this->login_history
+                    ->create([
+                    'os' => $os,
+                    'browser' => $browser,
+                    'device' => $device,
+                    'ip' => $ip,
+                    'country' => $country,
+                    'city' => $city,
+                    'location' => $location,
+                    'start_session' => $start_session,
+                    'user_id' => $user->id,
+                    'token_id' => $token_id,
+                    ]);
+            //  Get location
+
+
+
+
+
+
+
         $user->category = $this->category
         ->where('id', $user->category_id )
         ->first()->name;
