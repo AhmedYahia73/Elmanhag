@@ -71,6 +71,7 @@ class PlaceOrderController extends Controller
             $payment = $this->payment;
           $newOrder = $payment->create($newOrder);
           if($newOrder['service'] == 'Bundle'){
+            $bundle_id = json_decode($bundle_id);
             $bundlePayment = $newOrder->bundle()->sync($bundle_id);
             $payment_oreder['order'] = $this->bundle
             ->whereIn('id', $bundle_id)
