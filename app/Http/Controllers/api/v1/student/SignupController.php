@@ -79,22 +79,25 @@ protected $studentRequest = [
         
         
         if($this->parentRequest){
-            $parent = $this->user
-            ->where('email', $request->parent_email)
+            $newParent = $request->only($this->parentRequest);
+            //   $newParent['parent_id'] = $user->id;
+            $parent_phone = '012' . rand(100000, 999999);
+            $parent = $this->user->where('phone', $parent_phone)
             ->first();
-            if (empty($parent)) {
-                $newParent = $request->only($this->parentRequest);
-                //   $newParent['parent_id'] = $user->id;
-                  $newParent['role'] = 'parent';
-                  $parent = $this->user->create([
-                  'name' => $newParent['parent_name'],
-                  'email' => $newParent['parent_email'],
-                  'password' => $newParent['parent_password'],
-                  'phone' => $newParent['parent_phone'],
-                  'role' => 'parent',
-                  'parent_relation_id' => $newParent['parent_relation_id'],
-                  ]); // Start Create Parent
+            while (!empty($parent)) {
+                $parent_phone = '012' . rand(100000, 999999);
+                $parent = $this->user->where('phone', $parent_phone)
+                ->first();
             }
+            $newParent['role'] = 'parent';
+            $parent = $this->user->create([
+            'name' => 'parent ' . $newStudent['name'],
+            'email' => $parent_phone . '@elmanhag.com',
+            'password' => $newParent['parent_password'],
+            'phone' => $parent_phone,
+            'role' => 'parent',
+            'parent_relation_id' => $newParent['parent_relation_id'],
+            ]); // Start Create Parent
         }
         $newStudent['parent_id'] = $parent->id; // Relational Parent With Student
         $user = $this->user->create($newStudent); // Start Create New Student

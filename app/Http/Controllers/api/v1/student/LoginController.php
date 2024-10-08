@@ -53,7 +53,7 @@ class LoginController extends Controller
             }
         if( !password_verify($request->input('password'),$user->password)){
                 return $error ;
-       }
+        }
                 $token = $user->createToken('personal access token')->plainTextToken;
                 $user->token = $token;
                 if(!empty($user->role) && $user->role != 'admin' && $user->role != 'supAdmin'){
