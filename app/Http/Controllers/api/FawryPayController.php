@@ -13,6 +13,8 @@ use App\trait\PlaceOrder;
 use Illuminate\Http\Request;
 use App\services\FawryPayService;
 
+use function PHPUnit\Framework\isList;
+
 class FawryPayController extends Controller
 {
     protected $fawryPayService;
@@ -64,7 +66,7 @@ class FawryPayController extends Controller
              // Start Create Order If Operation Payment Success
             $placeOrder = $this->placeOrder($request);
              // Start Create Order If Operation Payment Success
-           
+    
         // Extract data
         $merchantRefNum = $request->merchantRefNum;
         $customerProfileId =$request->customerProfileId;
@@ -74,6 +76,7 @@ class FawryPayController extends Controller
         // Generate signature
         $signature = $this->fawryPayService->generateSignature($merchantRefNum, $customerProfileId, $paymentMethod, $amount);
         // Prepare the request payload
+
         $data = [
             'merchantCode' => env('FAWRY_MERCHANT_CODE'),
             'customerName' => $request->customerName,
@@ -85,7 +88,7 @@ class FawryPayController extends Controller
             'paymentExpiry' => $request->paymentExpiry ?? null,
             'currencyCode' => 'EGP',
             'language' => $request->language ?? 'en-gb',
-            'chargeItems' => [$placeOrder['chargeItems']],
+            'chargeItems' => $placeOrder['chargeItems'],
             'signature' => $signature,
             'paymentMethod' => $paymentMethod,
             'description' => $request->description

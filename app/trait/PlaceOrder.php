@@ -43,6 +43,7 @@ trait PlaceOrder
             }
                    $createPayment = $this->payment->create($paymentData);
         foreach ($items as $item) {
+                
             $itemId = $item['itemId'];
             $item_type = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
             
