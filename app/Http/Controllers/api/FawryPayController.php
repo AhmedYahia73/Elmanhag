@@ -69,11 +69,11 @@ class FawryPayController extends Controller
         $items = $request->chargeItems;
         $count =1;
         foreach ($items as $item) {
-                        $listItems = ['chargeItems'];
+                        $listItems = [];
                          $count+=$count;
-                         
+             $product = json_decode( $item['itemId']);
                         $listItems []= [
-                                   'itemId'=>$item['itemId'][$count],
+                                   'itemId'=>$product[$count],
                                    'description'=>$item['description'],
                                    'quantity'=>$item['quantity'],
                                
@@ -81,6 +81,7 @@ class FawryPayController extends Controller
                                     
 
                     }
+         $listItems;
         // Extract data
         $merchantRefNum = $request->merchantRefNum;
         $customerProfileId =$request->customerProfileId;
@@ -90,7 +91,7 @@ class FawryPayController extends Controller
         // Generate signature
         $signature = $this->fawryPayService->generateSignature($merchantRefNum, $customerProfileId, $paymentMethod, $amount);
         // Prepare the request payload
-        $data = [
+       return $data = [
             'merchantCode' => env('FAWRY_MERCHANT_CODE'),
             'customerName' => $request->customerName,
             'customerMobile' => $request->customerMobile,

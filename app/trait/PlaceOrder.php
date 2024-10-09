@@ -53,7 +53,7 @@ trait PlaceOrder
                 $newbundle = $createPayment->bundle()->sync($itemId);
               }elseif($service == 'Subject'){
 
-                  $subject_id = $item['itemId'];
+                  $subject_id = json_decode($item['itemId']);
                   $bundleSubject = $user->bundles;
                   if(is_array($bundleSubject) && count($bundleSubject) > 0){
                             $studentSubject = $bundleSubject[0]->subjects->whereIn('id',$subject_id);
