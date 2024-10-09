@@ -26,7 +26,7 @@ class RoleController extends Controller
 
         return response()->json([
             'admin_position' => $admin_position,
-            'roles' => $roles,
+            'premissions' => $roles,
         ]);
     }
 
