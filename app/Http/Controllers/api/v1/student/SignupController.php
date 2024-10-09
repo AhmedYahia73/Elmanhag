@@ -65,7 +65,7 @@ protected $studentRequest = [
             } else {
                 $newStudent['image'] = 'female.png';
             }
-       } 
+       }
        else {
             $newStudent['image'] = $image_path;
        }
@@ -135,13 +135,6 @@ protected $studentRequest = [
                     'token_id' => $token_id,
                     ]);
             //  Get location
-
-
-
-
-
-
-
         $user->category = $this->category
         ->where('id', $user->category_id )
         ->first()->name;

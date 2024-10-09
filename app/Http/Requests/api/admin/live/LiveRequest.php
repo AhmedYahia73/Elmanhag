@@ -35,6 +35,7 @@ class LiveRequest extends FormRequest
             'paid' => ['required', 'boolean'],
             'inculded' => ['required', 'boolean'],
             'fixed' => ['boolean'],
+            'end_date' => ['date'],
         ];
     }
 

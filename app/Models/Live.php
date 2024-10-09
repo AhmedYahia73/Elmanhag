@@ -29,6 +29,7 @@ class Live extends Model
         'price',
         'inculded',
         'fixed',
+        'end_date',
     ];
 
     public function subject(){
