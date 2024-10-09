@@ -22,7 +22,7 @@ class RoleController extends Controller
         'subjects', 'bundles', 'questions', 'hw', 'revisions', 'exams', 'live',
         'discounts', 'promocode', 'pop up', 'reviews', 'payments',
         'affilate', 'support', 'reports', 'settings', 'notice board', 'chapters',
-        'parent', 'lessons',  'admin_roles', 'material'];
+        'parent', 'lessons',  'admin_roles', 'material', 'complaint', 'issues'];
 
         return response()->json([
             'admin_position' => $admin_position,
