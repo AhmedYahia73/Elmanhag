@@ -43,6 +43,7 @@ trait PlaceOrder
             }
                    $createPayment = $this->payment->create($paymentData);
         foreach ($items as $item) {
+                
             $itemId = $item['itemId'];
             $item_type = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
             
@@ -52,7 +53,7 @@ trait PlaceOrder
                 $newbundle = $createPayment->bundle()->sync($itemId);
               }elseif($service == 'Subject'){
 
-                  $subject_id = $item['itemId'];
+                  $subject_id = json_decode($item['itemId']);
                   $bundleSubject = $user->bundles;
                   if(is_array($bundleSubject) && count($bundleSubject) > 0){
                             $studentSubject = $bundleSubject[0]->subjects->whereIn('id',$subject_id);
@@ -68,7 +69,7 @@ trait PlaceOrder
                 
                 'paymentProcess' => $payment_number,
                     'chargeItems'=>[
-                        'itemId'=>$itemId,
+                        'itemId'=>$subject_id[0] ?? $itemId,
                         'description'=>$item_type,
                         'price'=>$amount,
                         'quantity'=>'1',

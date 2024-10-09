@@ -13,6 +13,8 @@ use App\trait\PlaceOrder;
 use Illuminate\Http\Request;
 use App\services\FawryPayService;
 
+use function PHPUnit\Framework\isList;
+
 class FawryPayController extends Controller
 {
     protected $fawryPayService;
@@ -64,7 +66,7 @@ class FawryPayController extends Controller
              // Start Create Order If Operation Payment Success
             $placeOrder = $this->placeOrder($request);
              // Start Create Order If Operation Payment Success
-           
+     
         // Extract data
         $merchantRefNum = $request->merchantRefNum;
         $customerProfileId =$request->customerProfileId;
