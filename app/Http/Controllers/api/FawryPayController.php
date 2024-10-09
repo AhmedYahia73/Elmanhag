@@ -66,22 +66,7 @@ class FawryPayController extends Controller
              // Start Create Order If Operation Payment Success
             $placeOrder = $this->placeOrder($request);
              // Start Create Order If Operation Payment Success
-        $items = $request->chargeItems;
-        $count =1;
-        foreach ($items as $item) {
-                        $listItems = [];
-                         $count+=$count;
-             $product = json_decode( $item['itemId']);
-                        $listItems []= [
-                                   'itemId'=>$product[$count],
-                                   'description'=>$item['description'],
-                                   'quantity'=>$item['quantity'],
-                               
-                                   ];
-                                    
-
-                    }
-         $listItems;
+     
         // Extract data
         $merchantRefNum = $request->merchantRefNum;
         $customerProfileId =$request->customerProfileId;
@@ -102,7 +87,7 @@ class FawryPayController extends Controller
             'paymentExpiry' => $request->paymentExpiry ?? null,
             'currencyCode' => 'EGP',
             'language' => $request->language ?? 'en-gb',
-            'chargeItems' => $listItems,
+            'chargeItems' => [$placeOrder['chargeItems']],
             'signature' => $signature,
             'paymentMethod' => $paymentMethod,
             'description' => $request->description
