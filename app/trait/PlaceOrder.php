@@ -65,11 +65,11 @@ trait PlaceOrder
               } catch (\Throwable $th) {
                return abort(code: 500);
               }
-          return  $data = [
+            $data = [
                 
                 'paymentProcess' => $payment_number,
                     'chargeItems'=>[
-                        'itemId'=>$subject_id[0],
+                        'itemId'=>$subject_id[0] ?? $itemId,
                         'description'=>$item_type,
                         'price'=>$amount,
                         'quantity'=>'1',
