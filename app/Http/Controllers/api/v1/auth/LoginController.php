@@ -32,7 +32,8 @@ class LoginController extends Controller
             if(!$checkData){
                     return response()->json(['faild'=> 'Check Your credentials'],400);
             }else{
-            $user =  $this->user->where('email', $credentials['email'])->first();
+            $user =  $this->user->where('email', $credentials['email'])
+            ->with('admin_position.roles')->first();
             $token = $user->createToken('personal access Tokens')->plainTextToken;
                 $user->token = $token;
                 return response()->json([
