@@ -38,6 +38,7 @@ class PromoCodeController extends Controller
                 $subject_price = $request->price;
                 $subject_promo = $promo_code->subjects->whereIn('id', $ids);
                 $request->price = $subject_promo->sum('price');
+                $price_fixed = $subject_price - $request->price;
                 $promo_code_state = $subject_promo->toArray();
             }
             elseif ($request->type == 'Live') {
@@ -64,7 +65,7 @@ class PromoCodeController extends Controller
             }
             $promo_code->update(['number_users' => $promo_code->number_users + 1]);
             $price += $price_fixed;
-            
+
             return response()->json([
                 'price' => $price
             ], 200);
