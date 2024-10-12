@@ -28,10 +28,12 @@ class PromoCodeController extends Controller
 
         if (!empty($promo_code)) {
             if ($request->type == 'Bundle') {
-                $promo_code_state = $promo_code->bundles->where('id', $request->id)->toArray();
+                $ids = json_decode($request->id);
+                $promo_code_state = $promo_code->bundles->whereIn('id', $ids)->toArray();
             }
             elseif ($request->type == 'Subject') {
-                $promo_code_state = $promo_code->subjects->where('id', $request->id)->toArray();
+                $ids = json_decode($request->id);
+                $promo_code_state = $promo_code->subjects->whereIn('id', $ids)->toArray();
             }
             elseif ($request->type == 'Live') {
                 if ($promo_code->live) {
