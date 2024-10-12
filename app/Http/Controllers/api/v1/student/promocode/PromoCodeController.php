@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\api\Student\promocode\PromoCodeRequest;
 
 use App\Models\PromoCode;
+use App\Models\subject;
 
 class PromoCodeController extends Controller
 {
-    public function __construct(private PromoCode $promo_code){}
+    public function __construct(private PromoCode $promo_code, private subject $subject){}
 
     public function promo_code(PromoCodeRequest $request){
         // https://bdev.elmanhag.shop/student/promoCode
@@ -25,6 +26,7 @@ class PromoCodeController extends Controller
         ->where('code', $request->code)
         ->orderByDesc('id')
         ->first();
+        $price_fixed = 0;
 
         if (!empty($promo_code)) {
             if ($request->type == 'Bundle') {
@@ -33,7 +35,10 @@ class PromoCodeController extends Controller
             }
             elseif ($request->type == 'Subject') {
                 $ids = json_decode($request->id);
-                $promo_code_state = $promo_code->subjects->whereIn('id', $ids)->toArray();
+                $subject_price = $request->price;
+                $subject_promo = $promo_code->subjects->whereIn('id', $ids);
+                $request->price = $subject_promo->sum('price');
+                $promo_code_state = $subject_promo->toArray();
             }
             elseif ($request->type == 'Live') {
                 if ($promo_code->live) {
@@ -58,7 +63,8 @@ class PromoCodeController extends Controller
                 $price = $request->price - $request->price * $promo_code->precentage / 100;
             }
             $promo_code->update(['number_users' => $promo_code->number_users + 1]);
-
+            $price += $price_fixed;
+            
             return response()->json([
                 'price' => $price
             ], 200);
