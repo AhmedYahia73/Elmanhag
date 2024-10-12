@@ -10,14 +10,26 @@ trait GetNexDay
 {
     // This Function Get Next Day Of Week
 
-    public function getNextDayBetween($startDate, $endDate, $dayOfWeek,$sessionTime)
+    public function getNextDayBetween($startDate, $endDate, $dayOfWeek, $sessionTime)
     {
         try {
             // Convert start and end dates to Carbon instances
             $start = Carbon::parse($startDate);
             $end = Carbon::parse($endDate);
-           return $timeNow = Carbon::now()->format('H:i:s');
             // Get the next occurrence of the specified day from the current date
+            //  Get Time Zone EGYPT
+         $utcTime = '2024-10-12 12:00:00'; // Example UTC time
+
+         // Convert the UTC time to a Carbon instance
+         $timeInUTC = Carbon::parse($utcTime, 'UTC');
+
+         // Change the time to Egypt's time zone (Africa/Cairo)
+         $timeInEgypt = $timeInUTC->setTimezone('Africa/Cairo');
+
+         // Display the time in Egypt's time zone
+         return  "Time in Egypt's time zone: " . $timeInEgypt->format('H-m');
+            //  Get Time Zone EGYPT
+
             $nextDay = Carbon::parse("next $dayOfWeek");
             return $sessionTime;
         } catch (\Exception $e) {
