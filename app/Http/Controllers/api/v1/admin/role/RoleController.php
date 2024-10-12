@@ -8,10 +8,12 @@ use App\Http\Requests\api\admin\role\RoleRequest;
 
 use App\Models\AdminPosition;
 use App\Models\AdminRole;
+use App\Models\User;
 
 class RoleController extends Controller
 {
-    public function __construct(private AdminPosition $admin_position, private AdminRole $admin_role){}
+    public function __construct(private AdminPosition $admin_position, private AdminRole $admin_role,
+    private User $user){}
 
     public function show(){
         // https://bdev.elmanhag.shop/admin/adminRole
@@ -22,11 +24,16 @@ class RoleController extends Controller
         'subjects', 'bundles', 'questions', 'hw', 'revisions', 'exams', 'live',
         'discounts', 'promocode', 'pop up', 'reviews', 'payments',
         'affilate', 'support', 'reports', 'settings', 'notice board', 'chapters',
-        'parent', 'lessons',  'admin_roles', 'material'];
+        'parent', 'lessons',  'admin_roles', 'material', 'complaint', 'issues'];
+        $user = $this->user
+        ->where('role', 'admin')
+        ->with('admin_position.roles')
+        ->get();
 
         return response()->json([
             'admin_position' => $admin_position,
-            'roles' => $roles,
+            'premissions' => $roles,
+            'admins' => $user
         ]);
     }
 
