@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\student\bundles;
 
+use App\GetNexDay;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BundlesController extends Controller
 {
+    use GetNexDay;
     public function __construct(private bundle $bundles, private subject $subjects, private Live $live){}
     
     public function show(){
@@ -104,7 +106,6 @@ class BundlesController extends Controller
             $query->where('users.id', Auth::user()->id);
         })
         ->where('inculded', 0)
-        ->where('date', '>=', date('Y-m-d'))
          
         
         ->orWhereNull('education_id')
@@ -113,15 +114,26 @@ class BundlesController extends Controller
             $query->where('users.id', Auth::user()->id);
         })
         ->where('inculded', 0)
-        ->where('date', '>=', date('Y-m-d'))
          
         ->orWhereNotIn('subject_id', $subjects->pluck('id'))
         ->where('inculded', 1)
-        ->where('date', '>=', date('Y-m-d'))
         ->where('category_id', Auth::user()->category_id)
         ->where('education_id', Auth::user()->education_id)
         
         ->get(); // Get live that havs the same category of student
+        
+        foreach ($live as $liveSession) {
+            $fixed = $liveSession->fixed;
+            if ($fixed == True) {
+            $startDate = $liveSession->date; // Get Start Date Session
+            $sessionTime = $liveSession->to; // Get Expired Date Session
+            $endDate = $liveSession->end_date; // Get Expired Date Session
+            $dayOfWeek = $liveSession->day; // Get The Day Session
+           $liveSession->timeZoneFixed =  $nexDay = $this->getNextDayBetween($startDate, $endDate, $dayOfWeek,$sessionTime); // Get Next Same Day & Date of Next Week Name
+                    $nexDay['name']; // Get Next Same Day of Next Week Name
+                    $nexDay['date']; // Get Next Date The Same Date of Next Week
+        }
+        }
         return response()->json([
             'bundles' => $bundles,
             'subjects' => $subjects,

@@ -49,14 +49,15 @@ class LiveSessionController extends Controller
 
         if ($fixed == True) {
             $startDate = $getLiveSession->date; // Get Start Date Session
-            $sessionTime =  Carbon::parse($getLiveSession->to);; // Get Expired Date Session
-             $sessionTime;
+            $sessionTime = $getLiveSession->to; // Get Expired Date Session
             $endDate = $getLiveSession->end_date; // Get Expired Date Session
             $dayOfWeek = $getLiveSession->day; // Get The Day Session
-           return  $nexDay = $this->getNextDayBetween($startDate, $endDate, $dayOfWeek,$sessionTime); // Get Next Same Day & Date of Next Week Name
+            $nexDay = $this->getNextDayBetween($startDate, $endDate, $dayOfWeek,$sessionTime); // Get Next Same Day & Date of Next Week Name
                     $nexDay['name']; // Get Next Same Day of Next Week Name
                     $nexDay['date']; // Get Next Date The Same Date of Next Week
         }
+        $live->zone = $nexDay['date'];
+
 
 
 
@@ -67,6 +68,7 @@ class LiveSessionController extends Controller
             data: [
                 'success' => 'data returned successfully',
                 'liveSession' => $sessions,
+                'dayZone'=>$nexDay,
             ],
             status: 200
         );
