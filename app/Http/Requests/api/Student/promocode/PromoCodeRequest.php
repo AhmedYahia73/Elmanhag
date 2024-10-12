@@ -25,7 +25,7 @@ class PromoCodeRequest extends FormRequest
     {
         return [
             'type' => ['required', 'in:Bundle,Subject,Live'],
-            'id' =>['required', 'numeric'],
+            'id' =>['required'],
             'code' => ['required'],
             'price' => ['required', 'numeric']
         ];

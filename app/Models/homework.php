@@ -27,7 +27,10 @@ class homework extends Model
         'mark' ,
         'pass' ,
         'status' ,
+        'homework',
     ];
+    protected $appends = ['homework_link'];
+
 
     public function subject(){
         return $this->belongsTo(subject::class);
