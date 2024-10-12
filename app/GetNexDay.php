@@ -18,16 +18,11 @@ trait GetNexDay
             $end = Carbon::parse($endDate);
             // Get the next occurrence of the specified day from the current date
             //  Get Time Zone EGYPT
-         $utcTime = '2024-10-12 12:00:00'; // Example UTC time
+            $timestamp = now(); // Example timestamp
 
-         // Convert the UTC time to a Carbon instance
-         $timeInUTC = Carbon::parse($utcTime, 'UTC');
-
-         // Change the time to Egypt's time zone (Africa/Cairo)
-         $timeInEgypt = $timeInUTC->setTimezone('Africa/Cairo');
-
-         // Display the time in Egypt's time zone
-         return  "Time in Egypt's time zone: " . $timeInEgypt->format('H-m');
+            return $time = Carbon::parse($timestamp)->setTimezone('Africa/Cairo')->format('H:m');
+            $now = Carbon::now('Africa/Cairo')->format('H:m');
+            $now = Carbon::now('Africa/Cairo');
             //  Get Time Zone EGYPT
 
             $nextDay = Carbon::parse("next $dayOfWeek");
