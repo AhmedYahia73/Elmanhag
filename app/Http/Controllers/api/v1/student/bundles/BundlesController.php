@@ -2,42 +2,45 @@
 
 namespace App\Http\Controllers\api\v1\student\bundles;
 
+use App\GetNexDay;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\bundle;
 use App\Models\subject;
 use App\Models\Live;
+use Illuminate\Support\Facades\Auth;
 
 class BundlesController extends Controller
 {
+    use GetNexDay;
     public function __construct(private bundle $bundles, private subject $subjects, private Live $live){}
     
     public function show(){
         // https://bdev.elmanhag.shop/student/bundles
         $bundles = $this->bundles
-        ->where('category_id', auth()->user()->category_id)
-        ->where('education_id', auth()->user()->education_id)
+        ->where('category_id', Auth::user()->category_id)
+        ->where('education_id', Auth::user()->education_id)
         ->whereDoesntHave('users', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->orWhereNull('education_id')
-        ->where('category_id', auth()->user()->category_id)
+        ->where('category_id', Auth::user()->category_id)
         ->whereDoesntHave('users', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->with('discount')
         ->get(); // Get bundles that havs the same category of student and student does not buy it
         $student_bundles = $this->bundles
-        ->where('category_id', auth()->user()->category_id)
-        ->where('education_id', auth()->user()->education_id)
+        ->where('category_id', Auth::user()->category_id)
+        ->where('education_id', Auth::user()->education_id)
         ->whereHas('users', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->orWhereNull('education_id')
-        ->where('category_id', auth()->user()->category_id)
+        ->where('category_id', Auth::user()->category_id)
         ->whereHas('users', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->with('subjects')
         ->get(); // Get bundles that student buy it with its subjects
@@ -47,16 +50,16 @@ class BundlesController extends Controller
             $item->subjects->pluck('id')->toArray());
         }
         $subjects = $this->subjects
-        ->where('category_id', auth()->user()->category_id)
-        ->where('education_id', auth()->user()->education_id)
+        ->where('category_id', Auth::user()->category_id)
+        ->where('education_id', Auth::user()->education_id)
         ->whereDoesntHave('users', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->whereNotIn('id', $bundles_subjects)
         ->orWhereNull('education_id')
-        ->where('category_id', auth()->user()->category_id)
+        ->where('category_id', Auth::user()->category_id)
         ->whereDoesntHave('users', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->whereNotIn('id', $bundles_subjects)
         ->with('discount')
@@ -97,27 +100,40 @@ class BundlesController extends Controller
         ->where('expired_date', '>=', date('Y-m-d'));
 
         $live = $this->live
-        ->where('category_id', auth()->user()->category_id)
-        ->where('education_id', auth()->user()->education_id)
+        ->where('category_id', Auth::user()->category_id)
+        ->where('education_id', Auth::user()->education_id)
         ->whereDoesntHave('students', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->where('inculded', 0)
-        ->where('date', '>=', now())
-        ->where('fixed', 0) 
+         
+        
         ->orWhereNull('education_id')
-        ->where('category_id', auth()->user()->category_id)
+        ->where('category_id', Auth::user()->category_id)
         ->whereDoesntHave('students', function ($query) {
-            $query->where('users.id', auth()->user()->id);
+            $query->where('users.id', Auth::user()->id);
         })
         ->where('inculded', 0)
-        ->where('date', '>=', now())
-        ->where('fixed', 0) 
-        ->orWhereIn('subject_id', $subjects->pluck('id'))
+         
+        ->orWhereNotIn('subject_id', $subjects->pluck('id'))
         ->where('inculded', 1)
-        ->where('date', '>=', date('Y-m-d'))
-        ->where('fixed', 0)
+        ->where('category_id', Auth::user()->category_id)
+        ->where('education_id', Auth::user()->education_id)
+        
         ->get(); // Get live that havs the same category of student
+        
+        foreach ($live as $liveSession) {
+            $fixed = $liveSession->fixed;
+            if ($fixed == True) {
+            $startDate = $liveSession->date; // Get Start Date Session
+            $sessionTime = $liveSession->to; // Get Expired Date Session
+            $endDate = $liveSession->end_date; // Get Expired Date Session
+            $dayOfWeek = $liveSession->day; // Get The Day Session
+           $liveSession->timeZoneFixed =  $nexDay = $this->getNextDayBetween($startDate, $endDate, $dayOfWeek,$sessionTime); // Get Next Same Day & Date of Next Week Name
+                    $nexDay['name']; // Get Next Same Day of Next Week Name
+                    $nexDay['date']; // Get Next Date The Same Date of Next Week
+        }
+        }
         return response()->json([
             'bundles' => $bundles,
             'subjects' => $subjects,

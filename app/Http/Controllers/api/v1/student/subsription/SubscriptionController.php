@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 use App\Models\bundle;
 use App\Models\subject;
 use App\Models\Live;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class SubscriptionController extends Controller
 {
     public function __construct(private bundle $bundles, private subject $subjects, private Live $live){}
-    
     public function view(){
+        
         // https://bdev.elmanhag.shop/student/subscription
         $bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
@@ -55,6 +57,8 @@ class SubscriptionController extends Controller
 
     public function check_live($id){
         // https://bdev.elmanhag.shop/student/subscription/check/{id}
+       
+
         $bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
         ->whereHas('users', function ($query) {
@@ -80,21 +84,23 @@ class SubscriptionController extends Controller
         ->where('expired_date', '>=', date('Y-m-d'));
         $subjects = $subjects->where('status', 1)
         ->where('expired_date', '>=', date('Y-m-d'));
-        
+
         $live = $this->live
-        ->with(['subject', 'teacher'])
-        ->where('category_id', auth()->user()->category_id)
-        ->whereHas('students', function ($query) {
-            $query->where('users.id', auth()->user()->id);
-        })
-        ->where('date', '>=', date('Y-m-d'))
-        ->where('id', $id)
-        ->orWhereIn('subject_id', $subjects->pluck('id'))
-        ->where('inculded', 1)
-        ->where('category_id', auth()->user()->category_id)
-        ->where('date', '>=', date('Y-m-d'))
-        ->where('id', $id)
-        ->first(); // Get live that havs the same category of student
+            ->with(['subject', 'teacher'])
+            ->where('category_id', auth()->user()->category_id)
+            ->whereHas('students', function ($query) {
+                $query->where('users.id', auth()->user()->id);
+            })
+            ->where('date', '>=', date('Y-m-d'))
+            ->where('id', $id)
+            ->orWhereIn('subject_id', $subjects->pluck('id'))
+            ->where('inculded', 1)
+            ->where('category_id', auth()->user()->category_id)
+            ->where('date', '>=', date('Y-m-d'))
+
+            ->where('id', $id);
+          
+        $live->first(); // Get live that havs the same category of student
 
         if (!empty($live)) {
             return response()->json([
@@ -102,9 +108,8 @@ class SubscriptionController extends Controller
             ], 200);
         } else {
             $live = $this->live
-            ->where('id', $id)
-            ->where('paid', 0)
-            ->first();
+                ->where('id', $id)
+                ->where('paid', 0);
             if (empty($live)) {
                 return response()->json([
                     'faild' => 'You must buy live first'
