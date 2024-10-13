@@ -37,6 +37,18 @@ class RoleController extends Controller
         ]);
     }
 
+    public function role($id){
+        // https://bdev.elmanhag.shop/admin/adminRole/role/{id}
+        $admin_position = $this->admin_position
+        ->with('roles')
+        ->where('id', $id)
+        ->first();
+
+        return response()->json([
+            'admin_position' => $admin_position,
+        ]);
+    }
+
     public function add(RoleRequest $request){
         // https://bdev.elmanhag.shop/admin/adminRole/add
         // Keys
