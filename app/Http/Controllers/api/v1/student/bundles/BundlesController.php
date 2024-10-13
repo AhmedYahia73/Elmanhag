@@ -129,7 +129,9 @@ class BundlesController extends Controller
             $sessionTime = $liveSession->to; // Get Expired Date Session
             $endDate = $liveSession->end_date; // Get Expired Date Session
             $dayOfWeek = $liveSession->day; // Get The Day Session
-           $liveSession->timeZoneFixed =  $nexDay = $this->getNextDayBetween($startDate, $endDate, $dayOfWeek,$sessionTime); // Get Next Same Day & Date of Next Week Name
+             $nexDay = $this->getNextDayBetween($startDate, $endDate, $dayOfWeek,$sessionTime); // Get Next Same Day & Date of Next Week Name
+                $liveSession->date = $nexDay['date'];
+                $liveSession->timeZoneFixed = $nexDay;
                     $nexDay['name']; // Get Next Same Day of Next Week Name
                     $nexDay['date']; // Get Next Date The Same Date of Next Week
         }
