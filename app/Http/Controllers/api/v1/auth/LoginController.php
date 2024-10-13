@@ -35,7 +35,7 @@ class LoginController extends Controller
             $user =  $this->user->where('email', $credentials['email'])
             ->with('admin_position.roles')->first();
             if (!empty($user->admin_position)) {
-                $user->perimissions = $user->admin_position->roles->pluck('role');
+                $user->premissions = $user->admin_position->roles->pluck('role');
             }
             $token = $user->createToken('personal access Tokens')->plainTextToken;
                 $user->token = $token;
