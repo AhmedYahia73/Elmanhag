@@ -38,13 +38,15 @@ trait GetNexDay
             $carbonDate = Carbon::parse($nextDay);
             $dayName = $carbonDate->format('l'); //  returns the full day name
             $nextDate =  $nextDay->toDateString(); // returns The Date Format Y-m-d
-            $data = [
-                'name' => $dayName,
-                'date' => $nextDate,
-            ];
-            return $data;
-        }
-        $data = Null;
+          
+            }
+          $data = [
+          'name' => $dayName ?? 'Expired',
+          'date' => $nextDate ?? 'Expired',
+          ];
+
+
+
         return $data;
     }
 }
