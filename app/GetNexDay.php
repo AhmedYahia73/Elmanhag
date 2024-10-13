@@ -43,10 +43,7 @@ trait GetNexDay
                 'date' => $nextDate,
             ];
             return $data;
-        } else {
-            return response()->json([
-                'error' => 'This Day Expired',
-            ], 404);
         }
+        return Null;
     }
 }

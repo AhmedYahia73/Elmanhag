@@ -137,7 +137,7 @@ class BundlesController extends Controller
         return response()->json([
             'bundles' => $bundles,
             'subjects' => $subjects,
-            'live' => $live,
+            'live' =>  $live,
         ]);
     }
 }
