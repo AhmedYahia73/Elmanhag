@@ -44,6 +44,7 @@ trait GetNexDay
             ];
             return $data;
         }
-        return Null;
+        $data = Null;
+        return $data;
     }
 }
