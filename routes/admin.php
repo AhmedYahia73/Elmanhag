@@ -172,6 +172,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('adminRole')->middleware('can:isAdminRoles')->group(function () {
         Route::controller(RoleController::class)->group(function(){
             Route::get('/', 'show')->name('role.show');
+            Route::get('/role/{id}', 'role')->name('role.role');
             Route::post('/add', 'add')->name('role.add');
             Route::put('/update/{id}', 'modify')->name('role.update');
             Route::delete('/delete/{id}', 'delete')->name('role.delete');
