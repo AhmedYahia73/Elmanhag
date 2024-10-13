@@ -34,9 +34,8 @@ class LoginController extends Controller
             }else{
             $user =  $this->user->where('email', $credentials['email'])
             ->with('admin_position.roles')->first();
-            $roles = collect([]);
             if (!empty($user->admin_position)) {
-                $roles = $user->admin_position->roles->pluck('role');
+                $user->roles = $user->admin_position->roles->pluck('role');
             }
             $token = $user->createToken('personal access Tokens')->plainTextToken;
                 $user->token = $token;
@@ -44,7 +43,6 @@ class LoginController extends Controller
                     'success'=>'Login Successfully',
                     '_token'=>$token,
                     'detailes'=>$user,
-                    'roles' => $roles
                 ]);
             }
         }
