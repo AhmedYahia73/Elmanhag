@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\api\admin\admins\AdminRequest;
 use App\Http\Requests\api\admin\admins\UpdateAdminRequest;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use App\Models\AdminPosition;
