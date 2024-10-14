@@ -37,6 +37,19 @@ class AdminController extends Controller
         ]);
     }
 
+    public function admin($id){
+        // https://bdev.elmanhag.shop/admin/admins/admin/{id}
+        $admins = $this->users
+        ->where('role', 'admin')
+        ->where('id', $id)
+        ->with('admin_position')
+        ->first();
+
+        return response()->json([
+            'admins' => $admins,
+        ]);
+    }
+
     public function add(AdminRequest $request){
         // https://bdev.elmanhag.shop/admin/admins/add
         // Keys
