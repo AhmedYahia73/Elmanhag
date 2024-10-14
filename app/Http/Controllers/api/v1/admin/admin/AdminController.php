@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\api\admin\admins\AdminRequest;
 use App\Http\Requests\api\admin\admins\UpdateAdminRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 use App\Models\User;
 use App\Models\AdminPosition;
@@ -35,6 +36,37 @@ class AdminController extends Controller
             'admins' => $admins,
             'roles' => $admin_position
         ]);
+    }
+
+    public function status(Request $request, $id){
+        // https://bdev.elmanhag.shop/admin/admins/status/{id}
+        // Keys
+        // status
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|boolean',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+
+        $this->user->where('id', $id)
+        ->where('role', 'admin')
+        ->update([
+            'status' => $request->status
+        ]);
+
+        if ($request->status == 0) {
+            return response()->json([
+                'success' => 'banned'
+            ]);
+        } else {
+            return response()->json([
+                'success' => 'active'
+            ]);
+        }
+        
     }
 
     public function admin($id){
