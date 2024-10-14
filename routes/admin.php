@@ -156,7 +156,6 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('revision.delete');
         });
     });
-  
 
     // Start Admin Module
     Route::prefix('admins')->middleware('can:isAdmins')->group(function () {
