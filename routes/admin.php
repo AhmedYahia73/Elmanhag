@@ -164,7 +164,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::put('/status/{id}', 'status')->name('admins.status');
             Route::get('/admin/{id}', 'admin')->name('admins.admin');
             Route::post('/add', 'add')->name('admins.add');
-            Route::put('/update/{id}', 'modify')->name('admins.update');
+            Route::post('/update/{id}', 'modify')->name('admins.update');
             Route::delete('/delete/{id}', 'delete')->name('admins.delete');
         }); 
     });
