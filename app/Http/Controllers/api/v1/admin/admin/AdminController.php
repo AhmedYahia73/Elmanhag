@@ -51,7 +51,7 @@ class AdminController extends Controller
             ],400);
         }
 
-        $this->user->where('id', $id)
+        $this->users->where('id', $id)
         ->where('role', 'admin')
         ->update([
             'status' => $request->status
