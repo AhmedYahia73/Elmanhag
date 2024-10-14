@@ -54,6 +54,7 @@ class AdminController extends Controller
         $this->users->where('id', $id)
         ->where('role', 'admin')
         ->orWhere('role', 'supAdmin')
+        ->where('id', $id)
         ->update([
             'status' => $request->status
         ]);
