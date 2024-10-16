@@ -29,6 +29,16 @@ class QuestionIssuesController extends Controller
         ]);
     }
 
+    public function question_issue($id){
+        // https://bdev.elmanhag.shop/admin/Settings/questionIssues/issue/{id}
+        $question_issue = $this->question_issues
+        ->where('id', $id)->first();
+
+        return response()->json([
+            'question_issue' => $question_issue
+        ]);
+    }
+
     public function add(Request $request){
         // https://bdev.elmanhag.shop/admin/Settings/questionIssues/add
         // Keys
