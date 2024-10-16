@@ -40,19 +40,49 @@ class PlaceOrderController extends Controller
     // This Is Controller About any Placing Order About Student 
     use image;
     public function place_order( PlaceOrderRequest $request ){
+        $old_payments = $this->payment
+        ->whereNull('status')
+        ->where('student_id', $request->user()->id)
+        ->get();
        $newOrder = $request->only($this->orderPlaceReqeust);
-        $student_id = $request->user()->id;
+       $student_id = $request->user()->id;
         $student = $request->user();
         $affiliate_id = $student->affilate_id;
         $payment_method_id = $request->payment_method_id;
         $bundle_id = $request->bundle_id;
-        $subject_id = $request->subject_id;
         $subject_id = $request->subject_id;
         $live_id = $request->live_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title; 
         $payment_oreder = [];
         $amount = json_decode($newOrder['amount']);
+
+        if ($newOrder['service'] == 'Bundle') {
+            
+            $user_bundle_id = json_decode($bundle_id);
+            foreach ($old_payments as $item) {
+                foreach ($item->bundle as $element) {
+                    if (in_array($element->id, $user_bundle_id)) {
+                        return response()->json([
+                            'faild' => 'You buy bundle before'
+                        ], 403);
+                    }
+                }
+            }
+       }
+       else{
+        
+            $user_subject_id = json_decode($subject_id);
+            foreach ($old_payments as $item) {  
+                foreach ($item->subject as $element) {
+                    if (in_array($element->id, $user_subject_id)) {
+                        return response()->json([
+                            'faild' => 'You buy subject before'
+                        ], 403);
+                    }
+                }
+             }
+       }
     //    $payment_title == 'vodafon cach' ? 
     //    $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
     //    : $newOrder['receipt'] = 'default.png';
