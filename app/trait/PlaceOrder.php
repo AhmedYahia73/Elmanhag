@@ -23,26 +23,28 @@ trait PlaceOrder
     public function placeOrder(Request $request ){
         
         $user = $request->user();
-        $newOrder = $request->only($this->orderPlaceReqeust);
+         $newOrder = $request->only($this->orderPlaceReqeust);
         $items = $newOrder['chargeItems'];
         // $user_id = $request->user()->id;
         $new_item = [];
         $service = $newOrder['chargeItems'][0]['description'];
         $amount = $newOrder['amount'];
+         $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
+        $payment_method_id = $paymentMethod->payment_method_id;
+                    if(!$paymentMethod){
+                        return abort(404);
+                    }
          $paymentData = [
                "merchantRefNum"=> $newOrder['merchantRefNum'],
                "student_id"=> $newOrder['customerProfileId'],
                "amount"=> $newOrder['amount'],
                "service"=> $service,
                "purchase_date"=>now(),
-               "payment_method_id"=>$newOrder['payment_method_id'],
+               "payment_method_id"=>$payment_method_id,
                "receipt"=>'fawry.png',
         ];
-         $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
      
-            if(empty($paymentMethod)){
-                    return abort(404);
-            }
+            
                    $createPayment = $this->payment->create($paymentData);
         foreach ($items as $item) {
                 
