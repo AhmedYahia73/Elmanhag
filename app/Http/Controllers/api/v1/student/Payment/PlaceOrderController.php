@@ -58,7 +58,6 @@ class PlaceOrderController extends Controller
         $amount = json_decode($newOrder['amount']);
 
         if ($newOrder['service'] == 'Bundle') {
-            
             $user_bundle_id = json_decode($bundle_id);
             foreach ($old_payments as $item) {
                 foreach ($item->bundle as $element) {
