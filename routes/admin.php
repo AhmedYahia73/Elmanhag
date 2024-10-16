@@ -481,6 +481,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::prefix('videoIssues')->group(function() {
             Route::controller(ListVideoIssuesController::class)->group(function(){
                 Route::get('/', 'show')->name('video_issues.show');
+                Route::get('/issue/{id}', 'video_issue')->name('video_issues.video_issue');
                 Route::post('/add', 'add')->name('video_issues.add');
                 Route::put('/update/{id}', 'modify')->name('video_issues.update');
                 Route::delete('/delete/{id}', 'delete')->name('video_issues.delete');

@@ -29,6 +29,16 @@ class VideoIssuesController extends Controller
         ]);
     }
 
+    public function video_issue($id){
+        // https://bdev.elmanhag.shop/admin/Settings/videoIssues/issue/{id}
+        $video_issue = $this->video_issues
+        ->where('id', $id)->first();
+
+        return response()->json([
+            'video_issue' => $video_issue
+        ]);
+    }
+
     public function add(Request $request){
         // https://bdev.elmanhag.shop/admin/Settings/videoIssues/add
         // Keys
