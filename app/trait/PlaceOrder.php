@@ -35,7 +35,7 @@ trait PlaceOrder
                "amount"=> $newOrder['amount'],
                "service"=> $service,
                "purchase_date"=>now(),
-               "payment_method_id"=>$newOrder->payment_method_id,
+               "payment_method_id"=>$newOrder['payment_method_id'],
                "receipt"=>'fawry.png',
         ];
          $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
