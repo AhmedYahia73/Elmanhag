@@ -69,7 +69,7 @@ class StudentsDataController extends Controller
         ]);
     }
 
-    public function student($id){
+    public function student_item($id){
         // https://bdev.elmanhag.shop/admin/student/student/{id}
         $student = $this->users->where('role', 'student')
         ->where('id', $id)
