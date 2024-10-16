@@ -120,7 +120,7 @@ class FawryPayController extends Controller
 
         if(isset($response['orderStatus']) && $response['orderStatus'] == 'EXPIRED' or $response['orderStatus'] == 'UNPAID'){
             return response()->json([
-                'faield'=>'Something Wrong',
+                'faild'=>'Something Wrong',
             ],498);
         };
        
