@@ -470,6 +470,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::prefix('questionIssues')->group(function() {
             Route::controller(ListQuestionIssuesController::class)->group(function(){
                 Route::get('/', 'show')->name('question_issues.show');
+                Route::get('/issue/{id}', 'question_issue')->name('question_issues.question_issue');
                 Route::post('/add', 'add')->name('question_issues.add');
                 Route::put('/update/{id}', 'modify')->name('question_issues.update');
                 Route::delete('/delete/{id}', 'delete')->name('question_issues.delete');
