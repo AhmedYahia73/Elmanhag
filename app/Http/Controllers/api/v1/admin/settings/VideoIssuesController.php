@@ -39,6 +39,26 @@ class VideoIssuesController extends Controller
         ]);
     }
 
+    public function status($id, Request $request){
+        // https://bdev.elmanhag.shop/admin/Settings/videoIssues/status/{id}
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|boolean',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+        $video_issue = $this->video_issues
+        ->where('id', $id)->first();
+        $video_issue->update([
+            'status' => $request->status
+        ]);
+        $status = $request->status == 0 ? 'Banned' : 'Active';
+
+        return response()->json(['success'=> $status],200);
+    }
+
     public function add(Request $request){
         // https://bdev.elmanhag.shop/admin/Settings/videoIssues/add
         // Keys
