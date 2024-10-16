@@ -107,6 +107,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('student')->middleware('can:isStudent')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
             Route::get('/', 'show')->name('student.show');
+            Route::get('/student/{id}', 'student')->name('student.student');
             Route::get('/loginHistory/{id}', 'login_history')->name('student.login_history');
             Route::post('/purchases', 'purchases')->name('student.purchases');
             Route::post('/purchasesData', 'purchases_data')->name('student.purchases_data');

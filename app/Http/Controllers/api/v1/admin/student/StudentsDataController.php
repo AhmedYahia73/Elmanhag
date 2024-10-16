@@ -69,6 +69,19 @@ class StudentsDataController extends Controller
         ]);
     }
 
+    public function student($id){
+        // https://bdev.elmanhag.shop/admin/student/student/{id}
+        $student = $this->users->where('role', 'student')
+        ->where('id', $id)
+        ->with(['subjects', 'bundles', 'category', 'country', 'education', 
+        'city', 'student_job', 'last_login'])
+        ->first();
+
+        return response()->json([
+            'student' => $student,
+        ]);
+    }
+
     public function purchases(Request $request){
         // https://bdev.elmanhag.shop/admin/student/purchases
         // Keys
