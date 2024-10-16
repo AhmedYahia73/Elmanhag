@@ -30,7 +30,7 @@ trait PlaceOrder
         $service = $newOrder['chargeItems'][0]['description'];
         $amount = $newOrder['amount'];
          $paymentMethod = $this->paymenty_method->where('title','fawry')->first();
-        $payment_method_id = $paymentMethod->payment_method_id;
+        $payment_method_id = $paymentMethod->id;
                     if(!$paymentMethod){
                         return abort(404);
                     }
