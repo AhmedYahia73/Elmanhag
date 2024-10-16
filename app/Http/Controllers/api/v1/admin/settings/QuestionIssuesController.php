@@ -39,7 +39,7 @@ class QuestionIssuesController extends Controller
         ]);
     }
 
-    public function status($id){
+    public function status($id, Request $request){
         // https://bdev.elmanhag.shop/admin/Settings/questionIssues/status/{id}
         $validator = Validator::make($request->all(), [
             'status' => 'required|boolean',
