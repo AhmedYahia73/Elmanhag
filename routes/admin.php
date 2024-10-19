@@ -119,7 +119,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         Route::controller(CreateStudentController::class)->group(function () {
             Route::post('/add', 'store')->name('student.add');
-            Route::put('/update/{id}', 'modify')->name('student.modify');
+            Route::post('/update/{id}', 'modify')->name('student.modify');
             Route::delete('/delete/{id}', 'delete')->name('student.delete');
             Route::put('/status/{id}', 'status')->name('student.status');
         });
