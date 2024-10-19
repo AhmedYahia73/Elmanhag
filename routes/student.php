@@ -117,7 +117,7 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         });
         Route::controller(RecordedLiveController::class)->group(function () { // This All Recorded Lives For Student
             Route::prefix('recorded_live')->group(function () {
-                Route::post('/', 'show')->name('recorded_live.show');
+                Route::get('/', 'show')->name('recorded_live.show');
             });
         });
         
