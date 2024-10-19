@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('live_recordeds', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->boolean('paid')->default(1);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

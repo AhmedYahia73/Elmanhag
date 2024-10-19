@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class LiveRecorded extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'name',
+        'description',
+        'category_id',
+        'chapter_id',
+        'lesson_id',
+        'paid',
+        'active',
+    ];
 }
