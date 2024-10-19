@@ -24,6 +24,8 @@ class SubscriptionController extends Controller
         })
         ->with('subjects')
         ->get(); // Get bundles that havs the same category of student and student buy it
+        $bundles = $bundles->where('status', 1)
+        ->where('expired_date', '>=', date('Y-m-d'));
         $bundles_subjects = [];
         foreach ($bundles as $item) {
             $bundles_subjects = array_merge($bundles_subjects, 
@@ -37,9 +39,6 @@ class SubscriptionController extends Controller
         ->orWhereIn('id', $bundles_subjects)
         ->where('category_id', auth()->user()->category_id)
         ->get(); // Get subject that havs the same category of student and student does not buy it
-
-        $bundles = $bundles->where('status', 1)
-        ->where('expired_date', '>=', date('Y-m-d'));
         $subjects = $subjects->where('status', 1)
         ->where('expired_date', '>=', date('Y-m-d'));
 

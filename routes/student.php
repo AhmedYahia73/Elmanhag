@@ -20,6 +20,7 @@ use App\Http\Controllers\api\v1\student\paymentMethod\PaymentMethodController;
 use App\Http\Controllers\api\v1\student\promocode\PromoCodeController;
 use App\Http\Controllers\api\v1\student\subsription\SubscriptionController;
 use App\Http\Controllers\api\v1\student\issues\IssuesController;
+use App\Http\Controllers\api\v1\student\recorded_live\RecordedLiveController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -112,6 +113,11 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         Route::controller(LiveSessionController::class)->group(function () { // This All Chapters For Student
             Route::prefix('live')->group(function () {
                 Route::post('session/view', 'show')->name('session.show');
+            });
+        });
+        Route::controller(RecordedLiveController::class)->group(function () { // This All Recorded Lives For Student
+            Route::prefix('recorded_live')->group(function () {
+                Route::post('/', 'show')->name('recorded_live.show');
             });
         });
         
