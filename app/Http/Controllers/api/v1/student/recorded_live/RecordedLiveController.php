@@ -43,6 +43,10 @@ class RecordedLiveController extends Controller
 
         $live_recorded = $this->live_recorded
         ->whereIn('subject_id', $subjects->pluck('id'))
+        ->where('active', 1)
+        ->orWhere('paid', 0)
+        ->where('active', 1)
+        ->where('category_id', auth()->user()->category_id)
         ->get();
 
         return response()->json([
