@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('video');
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('chapter_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('lesson_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->boolean('paid')->default(1);
             $table->boolean('active')->default(1);
             $table->timestamps();

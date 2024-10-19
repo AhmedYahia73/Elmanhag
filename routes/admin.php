@@ -64,6 +64,9 @@ use App\Http\Controllers\api\v1\admin\complaint\ComplaintController;
 use App\Http\Controllers\api\v1\admin\revision\RevisionController;
 use App\Http\Controllers\api\v1\admin\revision\CreateRevisionController;
 
+use App\Http\Controllers\api\v1\admin\live_recorded\LiveRecordedController;
+use App\Http\Controllers\api\v1\admin\live_recorded\CreateLiveRecordedController;
+
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
@@ -358,6 +361,19 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::post('/add', 'create')->name('live.add');
             Route::put('/update/{id}', 'modify')->name('live.update');
             Route::delete('/delete/{id}', 'delete')->name('live.delete');
+        });
+    });
+
+    // Start Recorded Live Module
+    Route::prefix('recordedLive')->middleware('can:isLive')->group(function () {
+        Route::controller(LiveRecordedController::class)->group(function () {
+            Route::get('/', 'view')->name('recordedLive.show');
+            Route::get('/live_item/{id}', 'live_item')->name('recordedLive.show_item');
+        });
+        Route::controller(CreateLiveRecordedController::class)->group(function () {
+            Route::post('/add', 'add')->name('recordedLive.add');
+            Route::post('/update/{id}', 'modify')->name('recordedLive.update');
+            Route::delete('/delete/{id}', 'delete')->name('recordedLive.delete');
         });
     });
     
