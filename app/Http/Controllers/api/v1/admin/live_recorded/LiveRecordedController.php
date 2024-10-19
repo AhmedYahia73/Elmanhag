@@ -12,6 +12,7 @@ class LiveRecordedController extends Controller
     public function __construct(private LiveRecorded $live_recorded){}
 
     public function view(){
+        // https://bdev.elmanhag.shop/admin/recordedLive
         $live_recorded = $this->live_recorded
         ->with(['category', 'chapter', 'lesson'])
         ->get();
@@ -22,6 +23,7 @@ class LiveRecordedController extends Controller
     }
     
     public function live_item($id){
+        // https://bdev.elmanhag.shop/admin/recordedLive/live_item/{id}
         $live_recorded = $this->live_recorded
         ->where('id', $id)
         ->with(['category', 'chapter', 'lesson'])
