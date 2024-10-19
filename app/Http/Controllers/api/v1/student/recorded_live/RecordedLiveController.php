@@ -15,6 +15,7 @@ class RecordedLiveController extends Controller
     private bundle $bundles){}
 
     public function show(){
+        // https://bdev.elmanhag.shop/student/recorded_live
         $bundles = $this->bundles
         ->where('category_id', auth()->user()->category_id)
         ->whereHas('users', function ($query) {
