@@ -74,7 +74,7 @@ class StudentsDataController extends Controller
         $student = $this->users->where('role', 'student')
         ->where('id', $id)
         ->with(['subjects', 'bundles', 'category', 'country', 'education', 
-        'city', 'student_job', 'last_login'])
+        'city', 'student_job', 'last_login', 'parents', 'parent_relation'])
         ->first();
 
         return response()->json([

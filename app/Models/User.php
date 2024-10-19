@@ -16,6 +16,7 @@ use App\Models\category;
 use App\Models\country;
 use App\Models\city;
 use App\Models\homework;
+use App\Models\ParentRelation;
 use App\Models\Education;
 use App\Models\Payout;
 use App\Models\AffilateAccount;
@@ -95,6 +96,10 @@ class User extends Authenticatable
 
     public function admin_position(){
         return $this->belongsTo(AdminPosition::class, 'admin_position_id');
+    }
+
+    public function parent_relation(){
+        return $this->belongsTo(ParentRelation::class, 'parent_relation_id');
     }
 
     public function signups(){
