@@ -11,7 +11,7 @@ use App\Models\subject;
 use App\Models\category;
 use App\Models\Education;
 use App\Models\chapter;
-use App\Models\Education;
+use App\Models\lesson;
 
 class LiveController extends Controller
 {
@@ -55,7 +55,7 @@ class LiveController extends Controller
             'category' => $category,
             'education' => $education,
             'chapters' => $chapters,
-            'lessons' => $lessons
+            'lessons' => $lessons,
         ]);
     }
 
