@@ -23,7 +23,14 @@ class LiveRecorded extends Model
         'subject_id',
         'paid',
         'active',
+        'semester',
     ];
+
+    protected $appends = ['video_link'];
+
+    public function getVideoLinkAttribute(){
+        return url('storage/' . $this->attributes['video']);
+    }
 
     public function category(){
         return $this->belongsTo(category::class, 'category_id');

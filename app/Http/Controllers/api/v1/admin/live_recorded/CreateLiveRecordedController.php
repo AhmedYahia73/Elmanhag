@@ -22,13 +22,14 @@ class CreateLiveRecordedController extends Controller
         'subject_id',
         'paid',
         'active',
+        'semester',
     ];
 
     public function add(LiveRecordedRequest $request){
         // https://bdev.elmanhag.shop/admin/recordedLive/add
         // Keys
         // name, description, category_id, chapter_id, lesson_id, subject_id
-        // paid, active, video
+        // paid, active, video, semester
         $data = $request->only($this->liveRequest);
         if (is_file($request->video)) {
             $video =  $this->upload($request,'video','admin/live_recorded/video'); // Upload video
@@ -46,7 +47,7 @@ class CreateLiveRecordedController extends Controller
         // https://bdev.elmanhag.shop/admin/recordedLive/update/{id}
         // Keys
         // name, description, category_id, chapter_id, lesson_id, subject_id
-        // paid, active, video
+        // paid, active, video, semester
         $data = $request->only($this->liveRequest);
         $live_recorded = $this->live_recorded
         ->where('id', $id)

@@ -32,6 +32,7 @@ class LiveRecordedRequest extends FormRequest
             'subject_id' => ['exists:subjects,id'],
             'paid' => ['required', 'boolean'],
             'active' => ['required', 'boolean'],
+            'semester' => ['required', 'in:first,second']
         ];
     }
 
