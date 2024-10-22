@@ -39,6 +39,7 @@ class LiveController extends Controller
         $subjects = $this->subject
         ->get();
         $category = $this->category
+        ->where('category_id', null)
         ->get();
         $education = $this->education
         ->get();
