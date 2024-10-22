@@ -22,7 +22,7 @@ class PaymentController extends Controller
         // https://bdev.elmanhag.shop/admin/payment/pendding
         $payments = $this->payments
         ->where('status', null)
-        ->with(['student', 'payment_method', 'bundle', 'subject', 'live'])
+        ->with(['student.category', 'payment_method', 'bundle', 'subject', 'live'])
         ->get();
 
         return response()->json([
@@ -175,7 +175,7 @@ class PaymentController extends Controller
         // https://bdev.elmanhag.shop/admin/payment
         $payments = $this->payments
         ->where('status', 1)
-        ->with(['student', 'payment_method', 'bundle', 'subject'])
+        ->with(['student.category', 'payment_method', 'bundle', 'subject'])
         ->get(); // Get approve payment
 
         return response()->json([
