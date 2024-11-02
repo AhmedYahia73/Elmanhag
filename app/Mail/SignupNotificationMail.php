@@ -20,7 +20,6 @@ class SignupNotificationMail extends Mailable
     public $view;
     public function __construct(public $user,$subject,$view)
     {
-        //
         $this->subject = $subject;
         $this->view = $view;
     }
