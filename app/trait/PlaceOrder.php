@@ -12,6 +12,8 @@ use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignupNotificationMail;
 
 trait PlaceOrder
 {
@@ -54,7 +56,10 @@ trait PlaceOrder
             try {
              $payment_number = $createPayment->id;
             if($service == 'Bundle'){
-                $newbundle = $createPayment->bundle()->sync($itemId);
+                $newbundle = $createPayment->bundle()->sync($itemId);            
+                $payment_oreder['order'] = $this->bundle
+                ->whereIn('id', $itemId)
+                ->get();
               }elseif($service == 'Subject'){
 
                   $subject_id = json_decode($item['itemId']);
@@ -64,7 +69,10 @@ trait PlaceOrder
                             $studentSubjectID = $studentSubject->pluck('id')->toArray();
                             $subject_id = array_diff($subject_id,$studentSubjectID);
                   }
-                $newSubjects = $createPayment->subject()->attach($subject_id);
+                $newSubjects = $createPayment->subject()->attach($subject_id);   
+                $payment_oreder['order'] = $this->subject
+                ->whereIn('id', $subject_id)
+                ->get();
               }
               } catch (\Throwable $th) {
                return abort(code: 500);
@@ -81,6 +89,17 @@ trait PlaceOrder
             ];
               
             }
+
+            
+      $subject = "Payment Notification Mail";
+      $view = "Payment";
+      $payment_oreder['receipt'] = null;
+      $payment_oreder['student'] = $request->user()->name;
+      $payment_oreder['category'] = $request->user()->category->name;
+      $payment_oreder['amount'] = $newOrder['amount'];
+      $payment_oreder['date'] = $request->purchase_date;
+      $payment_oreder['payment_method'] = 'fawry';
+       Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($payment_oreder,$subject,$view));
                   return $data ;
     }
 
