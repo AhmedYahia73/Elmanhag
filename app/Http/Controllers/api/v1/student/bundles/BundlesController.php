@@ -138,7 +138,7 @@ class BundlesController extends Controller
                     $nexDay['date']; // Get Next Date The Same Date of Next Week
         }
         }
-
+        $user_id = auth()->user()->id;
         $live_recorded = $this->live_recorded
         ->whereDoesntHave('user', function($query) use($user_id){
             $query->where('users.id', $user_id);
