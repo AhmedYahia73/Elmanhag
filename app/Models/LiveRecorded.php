@@ -38,6 +38,10 @@ class LiveRecorded extends Model
         return $this->belongsTo(category::class, 'category_id');
     }
 
+    public function user(){
+        return $this->belongsToMany(User::class, 'user_live_recorded', 'recorded_id', 'user_id');
+    }
+
     public function chapter(){
         return $this->belongsTo(chapter::class, 'chapter_id');
     }

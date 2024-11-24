@@ -102,6 +102,10 @@ class User extends Authenticatable
         return $this->belongsTo(ParentRelation::class, 'parent_relation_id');
     }
 
+    public function recorded_live(){
+        return $this->belongsToMany(LiveRecorded::class, 'user_live_recorded', 'user_id', 'recorded_id');
+    }
+
     public function signups(){
         return $this->hasMany(User::class, 'affilate_id');
     }

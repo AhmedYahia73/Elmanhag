@@ -41,13 +41,17 @@ class RecordedLiveController extends Controller
 
         $subjects = $subjects->where('status', 1)
         ->where('expired_date', '>=', date('Y-m-d'));
-
+        $user_id = auth()->user()->id;
         $live_recorded = $this->live_recorded
         ->whereIn('subject_id', $subjects->pluck('id'))
         ->where('active', 1)
         ->orWhere('paid', 0)
         ->where('active', 1)
         ->where('category_id', auth()->user()->category_id)
+        ->orWhereHas('user', function($query) use($user_id){
+            $query->where('user.id', $user_id);
+        })
+        ->where('active', 1)
         ->get();
 
         return response()->json([
