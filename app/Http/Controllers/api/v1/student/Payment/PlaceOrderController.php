@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\bundle;
 use App\Models\Live;
 use App\Models\subject;
+use App\Models\LiveRecorded;
 use App\trait\image;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ class PlaceOrderController extends Controller
      private bundle $bundle,
      private Live $live,
      private subject $subject,
+     private LiveRecorded $record_live,
      ){}
     // This Is Controller About any Placing Order About Student 
     use image;
@@ -52,6 +54,7 @@ class PlaceOrderController extends Controller
         $bundle_id = $request->bundle_id;
         $subject_id = $request->subject_id;
         $live_id = $request->live_id;
+        $record_live_id = $request->record_live_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title; 
         $payment_oreder = [];
@@ -101,7 +104,7 @@ class PlaceOrderController extends Controller
           $newOrder = $payment->create($newOrder);
           if($newOrder['service'] == 'Bundle'){
             $bundle_id = json_decode($bundle_id);
-            $bundlePayment = $newOrder->bundle()->sync($bundle_id);
+            $bundlePayment = $newOrder->bundle()->attach($bundle_id);
             $payment_oreder['order'] = $this->bundle
             ->whereIn('id', $bundle_id)
             ->get();
@@ -118,12 +121,19 @@ class PlaceOrderController extends Controller
             ->whereIn('id', $subject_id)
             ->get();
         }elseif($newOrder['service'] == 'Live session'){
-            $livePayment = $newOrder->live()->sync($live_id);
+            $livePayment = $newOrder->live()->attach($live_id);
             $payment_oreder['order'] = $this->live
             ->whereIn('id', $live_id)
             ->get();
 
-        }else{
+        }
+        elseif ($newOrder['service'] == 'Recorded live') {
+            $recording_lives = auth()->user()->recorded_live()->attach($record_live_id);
+            $payment_oreder['order'] = $this->record_live
+            ->whereIn('id', $record_live_id)
+            ->get();
+        }
+        else{
             return response()->json([
                 'faield' => 'This Service UnAvailable' ,
             ]);
