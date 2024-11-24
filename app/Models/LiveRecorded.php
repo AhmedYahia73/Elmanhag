@@ -24,6 +24,8 @@ class LiveRecorded extends Model
         'paid',
         'active',
         'semester',
+        'price',
+        'included',
     ];
 
     protected $appends = ['video_link'];
