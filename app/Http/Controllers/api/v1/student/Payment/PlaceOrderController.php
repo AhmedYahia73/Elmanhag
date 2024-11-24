@@ -72,7 +72,7 @@ class PlaceOrderController extends Controller
                 }
             }
        }
-       elseif($newOrder['service'] == 'Subject'){{
+       elseif($newOrder['service'] == 'Subject'){
         
             $user_subject_id = json_decode($subject_id);
             foreach ($old_payments as $item) {  
