@@ -130,7 +130,7 @@ class PlaceOrderController extends Controller
         elseif ($newOrder['service'] == 'Recorded live') {
             $recording_lives = auth()->user()->recorded_live()->attach($record_live_id);
             $payment_oreder['order'] = $this->record_live
-            ->whereIn('id', $record_live_id)
+            ->where('id', $record_live_id)
             ->get();
         }
         else{
@@ -140,7 +140,6 @@ class PlaceOrderController extends Controller
         }
      
 
-        return 12;
       $subject = "Payment Notification Mail";
       $view = "Payment";
       $payment_oreder['student'] = $request->user()->name;
