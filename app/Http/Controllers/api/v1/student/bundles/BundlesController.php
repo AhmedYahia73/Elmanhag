@@ -9,12 +9,14 @@ use Illuminate\Http\Request;
 use App\Models\bundle;
 use App\Models\subject;
 use App\Models\Live;
+use App\Models\LiveRecorded;
 use Illuminate\Support\Facades\Auth;
 
 class BundlesController extends Controller
 {
     use GetNexDay;
-    public function __construct(private bundle $bundles, private subject $subjects, private Live $live){}
+    public function __construct(private bundle $bundles, private subject $subjects, 
+    private Live $live, private LiveRecorded $live_recorded){}
     
     public function show(){
         // https://bdev.elmanhag.shop/student/bundles
@@ -136,10 +138,28 @@ class BundlesController extends Controller
                     $nexDay['date']; // Get Next Date The Same Date of Next Week
         }
         }
+
+        $live_recorded = $this->live_recorded
+        ->whereDoesntHave('user', function($query) use($user_id){
+            $query->where('users.id', $user_id);
+        })
+        ->where('active', 1)
+        ->where('paid', 1)
+        ->whereIn('subject_id', $subjects->pluck('id'))
+        ->where('included', 1)
+        ->orWhere('paid', 1)
+        ->where('active', 1)
+        ->whereDoesntHave('user', function($query) use($user_id){
+            $query->where('users.id', $user_id);
+        })
+        ->where('included', 0)
+        ->get();
+
         return response()->json([
             'bundles' => $bundles,
             'subjects' => $subjects,
             'live' =>  $live,
+            'live_recorded' => $live_recorded
         ]);
     }
 }
