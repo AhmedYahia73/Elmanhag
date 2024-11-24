@@ -49,7 +49,7 @@ class RecordedLiveController extends Controller
         ->where('active', 1)
         ->where('category_id', auth()->user()->category_id)
         ->orWhereHas('user', function($query) use($user_id){
-            $query->where('user.id', $user_id);
+            $query->where('users.id', $user_id);
         })
         ->where('active', 1)
         ->get();
