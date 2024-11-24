@@ -3,6 +3,7 @@
 namespace App\trait;
 
 use App\Models\bundle;
+use App\Models\subject;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\User;

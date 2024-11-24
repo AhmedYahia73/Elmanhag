@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('revisions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('semester', ['first', 'second']);
+            $table->enum('semester', ['first', 'second']); 
+            $table->foreignId('education_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('mark');
+            $table->float('price');
             $table->enum('type', ['monthly', 'final']);
-            $table->string('month');
+            $table->string('month')->nullable();
+            $table->date('expire_date');
             $table->boolean('status');
             $table->timestamps();
         });

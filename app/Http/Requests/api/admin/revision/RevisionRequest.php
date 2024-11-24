@@ -26,12 +26,13 @@ class RevisionRequest extends FormRequest
         return [
             'title' => ['required'],
             'semester' => ['required', 'in:first,second'],
+            'education_id' => ['required', 'exists:education,id'],
             'category_id' => ['required', 'exists:categories,id'],
             'subject_id' => ['required', 'exists:subjects,id'],
-            'mark' => ['required', 'numeric'],
+            'price' => ['required', 'numeric'],
             'type' => ['required', 'in:monthly,final'],
             'month' => ['required', 'numeric'],
-            'mark' => ['required', 'numeric'],
+            'expire_date' => ['required', 'date'],
             'status' => ['required', 'boolean'],
         ];
     }

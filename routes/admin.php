@@ -156,7 +156,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         }); 
         Route::controller(CreateRevisionController::class)->group(function(){
             Route::post('/add', 'create')->name('revision.add');
-            Route::put('/update/{id}', 'modify')->name('revision.update');
+            Route::post('/file/add/{id}', 'add_video')->name('revision.add_video');
+            Route::delete('/file/delete/{id}', 'delete_video')->name('revision.delete_video');
+            Route::post('/update/{id}', 'modify')->name('revision.update');
             Route::delete('/delete/{id}', 'delete')->name('revision.delete');
         });
     });
