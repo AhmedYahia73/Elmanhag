@@ -37,4 +37,8 @@ class Revision extends Model
     public function videos(){
         return $this->hasMany(RevisionVideo::class);
     }
+
+    public function user(){
+        return $this->belongsToMany(User::class, 'user_revision', 'revision_id', 'user_id');
+    }
 }
