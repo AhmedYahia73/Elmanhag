@@ -52,6 +52,7 @@ class RecordedLiveController extends Controller
             $query->where('users.id', $user_id);
         })
         ->where('active', 1)
+        ->with(['category', 'chapter', 'lesson'])
         ->get();
 
         return response()->json([
