@@ -53,7 +53,7 @@ class PaymentController extends Controller
         ->where('status', null) 
         ->orWhere('id', $id)
         ->where('status', 0) 
-        ->with(['bundle', 'subject'])
+        ->with(['bundle', 'subject', 'recorded_live'])
         ->first(); // Get payment with its service [bundles, subjects]
         
         if (empty($payment)) {
@@ -100,6 +100,13 @@ class PaymentController extends Controller
         elseif ( $payment->service == 'Revision' ) {
             // code
             $service_type = 'revision';
+        }
+        elseif ( $payment->service == 'Recorded live' ) {
+            $service_type = 'recorded_live';
+            $recorded_live = $payment->recorded_live->pluck('id')->toArray(); // Get recorded_live as array
+            if (count($recorded_live) > 0) {
+                $user->recorded_live()->attach($recorded_live); // Add bundles to student
+            }
         }
         
         //if student has affilate and it is the first payment for him
