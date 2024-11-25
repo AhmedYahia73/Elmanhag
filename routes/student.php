@@ -21,6 +21,7 @@ use App\Http\Controllers\api\v1\student\promocode\PromoCodeController;
 use App\Http\Controllers\api\v1\student\subsription\SubscriptionController;
 use App\Http\Controllers\api\v1\student\issues\IssuesController;
 use App\Http\Controllers\api\v1\student\recorded_live\RecordedLiveController;
+use App\Http\Controllers\api\v1\student\revision\RevisionController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(SignupController::class)->group(function () {
@@ -54,6 +55,12 @@ Route::middleware(['auth:sanctum','IsStudent'])->group(function(){
         Route::controller(IssuesController::class)->group(function () {
             Route::get('/','view')->name('issues.view');
             Route::post('/','add')->name('issues.add');
+        }); 
+    });
+    
+    Route::prefix('revision')->group(function () {
+        Route::controller(RevisionController::class)->group(function () {
+            Route::get('/','revisions')->name('revision.revisions');
         }); 
     });
     
