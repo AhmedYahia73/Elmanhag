@@ -128,6 +128,7 @@ class PlaceOrderController extends Controller
 
         }
         elseif ($newOrder['service'] == 'Recorded live') {
+            return 00;
             $livePayment = $newOrder->recorded_live()->attach($record_live_id); 
             $payment_oreder['order'] = $this->record_live
             ->where('id', $record_live_id)
