@@ -140,6 +140,7 @@ class BundlesController extends Controller
         }
         $user_id = auth()->user()->id;
         $live_recorded = $this->live_recorded
+        ->with(['category', 'chapter', 'lesson'])
         ->whereDoesntHave('user', function($query) use($user_id){
             $query->where('users.id', $user_id);
         })
