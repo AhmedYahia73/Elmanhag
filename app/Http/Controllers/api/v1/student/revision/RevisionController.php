@@ -12,6 +12,7 @@ class RevisionController extends Controller
     public function __construct(private Revision $revisions){}
 
     public function revisions(){
+        // https://bdev.elmanhag.shop/student/revision
         $user_id = auth()->user()->id;
         $revisions = $this->revisions
         ->whereHas('user', function($query) use($user_id){
