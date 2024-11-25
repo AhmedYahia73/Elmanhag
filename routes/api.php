@@ -18,7 +18,6 @@ use App\Http\Controllers\api\v1\AffilateController;
 use App\Http\Controllers\api\v1\student\SubjectsController;
 use App\Http\Controllers\api\v1\student\ProfileController as ProfileStudentController;
 
-
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');

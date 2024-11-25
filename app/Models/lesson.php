@@ -35,3 +35,4 @@ class lesson extends Model
     }
 
 }
+Attribute
