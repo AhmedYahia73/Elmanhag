@@ -35,7 +35,7 @@ class SignupRequest extends FormRequest
             'education_id' => ['required','exists:education,id'],
             // 'gender' => ['required'],
             'sudent_jobs_id' => ['required','exists:student_jobs,id'],
-            'parent_relation_id' => ['required','exists:parent_relations,id'],
+            'parent_relation_id' => ['nullable', 'exists:parent_relations,id'],
         ];
     }
     public function failedValidation(Validator $validator){

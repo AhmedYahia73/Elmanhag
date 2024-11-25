@@ -41,6 +41,7 @@ class CreateCategoryController extends Controller
         $data = $request->only($this->categoryRequest); // Get Request
         $category = category::where('id', $id)
         ->first(); //Get Category
+        
         if (is_file($request->thumbnail)) { 
             $image =  $this->upload($request,'thumbnail','admin/categories/thumbnail'); // Upload Thumbnail
         

@@ -64,6 +64,9 @@ use App\Http\Controllers\api\v1\admin\complaint\ComplaintController;
 use App\Http\Controllers\api\v1\admin\revision\RevisionController;
 use App\Http\Controllers\api\v1\admin\revision\CreateRevisionController;
 
+use App\Http\Controllers\api\v1\admin\live_recorded\LiveRecordedController;
+use App\Http\Controllers\api\v1\admin\live_recorded\CreateLiveRecordedController;
+
 use App\Http\Controllers\api\v1\admin\affilate\AffilateController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_CommessionController;
 use App\Http\Controllers\api\v1\admin\affilate\Aff_PayoutController;
@@ -107,6 +110,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::prefix('student')->middleware('can:isStudent')->group(function () {
         Route::controller(StudentsDataController::class)->group(function () {
             Route::get('/', 'show')->name('student.show');
+            Route::get('/student/{id}', 'student_item')->name('student.student');
             Route::get('/loginHistory/{id}', 'login_history')->name('student.login_history');
             Route::post('/purchases', 'purchases')->name('student.purchases');
             Route::post('/purchasesData', 'purchases_data')->name('student.purchases_data');
@@ -115,7 +119,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         });
         Route::controller(CreateStudentController::class)->group(function () {
             Route::post('/add', 'store')->name('student.add');
-            Route::put('/update/{id}', 'modify')->name('student.modify');
+            Route::post('/update/{id}', 'modify')->name('student.modify');
             Route::delete('/delete/{id}', 'delete')->name('student.delete');
             Route::put('/status/{id}', 'status')->name('student.status');
         });
@@ -152,7 +156,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         }); 
         Route::controller(CreateRevisionController::class)->group(function(){
             Route::post('/add', 'create')->name('revision.add');
-            Route::put('/update/{id}', 'modify')->name('revision.update');
+            Route::post('/file/add/{id}', 'add_video')->name('revision.add_video');
+            Route::delete('/file/delete/{id}', 'delete_video')->name('revision.delete_video');
+            Route::post('/update/{id}', 'modify')->name('revision.update');
             Route::delete('/delete/{id}', 'delete')->name('revision.delete');
         });
     });
@@ -359,6 +365,19 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::delete('/delete/{id}', 'delete')->name('live.delete');
         });
     });
+
+    // Start Recorded Live Module
+    Route::prefix('recordedLive')->middleware('can:isLive')->group(function () {
+        Route::controller(LiveRecordedController::class)->group(function () {
+            Route::get('/', 'view')->name('recordedLive.show');
+            Route::get('/live_item/{id}', 'live_item')->name('recordedLive.show_item');
+        });
+        Route::controller(CreateLiveRecordedController::class)->group(function () {
+            Route::post('/add', 'add')->name('recordedLive.add');
+            Route::post('/update/{id}', 'modify')->name('recordedLive.update');
+            Route::delete('/delete/{id}', 'delete')->name('recordedLive.delete');
+        });
+    });
     
     
     // Start Affilate Module
@@ -471,6 +490,7 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
             Route::controller(ListQuestionIssuesController::class)->group(function(){
                 Route::get('/', 'show')->name('question_issues.show');
                 Route::get('/issue/{id}', 'question_issue')->name('question_issues.question_issue');
+                Route::put('/status/{id}', 'status')->name('question_issues.status');
                 Route::post('/add', 'add')->name('question_issues.add');
                 Route::put('/update/{id}', 'modify')->name('question_issues.update');
                 Route::delete('/delete/{id}', 'delete')->name('question_issues.delete');
@@ -480,6 +500,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
         Route::prefix('videoIssues')->group(function() {
             Route::controller(ListVideoIssuesController::class)->group(function(){
                 Route::get('/', 'show')->name('video_issues.show');
+                Route::get('/issue/{id}', 'video_issue')->name('video_issues.video_issue');
+                Route::put('/status/{id}', 'status')->name('video_issues.status');
                 Route::post('/add', 'add')->name('video_issues.add');
                 Route::put('/update/{id}', 'modify')->name('video_issues.update');
                 Route::delete('/delete/{id}', 'delete')->name('video_issues.delete');

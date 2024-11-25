@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\api\admin\revision;
+namespace App\Http\Requests\api\admin\live_recorded;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RevisionRequest extends FormRequest
+class LiveRecordedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,15 @@ class RevisionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required'],
-            'semester' => ['required', 'in:first,second'],
-            'education_id' => ['required', 'exists:education,id'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'subject_id' => ['required', 'exists:subjects,id'],
-            'price' => ['required', 'numeric'],
-            'type' => ['required', 'in:monthly,final'],
-            'month' => ['required', 'numeric'],
-            'expire_date' => ['required', 'date'],
-            'status' => ['required', 'boolean'],
+            'name' => ['required'],
+            'video' => ['required'],
+            'category_id' => ['exists:categories,id'],
+            'chapter_id' => ['exists:chapters,id', 'nullable'],
+            'lesson_id' => ['exists:lessons,id', 'nullable'],
+            'subject_id' => ['exists:subjects,id'],
+            'paid' => ['required', 'boolean'],
+            'active' => ['required', 'boolean'],
+            'semester' => ['required', 'in:first,second']
         ];
     }
 

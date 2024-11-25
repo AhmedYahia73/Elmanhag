@@ -16,11 +16,13 @@ class Revision extends Model
     protected $fillable = [
         'title',
         'semester',
+        'education_id',
         'category_id',
         'subject_id',
-        'mark',
+        'price',
         'type',
         'month',
+        'expire_date',
         'status',
     ];
 
@@ -32,7 +34,11 @@ class Revision extends Model
         return $this->belongsTo(subject::class);
     }
 
-    public function question_groups(){
-        return $this->hasMany(RevisionQuestionGroup::class);
+    public function videos(){
+        return $this->hasMany(RevisionVideo::class);
+    }
+
+    public function user(){
+        return $this->belongsToMany(User::class, 'user_revision', 'revision_id', 'user_id');
     }
 }

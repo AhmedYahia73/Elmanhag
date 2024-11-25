@@ -19,14 +19,14 @@
             <td style="padding: 10px; border: 1px solid #ddd;">النوع</td>
         </tr>
         <tr>
-            <td style="padding: 10px; border: 1px solid #ddd;">{{$user->gender == 'male' ? 'ولد' : 'بنت'}}</td>
-            <td style="padding: 10px; border: 1px solid #ddd;">نوع</td>
-        </tr>
-        <tr>
             <td style="padding: 10px; border: 1px solid #ddd;">{{$user->phone}}</td>
             <td style="padding: 10px; border: 1px solid #ddd;">رقم الطالب</td>
         </tr>
         @if ($user->role == 'student')
+        <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;">{{$user->gender == 'male' ? 'ولد' : 'بنت'}}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">نوع</td>
+        </tr>
         <tr>
             <td style="padding: 10px; border: 1px solid #ddd;">{{$user->parent_phone}}</td>
             <td style="padding: 10px; border: 1px solid #ddd;">رقم ولى الأمر</td>

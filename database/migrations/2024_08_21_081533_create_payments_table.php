@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->float('amount');
-            $table->enum('service', ['Live session', 'Bundle', 'Subject', 'Live Package', 'Revision']);
+            $table->enum('service', ['Live session', 'Bundle', 'Subject', 'Live Package', 'Revision', 'Recorded live']);
             $table->foreignId('student_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('payment_method_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('receipt')->nullable();

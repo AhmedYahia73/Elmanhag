@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\bundle;
 use App\Models\Live;
 use App\Models\subject;
+use App\Models\LiveRecorded;
 use App\trait\image;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -36,23 +37,54 @@ class PlaceOrderController extends Controller
      private bundle $bundle,
      private Live $live,
      private subject $subject,
+     private LiveRecorded $record_live,
      ){}
     // This Is Controller About any Placing Order About Student 
     use image;
     public function place_order( PlaceOrderRequest $request ){
+        $old_payments = $this->payment
+        ->whereNull('status')
+        ->where('student_id', $request->user()->id)
+        ->get();
        $newOrder = $request->only($this->orderPlaceReqeust);
-        $student_id = $request->user()->id;
+       $student_id = $request->user()->id;
         $student = $request->user();
         $affiliate_id = $student->affilate_id;
         $payment_method_id = $request->payment_method_id;
         $bundle_id = $request->bundle_id;
         $subject_id = $request->subject_id;
-        $subject_id = $request->subject_id;
         $live_id = $request->live_id;
+        $record_live_id = $request->record_live_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title; 
         $payment_oreder = [];
         $amount = json_decode($newOrder['amount']);
+
+        if ($newOrder['service'] == 'Bundle') {
+            $user_bundle_id = json_decode($bundle_id);
+            foreach ($old_payments as $item) {
+                foreach ($item->bundle as $element) {
+                    if (in_array($element->id, $user_bundle_id)) {
+                        return response()->json([
+                            'faild' => 'You buy bundle before'
+                        ], 403);
+                    }
+                }
+            }
+       }
+       elseif($newOrder['service'] == 'Subject'){
+        
+            $user_subject_id = json_decode($subject_id);
+            foreach ($old_payments as $item) {  
+                foreach ($item->subject as $element) {
+                    if (in_array($element->id, $user_subject_id)) {
+                        return response()->json([
+                            'faild' => 'You buy subject before'
+                        ], 403);
+                    }
+                }
+             }
+       }
     //    $payment_title == 'vodafon cach' ? 
     //    $newOrder['receipt'] = $this->upload($request,'receipt','student/receipt')
     //    : $newOrder['receipt'] = 'default.png';
@@ -72,7 +104,7 @@ class PlaceOrderController extends Controller
           $newOrder = $payment->create($newOrder);
           if($newOrder['service'] == 'Bundle'){
             $bundle_id = json_decode($bundle_id);
-            $bundlePayment = $newOrder->bundle()->sync($bundle_id);
+            $bundlePayment = $newOrder->bundle()->attach($bundle_id);
             $payment_oreder['order'] = $this->bundle
             ->whereIn('id', $bundle_id)
             ->get();
@@ -89,12 +121,19 @@ class PlaceOrderController extends Controller
             ->whereIn('id', $subject_id)
             ->get();
         }elseif($newOrder['service'] == 'Live session'){
-            $livePayment = $newOrder->live()->sync($live_id);
+            $livePayment = $newOrder->live()->attach($live_id);
             $payment_oreder['order'] = $this->live
             ->whereIn('id', $live_id)
             ->get();
 
-        }else{
+        }
+        elseif ($newOrder['service'] == 'Recorded live') {
+            $recording_lives = auth()->user()->recorded_live()->attach($record_live_id);
+            $payment_oreder['order'] = $this->record_live
+            ->where('id', $record_live_id)
+            ->get();
+        }
+        else{
             return response()->json([
                 'faield' => 'This Service UnAvailable' ,
             ]);

@@ -32,6 +32,7 @@ class Payment extends Model
     public function getReceiptLinkAttribute(){
         return url('storage/' . $this->attributes['receipt']);
     }
+    
     public function student(){
         return $this->belongsTo(User::class, 'student_id');
     }

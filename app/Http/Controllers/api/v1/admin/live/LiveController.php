@@ -10,11 +10,14 @@ use App\Models\User;
 use App\Models\subject;
 use App\Models\category;
 use App\Models\Education;
+use App\Models\chapter;
+use App\Models\lesson;
 
 class LiveController extends Controller
 {
     public function __construct(private Live $live, private category $category,
-    private Education $education, private User $users, private subject $subject){}
+    private Education $education, private User $users, private subject $subject,
+    private chapter $chapters, private lesson $lessons){}
 
     public function show(){
         // https://bdev.elmanhag.shop/admin/live
@@ -36,8 +39,13 @@ class LiveController extends Controller
         $subjects = $this->subject
         ->get();
         $category = $this->category
+        ->where('category_id', '!=', null)
         ->get();
         $education = $this->education
+        ->get();
+        $chapters = $this->chapters
+        ->get();
+        $lessons = $this->lessons
         ->get();
 
         return response()->json([
@@ -47,6 +55,8 @@ class LiveController extends Controller
             'subjects' => $subjects,
             'category' => $category,
             'education' => $education,
+            'chapters' => $chapters,
+            'lessons' => $lessons,
         ]);
     }
 

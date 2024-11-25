@@ -39,6 +39,26 @@ class QuestionIssuesController extends Controller
         ]);
     }
 
+    public function status($id, Request $request){
+        // https://bdev.elmanhag.shop/admin/Settings/questionIssues/status/{id}
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|boolean',
+        ]);
+        if ($validator->fails()) { // if Validate Make Error Return Message Error
+            return response()->json([
+                'error' => $validator->errors(),
+            ],400);
+        }
+        $question_issue = $this->question_issues
+        ->where('id', $id)->first();
+        $question_issue->update([
+            'status' => $request->status
+        ]);
+        $status = $request->status == 0 ? 'Banned' : 'Active';
+
+        return response()->json(['success'=> $status],200);
+    }
+
     public function add(Request $request){
         // https://bdev.elmanhag.shop/admin/Settings/questionIssues/add
         // Keys

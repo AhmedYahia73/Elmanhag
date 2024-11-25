@@ -1,3 +1,4 @@
+
 <style>
     .receipt-container {
     max-width: 600px;
@@ -15,69 +16,53 @@
     border-radius: 8px;
     margin-bottom: 20px;
 }
-
-.info-table {
-    width: 100%;
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.info-row:last-child {
-    border-bottom: none;
-}
-
-.info-label {
-    font-weight: bold;
-    color: #333;
-}
-
-.info-value {
-    color: #555;
-    text-align: right; /* Align values to the right for better readability */
-}
-
 </style>
 
 <div class="receipt-container">
     @if ($user['receipt'])
         <img src="{{$user['receipt']}}" alt="Receipt Image" class="receipt-image" />
     @endif
-    <div class="info-table">
-        <div class="info-row">
-            <div class="info-label">الاسم</div>
-            <div class="info-value">{{$user['student']}}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">السنة الدراسية</div>
-            <div class="info-value">{{$user['category']}}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">المبلغ المدفوع</div>
-            <div class="info-value">{{$user['amount']}}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">طريقة الدفع</div>
-            <div class="info-value">{{$user['payment_method']}}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">التاريخ</div>
-            <div class="info-value">{{$user['date']}}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">المشتريات</div>
-            <div class="info-value">
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+    <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">المعلومات</th>
+            <th style="text-align: right; padding: 10px; border: 1px solid #ddd;">التفاصيل</th>
+        </tr>
+    </thead> 
+    <tbody>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;">{{$user['student']}}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">الاسم</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;">{{$user['category']}}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">السنة الدراسية</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;">{{$user['amount']}}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">المبلغ المدفوع</td>
+        </tr> 
+        <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;">{{$user['payment_method']}}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">طريقة الدفع</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;">{{date('d-m-Y')}}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">التاريخ</td>
+        </tr> 
+        <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;">
                 @if ($user['order'])
-                @foreach ($user['order'] as $order)
-                    {{$order->name}}
-                    <br />
-                @endforeach
+                    @foreach ($user['order'] as $order)
+                        {{$order->name}}
+                        <br />
+                    @endforeach
                 @endif
-            </div>
-        </div>
-    </div>
+            </td>
+            <td style="padding: 10px; border: 1px solid #ddd;">المشتريات</td>
+        </tr>
+    </tbody>
+</table>
 </div>
+ 
+ 
