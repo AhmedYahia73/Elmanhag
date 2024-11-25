@@ -18,6 +18,7 @@ class RevisionController extends Controller
         ->whereHas('user', function($query) use($user_id){
             $query->where('users.id', $user_id);
         })
+        ->where('expire_date', '>=', date('Y-m-d'))
         ->with(['videos'])
         ->get();
 
