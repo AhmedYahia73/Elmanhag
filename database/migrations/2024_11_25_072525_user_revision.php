@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_revision', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('revision_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
