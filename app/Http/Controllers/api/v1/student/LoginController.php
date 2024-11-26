@@ -36,11 +36,6 @@ class LoginController extends Controller
         ->where('email',$login['email'])
         ->orWhere('affilate_code',$login['email'])
         ->orWhere('phone',$login['email'])->first();
-        if ($user->status == 0) {
-            return response()->json([
-                'success' => 'You are banned'
-            ], 403);
-        }
         // return $user->password . ' '. bcrypt($login['password']);
         $error = response()->json([
         'faield'=>'creational not Valid'
@@ -53,6 +48,11 @@ class LoginController extends Controller
             }
         if( !password_verify($request->input('password'),$user->password)){
                 return $error ;
+        }
+        if ($user->status == 0) {
+            return response()->json([
+                'success' => 'You are banned'
+            ], 403);
         }
                 $token = $user->createToken('personal access token')->plainTextToken;
                 $user->token = $token;

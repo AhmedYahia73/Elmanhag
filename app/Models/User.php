@@ -203,10 +203,15 @@ class User extends Authenticatable
      }
 
       public function live():BelongsToMany{
-      return $this->belongsToMany(Live::class, 'user_live');
+        return $this->belongsToMany(Live::class, 'user_live');
       }
+
       public function services():BelongsToMany{
-      return $this->belongsToMany(Live::class, 'user_Live');
+        return $this->belongsToMany(Live::class, 'user_Live');
+      }
+
+      public function revision():BelongsToMany{
+        return $this->belongsToMany(Revision::class, 'user_revision');
       }
 
 }

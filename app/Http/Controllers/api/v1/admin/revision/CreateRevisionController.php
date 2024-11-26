@@ -54,7 +54,7 @@ class CreateRevisionController extends Controller
         }
 
         return response()->json([
-            'success' => 'You add data success'
+            'success' => $request->all()
         ]);
     }
 
