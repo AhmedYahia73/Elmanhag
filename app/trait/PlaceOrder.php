@@ -28,6 +28,7 @@ trait PlaceOrder
         $user = $request->user();
          $newOrder = $request->only($this->orderPlaceReqeust);
         $items = $newOrder['chargeItems'];
+        
         // $user_id = $request->user()->id;
         $new_item = [];
         $service = $newOrder['chargeItems'][0]['description'];
@@ -62,7 +63,6 @@ trait PlaceOrder
                 ->whereIn('id', $itemId)
                 ->get();
               }elseif($service == 'Subject'){
-
                   $subject_id = json_decode($item['itemId']);
                   $bundleSubject = $user->bundles;
                   if(is_array($bundleSubject) && count($bundleSubject) > 0){
@@ -74,12 +74,23 @@ trait PlaceOrder
                 $payment_oreder['order'] = $this->subject
                 ->whereIn('id', $subject_id)
                 ->get();
+              }elseif($service == 'Live session'){
+                    $live_id = $item['itemId'];
+                      $newLive = $createPayment->live()->attach($live_id);
+                      $payment_oreder['order'] = $this->live
+                       ->where('id', $live_id)
+                       ->get();
+              }elseif($service == 'Recorded live'){
+                    $record_live_id = $item['itemId'];
+                     $recordedLivePayment = $createPayment->recorded_live()->attach($record_live_id);
+                     $payment_oreder['order'] = $this->liveRecorded
+                     ->where('id', $record_live_id)
+                     ->get();
               }
               } catch (\Throwable $th) {
                return abort(code: 500);
               }
             $data = [
-                
                 'paymentProcess' => $payment_number,
                     'chargeItems'=>[
                         'itemId'=>$subject_id[0] ?? $itemId,
@@ -90,8 +101,6 @@ trait PlaceOrder
             ];
               
             }
-
-            
       $subject = "Payment Notification Mail";
       $view = "Payment";
       $payment_oreder['receipt'] = null;
@@ -103,7 +112,6 @@ trait PlaceOrder
        Mail::to('elmanhagedu@gmail.com')->send(new SignupNotificationMail($payment_oreder,$subject,$view));
                   return $data ;
     }
-
     public function confirmOrder($response){
         if(isset($response['code']) && $response['code'] == 9901){
                 return response()->json($response);

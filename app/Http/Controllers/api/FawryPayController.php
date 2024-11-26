@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\bundle;
+use App\Models\Live;
+use App\Models\LiveRecorded;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
@@ -25,6 +27,8 @@ class FawryPayController extends Controller
         private Payment $payment,
         private User $affiliate,
         private PaymentMethod $paymenty_method,
+        private Live $live,
+        private LiveRecorded $liveRecorded,
         FawryPayService $fawryPayService)
     {
         $this->fawryPayService = $fawryPayService;
@@ -64,7 +68,7 @@ class FawryPayController extends Controller
       
         
              // Start Create Order If Operation Payment Success
-            $placeOrder = $this->placeOrder($request);
+          return  $placeOrder = $this->placeOrder($request);
              // Start Create Order If Operation Payment Success
      
         // Extract data
