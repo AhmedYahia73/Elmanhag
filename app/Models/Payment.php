@@ -58,6 +58,6 @@ class Payment extends Model
     }
 
     public function revision():BelongsToMany{
-        return $this->belongsToMany(LiveRecorded::class, 'service_payment', 'payment_id', 'revision_id');
+        return $this->belongsToMany(Revision::class, 'service_payment', 'payment_id', 'revision_id');
     }
 }

@@ -22,7 +22,8 @@ class PaymentController extends Controller
         // https://bdev.elmanhag.shop/admin/payment/pendding
         $payments = $this->payments
         ->where('status', null)
-        ->with(['student.category', 'payment_method', 'bundle', 'subject', 'live', 'recorded_live'])
+        ->with(['student.category', 'payment_method', 'bundle', 'subject', 'live', 
+        'recorded_live', 'revision'])
         ->get();
 
         return response()->json([
@@ -100,6 +101,10 @@ class PaymentController extends Controller
         elseif ( $payment->service == 'Revision' ) {
             // code
             $service_type = 'revision';
+            $revision = $payment->revision->pluck('id')->toArray(); // Get revision as array
+            if (count($revision) > 0) {
+                $user->revision()->attach($revision); // Add bundles to student
+            }
         }
         elseif ( $payment->service == 'Recorded live' ) {
             $service_type = 'recorded_live';
@@ -107,8 +112,8 @@ class PaymentController extends Controller
             if (count($recorded_live) > 0) {
                 $user->recorded_live()->attach($recorded_live); // Add bundles to student
             }
-        }
-        
+        } 
+
         //if student has affilate and it is the first payment for him
        if (!empty($user->affilate_id) && $user->affilate_id  != null && empty($first_payment)) {
            $affilate_account = $this->affilate_account
