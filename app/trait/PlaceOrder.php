@@ -140,7 +140,8 @@ trait PlaceOrder
                 }, 'subject', function ($query):void {
                     $query->with('users');
            })->first();
-            $order = $payment->service == 'Bundle' ? 'bundle' : 'subject';
+            $order = $this->checkItemType($payment->service);
+            // $order = $payment->service == 'Bundle' ? 'bundle' : 'subject';
             if($order == 'bundle'){
                 $orderBundle = $payment->bundle;
                 foreach($orderBundle as $student_bundle){
@@ -151,6 +152,13 @@ trait PlaceOrder
                  foreach($orderSubject as $student_subject){
                   $student_subject->users()->attach([$student_subject->id=>['user_id'=>$customerMerchantId]] );
                  }
+            }elseif($order == 'Live'){
+                $orderLive = $payment->live;
+                  $orderLive->users()->attach([$orderLive->id=>['user_id'=>$customerMerchantId]] );
+            }elseif($order == 'Live Recorded'){
+                $orderRecordedLive = $payment->recorded_live;
+                  $orderRecordedLive->users()->attach([$orderRecordedLive->id=>['user_id'=>$customerMerchantId]] );
+
             }
 
         }
