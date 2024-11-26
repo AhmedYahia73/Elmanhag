@@ -144,11 +144,13 @@ class BundlesController extends Controller
         ->whereDoesntHave('user', function($query) use($user_id){
             $query->where('users.id', $user_id);
         })
+        ->where('category_id', auth()->user()->category_id )
         ->where('active', 1)
         ->where('paid', 1)
         ->whereIn('subject_id', $subjects->pluck('id'))
         ->where('included', 1)
         ->orWhere('paid', 1)
+        ->where('category_id', auth()->user()->category_id )
         ->where('active', 1)
         ->whereDoesntHave('user', function($query) use($user_id){
             $query->where('users.id', $user_id);
