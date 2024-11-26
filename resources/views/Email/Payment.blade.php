@@ -54,7 +54,11 @@
             <td style="padding: 10px; border: 1px solid #ddd;">
                 @if ($user['order'])
                     @foreach ($user['order'] as $order)
+                        @if ($order->name)
                         {{$order->name}}
+                        @else
+                        {{$order->title}}
+                        @endif
                         <br />
                     @endforeach
                 @endif

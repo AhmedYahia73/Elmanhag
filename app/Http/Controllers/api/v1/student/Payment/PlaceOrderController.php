@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\bundle;
 use App\Models\Live;
 use App\Models\subject;
+use App\Models\Revision;
 use App\Models\LiveRecorded;
 use App\trait\image;
 use Illuminate\Database\QueryException;
@@ -38,6 +39,7 @@ class PlaceOrderController extends Controller
      private Live $live,
      private subject $subject,
      private LiveRecorded $record_live,
+     private Revision $revisions,
      ){}
     // This Is Controller About any Placing Order About Student 
     use image;
@@ -54,6 +56,7 @@ class PlaceOrderController extends Controller
         $bundle_id = $request->bundle_id;
         $subject_id = $request->subject_id;
         $live_id = $request->live_id;
+        $revision_id = $request->revision_id;
         $record_live_id = $request->record_live_id;
         $payment = $this->paymenty_method->where('id',$payment_method_id)->first();
         $payment_title = $payment->title; 
@@ -128,9 +131,15 @@ class PlaceOrderController extends Controller
 
         }
         elseif ($newOrder['service'] == 'Recorded live') {
-            $livePayment = $newOrder->recorded_live()->attach($record_live_id); 
+            $recordedLivePayment = $newOrder->recorded_live()->attach($record_live_id); 
             $payment_oreder['order'] = $this->record_live
             ->where('id', $record_live_id)
+            ->get();
+        }
+        elseif ($newOrder['service'] == 'Revision') {
+            $revisionPayment = $newOrder->revision()->attach($revision_id); 
+            $payment_oreder['order'] = $this->revisions
+            ->where('id', $revision_id)
             ->get();
         }
         else{
