@@ -31,7 +31,6 @@ class RevisionRequest extends FormRequest
             'subject_id' => ['required', 'exists:subjects,id'],
             'price' => ['required', 'numeric'],
             'type' => ['required', 'in:monthly,final'],
-            'month' => ['required', 'numeric'],
             'expire_date' => ['required', 'date'],
             'status' => ['required', 'boolean'],
         ];
