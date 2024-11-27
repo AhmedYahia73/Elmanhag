@@ -19,7 +19,7 @@ class RevisionController extends Controller
         $subjects = $this->subjects->get();
         $categories = $this->category->get();
         $revision = $this->revision
-        ->with(['subject', 'category', 'videos']) 
+        ->with(['subject', 'category', 'videos', 'education']) 
         ->get();
 
         return response()->json([
