@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SignupNotificationMail;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 trait PlaceOrder
 {
@@ -53,8 +54,8 @@ trait PlaceOrder
         foreach ($items as $item) {
                 
             $itemId = $item['itemId'];
-            $item_type = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
-            
+            // $item_type = $service == 'Bundle' ? 'bundle' : 'subject'; // iF Changed By Sevice Name Get Price One Of Them
+            $item_type = $this->checkItemType($service);
             try {
              $payment_number = $createPayment->id;
             if($service == 'Bundle'){
@@ -76,16 +77,24 @@ trait PlaceOrder
                 ->get();
               }elseif($service == 'Live session'){
                     $live_id = $item['itemId'];
+
                       $newLive = $createPayment->live()->attach($live_id);
                       $payment_oreder['order'] = $this->live
                        ->where('id', $live_id)
                        ->get();
               }elseif($service == 'Recorded live'){
-                    $record_live_id = $item['itemId'];
-                     $recordedLivePayment = $createPayment->recorded_live()->attach($record_live_id);
-                     $payment_oreder['order'] = $this->liveRecorded
-                     ->where('id', $record_live_id)
-                     ->get();
+                  try {
+                      $record_live_id = $item['itemId'];
+                      $recordedLivePayment = $createPayment->recorded_live()->attach($record_live_id);
+                      $payment_oreder['order'] = $this->liveRecorded
+                      ->where('id', $record_live_id)
+                      ->get();
+                  } catch (\Throwable $th) {
+                        throw new HttpResponseException(response()->json([
+                            'error'=>'Something Wron In Payment Recorded Live',
+                            'message'=>$th->getMessage(),
+                        ]));
+                  }
               }
               } catch (\Throwable $th) {
                return abort(code: 500);
@@ -131,7 +140,8 @@ trait PlaceOrder
                 }, 'subject', function ($query):void {
                     $query->with('users');
            })->first();
-            $order = $payment->service == 'Bundle' ? 'bundle' : 'subject';
+            $order = $this->checkItemType($payment->service);
+            // $order = $payment->service == 'Bundle' ? 'bundle' : 'subject';
             if($order == 'bundle'){
                 $orderBundle = $payment->bundle;
                 foreach($orderBundle as $student_bundle){
@@ -142,9 +152,34 @@ trait PlaceOrder
                  foreach($orderSubject as $student_subject){
                   $student_subject->users()->attach([$student_subject->id=>['user_id'=>$customerMerchantId]] );
                  }
+            }elseif($order == 'Live'){
+                $orderLive = $payment->live;
+                  $orderLive->users()->attach([$orderLive->id=>['user_id'=>$customerMerchantId]] );
+            }elseif($order == 'Live Recorded'){
+                $orderRecordedLive = $payment->recorded_live;
+                  $orderRecordedLive->users()->attach([$orderRecordedLive->id=>['user_id'=>$customerMerchantId]] );
+
             }
 
         }
         return response()->json($response);
+    }
+
+    public function checkItemType($service){
+        switch ($service) {
+            case 'Bundle':
+                return $item_type = 'bundle';
+            case 'Subject':
+                return $item_type = 'subject';
+            case 'Live session':
+                return $item_type = 'Live';
+            case 'Recorded live':
+                return $item_type = 'Live Recorded';
+
+            default:
+                throw new HttpResponseException(response()->json([
+                    'error'=>'Not Found any Services'
+                ]));
+        }
     }
 }

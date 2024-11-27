@@ -68,7 +68,7 @@ class FawryPayController extends Controller
       
         
              // Start Create Order If Operation Payment Success
-          return  $placeOrder = $this->placeOrder($request);
+            $placeOrder = $this->placeOrder($request);
              // Start Create Order If Operation Payment Success
      
         // Extract data
@@ -128,7 +128,7 @@ class FawryPayController extends Controller
             ],498);
         };
        
-           $orderConfirmation =      $this->confirmOrder($response);
+          return $orderConfirmation =      $this->confirmOrder($response);
             if($orderConfirmation){
                     return response()->json([
                         'success'=>'Order Success',
